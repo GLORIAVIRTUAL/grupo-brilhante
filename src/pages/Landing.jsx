@@ -5,6 +5,7 @@ import HeroSection from '@/components/landing/HeroSection';
 import ServicesSection from '@/components/landing/ServicesSection';
 import ProcessSection from '@/components/landing/ProcessSection';
 import GroupSection from '@/components/landing/GroupSection';
+import StructureGallery from '@/components/landing/StructureGallery';
 import BrilavSection from '@/components/landing/BrilavSection';
 import FaqSection from '@/components/landing/FaqSection';
 import ContactSection from '@/components/landing/ContactSection';
@@ -23,5 +24,5 @@ const buildWhatsappUrl = (subject = '') => `https://wa.me/${WHATSAPP_NUMBER}?tex
 
 export default function Landing() {
   const whatsappUrl = buildWhatsappUrl();
-  return <div className="site-page"><SiteHeader logo={LOGO} whatsappUrl={whatsappUrl} /><main><HeroSection image={IMAGES.cleaning} whatsappUrl={whatsappUrl} /><ServicesSection buildWhatsappUrl={buildWhatsappUrl} /><ProcessSection /><GroupSection image={IMAGES.reception} whatsappUrl={whatsappUrl} /><BrilavSection image={IMAGES.laundry} whatsappUrl={buildWhatsappUrl('Brilav — lavanderia hospitalar')} /><FaqSection /><ContactSection image={IMAGES.hospital} whatsappUrl={buildWhatsappUrl('contato comercial')} /></main><SiteFooter logo={LOGO} /></div>;
+  return <div className="site-page"><SiteHeader logo={LOGO} whatsappUrl={whatsappUrl} /><main><HeroSection image={IMAGES.cleaning} whatsappUrl={whatsappUrl} /><ServicesSection buildWhatsappUrl={buildWhatsappUrl} /><ProcessSection /><GroupSection image={IMAGES.reception} whatsappUrl={whatsappUrl} /><StructureGallery /><BrilavSection image={IMAGES.laundry} whatsappUrl={buildWhatsappUrl('Brilav — lavanderia hospitalar')} /><FaqSection /><ContactSection image={IMAGES.hospital} whatsappUrl={buildWhatsappUrl('contato comercial')} /></main><SiteFooter logo={LOGO} /></div>;
 }
