@@ -308,7 +308,7 @@ export default function Layout({ children }) {
                   to={item.path}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative
                     ${isActive 
-                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border border-white/10' 
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border border-white/10' 
                       : 'hover:bg-white/5 text-gray-400 hover:text-white'
                     }`}
                 >
@@ -341,7 +341,7 @@ export default function Layout({ children }) {
                 to="/dispatches"
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative border
                   ${location.pathname === '/dispatches'
-                    ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border-white/10'
+                    ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
                     : 'bg-[#216FA1]/15 border-[#216FA1]/30 text-gray-200 hover:bg-[#216FA1]/25 hover:text-white'
                   }`}
               >
@@ -356,7 +356,7 @@ export default function Layout({ children }) {
                   onClick={() => setMarketingOpen(prev => !prev)}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative w-full border
                     ${marketingPaths.includes(location.pathname)
-                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border-white/10'
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
                       : 'bg-green-400/15 border-green-400/30 hover:bg-green-400/25 text-gray-200 hover:text-white'
                     }`}
                 >
