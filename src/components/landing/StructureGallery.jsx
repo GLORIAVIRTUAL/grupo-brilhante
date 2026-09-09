@@ -10,7 +10,7 @@ const photos = [
 ];
 
 function Photo({ item, hidden = false }) {
-  return <figure className="archive-photo" aria-hidden={hidden || undefined}><img src={item[0]} alt={hidden ? '' : item[1]} /><figcaption><span>Acervo histórico</span>{item[1]}</figcaption></figure>;
+  return <figure className="archive-photo" aria-hidden={hidden || undefined}><img src={item[0]} alt={hidden ? '' : item[1]} /><figcaption>{item[1]}</figcaption></figure>;
 }
 
 export default function StructureGallery() {
