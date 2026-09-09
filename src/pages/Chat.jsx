@@ -1341,7 +1341,7 @@ export default function Chat() {
                <div className="flex items-center gap-2 flex-wrap justify-end">
                    <button 
                        onClick={() => setIsEditCustomerOpen(true)}
-                       className="h-10 px-3 bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 rounded-lg text-xs font-medium transition-colors border border-purple-600/30 flex items-center gap-1.5 whitespace-nowrap"
+                       className="h-10 px-3 bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 rounded-lg text-xs font-medium transition-colors border border-blue-600/30 flex items-center gap-1.5 whitespace-nowrap"
                        title="Cadastrar / Editar Cliente"
                    >
                        <UserCog className="w-3.5 h-3.5" /> Cadastrar

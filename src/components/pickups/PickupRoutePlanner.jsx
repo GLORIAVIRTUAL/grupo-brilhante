@@ -148,7 +148,7 @@ export default function PickupRoutePlanner({ pickups, customers, customerMap, da
           </Badge>
         )}
         {routeSummary?.total_distance_text && (
-          <Badge className="bg-purple-500/10 text-purple-300 border border-purple-500/20 gap-1">
+          <Badge className="bg-blue-500/10 text-blue-300 border border-blue-500/20 gap-1">
             <MapPinned className="w-3 h-3" /> {routeSummary.total_distance_text}
           </Badge>
         )}

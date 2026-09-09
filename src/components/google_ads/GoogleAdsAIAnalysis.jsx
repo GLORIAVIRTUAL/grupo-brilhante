@@ -116,10 +116,10 @@ Seja DIRETO, técnico e prático. Identifique campanhas com problemas (CTR baixo
   };
 
   return (
-    <Card className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border-purple-500/20 p-6">
+    <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/10 border-blue-500/20 p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center">
             <Brain className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -130,7 +130,7 @@ Seja DIRETO, técnico e prático. Identifique campanhas com problemas (CTR baixo
         <Button
           onClick={analyze}
           disabled={loading || !campaigns?.length}
-          className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+          className="bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-600 hover:to-blue-600"
         >
           {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analisando...</> : <><Brain className="w-4 h-4 mr-2" /> Analisar com IA</>}
         </Button>

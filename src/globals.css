@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 265 65% 13%; /* #17364F */
+    --background: 206 55% 20%;
     --foreground: 0 0% 100%;
     
-    --card: 265 65% 15%;
+    --card: 206 51% 23%;
     --card-foreground: 0 0% 100%;
  
-    --popover: 265 65% 13%;
+    --popover: 206 55% 20%;
     --popover-foreground: 0 0% 100%;
  
-    --primary: 24 100% 50%; /* #216FA1 */
+    --primary: 203 66% 38%;
     --primary-foreground: 0 0% 100%;
  
-    --secondary: 264 79% 35%; /* #216FA1 */
+    --secondary: 203 63% 47%;
     --secondary-foreground: 0 0% 100%;
  
-    --muted: 265 30% 25%;
-    --muted-foreground: 265 20% 70%;
+    --muted: 206 45% 28%;
+    --muted-foreground: 205 30% 75%;
  
-    --accent: 24 100% 50%;
+    --accent: 203 66% 38%;
     --accent-foreground: 0 0% 100%;
  
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
  
-    --border: 265 30% 25%;
-    --input: 265 30% 25%;
-    --ring: 24 100% 50%;
+    --border: 206 45% 28%;
+    --input: 206 45% 28%;
+    --ring: 203 66% 38%;
   }
 }
 
@@ -54,7 +54,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 102, 0, 0.5);
+  background: rgba(33, 111, 161, 0.5);
 }
 
 /* Glassmorphism utilities if needed */

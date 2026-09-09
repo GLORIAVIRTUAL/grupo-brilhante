@@ -730,15 +730,15 @@ export default function Pickups() {
               )}
 
               <div className="space-y-4 pt-2 border-t border-white/10 mt-2">
-                <div className="flex items-center justify-between bg-purple-500/10 border border-purple-500/20 p-3 rounded-md">
+                <div className="flex items-center justify-between bg-blue-500/10 border border-blue-500/20 p-3 rounded-md">
                   <div className="space-y-0.5">
-                    <label className="text-sm font-medium text-purple-400">Encaixe (Coleta Extra)</label>
-                    <p className="text-xs text-purple-400/70">Ignora a capacidade do turno e cria sem consumir vaga</p>
+                    <label className="text-sm font-medium text-blue-400">Encaixe (Coleta Extra)</label>
+                    <p className="text-xs text-blue-400/70">Ignora a capacidade do turno e cria sem consumir vaga</p>
                   </div>
                   <Switch
                     checked={isExtraPickup}
                     onCheckedChange={(v) => { setIsExtraPickup(v); if (v) setIsFixedPickup(false); }}
-                    className="data-[state=checked]:bg-purple-500"
+                    className="data-[state=checked]:bg-blue-500"
                   />
                 </div>
 
@@ -871,7 +871,7 @@ export default function Pickups() {
                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div> Agendado</div>
                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-500"></div> Realizado</div>
                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-yellow-500"></div> Fixa / IA</div>
-               <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500"></div> Encaixe</div>
+               <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div> Encaixe</div>
             </div>
           </div>
           
@@ -946,8 +946,8 @@ export default function Pickups() {
                                     )}
                                   >
                                     {pickup.source === 'ai' && (
-                                      <div className="absolute top-0 right-0 p-1 bg-purple-500/20 rounded-bl-lg">
-                                        <Bot className="w-3 h-3 text-purple-400" />
+                                      <div className="absolute top-0 right-0 p-1 bg-blue-500/20 rounded-bl-lg">
+                                        <Bot className="w-3 h-3 text-blue-400" />
                                       </div>
                                     )}
                                     
@@ -1080,8 +1080,8 @@ export default function Pickups() {
           />
 
           {extraPickupsForDay.length > 0 && (
-            <div className="border-t border-white/10 p-4 bg-purple-500/5">
-              <h3 className="text-sm font-semibold text-purple-300 mb-3 flex items-center gap-2">
+            <div className="border-t border-white/10 p-4 bg-blue-500/5">
+              <h3 className="text-sm font-semibold text-blue-300 mb-3 flex items-center gap-2">
                 <Plus className="w-4 h-4" /> Encaixes do dia ({extraPickupsForDay.length})
               </h3>
               <div className="space-y-2">
@@ -1094,7 +1094,7 @@ export default function Pickups() {
                         "rounded-lg p-3 border shadow-sm relative",
                         pickup.status === 'completed'
                           ? "bg-green-500/10 border-green-500/20"
-                          : "bg-purple-500/15 border-purple-500/30"
+                          : "bg-blue-500/15 border-blue-500/30"
                       )}
                     >
                       <div className="flex justify-between items-start gap-2">
@@ -1102,7 +1102,7 @@ export default function Pickups() {
                           <h4 className="font-semibold text-white flex items-center gap-2 flex-wrap">
                             {customer?.full_name || 'Cliente Desconhecido'}
                             <ServiceKindBadge value={pickup.service_kind} />
-                            <Badge variant="outline" className="text-[10px] py-0 h-5 bg-purple-500/20 text-purple-300 border-purple-500/30">ENCAIXE</Badge>
+                            <Badge variant="outline" className="text-[10px] py-0 h-5 bg-blue-500/20 text-blue-300 border-blue-500/30">ENCAIXE</Badge>
                             {pickup.status === 'completed' && <CheckCircle className="w-4 h-4 text-green-500" />}
                             {pickup.priority && <Badge variant="destructive" className="text-[10px] py-0 h-5">PRIORIDADE</Badge>}
                           </h4>

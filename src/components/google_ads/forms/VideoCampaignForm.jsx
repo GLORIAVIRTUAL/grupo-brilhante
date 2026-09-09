@@ -89,13 +89,13 @@ export default function VideoCampaignForm() {
       <p className="text-xs text-gray-400 mb-4">Seu vídeo aparece antes ou durante vídeos do YouTube.</p>
 
       {/* Canal do YouTube — referência */}
-      <div className="mb-5 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
+      <div className="mb-5 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
         <div className="flex items-center gap-2 mb-2">
-          <Youtube className="w-4 h-4 text-purple-300" />
-          <Label className="text-purple-100 font-semibold text-sm">Seu canal do YouTube</Label>
+          <Youtube className="w-4 h-4 text-blue-300" />
+          <Label className="text-blue-100 font-semibold text-sm">Seu canal do YouTube</Label>
           {channelSaved && <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/20 text-green-300">Salvo</span>}
         </div>
-        <p className="text-xs text-purple-200/70 mb-2">
+        <p className="text-xs text-blue-200/70 mb-2">
           A API <strong>não</strong> precisa de acesso ao canal — o Google Ads veicula qualquer vídeo público pelo ID.
           Salve aqui o link do seu canal apenas como referência rápida pra subir novos vídeos.
         </p>

@@ -57,7 +57,7 @@ export default function Apresentacao() {
           footnote={slide.footnote}
         >
           {slide.image && (
-            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-900/40">
+            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/40">
               <img src={slide.image} alt="" className="w-full h-[280px] md:h-[380px] object-cover" />
             </div>
           )}

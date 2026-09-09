@@ -21,8 +21,8 @@ export default function OverflowPickupsSection({ pickups, customerMap, formatBR,
           return (
             <div key={pickup.id} className="rounded-lg p-3 border shadow-sm relative bg-orange-500/10 border-orange-500/30">
               {pickup.source === 'ai' && (
-                <div className="absolute top-0 right-0 p-1 bg-purple-500/20 rounded-bl-lg">
-                  <Bot className="w-3 h-3 text-purple-400" />
+                <div className="absolute top-0 right-0 p-1 bg-blue-500/20 rounded-bl-lg">
+                  <Bot className="w-3 h-3 text-blue-400" />
                 </div>
               )}
               <div className="flex justify-between items-start gap-2">

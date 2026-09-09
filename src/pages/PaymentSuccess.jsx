@@ -28,7 +28,7 @@ export default function PaymentSuccess() {
 
   return (
     <div className="min-h-screen bg-[#17364F] flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center shadow-2xl shadow-purple-900/20">
+      <div className="max-w-md w-full bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center shadow-2xl shadow-blue-900/20">
         <motion.div 
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}

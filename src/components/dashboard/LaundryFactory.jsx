@@ -34,7 +34,7 @@ export default function LaundryFactory() {
                  {/* Clothes simulating shapes */}
                  <div className="absolute top-2 left-4 w-6 h-6 bg-white rounded-full opacity-80" />
                  <div className="absolute bottom-4 right-6 w-8 h-8 bg-[#216FA1] rounded-sm opacity-80" />
-                 <div className="absolute top-8 right-2 w-5 h-5 bg-purple-500 rounded-full opacity-80" />
+                 <div className="absolute top-8 right-2 w-5 h-5 bg-blue-500 rounded-full opacity-80" />
               </motion.div>
               {/* Glass Reflection */}
               <div className="absolute top-2 left-2 w-8 h-4 bg-white opacity-20 rounded-full rotate-45" />

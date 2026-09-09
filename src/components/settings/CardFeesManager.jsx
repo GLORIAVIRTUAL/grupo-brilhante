@@ -118,7 +118,7 @@ export default function CardFeesManager() {
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-white">{fee.brand}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${fee.card_type === 'debit' ? 'bg-blue-500/20 text-blue-300' : 'bg-purple-500/20 text-purple-300'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${fee.card_type === 'debit' ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-500/20 text-blue-300'}`}>
                       {fee.card_type === 'debit' ? 'Débito' : 'Crédito'}
                     </span>
                   </div>

@@ -812,7 +812,7 @@ Templates WhatsApp (3) — JSON [
                       className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start justify-between gap-3 group hover:border-[#216FA1]/30 transition-colors"
                     >
                       <div className="flex items-start gap-3 min-w-0 flex-1">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-blue-300 shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/20 flex items-center justify-center text-blue-300 shrink-0">
                           <ProductIcon product={product} className="w-5 h-5" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -946,7 +946,7 @@ Templates WhatsApp (3) — JSON [
                 </div>
                 <div className="bg-black/20 p-4 rounded-xl border border-white/5">
                   <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-purple-400"></div> Engomagem
+                    <div className="w-2 h-2 rounded-full bg-blue-400"></div> Engomagem
                   </h4>
                   <p className="text-sm text-gray-400">Acabamento profissional, vincos perfeitos e economia de tempo.</p>
                 </div>
@@ -1029,7 +1029,7 @@ Templates WhatsApp (3) — JSON [
              <CardContent className="space-y-6">
                <div className="flex items-center justify-between">
                  <div className="flex items-center gap-2">
-                   <MessageSquare className="w-5 h-5 text-purple-400" />
+                   <MessageSquare className="w-5 h-5 text-blue-400" />
                    <Label>Ativar Auto-Resposta</Label>
                  </div>
                  <Switch 

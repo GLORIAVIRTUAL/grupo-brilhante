@@ -92,7 +92,7 @@ export default function Layout({ children }) {
                     onClick: () => navigate('/chat')
                 },
                 duration: 5000,
-                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-purple-900/50",
+                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-blue-900/50",
                 descriptionClassName: "text-gray-300",
                 actionButtonStyle: { background: "#216FA1", color: "white" },
                 icon: <MessageSquare className="w-5 h-5 text-[#216FA1]" />,
@@ -209,7 +209,7 @@ export default function Layout({ children }) {
                     onClick: () => navigate('/chat')
                 },
                 duration: 10000,
-                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-purple-900/50",
+                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-blue-900/50",
                 descriptionClassName: "text-gray-300",
                 actionButtonStyle: { background: "#216FA1", color: "white" },
                 icon: <ImageIcon className="w-5 h-5 text-[#216FA1]" />
@@ -290,11 +290,13 @@ export default function Layout({ children }) {
         {/* Sidebar */}
         <aside className="w-20 lg:w-72 min-h-screen bg-white/5 backdrop-blur-xl border-r border-white/10 flex flex-col transition-all duration-300">
           <div className="px-3 py-4 flex items-center justify-center lg:justify-start gap-3">
-            <img 
-              src="https://media.base44.com/images/public/6a99e42ee48200f5d8ddd176/250769bd5_ChatGPTImage3desetde202619_33_19.png"
-              alt="GLÓRIA LAUNDRY 5àSec"
-              className="h-32 w-full max-w-[260px] object-contain"
-            />
+            <div className="bg-white rounded-xl px-3 py-2 flex items-center justify-center mx-auto lg:mx-0 w-full max-w-[260px]">
+              <img 
+                src="https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/10365075e_Untitled110x40px1.png"
+                alt="BRILHANTE LIMPEZA & TERCEIRIZAÇÃO"
+                className="h-9 lg:h-10 w-auto object-contain"
+              />
+            </div>
           </div>
 
           <nav className="flex-1 mt-8 px-3 space-y-2">
@@ -306,7 +308,7 @@ export default function Layout({ children }) {
                   to={item.path}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative
                     ${isActive 
-                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border border-white/10' 
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border border-white/10' 
                       : 'hover:bg-white/5 text-gray-400 hover:text-white'
                     }`}
                 >
@@ -339,7 +341,7 @@ export default function Layout({ children }) {
                 to="/dispatches"
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative border
                   ${location.pathname === '/dispatches'
-                    ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
+                    ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border-white/10'
                     : 'bg-[#216FA1]/15 border-[#216FA1]/30 text-gray-200 hover:bg-[#216FA1]/25 hover:text-white'
                   }`}
               >
@@ -354,7 +356,7 @@ export default function Layout({ children }) {
                   onClick={() => setMarketingOpen(prev => !prev)}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative w-full border
                     ${marketingPaths.includes(location.pathname)
-                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border-white/10'
                       : 'bg-green-400/15 border-green-400/30 hover:bg-green-400/25 text-gray-200 hover:text-white'
                     }`}
                 >
@@ -444,7 +446,7 @@ export default function Layout({ children }) {
                     {soundEnabled ? <Volume2 className="w-5 h-5 text-[#216FA1]" /> : <VolumeX className="w-5 h-5" />}
                 </button>
                 <NotificationsMenu />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#216FA1] to-yellow-500 flex items-center justify-center text-xs font-bold shadow-lg shadow-orange-500/20">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#216FA1] to-[#2d8ac4] flex items-center justify-center text-xs font-bold shadow-lg shadow-blue-500/20">
                     AD
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { Sparkles, ShieldCheck, Shirt, Droplets, Leaf, MessageSquare, Clock, Tru
 import LandingQuoteForm from '@/components/landing/LandingQuoteForm';
 import './Landing.css';
 
-const LOGO = 'https://media.base44.com/images/public/6a99e42ee48200f5d8ddd176/28c27e13c_Untitled110x40px.png';
+const LOGO = 'https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/10365075e_Untitled110x40px1.png';
 const HERO_IMAGES = [
   { src: 'https://media.base44.com/images/public/6a99e42ee48200f5d8ddd176/81906a8b9_bag.png', alt: 'Bags 5àsec para cuidar das roupas de toda a família' },
   { src: 'https://media.base44.com/images/public/6a99e42ee48200f5d8ddd176/7e98f6ec3_L01_banner_960x545_5aSec.jpg', alt: 'Promoção 5àsec: você ganha de lavada' },
@@ -34,7 +34,7 @@ export default function Landing() {
   return (
     <div className="landing-page">
       <header className="landing-header landing-wrap">
-        <img className="landing-logo" src={LOGO} alt="5àsec · TEXTILE EXPERT" />
+        <img className="landing-logo" src={LOGO} alt="BRILHANTE · LIMPEZA & TERCEIRIZAÇÃO" />
         <nav className="landing-nav" aria-label="Navegação principal">
           <a href="#servicos">Serviços</a><a href="#orcamento">Orçamento</a><a href="#unidade">A Unidade</a>
         </nav>
@@ -84,7 +84,7 @@ export default function Landing() {
         <section className="landing-cta"><div className="landing-wrap"><h2>Pronto para suas roupas ficarem como novas?</h2><p>Peça seu orçamento agora mesmo.</p><a href="#orcamento">Fazer orçamento</a></div></section>
       </main>
 
-      <footer className="landing-footer"><div className="landing-wrap landing-footer-inner"><img src={LOGO} alt="5àsec · TEXTILE EXPERT" /><p>© 2026 5àsec Unidade Teste · TEXTILE EXPERT</p></div></footer>
+      <footer className="landing-footer"><div className="landing-wrap landing-footer-inner"><img src={LOGO} alt="BRILHANTE · LIMPEZA & TERCEIRIZAÇÃO" /><p>© 2026 5àsec Unidade Teste · TEXTILE EXPERT</p></div></footer>
     </div>
   );
 }

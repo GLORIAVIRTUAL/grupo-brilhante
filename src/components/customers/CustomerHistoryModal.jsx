@@ -53,7 +53,7 @@ export default function CustomerHistoryModal({ customer, isOpen, onClose }) {
     const colors = {
       pending: "bg-yellow-500/10 text-yellow-500",
       processing: "bg-blue-500/10 text-blue-500",
-      ready: "bg-purple-500/10 text-purple-500",
+      ready: "bg-blue-500/10 text-blue-500",
       delivered: "bg-green-500/10 text-green-500",
       finished: "bg-green-500/10 text-green-500",
       cancelled: "bg-red-500/10 text-red-500",

@@ -120,14 +120,14 @@ export default function Dispatches() {
     satisfaction_survey: { icon: Star, label: 'Pesquisa de Satisfação', color: 'text-yellow-500 bg-yellow-500/10' },
     inactive_customer: { icon: UserX, label: 'Cliente Ausente', color: 'text-orange-500 bg-orange-500/10' },
     order_reminder: { icon: Clock, label: 'Lembrete de Pedido', color: 'text-blue-500 bg-blue-500/10' },
-    promotional: { icon: Gift, label: 'Promocional', color: 'text-purple-500 bg-purple-500/10' },
+    promotional: { icon: Gift, label: 'Promocional', color: 'text-blue-500 bg-blue-500/10' },
     follow_up: { icon: MessageCircle, label: 'Follow-up', color: 'text-green-500 bg-green-500/10' }
   };
 
   const statusConfig = {
     sent: { label: 'Enviado', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
     delivered: { label: 'Entregue', color: 'bg-green-500/10 text-green-400 border-green-500/20' },
-    read: { label: 'Lido', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+    read: { label: 'Lido', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
     failed: { label: 'Falhou', color: 'bg-red-500/10 text-red-400 border-red-500/20' }
   };
 
@@ -211,7 +211,7 @@ export default function Dispatches() {
           { label: 'Sucesso', value: stats.sent, icon: CheckCircle, color: 'from-green-500 to-green-600' },
           { label: 'Falhas', value: stats.failed, icon: XCircle, color: 'from-red-500 to-red-600' },
           { label: 'Retornaram (30d)', value: stats.returned, icon: Star, color: 'from-yellow-500 to-yellow-600' },
-          { label: 'Taxa Conversão', value: `${stats.conversionRate}%`, icon: Gift, color: 'from-purple-500 to-purple-600' }
+          { label: 'Taxa Conversão', value: `${stats.conversionRate}%`, icon: Gift, color: 'from-blue-500 to-blue-600' }
         ].map((stat, i) => (
           <motion.div
             key={i}
