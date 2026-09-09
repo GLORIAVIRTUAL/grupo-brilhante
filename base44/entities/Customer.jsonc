@@ -14,6 +14,18 @@
         "type": "string"
       }
     },
+    "canonical_phone": {
+      "type": "string",
+      "description": "Telefone normalizado usado para deduplicação server-side"
+    },
+    "legal_entity_id": {
+      "type": "string",
+      "description": "Empresa legal responsável pelo relacionamento"
+    },
+    "business_party_id": {
+      "type": "string",
+      "description": "Vínculo futuro com o cadastro unificado"
+    },
     "preferred_language": {
       "type": "string",
       "enum": [

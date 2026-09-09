@@ -1,0 +1,29 @@
+{
+  "name": "HospitalPickup",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_unit_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
+    "field_route_id": { "type": "string" },
+    "vehicle_id": { "type": "string" },
+    "driver_user_id": { "type": "string" },
+    "pickup_number": { "type": "string" },
+    "scheduled_at": { "type": "string", "format": "date-time" },
+    "arrived_at": { "type": "string", "format": "date-time" },
+    "collected_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["scheduled", "in_route", "arrived", "collected", "weighed", "cancelled"], "default": "scheduled" },
+    "estimated_weight_kg": { "type": "number", "default": 0 },
+    "package_count": { "type": "number", "default": 0 },
+    "contamination_class": { "type": "string", "enum": ["standard", "infectious", "chemical", "mixed", "unknown"], "default": "unknown" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "customer_signature_asset_id": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "business_party_id", "business_contract_id", "pickup_number", "scheduled_at", "status", "idempotency_key"]
+}

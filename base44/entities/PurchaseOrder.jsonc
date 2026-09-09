@@ -1,0 +1,33 @@
+{
+  "name": "PurchaseOrder",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "cost_center_id": { "type": "string" },
+    "purchase_requisition_id": { "type": "string" },
+    "supplier_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "order_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "submitted", "approved", "sent", "partially_received", "received", "cancelled", "closed"], "default": "draft" },
+    "currency": { "type": "string", "default": "BRL" },
+    "subtotal": { "type": "number", "default": 0 },
+    "discount": { "type": "number", "default": 0 },
+    "freight": { "type": "number", "default": 0 },
+    "taxes": { "type": "number", "default": 0 },
+    "total": { "type": "number", "default": 0 },
+    "expected_delivery_at": { "type": "string", "format": "date-time" },
+    "payment_terms": { "type": "string" },
+    "buyer_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "sent_at": { "type": "string", "format": "date-time" },
+    "closed_at": { "type": "string", "format": "date-time" },
+    "approval_reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "warehouse_id", "supplier_id", "order_number", "status", "currency", "idempotency_key"]
+}

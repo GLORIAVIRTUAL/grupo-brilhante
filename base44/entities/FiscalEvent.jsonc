@@ -2,6 +2,8 @@
   "name": "FiscalEvent",
   "type": "object",
   "properties": {
+    "legal_entity_id": { "type": "string" },
+    "event_key": { "type": "string" },
     "unit_id": { "type": "string" },
     "fiscal_document_id": { "type": "string" },
     "event_type": {

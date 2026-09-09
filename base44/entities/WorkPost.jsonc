@@ -1,0 +1,27 @@
+{
+  "name": "WorkPost",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "cleaning_site_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "cost_center_id": { "type": "string" },
+    "post_code": { "type": "string" },
+    "name": { "type": "string" },
+    "role_name": { "type": "string" },
+    "shift_name": { "type": "string" },
+    "start_time": { "type": "string" },
+    "end_time": { "type": "string" },
+    "weekdays": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 6 }, "default": [] },
+    "required_headcount": { "type": "number", "default": 1 },
+    "supervisor_user_id": { "type": "string" },
+    "hourly_cost": { "type": "number", "default": 0 },
+    "monthly_price": { "type": "number", "default": 0 },
+    "materials_included": { "type": "boolean", "default": true },
+    "checklist_template_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "inactive"], "default": "draft" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "cleaning_site_id", "business_contract_id", "post_code", "name", "role_name", "required_headcount", "status"]
+}

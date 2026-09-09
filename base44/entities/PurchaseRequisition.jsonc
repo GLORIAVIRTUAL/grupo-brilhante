@@ -1,0 +1,23 @@
+{
+  "name": "PurchaseRequisition",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "cost_center_id": { "type": "string" },
+    "request_number": { "type": "string" },
+    "requester_user_id": { "type": "string" },
+    "needed_by": { "type": "string", "format": "date-time" },
+    "priority": { "type": "string", "enum": ["low", "normal", "high", "urgent"], "default": "normal" },
+    "status": { "type": "string", "enum": ["draft", "submitted", "approved", "rejected", "ordered", "partially_ordered", "cancelled"], "default": "draft" },
+    "estimated_total": { "type": "number", "default": 0 },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "approval_reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "warehouse_id", "request_number", "requester_user_id", "status", "idempotency_key"]
+}

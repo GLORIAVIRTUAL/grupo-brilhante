@@ -65,7 +65,18 @@
     "unit_id": {
       "type": "string",
       "description": "ID da unidade respons\u00e1vel pela prospec\u00e7\u00e3o"
-    }
+    },
+    "legal_entity_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "sales_opportunity_id": { "type": "string" },
+    "source": { "type": "string" },
+    "source_detail": { "type": "string" },
+    "landing_page": { "type": "string" },
+    "utm": { "type": "object", "additionalProperties": true },
+    "communication_consent_id": { "type": "string" },
+    "qualification_score": { "type": "number", "default": 0 },
+    "converted_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
   },
   "required": [
     "company_name",

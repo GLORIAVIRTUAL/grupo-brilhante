@@ -67,7 +67,7 @@ export default function ReportsPage() {
 
   // Relatórios precisam refletir pagamentos confirmados agora (webhook/caixa),
   // por isso não reutilizam cache antigo ao abrir a página.
-  const freshQuery = { staleTime: 0, refetchOnMount: 'always' };
+  const freshQuery = { staleTime: 0, refetchOnMount: true };
 
   const { data: payments = [], isLoading: loadingPayments } = useQuery({
     queryKey: ['reports-payments'],

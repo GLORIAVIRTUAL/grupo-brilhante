@@ -97,16 +97,16 @@ export const AuthProvider = ({ children }) => {
         const accessResponse = await base44.functions.invoke('check_access_session', {});
         access = accessResponse?.data || {};
       } catch (accessError) {
-        const accessCode = accessError?.response?.data?.code || accessError?.data?.code;
-        // Bloqueios reais de segurança continuam interrompendo o acesso.
-        if (['ACCOUNT_BLOCKED', 'MFA_REQUIRED', 'SESSION_REVOKED'].includes(accessCode)) throw accessError;
-        console.warn('Falha ao validar política de acesso; usando papel do usuário.', accessCode);
-        access = {};
+        // Sem confirmação server-side da política, nenhuma rota protegida é liberada.
+        throw accessError;
       }
       setUser({
         ...currentUser,
         effective_permissions: access.permissions || currentUser.permissions || [],
+        effective_legal_entity_ids: access.legal_entity_ids || [],
+        primary_legal_entity_id: access.primary_legal_entity_id || currentUser.primary_legal_entity_id || null,
         effective_unit_ids: access.unit_ids || [],
+        primary_unit_id: access.primary_unit_id || currentUser.primary_unit_id || null,
         access_revision: access.access_revision || currentUser.access_revision || 1,
       });
       setAuthError(null);

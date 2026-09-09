@@ -5,12 +5,19 @@
     "customer_id": {
       "type": "string"
     },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "prospect_id": { "type": "string" },
+    "sales_opportunity_id": { "type": "string" },
     "channel": {
       "type": "string",
       "enum": [
         "WHATSAPP",
         "INSTAGRAM",
-        "MESSENGER"
+        "MESSENGER",
+        "EMAIL",
+        "SITE"
       ],
       "default": "WHATSAPP"
     },
@@ -21,6 +28,9 @@
       "type": "string",
       "enum": [
         "OPEN",
+        "WAITING_CUSTOMER",
+        "WAITING_AGENT",
+        "RESOLVED",
         "CLOSED"
       ],
       "default": "OPEN"
@@ -36,6 +46,18 @@
       "type": "boolean",
       "default": false
     },
+    "assigned_user_id": { "type": "string" },
+    "assigned_queue": { "type": "string" },
+    "service_mode": { "type": "string", "enum": ["ai", "human", "hybrid"], "default": "hybrid" },
+    "priority": { "type": "string", "enum": ["low", "normal", "high", "critical"], "default": "normal" },
+    "tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "first_response_due_at": { "type": "string", "format": "date-time" },
+    "resolution_due_at": { "type": "string", "format": "date-time" },
+    "first_human_response_at": { "type": "string", "format": "date-time" },
+    "resolved_at": { "type": "string", "format": "date-time" },
+    "communication_consent_id": { "type": "string" },
+    "source": { "type": "string" },
+    "utm": { "type": "object", "additionalProperties": true },
     "metadata": {
       "type": "object",
       "description": "Store conversation state, e.g. { flow: 'QUOTE', step: 1 }"

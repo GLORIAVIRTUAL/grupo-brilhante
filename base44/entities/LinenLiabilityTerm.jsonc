@@ -1,0 +1,26 @@
+{
+  "name": "LinenLiabilityTerm",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_unit_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "term_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "sent", "accepted", "expired", "cancelled"], "default": "draft" },
+    "effective_from": { "type": "string", "format": "date-time" },
+    "effective_to": { "type": "string", "format": "date-time" },
+    "responsible_name": { "type": "string" },
+    "responsible_document_suffix": { "type": "string" },
+    "signature_asset_id": { "type": "string" },
+    "items_snapshot": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "total_quantity": { "type": "number", "default": 0 },
+    "replacement_value": { "type": "number", "default": 0 },
+    "accepted_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "business_contract_id", "term_number", "status", "effective_from", "idempotency_key"]
+}

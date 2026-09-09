@@ -1,0 +1,24 @@
+{
+  "name": "CleaningChecklistTemplate",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "cleaning_site_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "template_code": { "type": "string" },
+    "name": { "type": "string" },
+    "environment_type": { "type": "string" },
+    "frequency": { "type": "string", "enum": ["per_shift", "daily", "weekly", "biweekly", "monthly", "on_demand", "other"] },
+    "version": { "type": "number", "default": 1 },
+    "items": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "required_material_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "evidence_required": { "type": "boolean", "default": false },
+    "minimum_score": { "type": "number", "default": 80 },
+    "status": { "type": "string", "enum": ["draft", "active", "superseded", "inactive"], "default": "draft" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_contract_id", "template_code", "name", "frequency", "version", "items", "status"]
+}

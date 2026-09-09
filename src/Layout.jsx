@@ -5,7 +5,10 @@ import { base44 } from '@/api/base44Client';
 import { 
   LayoutDashboard, 
   MessageSquare, 
-  ShoppingBag, 
+  ShoppingBag,
+  ShoppingCart,
+  Hospital,
+  Shirt,
   Users, 
   Settings, 
   LogOut,
@@ -23,6 +26,13 @@ import {
   Network,
   Megaphone,
   Building2,
+  FileArchive,
+  UserRoundCog,
+  BriefcaseBusiness,
+  DatabaseZap,
+  Landmark,
+  FileCheck2,
+  BarChart3,
   ChevronDown,
   TrendingUp
 } from 'lucide-react';
@@ -233,10 +243,8 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   useEffect(() => {
-    const hostname = window.location.hostname;
-    const isMainDomain = hostname === 'chat5asec.com.br' || hostname === 'www.chat5asec.com.br';
     if (location.pathname === '/') {
-      navigate(isMainDomain ? '/landing' : ['entregador', 'coletas', 'driver'].includes(user?.role) ? '/pickups' : '/dashboard');
+      navigate(['entregador', 'coletas', 'driver'].includes(user?.role) ? '/pickups' : '/dashboard');
       return;
     }
     const publicRoutes = ['/landing', '/landing-page', '/login', '/register-unit', '/PaymentSuccess'];
@@ -257,6 +265,20 @@ export default function Layout({ children }) {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['admin', 'user', 'super_admin', 'manager', 'attendant', 'cashier', 'production', 'inventory', 'finance', 'auditor'] },
+    { icon: Building2, label: 'Empresas & Unidades', path: '/enterprise-structure', roles: ['super_admin', 'admin', 'manager', 'finance', 'auditor'], permissions: ['companies.view', 'companies.manage'] },
+    { icon: FileArchive, label: 'Documentos', path: '/documents', roles: ['super_admin', 'admin', 'manager', 'finance', 'auditor'], permissions: ['documents.view', 'documents.manage'] },
+    { icon: UserRoundCog, label: 'Cadastro Unificado', path: '/business-registry', roles: ['super_admin', 'admin', 'manager', 'attendant', 'finance', 'auditor'], permissions: ['parties.view', 'parties.manage'] },
+    { icon: BriefcaseBusiness, label: 'CRM B2B & Contratos', path: '/commercial-operations', roles: ['super_admin', 'admin', 'manager', 'attendant', 'production', 'finance', 'auditor'], permissions: ['crm.manage', 'contracts.view', 'contracts.manage', 'service_orders.view', 'service_orders.execute'] },
+    { icon: Landmark, label: 'Financeiro Empresarial', path: '/enterprise-finance', roles: ['super_admin', 'admin', 'finance', 'auditor'], permissions: ['finance.view', 'finance.manage', 'finance.approve'] },
+    { icon: Banknote, label: 'Banco do Brasil', path: '/banking-operations', roles: ['super_admin', 'admin', 'finance', 'auditor'], permissions: ['banking.view', 'banking.manage', 'banking.reconcile'] },
+    { icon: FileCheck2, label: 'Fiscal por CNPJ', path: '/enterprise-fiscal', roles: ['super_admin', 'admin', 'finance', 'auditor'], permissions: ['fiscal.view', 'fiscal.manage', 'fiscal.transmit'] },
+    { icon: ShoppingCart, label: 'Compras & Estoque', path: '/procurement-operations', roles: ['super_admin', 'admin', 'manager', 'inventory', 'finance', 'auditor'], permissions: ['purchases.view', 'purchases.manage', 'purchases.approve', 'receipts.manage', 'inventory.view', 'inventory.manage', 'inventory.transfer'] },
+    { icon: Hospital, label: 'Lavanderia Hospitalar', path: '/hospital-laundry', roles: ['super_admin', 'admin', 'manager', 'production', 'driver', 'finance', 'auditor'], permissions: ['hospital.view', 'hospital.weigh', 'hospital.quality', 'hospital.bill'] },
+    { icon: Shirt, label: 'Enxovais', path: '/linen-operations', roles: ['super_admin', 'admin', 'manager', 'production', 'driver', 'inventory', 'finance', 'auditor'], permissions: ['linen.view', 'linen.manage', 'linen.inventory', 'linen.charge_loss'] },
+    { icon: BriefcaseBusiness, label: 'Limpeza & Terceirização', path: '/cleaning-operations', roles: ['super_admin', 'admin', 'manager', 'production', 'finance', 'auditor'], permissions: ['cleaning.view', 'cleaning.manage', 'cleaning.inspect', 'cleaning.measure'] },
+    { icon: MessageSquare, label: 'Governança de Atendimento', path: '/communication-governance', roles: ['super_admin', 'admin', 'manager', 'attendant'], permissions: ['crm.manage', 'settings.manage'] },
+    { icon: BarChart3, label: 'Inteligência Gerencial', path: '/enterprise-intelligence', roles: ['super_admin', 'admin', 'manager', 'finance', 'auditor'], permissions: ['reports.view', 'reports.view_all'] },
+    { icon: DatabaseZap, label: 'Migração Conta Azul', path: '/conta-azul-migration', roles: ['super_admin', 'admin', 'finance', 'auditor'], permissions: ['migration.view', 'migration.execute', 'migration.approve'] },
     { icon: MessageSquare, label: 'Chat IA & Humano', path: '/chat', roles: ['admin', 'user', 'super_admin', 'manager', 'attendant'], permissions: ['crm.manage', 'customers.manage', 'quotes.manage'] },
     { icon: ShoppingBag, label: 'Pedidos (CRM)', path: '/orders', roles: ['admin', 'user', 'super_admin', 'manager', 'attendant', 'cashier', 'production', 'driver', 'inventory', 'finance', 'auditor'], permissions: ['orders.view', 'quotes.manage'] },
     { icon: Users, label: 'Clientes', path: '/customers', roles: ['admin', 'user', 'super_admin', 'manager', 'attendant'], permissions: ['crm.manage', 'customers.manage'] },

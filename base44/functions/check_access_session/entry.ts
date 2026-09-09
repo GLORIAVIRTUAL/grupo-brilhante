@@ -14,7 +14,10 @@ Deno.serve(async (req) => {
       allowed: true,
       role: principal.role,
       permissions: principal.permissions,
+      legal_entity_ids: principal.legalEntityIds,
+      primary_legal_entity_id: principal.user?.primary_legal_entity_id || null,
       unit_ids: principal.unitIds,
+      primary_unit_id: principal.user?.primary_unit_id || null,
       mfa_status: principal.user?.mfa_status || 'not_required',
       access_revision: principal.user?.access_revision || 1,
     });

@@ -1,0 +1,23 @@
+{
+  "name": "BankFileLayoutProfile",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "bank_account_id": { "type": "string" },
+    "provider": { "type": "string", "enum": ["banco_do_brasil"] },
+    "layout_type": { "type": "string", "enum": ["cnab240", "cnab400"] },
+    "direction": { "type": "string", "enum": ["return", "remittance"] },
+    "service_type": { "type": "string", "enum": ["collection", "statement", "payments"] },
+    "version": { "type": "string" },
+    "record_length": { "type": "number", "enum": [240, 400] },
+    "encoding": { "type": "string", "enum": ["utf-8", "latin1"], "default": "latin1" },
+    "field_map": { "type": "object", "additionalProperties": true },
+    "status": { "type": "string", "enum": ["draft", "homologated", "retired"], "default": "draft" },
+    "homologated_at": { "type": "string", "format": "date-time" },
+    "homologated_by_user_id": { "type": "string" },
+    "source_document_asset_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "provider", "layout_type", "direction", "service_type", "version", "record_length", "field_map", "status"]
+}

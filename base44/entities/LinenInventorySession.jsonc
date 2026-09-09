@@ -1,0 +1,28 @@
+{
+  "name": "LinenInventorySession",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_unit_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "session_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "counting", "submitted", "approved", "rejected", "cancelled"], "default": "draft" },
+    "blind_count": { "type": "boolean", "default": true },
+    "freeze_customer_movements": { "type": "boolean", "default": true },
+    "started_at": { "type": "string", "format": "date-time" },
+    "submitted_at": { "type": "string", "format": "date-time" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "counter_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "expected_total": { "type": "number", "default": 0 },
+    "counted_total": { "type": "number", "default": 0 },
+    "divergence_total": { "type": "number", "default": 0 },
+    "idempotency_key": { "type": "string" },
+    "reason": { "type": "string" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "business_contract_id", "session_number", "status", "idempotency_key"]
+}

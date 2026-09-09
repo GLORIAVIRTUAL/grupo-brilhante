@@ -23,7 +23,7 @@ const FINANCIAL_TYPES = [
 
 const money = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value || 0));
 
-export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purchase', unitId, onProcessed }) {
+export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purchase', unitId, legalEntityId = null, warehouseId = null, purchaseOrderId = null, onProcessed }) {
   const [file, setFile] = useState(null);
   const [expectedType, setExpectedType] = useState(mode === 'purchase' ? 'nfe' : 'electricity_bill');
   const [busy, setBusy] = useState(false);
@@ -49,6 +49,14 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
 
     setBusy(true);
     try {
+      let effectiveLegalEntityId = legalEntityId;
+      let effectiveWarehouseId = warehouseId;
+      if (mode === 'purchase' && (!effectiveLegalEntityId || !effectiveWarehouseId)) {
+        const unit = await base44.entities.Unit.get(unitId);
+        effectiveLegalEntityId = effectiveLegalEntityId || unit?.legal_entity_id;
+        effectiveWarehouseId = effectiveWarehouseId || unit?.default_warehouse_id;
+      }
+      if (mode === 'purchase' && (!effectiveLegalEntityId || !effectiveWarehouseId)) throw new Error('PURCHASE_SCOPE_REQUIRED');
       const documentType = mode === 'purchase'
         ? 'purchase_invoice'
         : (expectedType === 'service_invoice' ? 'service_invoice' : 'utility_bill');
@@ -56,11 +64,14 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
         file,
         documentType,
         unitId,
-        metadata: { source: mode === 'purchase' ? 'purchase_document_inbox' : 'financial_document_inbox' },
+        legalEntityId: effectiveLegalEntityId,
+        relatedEntityType: mode === 'purchase' && purchaseOrderId ? 'purchase_order' : undefined,
+        relatedEntityId: mode === 'purchase' ? purchaseOrderId : undefined,
+        metadata: { source: mode === 'purchase' ? 'purchase_document_inbox' : 'financial_document_inbox', warehouse_id: effectiveWarehouseId, purchase_order_id: purchaseOrderId },
       });
 
       const response = mode === 'purchase'
-        ? await base44.functions.invoke('extract_purchase_document', { document_asset_id: upload.asset.id })
+        ? await base44.functions.invoke('extract_purchase_document', { document_asset_id: upload.asset.id, legal_entity_id: effectiveLegalEntityId, unit_id: unitId, warehouse_id: effectiveWarehouseId, purchase_order_id: purchaseOrderId })
         : await base44.functions.invoke('extract_financial_document', {
             document_asset_id: upload.asset.id,
             expected_document_type: expectedType,
@@ -69,8 +80,8 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
       setResult(response.data);
       toast.success(response.data?.configured === false ? 'Documento recebido para preenchimento manual.' : 'Documento lido. Confira os campos antes de aprovar.');
     } catch (error) {
-      console.error(error);
-      toast.error(error.code === 'DUPLICATE_DOCUMENT' ? error.message : 'Não foi possível processar o documento.');
+      const scopeMessage = error?.message === 'PURCHASE_SCOPE_REQUIRED' ? 'Vincule a unidade a um CNPJ e depósito padrão antes de enviar compras.' : null;
+      toast.error(scopeMessage || (error.code === 'DUPLICATE_DOCUMENT' ? error.message : 'Não foi possível processar o documento.'));
     } finally {
       setBusy(false);
     }
@@ -79,18 +90,19 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
   const approve = async () => {
     setBusy(true);
     try {
-      const response = mode === 'purchase'
-        ? await base44.functions.invoke('approve_purchase_document', {
-            purchase_document_id: result.purchase_document.id,
-          })
-        : await base44.functions.invoke('approve_financial_document', {
-            financial_document_id: result.financial_document.id,
-          });
+      if (mode === 'purchase') {
+        setApproved(true);
+        onProcessed?.(result);
+        toast.success('Documento extraído. Conclua o recebimento físico na central de compras.');
+        return;
+      }
+      const response = await base44.functions.invoke('approve_financial_document', {
+        financial_document_id: result.financial_document.id,
+      });
       setApproved(true);
       onProcessed?.(response.data);
-      toast.success(mode === 'purchase' ? 'Estoque e conta a pagar gerados.' : 'Conta a pagar criada para aprovação.');
+      toast.success('Conta a pagar criada para aprovação.');
     } catch (error) {
-      console.error(error);
       const code = error.response?.data?.error;
       toast.error(code === 'purchase_items_require_review' ? 'Relacione todos os itens aos insumos antes de aprovar.' : 'O documento ainda precisa de revisão.');
     } finally {
@@ -107,7 +119,7 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
         <DialogHeader>
           <div className="flex items-center gap-3">
             <div className="rounded-2xl bg-gradient-to-br from-orange-500 to-[#216FA1] p-2.5"><ReceiptText className="h-5 w-5" /></div>
-            <div><DialogTitle>{title}</DialogTitle><DialogDescription className="text-white/50">O sistema extrai os dados; nenhum estoque ou pagamento é alterado antes da aprovação.</DialogDescription></div>
+            <div><DialogTitle>{title}</DialogTitle><DialogDescription className="text-white/50">O sistema extrai os dados; nenhum estoque ou pagamento é alterado antes do recebimento físico e da aprovação.</DialogDescription></div>
           </div>
         </DialogHeader>
 
@@ -148,14 +160,14 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
               <div className="rounded-2xl border border-white/10 bg-black/20 p-4"><p className="text-xs uppercase tracking-wide text-white/35">Vencimento</p><p className="mt-1 font-medium">{entity?.due_date ? new Date(entity.due_date).toLocaleDateString('pt-BR') : 'Revisar'}</p></div>
             </div>
 
-            {mode === 'purchase' && <p className="text-sm text-white/50">{result.items?.length || 0} linha(s) extraída(s). Itens sem correspondência entram na fila de revisão de estoque.</p>}
+            {mode === 'purchase' && <p className="text-sm text-white/50">{result.items?.length || 0} linha(s) extraída(s). Confira o pedido e registre o recebimento físico na central de compras; esta etapa não movimenta estoque nem cria conta a pagar.</p>}
 
             {approved ? (
-              <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-emerald-200"><Check className="h-5 w-5" />Documento aprovado e registrado.</div>
+              <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-emerald-200"><Check className="h-5 w-5" />{mode === 'purchase' ? 'Extração confirmada e encaminhada ao recebimento.' : 'Documento aprovado e registrado.'}</div>
             ) : (
               <div className="flex flex-wrap justify-end gap-3">
                 <Button variant="outline" onClick={() => setResult(null)} disabled={busy}>Enviar outro</Button>
-                <Button onClick={approve} disabled={busy || entity?.status === 'human_review'} className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">{busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}Aprovar lançamento</Button>
+                <Button onClick={approve} disabled={busy || entity?.status === 'human_review'} className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">{busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}{mode === 'purchase' ? 'Confirmar extração' : 'Aprovar lançamento'}</Button>
               </div>
             )}
           </div>

@@ -1,0 +1,22 @@
+{
+  "name": "LinenInventoryLine",
+  "type": "object",
+  "properties": {
+    "linen_inventory_session_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "linen_catalog_item_id": { "type": "string" },
+    "linen_asset_id": { "type": "string" },
+    "expected_quantity": { "type": "number", "default": 0 },
+    "counted_quantity": { "type": "number", "default": 0 },
+    "damaged_quantity": { "type": "number", "default": 0 },
+    "lost_quantity": { "type": "number", "default": 0 },
+    "divergence_quantity": { "type": "number", "default": 0 },
+    "replacement_cost": { "type": "number", "default": 0 },
+    "divergence_amount": { "type": "number", "default": 0 },
+    "reason": { "type": "string" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["linen_inventory_session_id", "legal_entity_id", "business_party_id", "linen_catalog_item_id"]
+}

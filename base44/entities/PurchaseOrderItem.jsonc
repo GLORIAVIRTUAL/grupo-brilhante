@@ -1,0 +1,27 @@
+{
+  "name": "PurchaseOrderItem",
+  "type": "object",
+  "properties": {
+    "purchase_order_id": { "type": "string" },
+    "purchase_requisition_item_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "stock_item_id": { "type": "string" },
+    "supplier_code": { "type": "string" },
+    "description": { "type": "string" },
+    "ordered_quantity": { "type": "number" },
+    "received_quantity": { "type": "number", "default": 0 },
+    "accepted_quantity": { "type": "number", "default": 0 },
+    "rejected_quantity": { "type": "number", "default": 0 },
+    "purchase_unit": { "type": "string" },
+    "conversion_factor": { "type": "number", "default": 1 },
+    "unit_price": { "type": "number" },
+    "discount": { "type": "number", "default": 0 },
+    "taxes": { "type": "number", "default": 0 },
+    "total": { "type": "number" },
+    "line_status": { "type": "string", "enum": ["ordered", "partially_received", "received", "cancelled"], "default": "ordered" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["purchase_order_id", "legal_entity_id", "unit_id", "warehouse_id", "description", "ordered_quantity", "purchase_unit", "unit_price", "line_status"]
+}

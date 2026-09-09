@@ -1,0 +1,24 @@
+{
+  "name": "GoodsReceipt",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "purchase_order_id": { "type": "string" },
+    "purchase_document_id": { "type": "string" },
+    "supplier_id": { "type": "string" },
+    "receipt_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "receiving", "quality_hold", "partially_accepted", "accepted", "rejected", "cancelled"], "default": "draft" },
+    "received_at": { "type": "string", "format": "date-time" },
+    "receiver_user_id": { "type": "string" },
+    "quality_user_id": { "type": "string" },
+    "quality_status": { "type": "string", "enum": ["not_required", "pending", "approved", "rejected"], "default": "not_required" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "divergence_summary": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "warehouse_id", "supplier_id", "receipt_number", "status", "idempotency_key"]
+}

@@ -1,7 +1,13 @@
-import { authorizeUserOrInternal } from '../../shared/functionSecurity.js';
+import { authorizeUserOrInternal, enforceAuthenticatedUser, securityErrorResponse } from '../../shared/functionSecurity.js';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
-const DEFAULT_ORIGIN = 'https://lavanderia-5asec-connect-copy-d8ddd176.base44.app';
+function paymentReturnOrigin(): string {
+  const configured = String(Deno.env.get('PAYMENT_RETURN_ORIGIN') || '').trim();
+  if (!configured) throw new Error('PAYMENT_RETURN_ORIGIN não configurado');
+  const parsed = new URL(configured);
+  if (parsed.protocol !== 'https:') throw new Error('PAYMENT_RETURN_ORIGIN deve usar HTTPS');
+  return parsed.origin;
+}
 
 const ALLOWED_BILLING_TYPES = new Set(['pix', 'credit_card']);
 
@@ -11,16 +17,6 @@ function gatewayBase(): string {
   const url = (Deno.env.get('ASAAS_GATEWAY_URL') || '').trim();
   if (!url) throw new Error('ASAAS_GATEWAY_URL não configurado');
   return url.replace(/\/+$/, '');
-}
-
-function canAccessUnit(user: any, unitId?: string) {
-  if (!unitId) return true;
-  if (['super_admin', 'admin'].includes(user?.role)) return true;
-  const allowed = new Set([
-    user?.primary_unit_id,
-    ...(Array.isArray(user?.allowed_unit_ids) ? user.allowed_unit_ids : []),
-  ].filter(Boolean));
-  return allowed.has(unitId);
 }
 
 // Headers enviados ao gateway — token do gateway, NÃO a chave Asaas.
@@ -197,7 +193,7 @@ async function createCheckoutSession(
     },
     items: [{
       name: `Pedido #${referenceLabel}`,
-      description: `Pagamento de lavanderia - ${customer?.full_name || 'Cliente'}`,
+      description: `Pagamento de serviços - ${customer?.full_name || 'Cliente'}`,
       quantity: 1,
       value: Math.round(amount * 100) / 100,
     }],
@@ -270,8 +266,21 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'order_or_quote_not_found', request_id: requestId }, { status: 404 });
     }
 
-    if (!isInternal && !canAccessUnit(user, source.unit_id)) {
-      return Response.json({ error: 'forbidden_unit', request_id: requestId }, { status: 403 });
+    const unit = source.unit_id ? await base44.asServiceRole.entities.Unit.get(source.unit_id).catch(() => null) : null;
+    const legalEntityId = source.legal_entity_id || unit?.legal_entity_id || null;
+    if (!legalEntityId) return Response.json({ error: 'legal_entity_not_configured', request_id: requestId }, { status: 409 });
+    if (!isInternal) {
+      await enforceAuthenticatedUser(base44, req, user, {
+        permission: 'banking.manage',
+        legalEntityId,
+        unitId: source.unit_id,
+        requireMfa: true,
+        source: 'generate_payment_link',
+      });
+    }
+
+    if (Deno.env.get('ASAAS_INTEGRATION_ENABLED') !== 'true') {
+      return Response.json({ error: 'payment_integration_disabled', message: 'A integração de cobrança está desativada para homologação.', request_id: requestId }, { status: 503 });
     }
 
     const amount = Number(order?.total_amount ?? quote?.total);
@@ -313,7 +322,10 @@ Deno.serve(async (req) => {
       }, { status: 422 });
     }
 
-    const origin = DEFAULT_ORIGIN;
+    let origin: string;
+    try { origin = paymentReturnOrigin(); } catch {
+      return Response.json({ error: 'payment_return_origin_not_configured', request_id: requestId }, { status: 503 });
+    }
     const referenceLabel = order?.ticket_number || referenceId.slice(0, 8).toUpperCase();
     const referenceIdForAsaas = order?.id || quote?.id || referenceId;
 
@@ -387,6 +399,7 @@ Deno.serve(async (req) => {
       customer_id: customerId,
       quote_id: quote?.id,
       order_id: order?.id,
+      legal_entity_id: legalEntityId,
       unit_id: source.unit_id,
       status: 'pending',
       amount,
@@ -406,9 +419,10 @@ Deno.serve(async (req) => {
       customer_name: customer?.full_name,
       amount,
       reason: result.type === 'direct_pix' ? 'pix_payment_created_asaas' : 'payment_link_created_asaas',
-      user_email: user?.email || 'gloria-ia@sistema',
-      user_name: user?.full_name || user?.display_name || 'Glória (IA)',
+      user_email: user?.email || 'automacao-interna@sistema',
+      user_name: user?.full_name || user?.display_name || 'Automação interna',
       user_role: user?.role || 'internal',
+      legal_entity_id: legalEntityId,
       unit_id: source.unit_id,
       request_id: requestId,
       success: true,
@@ -427,13 +441,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error(`[generate_payment_link:${requestId}]`, error);
     // Falhas de autorização devem informar o motivo real, não virar 500 genérico.
-    if ((error as any)?.name === 'SecurityError') {
-      return Response.json({
-        error: (error as any).code || 'ACCESS_DENIED',
-        message: (error as any).message,
-        request_id: requestId,
-      }, { status: Number((error as any).status) || 403 });
-    }
+    if ((error as any)?.name === 'SecurityError') return securityErrorResponse(error);
     return Response.json({ error: 'payment_link_failed', request_id: requestId }, { status: 500 });
   }
 });

@@ -1,11 +1,11 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
-import { secrets } from 'base44:runtime';
 import { notifyPaymentConfirmed } from '../../shared/paymentConfirmationNotice.js';
+import { requireProviderToken, securityErrorResponse } from '../../shared/functionSecurity.js';
 
 // Recebe os eventos do Asaas (via gateway) e confirma o pagamento no sistema.
 // Configure esta URL no painel do Asaas / gateway:
 //   https://<app>/functions/asaas_webhook
-// Autenticação: header "asaas-access-token" (ou ?token=) igual ao ASAAS_WEBHOOK_SECRET.
+// Autenticação: header "asaas-access-token" ou "x-webhook-token" igual ao ASAAS_WEBHOOK_SECRET.
 
 const PAID_EVENTS = new Set(['PAYMENT_RECEIVED', 'PAYMENT_CONFIRMED', 'PAYMENT_RECEIVED_IN_CASH']);
 const REFUND_EVENTS = new Set(['PAYMENT_REFUNDED', 'PAYMENT_CHARGEBACK_REQUESTED', 'PAYMENT_REVERSED']);
@@ -18,13 +18,7 @@ export default async function (req: Request): Promise<Response> {
       return Response.json({ error: 'method_not_allowed' }, { status: 405 });
     }
 
-    const expected = secrets.get('ASAAS_WEBHOOK_SECRET');
-    const provided = req.headers.get('asaas-access-token')
-      || req.headers.get('x-webhook-token')
-      || new URL(req.url).searchParams.get('token');
-    if (!expected || provided !== expected) {
-      return Response.json({ error: 'unauthorized', request_id: requestId }, { status: 401 });
-    }
+    requireProviderToken(req, 'ASAAS_WEBHOOK_SECRET', ['asaas-access-token', 'x-webhook-token']);
 
     const body = await req.json();
     const event = String(body?.event || '');
@@ -153,8 +147,9 @@ export default async function (req: Request): Promise<Response> {
     }).catch(() => null);
 
     return Response.json({ ok: true, event, applied, request_id: requestId });
-  } catch (error) {
-    console.error(`[asaas_webhook:${requestId}]`, error);
+  } catch (error: any) {
+    console.error(`[asaas_webhook:${requestId}]`, error?.code || error?.message || 'webhook_failed');
+    if (error?.name === 'SecurityError') return securityErrorResponse(error);
     return Response.json({ error: 'webhook_failed', request_id: requestId }, { status: 500 });
   }
 }

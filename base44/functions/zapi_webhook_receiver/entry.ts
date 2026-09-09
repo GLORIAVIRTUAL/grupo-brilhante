@@ -587,7 +587,7 @@ Deno.serve(async (req) => {
         // mensagem como pendente de IA e devolvemos 200 na hora — a automação
         // 'aiReplyTrigger' assume o debounce e chama a Glória em seu próprio ciclo.
         if (!payload.fromMe && (type === 'IMAGE' || type === 'TEXT' || type === 'AUDIO' || type === 'DOC')) {
-            await base44.asServiceRole.entities.Message.update(message.id, { ai_pending: true });
+            await base44.asServiceRole.entities.Message.update(message.id, { ai_pending: true, workflow_dispatch_token: crypto.randomUUID() });
             return Response.json({ status: "success", messageId: message.id, note: "ai_queued" });
         }
 

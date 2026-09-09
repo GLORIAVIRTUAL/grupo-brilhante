@@ -1,0 +1,23 @@
+{
+  "name": "FinancialPeriod",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "year": { "type": "number" },
+    "month": { "type": "number", "minimum": 1, "maximum": 12 },
+    "period_key": { "type": "string" },
+    "starts_on": { "type": "string", "format": "date" },
+    "ends_on": { "type": "string", "format": "date" },
+    "status": { "type": "string", "enum": ["open", "closing", "closed", "reopened"], "default": "open" },
+    "closed_at": { "type": "string", "format": "date-time" },
+    "closed_by_user_id": { "type": "string" },
+    "closure_reason": { "type": "string" },
+    "closure_snapshot": { "type": "object", "additionalProperties": true },
+    "reopened_at": { "type": "string", "format": "date-time" },
+    "reopened_by_user_id": { "type": "string" },
+    "reopen_reason": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "year", "month", "period_key", "starts_on", "ends_on", "status"]
+}

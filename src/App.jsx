@@ -11,6 +11,20 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import DownloadReport from '@/pages/DownloadReport';
 import Apresentacao from '@/pages/Apresentacao';
 import Prospeccao from '@/pages/Prospeccao';
+import EnterpriseStructure from '@/pages/EnterpriseStructure';
+import DocumentRepository from '@/pages/DocumentRepository';
+import BusinessRegistry from '@/pages/BusinessRegistry';
+import CommercialOperations from '@/pages/CommercialOperations';
+import EnterpriseFinance from '@/pages/EnterpriseFinance';
+import ContaAzulMigration from '@/pages/ContaAzulMigration';
+import BankingOperations from '@/pages/BankingOperations';
+import EnterpriseFiscal from '@/pages/EnterpriseFiscal';
+import ProcurementOperations from '@/pages/ProcurementOperations';
+import HospitalLaundry from '@/pages/HospitalLaundry';
+import LinenOperations from '@/pages/LinenOperations';
+import CleaningOperations from '@/pages/CleaningOperations';
+import CommunicationGovernance from '@/pages/CommunicationGovernance';
+import EnterpriseIntelligence from '@/pages/EnterpriseIntelligence';
 import { MachineProvider } from '@/components/dashboard/MachineContext';
 import { hasPermission } from '@/lib/accessControl';
 
@@ -32,7 +46,21 @@ const PAGE_PERMISSION_OPTIONS = {
   ChatCustomers: ['crm.manage', 'customers.manage'],
   Orders: ['orders.view', 'quotes.manage'],
   Dispatches: ['delivery.manage', 'pickups.manage', 'field_route.execute', 'fleet.manage'],
-  'register-unit': ['settings.manage'],
+  'register-unit': ['companies.manage'],
+  EnterpriseStructure: ['companies.view', 'companies.manage'],
+  DocumentRepository: ['documents.view', 'documents.manage'],
+  BusinessRegistry: ['parties.view', 'parties.manage'],
+  CommercialOperations: ['crm.manage', 'contracts.view', 'contracts.manage', 'service_orders.view', 'service_orders.execute'],
+  EnterpriseFinance: ['finance.view', 'finance.manage', 'finance.approve'],
+  ContaAzulMigration: ['migration.view', 'migration.execute', 'migration.approve'],
+  BankingOperations: ['banking.view', 'banking.manage', 'banking.reconcile'],
+  EnterpriseFiscal: ['fiscal.view', 'fiscal.manage', 'fiscal.transmit'],
+  ProcurementOperations: ['purchases.view', 'purchases.manage', 'purchases.approve', 'receipts.manage', 'inventory.view', 'inventory.manage', 'inventory.transfer'],
+  HospitalLaundry: ['hospital.view', 'hospital.weigh', 'hospital.quality', 'hospital.bill'],
+  LinenOperations: ['linen.view', 'linen.manage', 'linen.inventory', 'linen.charge_loss'],
+  CleaningOperations: ['cleaning.view', 'cleaning.manage', 'cleaning.inspect', 'cleaning.measure'],
+  CommunicationGovernance: ['crm.manage', 'settings.manage'],
+  EnterpriseIntelligence: ['reports.view', 'reports.view_all'],
   Settings: ['settings.manage', 'users.manage', 'prices.manage', 'catalogs.manage', 'loyalty.manage'],
   Reports: ['reports.view', 'reports.view_all', 'reports.finance', 'reports.stock'],
   Management: ['orders.view', 'quotes.manage', 'payments.receive', 'payments.confirm', 'cash.manage', 'production.manage', 'inventory.manage', 'finance.approve', 'billing.manage', 'fiscal.manage'],
@@ -115,6 +143,104 @@ const AuthenticatedApp = () => {
       <Route path="/" element={
         <LayoutWrapper currentPageName={mainPageKey}>
           <MainPage />
+        </LayoutWrapper>
+      } />
+      <Route path="/enterprise-structure" element={
+        <LayoutWrapper currentPageName="EnterpriseStructure">
+          <PageAccessGuard pageName="EnterpriseStructure" user={user}>
+            <EnterpriseStructure />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/documents" element={
+        <LayoutWrapper currentPageName="DocumentRepository">
+          <PageAccessGuard pageName="DocumentRepository" user={user}>
+            <DocumentRepository />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/business-registry" element={
+        <LayoutWrapper currentPageName="BusinessRegistry">
+          <PageAccessGuard pageName="BusinessRegistry" user={user}>
+            <BusinessRegistry />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/commercial-operations" element={
+        <LayoutWrapper currentPageName="CommercialOperations">
+          <PageAccessGuard pageName="CommercialOperations" user={user}>
+            <CommercialOperations />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/enterprise-finance" element={
+        <LayoutWrapper currentPageName="EnterpriseFinance">
+          <PageAccessGuard pageName="EnterpriseFinance" user={user}>
+            <EnterpriseFinance />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/conta-azul-migration" element={
+        <LayoutWrapper currentPageName="ContaAzulMigration">
+          <PageAccessGuard pageName="ContaAzulMigration" user={user}>
+            <ContaAzulMigration />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/banking-operations" element={
+        <LayoutWrapper currentPageName="BankingOperations">
+          <PageAccessGuard pageName="BankingOperations" user={user}>
+            <BankingOperations />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/enterprise-fiscal" element={
+        <LayoutWrapper currentPageName="EnterpriseFiscal">
+          <PageAccessGuard pageName="EnterpriseFiscal" user={user}>
+            <EnterpriseFiscal />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/procurement-operations" element={
+        <LayoutWrapper currentPageName="ProcurementOperations">
+          <PageAccessGuard pageName="ProcurementOperations" user={user}>
+            <ProcurementOperations />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/hospital-laundry" element={
+        <LayoutWrapper currentPageName="HospitalLaundry">
+          <PageAccessGuard pageName="HospitalLaundry" user={user}>
+            <HospitalLaundry />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/linen-operations" element={
+        <LayoutWrapper currentPageName="LinenOperations">
+          <PageAccessGuard pageName="LinenOperations" user={user}>
+            <LinenOperations />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/cleaning-operations" element={
+        <LayoutWrapper currentPageName="CleaningOperations">
+          <PageAccessGuard pageName="CleaningOperations" user={user}>
+            <CleaningOperations />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/communication-governance" element={
+        <LayoutWrapper currentPageName="CommunicationGovernance">
+          <PageAccessGuard pageName="CommunicationGovernance" user={user}>
+            <CommunicationGovernance />
+          </PageAccessGuard>
+        </LayoutWrapper>
+      } />
+      <Route path="/enterprise-intelligence" element={
+        <LayoutWrapper currentPageName="EnterpriseIntelligence">
+          <PageAccessGuard pageName="EnterpriseIntelligence" user={user}>
+            <EnterpriseIntelligence />
+          </PageAccessGuard>
         </LayoutWrapper>
       } />
       {Object.entries(Pages).map(([path, Page]) => (

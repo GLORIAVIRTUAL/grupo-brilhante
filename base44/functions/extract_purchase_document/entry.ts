@@ -1,292 +1,49 @@
-import { enforceExistingUserSecurity } from '../../shared/functionSecurity.js';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.46';
+import { authorizeUserOrInternal, enforceAuthenticatedUser, securityErrorResponse } from '../../shared/functionSecurity.js';
+import { assertWarehouseScope } from '../../shared/procurementInventoryCore.js';
 
-const ALLOWED_ROLES = new Set(['super_admin', 'admin', 'manager', 'inventory', 'finance']);
+function normalize(value: unknown) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase(); }
+function digits(value: unknown) { return String(value || '').replace(/\D/g, ''); }
+function clean(value: unknown, max = 500) { return String(value || '').trim().slice(0, max); }
+const extractionSchema = { type: 'object', properties: { document_type: { type: 'string' }, supplier: { type: 'object', properties: { corporate_name: { type: 'string' }, trade_name: { type: 'string' }, tax_id: { type: 'string' }, state_registration: { type: 'string' } } }, document_number: { type: 'string' }, series: { type: 'string' }, access_key: { type: 'string' }, issue_date: { type: 'string' }, due_date: { type: 'string' }, subtotal: { type: 'number' }, discount: { type: 'number' }, freight: { type: 'number' }, taxes: { type: 'number' }, total: { type: 'number' }, items: { type: 'array', items: { type: 'object', properties: { supplier_code: { type: 'string' }, description: { type: 'string' }, quantity: { type: 'number' }, unit: { type: 'string' }, unit_price: { type: 'number' }, discount: { type: 'number' }, taxes: { type: 'number' }, total: { type: 'number' }, batch_number: { type: 'string' }, expiry_date: { type: 'string' } } } } } };
+async function openReview(db: any, input: any) { const review = await db.HumanReview.create({ unit_id: input.unit_id, review_type: 'purchase_document', status: 'pending', priority: input.priority || 'high', entity_type: 'purchase_document', entity_id: input.document_id, ai_job_id: input.ai_job_id, document_asset_ids: [input.asset_id], reason_codes: input.reason_codes, summary: input.summary, proposed_data: input.proposed_data || {}, request_id: input.request_id, metadata: { legal_entity_id: input.legal_entity_id, warehouse_id: input.warehouse_id } }); await db.PurchaseDocument.update(input.document_id, { status: 'human_review', human_review_id: review.id }); return review; }
 
-function normalize(value: unknown) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-zA-Z0-9 ]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
-}
-
-function digits(value: unknown) {
-  return String(value || '').replace(/\D/g, '');
-}
-
-function canAccessUnit(user: any, unitId?: string) {
-  if (!unitId || ['super_admin', 'admin'].includes(user?.role)) return true;
-  return new Set([user?.primary_unit_id, ...(user?.allowed_unit_ids || [])].filter(Boolean)).has(unitId);
-}
-
-const extractionSchema = {
-  type: 'object',
-  properties: {
-    document_type: { type: 'string' },
-    supplier: {
-      type: 'object',
-      properties: {
-        corporate_name: { type: 'string' },
-        trade_name: { type: 'string' },
-        tax_id: { type: 'string' },
-        state_registration: { type: 'string' },
-      },
-    },
-    document_number: { type: 'string' },
-    series: { type: 'string' },
-    access_key: { type: 'string' },
-    issue_date: { type: 'string' },
-    due_date: { type: 'string' },
-    subtotal: { type: 'number' },
-    discount: { type: 'number' },
-    freight: { type: 'number' },
-    taxes: { type: 'number' },
-    total: { type: 'number' },
-    items: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          supplier_code: { type: 'string' },
-          description: { type: 'string' },
-          quantity: { type: 'number' },
-          unit: { type: 'string' },
-          unit_price: { type: 'number' },
-          discount: { type: 'number' },
-          taxes: { type: 'number' },
-          total: { type: 'number' },
-          batch_number: { type: 'string' },
-          expiry_date: { type: 'string' },
-        },
-      },
-    },
-  },
-};
-
-Deno.serve(async (req) => {
-  const requestId = crypto.randomUUID();
-  let aiJob: any = null;
-
+Deno.serve(async (req: Request) => {
+  const requestId = crypto.randomUUID(); let aiJob: any = null; let base44: any = null;
   try {
-    if (req.method !== 'POST') {
-      return Response.json({ error: 'method_not_allowed', request_id: requestId }, { status: 405 });
-    }
-
-    const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    await enforceExistingUserSecurity(base44, req, user, { source: 'extract_purchase_document' });
-    if (!user) return Response.json({ error: 'authentication_required', request_id: requestId }, { status: 401 });
-    if (!ALLOWED_ROLES.has(user.role || 'inventory') && !(user.permissions || []).includes('documents.review')) {
-      return Response.json({ error: 'forbidden', request_id: requestId }, { status: 403 });
-    }
-
-    const { document_asset_id: assetId } = await req.json();
-    if (!assetId) return Response.json({ error: 'document_asset_id_required', request_id: requestId }, { status: 400 });
-
-    const asset = await base44.asServiceRole.entities.DocumentAsset.get(assetId);
-    if (!asset || asset.document_type !== 'purchase_invoice') {
-      return Response.json({ error: 'invalid_purchase_asset', request_id: requestId }, { status: 422 });
-    }
-    if (!canAccessUnit(user, asset.unit_id)) {
-      return Response.json({ error: 'forbidden_unit', request_id: requestId }, { status: 403 });
-    }
-
-    const duplicates = await base44.asServiceRole.entities.PurchaseDocument.filter({ file_hash: asset.sha256 });
-    if (duplicates.length > 0) {
-      return Response.json({ error: 'duplicate_purchase_document', purchase_document_id: duplicates[0].id, request_id: requestId }, { status: 409 });
-    }
-
-    aiJob = await base44.asServiceRole.entities.AIJob.create({
-      unit_id: asset.unit_id,
-      job_type: 'purchase_invoice_extraction',
-      status: 'processing',
-      document_asset_ids: [asset.id],
-      model: 'base44_core_extractor',
-      prompt_version: 'purchase-document-v1',
-      attempts: 1,
-      started_at: new Date().toISOString(),
-      created_by_user_id: user.id,
-      request_id: requestId,
-    });
-
+    if (req.method !== 'POST') return Response.json({ error: 'method_not_allowed', request_id: requestId }, { status: 405 });
+    base44 = createClientFromRequest(req); const db = base44.asServiceRole.entities; const body = await req.json();
+    const auth = await authorizeUserOrInternal(base44, req, body, { allowInternal: false, source: 'extract_purchase_document' });
+    const assetId = clean(body.document_asset_id, 120); if (!assetId) return Response.json({ error: 'document_asset_id_required', request_id: requestId }, { status: 422 });
+    const asset = await db.DocumentAsset.get(assetId).catch(() => null); if (!asset || asset.document_type !== 'purchase_invoice') return Response.json({ error: 'invalid_purchase_asset', request_id: requestId }, { status: 422 });
+    const legalEntityId = clean(body.legal_entity_id || asset.legal_entity_id, 100); const unitId = clean(body.unit_id || asset.unit_id, 100); const warehouseId = clean(body.warehouse_id || asset.metadata?.warehouse_id, 100);
+    if (!legalEntityId || !unitId || !warehouseId || (asset.legal_entity_id && asset.legal_entity_id !== legalEntityId) || asset.unit_id !== unitId) return Response.json({ error: 'purchase_asset_scope_required', request_id: requestId }, { status: 409 });
+    await enforceAuthenticatedUser(base44, req, auth.user, { permission: 'documents.review', legalEntityId, unitId, source: 'extract_purchase_document' });
+    const warehouse = await db.Warehouse.get(warehouseId).catch(() => null); assertWarehouseScope({ warehouse, legalEntityId, unitId });
+    const duplicates = await db.PurchaseDocument.filter({ legal_entity_id: legalEntityId, file_hash: asset.sha256 }, '-created_date', 3).catch(() => []); if (duplicates.length) return Response.json({ error: 'duplicate_purchase_document', purchase_document_id: duplicates[0].id, request_id: requestId }, { status: 409 });
+    let purchaseOrder = null; if (body.purchase_order_id) { purchaseOrder = await db.PurchaseOrder.get(body.purchase_order_id).catch(() => null); if (!purchaseOrder || purchaseOrder.legal_entity_id !== legalEntityId || purchaseOrder.warehouse_id !== warehouseId || !['approved', 'sent', 'partially_received'].includes(purchaseOrder.status)) return Response.json({ error: 'purchase_order_scope_mismatch', request_id: requestId }, { status: 409 }); }
+    aiJob = await db.AIJob.create({ unit_id: unitId, job_type: 'purchase_invoice_extraction', status: 'processing', document_asset_ids: [asset.id], model: 'base44_core_extractor', prompt_version: 'purchase-document-v2-enterprise', attempts: 1, started_at: new Date().toISOString(), created_by_user_id: auth.user.id, request_id: requestId, metadata: { legal_entity_id: legalEntityId, warehouse_id: warehouseId, purchase_order_id: purchaseOrder?.id } });
     let extracted: any;
-    try {
-      const extraction = await base44.integrations.Core.ExtractDataFromUploadedFile({
-        file_url: asset.storage_key,
-        json_schema: extractionSchema,
-      });
-      extracted = extraction?.output || extraction?.data || extraction;
-    } catch (error) {
-      const purchaseDocument = await base44.asServiceRole.entities.PurchaseDocument.create({
-        unit_id: asset.unit_id,
-        document_type: 'other',
-        document_asset_id: asset.id,
-        file_hash: asset.sha256,
-        status: 'human_review',
-        ai_job_id: aiJob.id,
-        extraction_confidence: 0,
-        notes: 'Extração automática indisponível; preencher manualmente.',
-      });
-      const review = await base44.asServiceRole.entities.HumanReview.create({
-        unit_id: asset.unit_id,
-        review_type: 'purchase_document',
-        status: 'pending',
-        priority: 'high',
-        entity_type: 'purchase_document',
-        entity_id: purchaseDocument.id,
-        ai_job_id: aiJob.id,
-        document_asset_ids: [asset.id],
-        reason_codes: ['extractor_unavailable'],
-        summary: 'Preencher nota de compra manualmente',
-        proposed_data: {},
-        request_id: requestId,
-      });
-      await base44.asServiceRole.entities.PurchaseDocument.update(purchaseDocument.id, { human_review_id: review.id });
-      await base44.asServiceRole.entities.AIJob.update(aiJob.id, {
-        status: 'human_review',
-        entity_type: 'purchase_document',
-        entity_id: purchaseDocument.id,
-        error_code: 'extractor_unavailable',
-        error_message: 'Configuração de extração ainda não disponível.',
-        completed_at: new Date().toISOString(),
-      });
-      return Response.json({ purchase_document: purchaseDocument, items: [], configured: false, human_review_required: true, request_id: requestId });
+    try { const extraction = await base44.integrations.Core.ExtractDataFromUploadedFile({ file_url: asset.storage_key, json_schema: extractionSchema }); extracted = extraction?.output || extraction?.data || extraction; }
+    catch {
+      const purchaseDocument = await db.PurchaseDocument.create({ legal_entity_id: legalEntityId, unit_id: unitId, warehouse_id: warehouseId, cost_center_id: purchaseOrder?.cost_center_id, purchase_order_id: purchaseOrder?.id, supplier_id: purchaseOrder?.supplier_id, business_party_id: purchaseOrder?.business_party_id, document_type: 'other', document_asset_id: asset.id, file_hash: asset.sha256, status: 'human_review', ai_job_id: aiJob.id, extraction_confidence: 0, entry_date: new Date().toISOString(), notes: 'Extração automática indisponível; preencher manualmente.', metadata: { request_id: requestId } });
+      const review = await openReview(db, { unit_id: unitId, legal_entity_id: legalEntityId, warehouse_id: warehouseId, document_id: purchaseDocument.id, ai_job_id: aiJob.id, asset_id: asset.id, reason_codes: ['extractor_unavailable'], summary: 'Preencher nota de compra manualmente', request_id: requestId });
+      await db.AIJob.update(aiJob.id, { status: 'human_review', entity_type: 'purchase_document', entity_id: purchaseDocument.id, error_code: 'extractor_unavailable', error_message: 'Extração automática indisponível; revisão humana obrigatória.', completed_at: new Date().toISOString() });
+      return Response.json({ purchase_document: purchaseDocument, items: [], human_review: review, configured: false, human_review_required: true, request_id: requestId });
     }
-
-    const supplierTaxId = digits(extracted?.supplier?.tax_id);
-    const suppliers = supplierTaxId
-      ? await base44.asServiceRole.entities.Supplier.filter({ tax_id: supplierTaxId })
-      : [];
-    const supplier = suppliers[0] || null;
-    const stockItems = await base44.asServiceRole.entities.StockItem.filter({ unit_id: asset.unit_id });
-    const extractedItems = Array.isArray(extracted?.items) ? extracted.items : [];
-
-    const requiredSignals = [supplierTaxId.length === 14, Boolean(extracted?.document_number), extractedItems.length > 0, Number(extracted?.total || 0) > 0];
-    const confidence = requiredSignals.filter(Boolean).length / requiredSignals.length;
-    const needsReview = confidence < 1 || !supplier;
-
-    const purchaseDocument = await base44.asServiceRole.entities.PurchaseDocument.create({
-      unit_id: asset.unit_id,
-      supplier_id: supplier?.id,
-      supplier_tax_id: supplierTaxId,
-      supplier_name: extracted?.supplier?.corporate_name || extracted?.supplier?.trade_name || '',
-      document_type: ['nfe', 'nfce', 'invoice', 'receipt'].includes(normalize(extracted?.document_type)) ? normalize(extracted.document_type) : 'other',
-      document_number: String(extracted?.document_number || ''),
-      series: String(extracted?.series || ''),
-      access_key: digits(extracted?.access_key),
-      document_asset_id: asset.id,
-      file_hash: asset.sha256,
-      issue_date: extracted?.issue_date || undefined,
-      entry_date: new Date().toISOString(),
-      due_date: extracted?.due_date || undefined,
-      subtotal: Number(extracted?.subtotal || 0),
-      discount: Number(extracted?.discount || 0),
-      freight: Number(extracted?.freight || 0),
-      taxes: Number(extracted?.taxes || 0),
-      total: Number(extracted?.total || 0),
-      status: needsReview ? 'human_review' : 'received',
-      extraction_confidence: confidence,
-      ai_job_id: aiJob.id,
-      metadata: { extracted_supplier: extracted?.supplier || {}, request_id: requestId },
-    });
-
-    const purchaseItems = [];
-    let lineNumber = 0;
-    for (const line of extractedItems) {
-      lineNumber += 1;
-      const normalizedDescription = normalize(line.description);
-      const matched = stockItems.find((stock: any) => {
-        const supplierCode = supplier?.id && stock.supplier_codes?.[supplier.id];
-        return (line.supplier_code && supplierCode === line.supplier_code) || normalize(stock.name) === normalizedDescription;
-      }) || null;
-      const conversionFactor = Number(matched?.purchase_to_base_factor || 1);
-      const quantity = Number(line.quantity || 0);
-      const purchaseItem = await base44.asServiceRole.entities.PurchaseItem.create({
-        purchase_document_id: purchaseDocument.id,
-        unit_id: asset.unit_id,
-        line_number: lineNumber,
-        supplier_code: String(line.supplier_code || ''),
-        description_original: String(line.description || `Item ${lineNumber}`),
-        stock_item_id: matched?.id,
-        match_status: matched ? 'matched' : 'suggested',
-        match_confidence: matched ? 1 : 0,
-        invoiced_quantity: quantity,
-        received_quantity: 0,
-        accepted_quantity: 0,
-        purchase_unit: String(line.unit || matched?.purchase_unit || matched?.base_unit || 'unit'),
-        conversion_factor: conversionFactor,
-        base_quantity: quantity * conversionFactor,
-        unit_price: Number(line.unit_price || 0),
-        discount: Number(line.discount || 0),
-        taxes: Number(line.taxes || 0),
-        total: Number(line.total || (quantity * Number(line.unit_price || 0))),
-        batch_number: line.batch_number || undefined,
-        expiry_date: line.expiry_date || undefined,
-      });
-      purchaseItems.push(purchaseItem);
-    }
-
-    const unmatchedCount = purchaseItems.filter((item: any) => !item.stock_item_id).length;
-    let review = null;
-    if (needsReview || unmatchedCount > 0) {
-      review = await base44.asServiceRole.entities.HumanReview.create({
-        unit_id: asset.unit_id,
-        review_type: 'purchase_document',
-        status: 'pending',
-        priority: unmatchedCount > 0 ? 'high' : 'normal',
-        entity_type: 'purchase_document',
-        entity_id: purchaseDocument.id,
-        ai_job_id: aiJob.id,
-        document_asset_ids: [asset.id],
-        reason_codes: [
-          ...(!supplier ? ['supplier_not_matched'] : []),
-          ...(unmatchedCount > 0 ? ['stock_items_not_matched'] : []),
-          ...(confidence < 1 ? ['required_fields_missing'] : []),
-        ],
-        summary: `Revisar nota ${purchaseDocument.document_number || purchaseDocument.id.slice(0, 8)}`,
-        proposed_data: { header: extracted, unmatched_count: unmatchedCount },
-        request_id: requestId,
-      });
-      await base44.asServiceRole.entities.PurchaseDocument.update(purchaseDocument.id, {
-        status: 'human_review',
-        human_review_id: review.id,
-      });
-    }
-
-    await base44.asServiceRole.entities.AIJob.update(aiJob.id, {
-      status: review ? 'human_review' : 'completed',
-      entity_type: 'purchase_document',
-      entity_id: purchaseDocument.id,
-      confidence,
-      field_confidence: {
-        supplier_tax_id: supplierTaxId.length === 14 ? 1 : 0,
-        document_number: extracted?.document_number ? 1 : 0,
-        items: extractedItems.length > 0 ? 1 : 0,
-        total: Number(extracted?.total || 0) > 0 ? 1 : 0,
-      },
-      result: { purchase_document_id: purchaseDocument.id, item_count: purchaseItems.length, unmatched_count: unmatchedCount },
-      completed_at: new Date().toISOString(),
-    });
-
+    const supplierTaxId = digits(extracted?.supplier?.tax_id); const suppliers = supplierTaxId ? await db.Supplier.filter({ legal_entity_id: legalEntityId, tax_id: supplierTaxId }, '-updated_date', 5).catch(() => []) : []; const supplier = suppliers[0] || null;
+    if (purchaseOrder && supplier && purchaseOrder.supplier_id !== supplier.id) return Response.json({ error: 'invoice_supplier_differs_from_purchase_order', request_id: requestId }, { status: 409 });
+    const stockItems = await db.StockItem.filter({ legal_entity_id: legalEntityId, warehouse_id: warehouseId }, 'name', 5000).catch(() => []); const extractedItems = Array.isArray(extracted?.items) ? extracted.items : []; const requiredSignals = [supplierTaxId.length === 14, Boolean(extracted?.document_number), extractedItems.length > 0, Number(extracted?.total || 0) > 0]; const confidence = requiredSignals.filter(Boolean).length / requiredSignals.length; const needsReview = confidence < 1 || !supplier || (purchaseOrder && purchaseOrder.supplier_id !== (supplier?.id || purchaseOrder.supplier_id));
+    const purchaseDocument = await db.PurchaseDocument.create({ legal_entity_id: legalEntityId, unit_id: unitId, warehouse_id: warehouseId, cost_center_id: purchaseOrder?.cost_center_id, purchase_order_id: purchaseOrder?.id, supplier_id: supplier?.id || purchaseOrder?.supplier_id, business_party_id: supplier?.business_party_id || purchaseOrder?.business_party_id, supplier_tax_id: supplierTaxId, supplier_name: clean(extracted?.supplier?.corporate_name || extracted?.supplier?.trade_name, 180), document_type: ['nfe', 'nfce', 'invoice', 'receipt'].includes(normalize(extracted?.document_type)) ? normalize(extracted.document_type) : 'other', document_number: clean(extracted?.document_number, 100), series: clean(extracted?.series, 40), access_key: digits(extracted?.access_key), document_asset_id: asset.id, file_hash: asset.sha256, issue_date: extracted?.issue_date || undefined, entry_date: new Date().toISOString(), due_date: extracted?.due_date || undefined, subtotal: Number(extracted?.subtotal || 0), discount: Number(extracted?.discount || 0), freight: Number(extracted?.freight || 0), taxes: Number(extracted?.taxes || 0), total: Number(extracted?.total || 0), status: needsReview ? 'human_review' : 'received', extraction_confidence: confidence, ai_job_id: aiJob.id, metadata: { extracted_supplier: { tax_id_suffix: supplierTaxId.slice(-4), name: clean(extracted?.supplier?.corporate_name || extracted?.supplier?.trade_name, 180) }, request_id: requestId } });
+    const purchaseOrderItems = purchaseOrder ? await db.PurchaseOrderItem.filter({ purchase_order_id: purchaseOrder.id }, 'created_date', 1000).catch(() => []) : []; const purchaseItems = []; let lineNumber = 0;
+    for (const line of extractedItems) { lineNumber += 1; const normalizedDescription = normalize(line.description); const matched = stockItems.find((stock: any) => { const supplierCode = supplier?.id && stock.supplier_codes?.[supplier.id]; return (line.supplier_code && supplierCode === line.supplier_code) || normalize(stock.name) === normalizedDescription; }) || null; const orderItem = purchaseOrderItems.find((item: any) => (matched && item.stock_item_id === matched.id) || normalize(item.description) === normalizedDescription) || null; const conversionFactor = Number(matched?.purchase_to_base_factor || orderItem?.conversion_factor || 1); const invoiceQuantity = Number(line.quantity || 0); const purchaseItem = await db.PurchaseItem.create({ purchase_document_id: purchaseDocument.id, legal_entity_id: legalEntityId, unit_id: unitId, warehouse_id: warehouseId, purchase_order_item_id: orderItem?.id, line_number: lineNumber, supplier_code: clean(line.supplier_code, 100), description_original: clean(line.description || `Item ${lineNumber}`, 300), stock_item_id: matched?.id || orderItem?.stock_item_id, match_status: matched || orderItem ? 'matched' : 'suggested', match_confidence: matched || orderItem ? 1 : 0, invoiced_quantity: invoiceQuantity, received_quantity: 0, accepted_quantity: 0, purchase_unit: clean(line.unit || matched?.purchase_unit || orderItem?.purchase_unit || matched?.base_unit || 'unit', 40), conversion_factor: conversionFactor, base_quantity: invoiceQuantity * conversionFactor, unit_price: Number(line.unit_price || 0), discount: Number(line.discount || 0), taxes: Number(line.taxes || 0), total: Number(line.total || invoiceQuantity * Number(line.unit_price || 0)), batch_number: clean(line.batch_number, 120), expiry_date: line.expiry_date || undefined, metadata: { order_match: Boolean(orderItem) } }); purchaseItems.push(purchaseItem); }
+    const unmatchedCount = purchaseItems.filter((item: any) => !item.stock_item_id || !item.purchase_order_item_id && Boolean(purchaseOrder)).length; let review = null;
+    if (needsReview || unmatchedCount > 0) review = await openReview(db, { unit_id: unitId, legal_entity_id: legalEntityId, warehouse_id: warehouseId, document_id: purchaseDocument.id, ai_job_id: aiJob.id, asset_id: asset.id, reason_codes: [...(!supplier ? ['supplier_not_matched'] : []), ...(unmatchedCount ? ['stock_or_order_items_not_matched'] : []), ...(confidence < 1 ? ['required_fields_missing'] : [])], summary: `Revisar nota ${purchaseDocument.document_number || purchaseDocument.id.slice(0, 8)}`, proposed_data: { unmatched_count: unmatchedCount, purchase_order_id: purchaseOrder?.id }, request_id: requestId });
+    await db.AIJob.update(aiJob.id, { status: review ? 'human_review' : 'completed', entity_type: 'purchase_document', entity_id: purchaseDocument.id, confidence, field_confidence: { supplier_tax_id: supplierTaxId.length === 14 ? 1 : 0, document_number: extracted?.document_number ? 1 : 0, items: extractedItems.length ? 1 : 0, total: Number(extracted?.total || 0) > 0 ? 1 : 0 }, result: { purchase_document_id: purchaseDocument.id, item_count: purchaseItems.length, unmatched_count: unmatchedCount }, completed_at: new Date().toISOString() });
     return Response.json({ purchase_document: purchaseDocument, items: purchaseItems, human_review: review, configured: true, request_id: requestId });
-  } catch (error) {
-    console.error(`[extract_purchase_document:${requestId}]`, error);
-    try {
-      if (aiJob?.id) {
-        const base44 = createClientFromRequest(req);
-        await base44.asServiceRole.entities.AIJob.update(aiJob.id, {
-          status: 'failed',
-          error_code: 'purchase_extraction_failed',
-          error_message: 'Falha ao processar documento.',
-          completed_at: new Date().toISOString(),
-        });
-      }
-    } catch (_) {
-      // Auditoria best-effort.
-    }
-    return Response.json({ error: 'purchase_extraction_failed', request_id: requestId }, { status: 500 });
+  } catch (error: any) {
+    if (error?.name === 'SecurityError') return securityErrorResponse(error);
+    try { if (aiJob?.id && base44) await base44.asServiceRole.entities.AIJob.update(aiJob.id, { status: 'failed', error_code: clean(error?.message || 'purchase_extraction_failed', 120), error_message: 'Falha segura ao processar documento.', completed_at: new Date().toISOString() }); } catch { /* best effort */ }
+    const known = new Set(['warehouse_scope_mismatch', 'warehouse_not_active']); return Response.json({ error: known.has(error?.message) ? error.message : 'purchase_extraction_failed', request_id: requestId }, { status: known.has(error?.message) ? 409 : 500 });
   }
 });

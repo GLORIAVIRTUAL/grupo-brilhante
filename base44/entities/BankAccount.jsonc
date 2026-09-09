@@ -1,0 +1,26 @@
+{
+  "name": "BankAccount",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "bank_code": { "type": "string" },
+    "bank_name": { "type": "string" },
+    "branch_masked": { "type": "string" },
+    "account_masked": { "type": "string" },
+    "account_type": { "type": "string", "enum": ["checking", "savings", "payment", "cash", "other"] },
+    "pix_key_type": { "type": "string", "enum": ["tax_id", "email", "phone", "random", "none"], "default": "none" },
+    "pix_key_masked": { "type": "string" },
+    "currency": { "type": "string", "default": "BRL" },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "inactive"], "default": "draft" },
+    "integration_provider": { "type": "string", "enum": ["none", "banco_do_brasil", "manual", "other"], "default": "none" },
+    "integration_status": { "type": "string", "enum": ["disabled", "configured", "homologation", "approved", "production", "suspended"], "default": "disabled" },
+    "last_reconciled_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "code", "name", "bank_code", "account_type", "status"]
+}

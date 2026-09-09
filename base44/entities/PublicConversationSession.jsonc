@@ -1,0 +1,24 @@
+{
+  "name": "PublicConversationSession",
+  "type": "object",
+  "properties": {
+    "session_key": { "type": "string", "description": "Identificador público não secreto da sessão" },
+    "token_hash": { "type": "string", "description": "SHA-256 do token entregue uma única vez ao navegador" },
+    "conversation_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "origin": { "type": "string" },
+    "ip_hash": { "type": "string" },
+    "user_agent_hash": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "expired", "revoked", "blocked"], "default": "active" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "last_used_at": { "type": "string", "format": "date-time" },
+    "message_count": { "type": "number", "default": 0 },
+    "failed_attempts": { "type": "number", "default": 0 },
+    "revoked_at": { "type": "string", "format": "date-time" },
+    "revoke_reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["session_key", "token_hash", "conversation_id", "customer_id", "unit_id", "status", "expires_at"]
+}

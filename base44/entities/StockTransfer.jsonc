@@ -1,0 +1,24 @@
+{
+  "name": "StockTransfer",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "source_unit_id": { "type": "string" },
+    "source_warehouse_id": { "type": "string" },
+    "destination_unit_id": { "type": "string" },
+    "destination_warehouse_id": { "type": "string" },
+    "transfer_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "approved", "dispatched", "partially_received", "received", "cancelled"], "default": "draft" },
+    "requested_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "dispatched_by_user_id": { "type": "string" },
+    "received_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "dispatched_at": { "type": "string", "format": "date-time" },
+    "received_at": { "type": "string", "format": "date-time" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "source_unit_id", "source_warehouse_id", "destination_unit_id", "destination_warehouse_id", "transfer_number", "status", "requested_by_user_id", "idempotency_key"]
+}

@@ -2,43 +2,154 @@
   "name": "FinancialDocument",
   "type": "object",
   "properties": {
-    "unit_id": { "type": "string" },
-    "document_asset_id": { "type": "string" },
-    "file_hash": { "type": "string" },
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "cost_center_id": {
+      "type": "string"
+    },
+    "bank_account_id": {
+      "type": "string"
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "native",
+        "conta_azul",
+        "bank",
+        "provider",
+        "migration",
+        "other"
+      ],
+      "default": "native"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "migration_record_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "document_asset_id": {
+      "type": "string"
+    },
+    "file_hash": {
+      "type": "string"
+    },
     "document_type": {
       "type": "string",
-      "enum": ["electricity_bill", "water_bill", "gas_bill", "internet_bill", "rent", "service_invoice", "bank_slip", "payment_receipt", "other"]
+      "enum": [
+        "electricity_bill",
+        "water_bill",
+        "gas_bill",
+        "internet_bill",
+        "rent",
+        "service_invoice",
+        "bank_slip",
+        "payment_receipt",
+        "other"
+      ]
     },
-    "issuer_name": { "type": "string" },
-    "issuer_tax_id": { "type": "string" },
-    "account_number": { "type": "string" },
-    "installation_number": { "type": "string" },
-    "document_number": { "type": "string" },
-    "competence_date": { "type": "string", "format": "date-time" },
-    "issue_date": { "type": "string", "format": "date-time" },
-    "due_date": { "type": "string", "format": "date-time" },
-    "amount": { "type": "number" },
-    "consumption_value": { "type": "number" },
-    "consumption_unit": { "type": "string" },
-    "barcode": { "type": "string" },
-    "pix_code": { "type": "string" },
+    "issuer_name": {
+      "type": "string"
+    },
+    "issuer_tax_id": {
+      "type": "string"
+    },
+    "account_number": {
+      "type": "string"
+    },
+    "installation_number": {
+      "type": "string"
+    },
+    "document_number": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "consumption_value": {
+      "type": "number"
+    },
+    "consumption_unit": {
+      "type": "string"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "pix_code": {
+      "type": "string"
+    },
     "status": {
       "type": "string",
-      "enum": ["received", "extracting", "human_review", "approved", "linked", "rejected", "cancelled"],
+      "enum": [
+        "received",
+        "extracting",
+        "human_review",
+        "approved",
+        "linked",
+        "rejected",
+        "cancelled"
+      ],
       "default": "received"
     },
     "anomaly_status": {
       "type": "string",
-      "enum": ["not_evaluated", "normal", "warning", "critical"],
+      "enum": [
+        "not_evaluated",
+        "normal",
+        "warning",
+        "critical"
+      ],
       "default": "not_evaluated"
     },
-    "anomaly_reasons": { "type": "array", "items": { "type": "string" }, "default": [] },
-    "extraction_confidence": { "type": "number" },
-    "field_confidence": { "type": "object", "additionalProperties": true },
-    "ai_job_id": { "type": "string" },
-    "human_review_id": { "type": "string" },
-    "accounts_payable_id": { "type": "string" },
-    "metadata": { "type": "object", "additionalProperties": true }
+    "anomaly_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "extraction_confidence": {
+      "type": "number"
+    },
+    "field_confidence": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ai_job_id": {
+      "type": "string"
+    },
+    "human_review_id": {
+      "type": "string"
+    },
+    "accounts_payable_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
   },
-  "required": ["unit_id", "document_asset_id", "file_hash", "document_type", "status"]
+  "required": [
+    "unit_id",
+    "document_asset_id",
+    "file_hash",
+    "document_type",
+    "status"
+  ]
 }

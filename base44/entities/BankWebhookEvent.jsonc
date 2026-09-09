@@ -1,0 +1,24 @@
+{
+  "name": "BankWebhookEvent",
+  "type": "object",
+  "properties": {
+    "provider": { "type": "string", "enum": ["banco_do_brasil"] },
+    "provider_environment": { "type": "string", "enum": ["sandbox", "homologation", "production"] },
+    "event_key": { "type": "string" },
+    "event_type": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "received_at": { "type": "string", "format": "date-time" },
+    "processed_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["received", "validated", "processed", "ignored", "rejected", "repair_required"], "default": "received" },
+    "legal_entity_id": { "type": "string" },
+    "bank_account_id": { "type": "string" },
+    "bank_charge_id": { "type": "string" },
+    "provider_charge_id": { "type": "string" },
+    "txid": { "type": "string" },
+    "safe_payload": { "type": "object", "additionalProperties": true },
+    "safe_error_code": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["provider", "provider_environment", "event_key", "payload_hash", "received_at", "status", "idempotency_key"]
+}

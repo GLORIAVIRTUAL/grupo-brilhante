@@ -1,0 +1,17 @@
+{
+  "name": "PartyRole",
+  "type": "object",
+  "properties": {
+    "business_party_id": { "type": "string" },
+    "role_type": { "type": "string", "enum": ["customer", "supplier", "service_recipient", "service_provider", "carrier", "hospital", "partner", "employee", "guarantor", "other"] },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "inactive", "blocked"], "default": "active" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "external_reference": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["business_party_id", "role_type", "legal_entity_id", "status"]
+}

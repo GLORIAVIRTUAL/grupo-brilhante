@@ -1,0 +1,21 @@
+{
+  "name": "PartyDocument",
+  "type": "object",
+  "properties": {
+    "business_party_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "document_asset_id": { "type": "string" },
+    "document_type": { "type": "string", "enum": ["articles_of_association", "tax_registration", "operating_license", "sanitary_license", "insurance", "certificate", "identity", "power_of_attorney", "bank_proof", "other"] },
+    "document_number": { "type": "string" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "verification_status": { "type": "string", "enum": ["pending", "verified", "rejected", "expired"], "default": "pending" },
+    "verified_at": { "type": "string", "format": "date-time" },
+    "verified_by_user_id": { "type": "string" },
+    "rejection_reason": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "superseded", "retired"], "default": "active" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["business_party_id", "legal_entity_id", "document_asset_id", "document_type", "verification_status", "status"]
+}

@@ -18,7 +18,12 @@
         "document",
         "scheduler",
         "user_command",
-        "internal"
+        "internal",
+        "base44_workflow",
+        "banking",
+        "fiscal",
+        "migration",
+        "integration"
       ]
     },
     "status": {
@@ -43,7 +48,14 @@
       "type": "object",
       "additionalProperties": true
     },
+    "result_summary": {
+      "type": "object",
+      "additionalProperties": true
+    },
     "error_message": {
+      "type": "string"
+    },
+    "error_code": {
       "type": "string"
     },
     "attempts": {
@@ -58,8 +70,19 @@
       "type": "string",
       "format": "date-time"
     },
+    "legal_entity_id": {
+      "type": "string"
+    },
     "unit_id": {
       "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "checkpoints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
     }
   },
   "required": [

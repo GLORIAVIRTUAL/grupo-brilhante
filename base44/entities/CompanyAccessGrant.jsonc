@@ -1,0 +1,21 @@
+{
+  "name": "CompanyAccessGrant",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "unit_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "permissions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "denied_permissions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "expired", "revoked"], "default": "draft" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "reason": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "revoked_by_user_id": { "type": "string" },
+    "revoked_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["user_id", "legal_entity_id", "status", "reason"]
+}

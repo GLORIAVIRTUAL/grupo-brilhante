@@ -1,0 +1,25 @@
+{
+  "name": "LinenCatalogItem",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "sku": { "type": "string" },
+    "name": { "type": "string" },
+    "linen_type": { "type": "string" },
+    "size": { "type": "string" },
+    "color": { "type": "string" },
+    "material": { "type": "string" },
+    "standard": { "type": "string" },
+    "ownership": { "type": "string", "enum": ["company", "customer", "third_party"], "default": "company" },
+    "tracking_mode": { "type": "string", "enum": ["quantity", "batch", "qr_individual", "barcode_individual", "rfid_future"], "default": "quantity" },
+    "expected_lifetime_washes": { "type": "number", "default": 0 },
+    "replacement_cost": { "type": "number", "default": 0 },
+    "rental_price": { "type": "number", "default": 0 },
+    "weight_kg": { "type": "number", "default": 0 },
+    "minimum_available_quantity": { "type": "number", "default": 0 },
+    "active": { "type": "boolean", "default": true },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "sku", "name", "linen_type", "ownership", "tracking_mode"]
+}

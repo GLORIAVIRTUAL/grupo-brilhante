@@ -5,6 +5,7 @@ import { requireInternalRequest, securityErrorResponse } from '../../shared/func
 // Cria de fato uma coleta (Pickup) no calendário. Reutilizada pela proteção anti-alucinação
 // do orchestrator para garantir que toda confirmação de coleta gere um registro real.
 Deno.serve(async (req) => {
+    const requestId = crypto.randomUUID();
     try {
         if (req.method !== 'POST') return Response.json({ error: 'method_not_allowed' }, { status: 405 });
         const base44 = createClientFromRequest(req);
@@ -27,9 +28,15 @@ Deno.serve(async (req) => {
         }
 
         const customer = await base44.asServiceRole.entities.Customer.get(customer_id).catch(() => null);
-        const savedAddr = normalize(`${customer?.address || ''} ${customer?.address_number || ''} ${customer?.address_complement || ''}`);
+        if (!customer) return Response.json({ error: 'Cliente não encontrado.', request_id: requestId }, { status: 404 });
+        const unitId = String(body.unit_id || customer.unit_id || '').trim();
+        if (!unitId || (customer.unit_id && customer.unit_id !== unitId)) return Response.json({ error: 'Escopo de unidade inválido.', request_id: requestId }, { status: 409 });
+        const unit = await base44.asServiceRole.entities.Unit.get(unitId).catch(() => null);
+        if (!unit?.legal_entity_id || unit.status !== 'active') return Response.json({ error: 'Unidade empresarial indisponível.', request_id: requestId }, { status: 409 });
+        const savedAddr = normalize(`${customer.address || ''} ${customer.address_number || ''} ${customer.address_complement || ''}`);
 
-        const convs = await base44.asServiceRole.entities.Conversation.filter({ customer_id });
+        const allConversations = await base44.asServiceRole.entities.Conversation.filter({ customer_id });
+        const convs = allConversations.filter((conversation) => conversation.metadata?.unit_id === unit.id);
         let inboundText = '';
         for (const cv of convs) {
             const msgs = await base44.asServiceRole.entities.Message.filter({ conversation_id: cv.id, direction: 'IN' }, '-created_date', 60);
@@ -71,6 +78,7 @@ Deno.serve(async (req) => {
         const targetRange = getPickupDateRange(date);
 
         const existingPickups = await base44.asServiceRole.entities.Pickup.filter({
+            unit_id: unit.id,
             scheduled_at: { $gte: targetRange.start, $lte: targetRange.end },
             status: { $ne: 'cancelled' }
         });
@@ -88,7 +96,7 @@ Deno.serve(async (req) => {
         }
 
         // Cancela coletas agendadas anteriores do mesmo cliente
-        const existingCustomerPickups = await base44.asServiceRole.entities.Pickup.filter({ customer_id, status: 'scheduled' });
+        const existingCustomerPickups = await base44.asServiceRole.entities.Pickup.filter({ customer_id, unit_id: unit.id, status: 'scheduled' });
         for (const oldPickup of existingCustomerPickups) {
             await base44.asServiceRole.entities.Pickup.update(oldPickup.id, { status: 'cancelled' });
         }
@@ -110,13 +118,14 @@ Deno.serve(async (req) => {
         const finalDate = getPickupSlotIso(date, selectedSlot);
         await base44.asServiceRole.entities.Pickup.create({
             customer_id,
-            unit_id: customer?.unit_id,
+            legal_entity_id: unit.legal_entity_id,
+            unit_id: unit.id,
             scheduled_at: finalDate,
             status: 'scheduled',
             address: address || '',
             notes: notes || '',
             source: 'ai',
-            created_by_name: 'Glória (IA)'
+            created_by_name: 'Automação de atendimento'
         });
 
         const shiftInfo = period === 'morning' ? `(turno manhã) das ${schedule.isSaturday ? '9h' : '8h'} às 12h` : '(turno tarde) das 13h às 16h';
@@ -125,11 +134,12 @@ Deno.serve(async (req) => {
             success: true,
             date,
             weekday: actualWeekday,
-            message: `Coleta agendada com sucesso para ${actualWeekday}, ${dd}/${mm}/${yy}, ${shiftInfo}. Confirme ao cliente EXATAMENTE esta data e este dia da semana.`
+            message: `Coleta agendada com sucesso para ${actualWeekday}, ${dd}/${mm}/${yy}, ${shiftInfo}. Confirme ao cliente EXATAMENTE esta data e este dia da semana.`,
+            request_id: requestId
         });
     } catch (error) {
         if (error?.name === 'SecurityError') return securityErrorResponse(error);
         console.error('schedulePickupTool error:', error?.message || error);
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: 'pickup_schedule_failed', request_id: requestId }, { status: 500 });
     }
 });

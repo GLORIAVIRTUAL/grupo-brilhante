@@ -1,0 +1,27 @@
+{
+  "name": "ReconciliationBatch",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "bank_account_id": { "type": "string" },
+    "source_type": { "type": "string", "enum": ["ofx", "cnab_return", "api", "manual", "migration"] },
+    "document_asset_id": { "type": "string" },
+    "file_hash": { "type": "string" },
+    "period_start": { "type": "string", "format": "date" },
+    "period_end": { "type": "string", "format": "date" },
+    "status": { "type": "string", "enum": ["uploaded", "validating", "ready", "processing", "completed", "completed_with_errors", "rejected", "repair_required"], "default": "uploaded" },
+    "total_records": { "type": "number", "default": 0 },
+    "matched_records": { "type": "number", "default": 0 },
+    "unmatched_records": { "type": "number", "default": 0 },
+    "error_records": { "type": "number", "default": 0 },
+    "total_credit_amount": { "type": "number", "default": 0 },
+    "total_debit_amount": { "type": "number", "default": 0 },
+    "processed_at": { "type": "string", "format": "date-time" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "approved_by_user_id": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "bank_account_id", "source_type", "file_hash", "status", "idempotency_key"]
+}

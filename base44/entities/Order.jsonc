@@ -3,6 +3,9 @@
   "type": "object",
   "properties": {
     "customer_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
     "source_quote_id": { "type": "string" },
     "status": {
       "type": "string",
@@ -30,6 +33,7 @@
       "enum": ["not_scheduled", "scheduled", "partial", "completed", "cancelled"],
       "default": "not_scheduled"
     },
+    "legal_entity_id": { "type": "string" },
     "unit_id": { "type": "string" },
     "expected_finish_at": { "type": "string", "format": "date-time" },
     "closed_at": { "type": "string", "format": "date-time" },
@@ -50,6 +54,7 @@
     "fiscal_document_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
     "fiscal_status": { "type": "string", "enum": ["not_issued", "draft", "ready", "queued", "authorized", "rejected", "cancelled"], "default": "not_issued" },
     "cost_center": { "type": "string" },
+    "cost_center_id": { "type": "string" },
     "purchase_order_number": { "type": "string" },
     "ticket_number": { "type": "string" },
     "piece_count": { "type": "number", "default": 0 },

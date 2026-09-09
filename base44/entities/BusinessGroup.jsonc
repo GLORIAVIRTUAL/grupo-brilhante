@@ -1,0 +1,26 @@
+{
+  "name": "BusinessGroup",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "trade_name": { "type": "string" },
+    "code": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "inactive"], "default": "draft" },
+    "default_currency": { "type": "string", "default": "BRL" },
+    "timezone": { "type": "string", "default": "America/Sao_Paulo" },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "logo_url": { "type": "string" },
+        "primary_color": { "type": "string" },
+        "secondary_color": { "type": "string" },
+        "website_url": { "type": "string" },
+        "support_email": { "type": "string" }
+      }
+    },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["name", "code", "status"]
+}

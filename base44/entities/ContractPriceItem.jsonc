@@ -1,0 +1,27 @@
+{
+  "name": "ContractPriceItem",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "contract_version_id": { "type": "string" },
+    "service_id": { "type": "string" },
+    "catalog_item_id": { "type": "string" },
+    "description": { "type": "string" },
+    "billing_unit": { "type": "string", "enum": ["piece", "kg", "hour", "work_post", "visit", "square_meter", "fixed_monthly", "day", "unit", "other"] },
+    "minimum_quantity": { "type": "number", "default": 0 },
+    "maximum_quantity": { "type": "number" },
+    "included_quantity": { "type": "number", "default": 0 },
+    "unit_price": { "type": "number" },
+    "excess_unit_price": { "type": "number" },
+    "minimum_charge": { "type": "number", "default": 0 },
+    "discount_percent": { "type": "number", "default": 0 },
+    "tax_included": { "type": "boolean", "default": true },
+    "valid_from": { "type": "string", "format": "date" },
+    "valid_until": { "type": "string", "format": "date" },
+    "status": { "type": "string", "enum": ["draft", "active", "superseded", "inactive"], "default": "draft" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "contract_id", "description", "billing_unit", "unit_price", "status"]
+}

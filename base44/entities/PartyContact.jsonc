@@ -1,0 +1,22 @@
+{
+  "name": "PartyContact",
+  "type": "object",
+  "properties": {
+    "business_party_id": { "type": "string" },
+    "contact_type": { "type": "string", "enum": ["phone", "mobile", "whatsapp", "email", "website", "other"] },
+    "label": { "type": "string" },
+    "contact_name": { "type": "string" },
+    "job_title": { "type": "string" },
+    "value": { "type": "string" },
+    "canonical_value": { "type": "string" },
+    "is_primary": { "type": "boolean", "default": false },
+    "allows_service_messages": { "type": "boolean", "default": true },
+    "allows_marketing": { "type": "boolean", "default": false },
+    "consent_source": { "type": "string", "enum": ["contract", "form", "whatsapp", "email", "verbal_record", "import", "not_collected"], "default": "not_collected" },
+    "consent_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["active", "invalid", "opted_out", "inactive"], "default": "active" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["business_party_id", "contact_type", "value", "status"]
+}

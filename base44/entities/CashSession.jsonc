@@ -2,48 +2,179 @@
   "name": "CashSession",
   "type": "object",
   "properties": {
-    "unit_id": { "type": "string" },
-    "session_number": { "type": "string" },
-    "operator_user_id": { "type": "string" },
-    "operator_name": { "type": "string" },
-    "status": { "type": "string", "enum": ["open", "counting", "pending_approval", "closed", "cancelled"], "default": "open" },
-    "opened_at": { "type": "string", "format": "date-time" },
-    "closed_at": { "type": "string", "format": "date-time" },
-    "opening_amount": { "type": "number", "default": 0 },
-    "expected_cash_amount": { "type": "number", "default": 0 },
-    "counted_cash_amount": { "type": "number" },
-    "difference_amount": { "type": "number" },
-    "income_amount": { "type": "number", "default": 0 },
-    "supply_amount": { "type": "number", "default": 0 },
-    "withdrawal_amount": { "type": "number", "default": 0 },
-    "refund_amount": { "type": "number", "default": 0 },
-    "approved_by_user_id": { "type": "string" },
-    "approved_at": { "type": "string", "format": "date-time" },
-    "difference_reason": { "type": "string" },
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "cost_center_id": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "native",
+        "conta_azul",
+        "bank",
+        "provider",
+        "migration",
+        "other"
+      ],
+      "default": "native"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "session_number": {
+      "type": "string"
+    },
+    "operator_user_id": {
+      "type": "string"
+    },
+    "operator_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "counting",
+        "pending_approval",
+        "closed",
+        "cancelled"
+      ],
+      "default": "open"
+    },
+    "opened_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "opening_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "expected_cash_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "counted_cash_amount": {
+      "type": "number"
+    },
+    "difference_amount": {
+      "type": "number"
+    },
+    "income_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "supply_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "withdrawal_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "refund_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "approved_by_user_id": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "difference_reason": {
+      "type": "string"
+    },
     "payment_summary": {
       "type": "object",
       "properties": {
-        "cash": { "type": "number", "default": 0 },
-        "pix": { "type": "number", "default": 0 },
-        "credit": { "type": "number", "default": 0 },
-        "debit": { "type": "number", "default": 0 },
-        "bank_transfer": { "type": "number", "default": 0 },
-        "customer_balance": { "type": "number", "default": 0 },
-        "invoiced": { "type": "number", "default": 0 },
-        "other": { "type": "number", "default": 0 }
+        "cash": {
+          "type": "number",
+          "default": 0
+        },
+        "pix": {
+          "type": "number",
+          "default": 0
+        },
+        "credit": {
+          "type": "number",
+          "default": 0
+        },
+        "debit": {
+          "type": "number",
+          "default": 0
+        },
+        "bank_transfer": {
+          "type": "number",
+          "default": 0
+        },
+        "customer_balance": {
+          "type": "number",
+          "default": 0
+        },
+        "invoiced": {
+          "type": "number",
+          "default": 0
+        },
+        "other": {
+          "type": "number",
+          "default": 0
+        }
       }
     },
-    "receipt_count": { "type": "number", "default": 0 },
-    "payment_count": { "type": "number", "default": 0 },
-    "pending_reconciliation_amount": { "type": "number", "default": 0 },
-    "approval_reason": { "type": "string" },
-    "reopened_at": { "type": "string", "format": "date-time" },
-    "reopened_by_user_id": { "type": "string" },
-    "reopen_reason": { "type": "string" },
-    "previous_session_id": { "type": "string" },
-    "closure_snapshot": { "type": "object", "additionalProperties": true },
-    "notes": { "type": "string" },
-    "request_id": { "type": "string" }
+    "receipt_count": {
+      "type": "number",
+      "default": 0
+    },
+    "payment_count": {
+      "type": "number",
+      "default": 0
+    },
+    "pending_reconciliation_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "approval_reason": {
+      "type": "string"
+    },
+    "reopened_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reopened_by_user_id": {
+      "type": "string"
+    },
+    "reopen_reason": {
+      "type": "string"
+    },
+    "previous_session_id": {
+      "type": "string"
+    },
+    "closure_snapshot": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "notes": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    }
   },
-  "required": ["unit_id", "operator_user_id", "status", "opened_at"]
+  "required": [
+    "unit_id",
+    "operator_user_id",
+    "status",
+    "opened_at"
+  ]
 }

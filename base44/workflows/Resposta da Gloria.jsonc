@@ -15,7 +15,8 @@
           "with": {
             "function_name": "aiReplyFromWorkflow",
             "args": {
-              "message_id": "${ .trigger.entity_id }"
+              "message_id": "${ .trigger.entity_id }",
+              "workflow_token": "${ .trigger.entity.workflow_dispatch_token }"
             }
           },
           "then": "end",

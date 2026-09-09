@@ -1,0 +1,27 @@
+{
+  "name": "BusinessActivity",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "opportunity_id": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "activity_type": { "type": "string", "enum": ["task", "call", "meeting", "visit", "email", "proposal", "follow_up", "other"] },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "owner_user_id": { "type": "string" },
+    "participant_user_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "starts_at": { "type": "string", "format": "date-time" },
+    "ends_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["planned", "in_progress", "completed", "cancelled", "overdue"], "default": "planned" },
+    "result": { "type": "string" },
+    "next_action": { "type": "string" },
+    "next_action_at": { "type": "string", "format": "date-time" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "activity_type", "title", "status"]
+}

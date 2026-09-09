@@ -1,0 +1,32 @@
+{
+  "name": "CleaningInspection",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "cleaning_site_id": { "type": "string" },
+    "work_post_id": { "type": "string" },
+    "work_schedule_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
+    "checklist_template_id": { "type": "string" },
+    "inspection_number": { "type": "string" },
+    "inspection_type": { "type": "string", "enum": ["routine", "supervisor_visit", "customer_request", "corrective", "final"], "default": "routine" },
+    "status": { "type": "string", "enum": ["draft", "in_progress", "submitted", "approved", "rejected", "corrective_action"], "default": "draft" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "inspector_user_id": { "type": "string" },
+    "team_user_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "checklist_snapshot": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "materials_used": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "score": { "type": "number", "default": 0 },
+    "passed": { "type": "boolean", "default": false },
+    "nonconformities": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "customer_signature_asset_id": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "cleaning_site_id", "business_contract_id", "checklist_template_id", "inspection_number", "inspection_type", "status", "inspector_user_id", "idempotency_key"]
+}

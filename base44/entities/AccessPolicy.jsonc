@@ -4,6 +4,7 @@
   "properties": {
     "name": { "type": "string" },
     "code": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
     "unit_id": { "type": "string" },
     "role": {
       "type": "string",

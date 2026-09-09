@@ -1,0 +1,25 @@
+{
+  "name": "MessageTemplate",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "template_code": { "type": "string" },
+    "name": { "type": "string" },
+    "channel": { "type": "string", "enum": ["whatsapp", "email", "sms", "site", "internal"] },
+    "purpose": { "type": "string", "enum": ["service", "transactional", "billing", "collection", "survey", "marketing", "campaign", "approval", "alert", "other"] },
+    "provider_template_name": { "type": "string" },
+    "language": { "type": "string", "default": "pt_BR" },
+    "subject": { "type": "string" },
+    "body": { "type": "string" },
+    "variables": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "outside_service_window": { "type": "boolean", "default": false },
+    "provider_approval_status": { "type": "string", "enum": ["not_required", "draft", "submitted", "approved", "rejected"], "default": "not_required" },
+    "version": { "type": "number", "default": 1 },
+    "status": { "type": "string", "enum": ["draft", "active", "superseded", "inactive"], "default": "draft" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "template_code", "name", "channel", "purpose", "body", "version", "status"]
+}

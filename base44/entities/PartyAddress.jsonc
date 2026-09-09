@@ -1,0 +1,25 @@
+{
+  "name": "PartyAddress",
+  "type": "object",
+  "properties": {
+    "business_party_id": { "type": "string" },
+    "address_type": { "type": "string", "enum": ["fiscal", "billing", "delivery", "pickup", "operational", "headquarters", "other"] },
+    "label": { "type": "string" },
+    "postal_code": { "type": "string" },
+    "street": { "type": "string" },
+    "number": { "type": "string" },
+    "complement": { "type": "string" },
+    "neighborhood": { "type": "string" },
+    "city": { "type": "string" },
+    "state": { "type": "string" },
+    "country": { "type": "string", "default": "BR" },
+    "latitude": { "type": "number" },
+    "longitude": { "type": "number" },
+    "is_primary": { "type": "boolean", "default": false },
+    "status": { "type": "string", "enum": ["active", "invalid", "inactive"], "default": "active" },
+    "verified_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["business_party_id", "address_type", "street", "number", "city", "state", "status"]
+}

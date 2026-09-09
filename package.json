@@ -9,6 +9,8 @@
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
+    "validate:schemas": "node scripts/validate-all-schemas.mjs",
+    "validate:erp": "node scripts/validate-grupo-brilhante-erp.mjs",
     "validate:evolution": "python3 scripts/validate-laundry-evolution.py",
     "test:pricing": "node scripts/test-laundry-pricing.mjs",
     "validate:counter-core": "npm run validate:evolution && npm run test:pricing && eslint --quiet src/components/management/ManagementCommandCenter.jsx src/components/management/GarmentLocationPanel.jsx src/components/management/GarmentLabelPrintDialog.jsx src/components/management/GarmentScannerDialog.jsx src/components/management/GarmentDeliveryDialog.jsx src/components/crm/AdvancedQuoteModal.jsx src/components/crm/ManualGarmentCharacteristics.jsx src/lib/garmentLabels.js src/lib/deliveryReceiptDocument.js && npm run build",

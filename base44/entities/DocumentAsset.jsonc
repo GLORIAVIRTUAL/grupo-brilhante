@@ -2,6 +2,9 @@
   "name": "DocumentAsset",
   "type": "object",
   "properties": {
+    "legal_entity_id": {
+      "type": "string"
+    },
     "unit_id": {
       "type": "string"
     },
@@ -11,6 +14,16 @@
     "customer_id": {
       "type": "string"
     },
+    "related_entity_type": { "type": "string" },
+    "related_entity_id": { "type": "string" },
+    "document_number": { "type": "string" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "classification": { "type": "string", "enum": ["public", "internal", "confidential", "restricted"], "default": "internal" },
+    "status": { "type": "string", "enum": ["active", "quarantined", "retired", "expired"], "default": "active" },
+    "retired_at": { "type": "string", "format": "date-time" },
+    "retired_by_user_id": { "type": "string" },
+    "retirement_reason": { "type": "string" },
     "document_type": {
       "type": "string",
       "enum": [
@@ -23,6 +36,16 @@
         "payment_receipt",
         "delivery_proof",
         "third_party_document",
+        "corporate_document",
+        "contract",
+        "contract_addendum",
+        "tax_document",
+        "bank_document",
+        "employee_document",
+        "hospital_document",
+        "linen_liability_term",
+        "cleaning_evidence",
+        "migration_source",
         "other"
       ]
     },
@@ -81,6 +104,8 @@
       "type": "string",
       "format": "date-time"
     },
+    "retention_class": { "type": "string", "enum": ["standard", "financial", "fiscal", "security", "privacy", "employment", "contractual"], "default": "standard" },
+    "created_by_user_id": { "type": "string" },
     "metadata": {
       "type": "object",
       "additionalProperties": true

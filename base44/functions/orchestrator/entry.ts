@@ -121,6 +121,8 @@ Deno.serve(async (req) => {
         requireInternalRequest(req, inputBody);
         invokeSender = (payload) => base44.asServiceRole.functions.invoke(senderFn, {
             ...payload,
+            customer_id: payload.customer_id || customer?.id,
+            unit_id: payload.unit_id || customer?.unit_id || conversation?.metadata?.unit_id,
             _internal_token: Deno.env.get('INTERNAL_FUNCTION_TOKEN')
         });
         
@@ -157,8 +159,11 @@ Deno.serve(async (req) => {
         conversation = loadedConversation;
         customer = loadedCustomer;
 
-        if (!conversation || !message) {
-            return Response.json({ error: "Context not found" }, { status: 404 });
+        if (!conversation || !message || !customer) {
+            return Response.json({ error: "Context not found", request_id: requestId }, { status: 404 });
+        }
+        if (message.conversation_id !== conversation.id || conversation.customer_id !== customer.id) {
+            return Response.json({ error: 'context_scope_mismatch', request_id: requestId }, { status: 409 });
         }
 
         // Reavalia a origem Moinhos usando também o metadata da conversa (fonte confiável,
@@ -259,41 +264,35 @@ Deno.serve(async (req) => {
              console.log(`Skipping orchestrator due to ignored solo text: ${message.text}`);
              return Response.json({ status: "ignored_solo_text" });
         }
-        // As unidades vêm SEMPRE do banco. Nada é criado automaticamente aqui.
-        const units = await base44.asServiceRole.entities.Unit.list('name', 50);
-
-        // Unidade padrão: a primeira unidade cadastrada. Não pergunta ao cliente.
-        if (!customer.unit_id) {
-            const defaultUnit = units[0];
-            if (defaultUnit) {
-                await base44.asServiceRole.entities.Customer.update(customer.id, {
-                    unit_id: defaultUnit.id,
-                    preferred_unit_name: defaultUnit.name
-                });
-                customer.unit_id = defaultUnit.id;
-                customer.preferred_unit_name = defaultUnit.name;
-
-                await updateNewCustomerStage(customer.id, 'Qualificação');
-
-                // Backfill registros antigos do cliente sem unidade
-                const [crmCards, customerQuotes, customerOrders, customerPayments] = await Promise.all([
-                    base44.asServiceRole.entities.CrmCard.filter({ customer_id: customer.id }),
-                    base44.asServiceRole.entities.Quote.filter({ customer_id: customer.id }),
-                    base44.asServiceRole.entities.Order.filter({ customer_id: customer.id }),
-                    base44.asServiceRole.entities.Payment.filter({ customer_id: customer.id })
-                ]);
-
-                await Promise.all([
-                    ...crmCards.filter(c => !c.unit_id).map((card) => base44.asServiceRole.entities.CrmCard.update(card.id, { unit_id: defaultUnit.id })),
-                    ...customerQuotes.filter(q => !q.unit_id).map((quote) => base44.asServiceRole.entities.Quote.update(quote.id, { unit_id: defaultUnit.id })),
-                    ...customerOrders.filter(o => !o.unit_id).map((order) => base44.asServiceRole.entities.Order.update(order.id, { unit_id: defaultUnit.id })),
-                    ...customerPayments.filter(p => !p.unit_id).map((payment) => base44.asServiceRole.entities.Payment.update(payment.id, { unit_id: defaultUnit.id }))
-                ]);
-            }
+        // O escopo da conversa deve ser explícito; nunca escolhemos a primeira unidade da rede.
+        const candidateUnitId = currentState.unit_id || customer.unit_id || null;
+        const activeUnit = candidateUnitId
+            ? await base44.asServiceRole.entities.Unit.get(candidateUnitId).catch(() => null)
+            : null;
+        if (!activeUnit || activeUnit.status !== 'active' || !activeUnit.legal_entity_id) {
+            await base44.asServiceRole.entities.Conversation.update(conversation.id, {
+                handoff_required: true,
+                metadata: { ...currentState, scope_error: 'enterprise_unit_required' }
+            }).catch(() => null);
+            return Response.json({ error: 'enterprise_unit_required', request_id: requestId }, { status: 409 });
         }
-
-        const activeUnitId = customer.unit_id || currentState.unit_id || null;
-        const activeUnitName = customer.preferred_unit_name || currentState.unit_name || units.find((unit) => unit.id === activeUnitId)?.name || '5àsec';
+        if (customer.unit_id && customer.unit_id !== activeUnit.id) {
+            return Response.json({ error: 'customer_unit_mismatch', request_id: requestId }, { status: 409 });
+        }
+        if (!customer.unit_id || !customer.legal_entity_id) {
+            await base44.asServiceRole.entities.Customer.update(customer.id, {
+                unit_id: activeUnit.id,
+                legal_entity_id: activeUnit.legal_entity_id,
+                preferred_unit_name: activeUnit.name
+            });
+            customer.unit_id = activeUnit.id;
+            customer.legal_entity_id = activeUnit.legal_entity_id;
+            customer.preferred_unit_name = activeUnit.name;
+            await updateNewCustomerStage(customer.id, 'Qualificação');
+        }
+        const activeUnitId = activeUnit.id;
+        const activeLegalEntityId = activeUnit.legal_entity_id;
+        const activeUnitName = customer.preferred_unit_name || currentState.unit_name || activeUnit.name;
 
         // Um pedido explícito de NOVO orçamento sempre encerra o estado operacional anterior,
         // mesmo quando a conversa do WhatsApp continua aberta. Mantemos apenas identidade/unidade.
@@ -969,6 +968,7 @@ Deno.serve(async (req) => {
                 if (schedule.isOpen) {
                     const range = getPickupDateRange(pickupAvailabilityRequest.date);
                     dayPickups = await base44.asServiceRole.entities.Pickup.filter({
+                        unit_id: activeUnitId,
                         scheduled_at: { $gte: range.start, $lte: range.end },
                         status: { $ne: 'cancelled' }
                     });
@@ -993,15 +993,16 @@ Deno.serve(async (req) => {
                 const hasSavedAddress = customerRecord?.address && customerRecord?.address_number;
 
                 if (hasSavedAddress) {
-                    const encaixe = await findNextEncaixeSlot(base44.asServiceRole);
+                    const encaixe = await findNextEncaixeSlot(base44, { unitId: activeUnitId, legalEntityId: activeLegalEntityId });
                     if (encaixe) {
-                        const oldPickups = await base44.asServiceRole.entities.Pickup.filter({ customer_id: customer.id, status: 'scheduled' });
+                        const oldPickups = await base44.asServiceRole.entities.Pickup.filter({ customer_id: customer.id, unit_id: activeUnitId, status: 'scheduled' });
                         for (const op of oldPickups) await base44.asServiceRole.entities.Pickup.update(op.id, { status: 'cancelled' });
 
                         const fullAddress = `${customerRecord.address}, ${customerRecord.address_number}${customerRecord.address_complement ? `, ${customerRecord.address_complement}` : ''}${customerRecord.neighborhood ? ` — ${customerRecord.neighborhood}` : ''}`;
                         await base44.asServiceRole.entities.Pickup.create({
                             customer_id: customer.id,
-                            unit_id: currentState.unit_id || '6a99e42ee48200f5d8ddd176',
+                            legal_entity_id: activeLegalEntityId,
+                            unit_id: activeUnitId,
                             scheduled_at: encaixe.slotIso,
                             address: fullAddress,
                             neighborhood: customerRecord.neighborhood,
@@ -1009,7 +1010,7 @@ Deno.serve(async (req) => {
                             fee: 0,
                             notes: 'ENCAIXE — pagamento antecipado via Pix confirmado',
                             source: 'ai',
-                            created_by_name: 'Glória (IA)',
+                            created_by_name: 'Automação de atendimento',
                             metadata: { encaixe: true, payment_confirmed: true }
                         });
                         currentState.payment_confirmed = false;
@@ -2017,7 +2018,7 @@ Deno.serve(async (req) => {
                         try {
                             // ENCAIXE: pagamento antecipado confirmado → sistema calcula próximo turno
                             if (args.encaixe) {
-                                const encaixe = await findNextEncaixeSlot(base44.asServiceRole);
+                                const encaixe = await findNextEncaixeSlot(base44, { unitId: activeUnitId, legalEntityId: activeLegalEntityId });
                                 if (!encaixe) {
                                     chatMessages.push({
                                         role: "tool",
@@ -2046,6 +2047,7 @@ Deno.serve(async (req) => {
                             const targetRange = getPickupDateRange(args.date);
 
                             const existingPickups = await base44.asServiceRole.entities.Pickup.filter({
+                                unit_id: activeUnitId,
                                 scheduled_at: {
                                     $gte: targetRange.start,
                                     $lte: targetRange.end
@@ -2074,6 +2076,7 @@ Deno.serve(async (req) => {
                             // Cancel any existing scheduled pickups for this customer before creating a new one
                             const existingCustomerPickups = await base44.asServiceRole.entities.Pickup.filter({
                                 customer_id: customer.id,
+                                unit_id: activeUnitId,
                                 status: 'scheduled'
                             });
                             for (const oldPickup of existingCustomerPickups) {
@@ -2102,6 +2105,8 @@ Deno.serve(async (req) => {
                                 const finalDate = getPickupSlotIso(args.date, selectedSlot);
                                 await base44.asServiceRole.entities.Pickup.create({
                                     customer_id: customer.id,
+                                    legal_entity_id: activeLegalEntityId,
+                                    unit_id: activeUnitId,
                                     scheduled_at: finalDate,
                                     status: 'scheduled',
                                     address: args.address,

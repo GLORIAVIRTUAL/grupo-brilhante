@@ -2,6 +2,16 @@
   "name": "User",
   "type": "object",
   "properties": {
+    "primary_legal_entity_id": {
+      "type": "string",
+      "description": "Empresa legal principal do usuário"
+    },
+    "allowed_legal_entity_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Empresas legais adicionais acessíveis ao usuário"
+    },
     "primary_unit_id": {
       "type": "string",
       "description": "Unidade principal do usuário"

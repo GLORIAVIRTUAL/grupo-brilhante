@@ -9,7 +9,7 @@ export class SecurityError extends Error {
   }
 }
 
-function constantTimeEqual(left, right) {
+export function constantTimeEqual(left, right) {
   const a = String(left || '');
   const b = String(right || '');
   const max = Math.max(a.length, b.length);
@@ -87,6 +87,27 @@ function userUnitIds(user) {
   return [...new Set([user?.primary_unit_id, ...(user?.allowed_unit_ids || [])].filter(Boolean))];
 }
 
+function userLegalEntityIds(user) {
+  return [...new Set([user?.primary_legal_entity_id, ...(user?.allowed_legal_entity_ids || [])].filter(Boolean))];
+}
+
+function activeAt(record, now = new Date()) {
+  if (!record || record.status !== 'active') return false;
+  if (record.valid_from && new Date(record.valid_from) > now) return false;
+  if (record.valid_until && new Date(record.valid_until) < now) return false;
+  return true;
+}
+
+async function loadCompanyGrants(base44, user) {
+  if (!user?.id) return [];
+  try {
+    const grants = await base44.asServiceRole.entities.CompanyAccessGrant.filter({ user_id: user.id, status: 'active' }, '-valid_from', 1000);
+    return grants.filter((grant) => activeAt(grant));
+  } catch {
+    return [];
+  }
+}
+
 async function recordDenied(base44, user, details) {
   try {
     await base44.asServiceRole.entities.UserSessionEvent.create({
@@ -106,7 +127,9 @@ export async function enforceAuthenticatedUser(base44, req, user, options = {}) 
   const {
     permission = null,
     roles = [],
+    legalEntityId = null,
     unitId = null,
+    requireMfa = false,
     source = 'server_function',
   } = options;
 
@@ -128,37 +151,63 @@ export async function enforceAuthenticatedUser(base44, req, user, options = {}) 
 
   let policies = [];
   try {
-    policies = await base44.asServiceRole.entities.AccessPolicy.filter({ role, status: 'active' }, '-version', 100);
+    policies = await base44.asServiceRole.entities.AccessPolicy.filter({ role, status: 'active' }, '-version', 1000);
   } catch {
     policies = [];
   }
-  const permissions = effectivePermissions(user, policies);
+  const grants = await loadCompanyGrants(base44, user);
+  const legalEntityIds = [...new Set([
+    ...userLegalEntityIds(user),
+    ...grants.map((grant) => grant.legal_entity_id),
+  ].filter(Boolean))];
+  const unitIds = [...new Set([
+    ...userUnitIds(user),
+    ...grants.flatMap((grant) => grant.unit_ids || []),
+  ].filter(Boolean))];
+  const applicablePolicies = policies.filter((policy) => (!policy.legal_entity_id || legalEntityIds.includes(policy.legal_entity_id))
+    && (!policy.unit_id || unitIds.includes(policy.unit_id)));
+  const permissionSet = new Set(effectivePermissions(user, applicablePolicies));
+  const applicableGrants = legalEntityId ? grants.filter((grant) => grant.legal_entity_id === legalEntityId) : grants;
+  for (const grant of applicableGrants) {
+    for (const granted of grant.permissions || []) permissionSet.add(granted);
+    for (const denied of grant.denied_permissions || []) permissionSet.delete(denied);
+  }
+  const permissions = [...permissionSet];
+
   const allowedRoles = new Set(roles.map(normalizeLegacyRole));
   if (allowedRoles.size && !allowedRoles.has(role) && !permissions.includes('*')) {
     await recordDenied(base44, user, { source, reason: 'role_denied', role, roles });
     throw new SecurityError('Seu papel não permite esta operação.', 403, 'ROLE_DENIED');
   }
   if (permission && !permissions.includes('*') && !permissions.includes(permission)) {
-    await recordDenied(base44, user, { source, reason: 'permission_denied', permission, role });
+    await recordDenied(base44, user, { source, reason: 'permission_denied', permission, role, legal_entity_id: legalEntityId });
     throw new SecurityError('Permissão insuficiente.', 403, 'PERMISSION_DENIED');
   }
 
-  const unitIds = userUnitIds(user);
-  if (unitId && role !== 'super_admin' && !permissions.includes('*') && !unitIds.includes(unitId)) {
-    await recordDenied(base44, user, { source, reason: 'unit_scope_denied', unit_id: unitId });
+  const canViewAllCompanies = role === 'super_admin' || permissions.includes('companies.view_all');
+  if (legalEntityId && !canViewAllCompanies && !legalEntityIds.includes(legalEntityId)) {
+    await recordDenied(base44, user, { source, reason: 'legal_entity_scope_denied', legal_entity_id: legalEntityId });
+    throw new SecurityError('Empresa fora do seu escopo.', 403, 'LEGAL_ENTITY_SCOPE_DENIED');
+  }
+  if (unitId && role !== 'super_admin' && !unitIds.includes(unitId)) {
+    await recordDenied(base44, user, { source, reason: 'unit_scope_denied', unit_id: unitId, legal_entity_id: legalEntityId });
     throw new SecurityError('Unidade fora do seu escopo.', 403, 'UNIT_SCOPE_DENIED');
   }
+  if (unitId && legalEntityId) {
+    const unit = await base44.asServiceRole.entities.Unit.get(unitId).catch(() => null);
+    if (!unit || unit.legal_entity_id !== legalEntityId) {
+      await recordDenied(base44, user, { source, reason: 'unit_company_mismatch', unit_id: unitId, legal_entity_id: legalEntityId });
+      throw new SecurityError('Unidade não pertence à empresa informada.', 409, 'UNIT_COMPANY_MISMATCH');
+    }
+  }
 
-  const applicablePolicies = policies.filter((policy) => !policy.unit_id || unitIds.includes(policy.unit_id));
-  // MFA só é exigido quando marcado explicitamente no usuário ou numa política de acesso.
-  // Não é mais derivado automaticamente do papel, pois o app não possui fluxo de cadastro de MFA.
-  const mustUseMfa = user.require_mfa === true || applicablePolicies.some((policy) => policy.require_mfa === true);
+  const mustUseMfa = requireMfa === true || ROLE_DEFINITIONS[role]?.mfaRequired === true || user.require_mfa === true || applicablePolicies.some((policy) => policy.require_mfa === true);
   if (mustUseMfa && user.mfa_status !== 'verified') {
-    await recordDenied(base44, user, { source, reason: 'mfa_required' });
+    await recordDenied(base44, user, { source, reason: 'mfa_required', legal_entity_id: legalEntityId });
     throw new SecurityError('Esta operação exige MFA verificado.', 403, 'MFA_REQUIRED');
   }
 
-  return { kind: 'user', user, role, permissions, unitIds, policies: applicablePolicies };
+  return { kind: 'user', user, role, permissions, unitIds, legalEntityIds, companyGrants: grants, policies: applicablePolicies };
 }
 
 export async function enforceExistingUserSecurity(base44, req, user, options = {}) {
@@ -172,7 +221,7 @@ export async function authorizeUserOrInternal(base44, req, body = {}, options = 
     const configured = Deno.env.get(internalTokenEnv) || '';
     const presented = presentedInternalToken(req, body);
     if (configured && presented && constantTimeEqual(presented, configured)) {
-      return { kind: 'internal', user: null, role: 'internal', permissions: ['*'], unitIds: [] };
+      return { kind: 'internal', user: null, role: 'internal', permissions: ['*'], unitIds: [], legalEntityIds: [] };
     }
   }
 
