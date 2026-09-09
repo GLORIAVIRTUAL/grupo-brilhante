@@ -290,13 +290,11 @@ export default function Layout({ children }) {
         {/* Sidebar */}
         <aside className="w-20 lg:w-72 min-h-screen bg-white/5 backdrop-blur-xl border-r border-white/10 flex flex-col transition-all duration-300">
           <div className="px-3 py-4 flex items-center justify-center lg:justify-start gap-3">
-            <div className="bg-white rounded-xl px-3 py-2 flex items-center justify-center mx-auto lg:mx-0 w-full max-w-[260px]">
-              <img 
-                src="https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/10365075e_Untitled110x40px1.png"
-                alt="BRILHANTE LIMPEZA & TERCEIRIZAÇÃO"
-                className="h-9 lg:h-10 w-auto object-contain"
-              />
-            </div>
+            <img 
+              src="https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/cda3b48dc_generated_image.png"
+              alt="BRILHANTE LIMPEZA & TERCEIRIZAÇÃO"
+              className="h-14 lg:h-20 w-auto object-contain mx-auto lg:mx-0"
+            />
           </div>
 
           <nav className="flex-1 mt-8 px-3 space-y-2">
