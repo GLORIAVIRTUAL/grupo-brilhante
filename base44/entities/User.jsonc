@@ -1,0 +1,122 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "primary_unit_id": {
+      "type": "string",
+      "description": "Unidade principal do usuário"
+    },
+    "allowed_unit_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Unidades adicionais que o usuário pode acessar"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "super_admin",
+        "admin",
+        "manager",
+        "attendant",
+        "cashier",
+        "production",
+        "driver",
+        "inventory",
+        "finance",
+        "auditor"
+      ],
+      "default": "attendant",
+      "description": "Papel principal usado pela política de autorização"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Permissões excepcionais adicionais ao papel"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "invited",
+        "active",
+        "suspended",
+        "disabled"
+      ],
+      "default": "active"
+    },
+    "require_mfa": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica que operações críticas exigem autenticação reforçada"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "last_login_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "access_revision": {
+      "type": "number",
+      "default": 1,
+      "description": "Versão monotônica da política de acesso aplicada ao usuário"
+    },
+    "access_reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "access_reviewed_by_user_id": {
+      "type": "string"
+    },
+    "access_change_reason": {
+      "type": "string"
+    },
+    "mfa_status": {
+      "type": "string",
+      "enum": ["not_required", "required", "enrolled", "verified", "recovery_required"],
+      "default": "not_required"
+    },
+    "mfa_provider": {
+      "type": "string",
+      "enum": ["base44", "external_idp", "not_configured"],
+      "default": "not_configured"
+    },
+    "mfa_enrolled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mfa_verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "suspended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "suspended_by_user_id": {
+      "type": "string"
+    },
+    "suspension_reason": {
+      "type": "string"
+    },
+    "session_revoked_after": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Marca lógica para exigir nova autenticação nas funções da aplicação"
+    },
+    "employment_identifier": {
+      "type": "string"
+    },
+    "job_title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "primary_unit_id"
+  ]
+}

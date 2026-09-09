@@ -1,0 +1,39 @@
+{
+  "name": "AIJob",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "job_type": {
+      "type": "string",
+      "enum": ["garment_recognition", "purchase_invoice_extraction", "utility_bill_extraction", "service_invoice_extraction", "receipt_extraction", "document_classification"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "processing", "completed", "human_review", "failed", "cancelled"],
+      "default": "queued"
+    },
+    "document_asset_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "entity_type": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "model": { "type": "string" },
+    "prompt_version": { "type": "string" },
+    "catalog_version": { "type": "string" },
+    "confidence": { "type": "number" },
+    "field_confidence": { "type": "object", "additionalProperties": true },
+    "result": { "type": "object", "additionalProperties": true },
+    "error_code": { "type": "string" },
+    "error_message": { "type": "string" },
+    "attempts": { "type": "number", "default": 0 },
+    "latency_ms": { "type": "number" },
+    "estimated_cost": { "type": "number" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["unit_id", "job_type", "status"]
+}

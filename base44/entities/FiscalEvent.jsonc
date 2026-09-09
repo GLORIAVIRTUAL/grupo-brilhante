@@ -1,0 +1,25 @@
+{
+  "name": "FiscalEvent",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "fiscal_document_id": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": ["created", "validated", "queued", "submitted", "authorized", "rejected", "error", "cancel_requested", "cancelled", "substituted", "downloaded", "resent"]
+    },
+    "status": { "type": "string", "enum": ["success", "pending", "failed"], "default": "success" },
+    "provider": { "type": "string" },
+    "environment": { "type": "string" },
+    "external_protocol": { "type": "string" },
+    "code": { "type": "string" },
+    "message": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "actor_user_id": { "type": "string" },
+    "actor_name": { "type": "string" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "fiscal_document_id", "event_type", "status", "occurred_at", "request_id"]
+}

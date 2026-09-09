@@ -1,0 +1,22 @@
+{
+  "name": "ThirdPartyPartner",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "corporate_name": { "type": "string" },
+    "trade_name": { "type": "string" },
+    "tax_id": { "type": "string" },
+    "service_types": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "contact_name": { "type": "string" },
+    "phones": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "email": { "type": "string" },
+    "default_lead_time_days": { "type": "number" },
+    "pricing": { "type": "object", "additionalProperties": true },
+    "quality_score": { "type": "number" },
+    "on_time_score": { "type": "number" },
+    "active": { "type": "boolean", "default": true },
+    "contract_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "notes": { "type": "string" }
+  },
+  "required": ["corporate_name", "tax_id"]
+}

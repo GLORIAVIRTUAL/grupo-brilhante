@@ -1,0 +1,64 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "customer_id": { "type": "string" },
+    "quote_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "accounts_receivable_id": { "type": "string" },
+    "accounts_payable_id": { "type": "string" },
+    "unit_id": { "type": "string", "description": "Unidade responsável pelo pagamento" },
+    "provider": { "type": "string", "enum": ["stripe", "cash", "card_terminal", "bank", "pix", "customer_balance", "manual", "other"], "default": "manual" },
+    "stripe_intent_id": { "type": "string" },
+    "external_reference": { "type": "string" },
+    "external_event_id": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "pending", "pending_confirmation", "succeeded", "failed", "expired", "partially_refunded", "refunded", "cancelled", "chargeback"],
+      "default": "pending"
+    },
+    "reconciliation_status": {
+      "type": "string",
+      "enum": ["not_required", "pending", "suggested", "reconciled", "divergent"],
+      "default": "pending"
+    },
+    "amount": { "type": "number" },
+    "refunded_amount": { "type": "number", "default": 0 },
+    "paid_at": { "type": "string", "format": "date-time" },
+    "confirmed_at": { "type": "string", "format": "date-time" },
+    "confirmed_by_user_id": { "type": "string" },
+    "reconciled_at": { "type": "string", "format": "date-time" },
+    "reconciled_by_user_id": { "type": "string" },
+    "bank_transaction_id": { "type": "string" },
+    "payment_method": {
+      "type": "string",
+      "enum": ["credit", "debit", "pix", "cash", "link", "boleto", "bank_transfer", "check", "gift_card", "customer_balance", "courtesy", "invoiced", "mixed"],
+      "default": "link"
+    },
+    "installments": { "type": "number", "description": "Número de parcelas" },
+    "card_brand": { "type": "string" },
+    "fee_percent": { "type": "number" },
+    "fee_amount": { "type": "number" },
+    "receipt_asset_id": { "type": "string" },
+    "payment_receipt_id": { "type": "string" },
+    "tender_sequence": { "type": "number" },
+    "tendered_amount": { "type": "number" },
+    "applied_amount": { "type": "number" },
+    "change_amount": { "type": "number", "default": 0 },
+    "settlement_status": {
+      "type": "string",
+      "enum": ["not_required", "pending", "settled", "failed", "reversed"],
+      "default": "pending"
+    },
+    "settled_at": { "type": "string", "format": "date-time" },
+    "reversed_at": { "type": "string", "format": "date-time" },
+    "reversed_by_user_id": { "type": "string" },
+    "reversal_payment_id": { "type": "string" },
+    "reversal_reason": { "type": "string" },
+    "allocation_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_id", "amount"]
+}

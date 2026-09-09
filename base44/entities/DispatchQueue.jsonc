@@ -1,0 +1,81 @@
+{
+  "name": "DispatchQueue",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "consent_request",
+        "birthday",
+        "satisfaction_survey",
+        "inactive_customer",
+        "order_reminder",
+        "promotional",
+        "follow_up"
+      ]
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "sender": {
+      "type": "string",
+      "enum": [
+        "main",
+        "moinhos"
+      ],
+      "default": "main"
+    },
+    "scheduled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "sending",
+        "sent",
+        "failed",
+        "cancelled"
+      ],
+      "default": "queued"
+    },
+    "attempts": {
+      "type": "number",
+      "default": 0
+    },
+    "error": {
+      "type": "string"
+    },
+    "triggered_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "type",
+    "customer_id",
+    "phone",
+    "message",
+    "scheduled_at"
+  ]
+}

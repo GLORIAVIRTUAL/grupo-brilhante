@@ -1,0 +1,19 @@
+{
+  "name": "IntegrationConfiguration",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "provider": { "type": "string" },
+    "integration_type": { "type": "string", "enum": ["ai", "payment", "messaging", "maps", "marketing", "automation", "storage", "other"] },
+    "display_name": { "type": "string" },
+    "enabled": { "type": "boolean", "default": false },
+    "required_secret_names": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "non_secret_config": { "type": "object", "additionalProperties": true },
+    "health_status": { "type": "string", "enum": ["not_configured", "unknown", "healthy", "degraded", "unavailable"], "default": "not_configured" },
+    "last_checked_at": { "type": "string", "format": "date-time" },
+    "last_success_at": { "type": "string", "format": "date-time" },
+    "last_error_code": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "required": ["provider", "integration_type", "display_name"]
+}

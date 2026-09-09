@@ -1,0 +1,69 @@
+{
+  "name": "MachineState",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "name": { "type": "string" },
+    "machine_id": {
+      "type": "string",
+      "description": "Identificador \u00fanico da m\u00e1quina, ex: wash-0, dry-1, iron-0"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Nome do cliente atualmente na m\u00e1quina"
+    },
+    "sale_id": {
+      "type": "string",
+      "description": "ID do ticket/venda espec\u00edfico que est\u00e1 na m\u00e1quina (identifica unicamente, mesmo com nomes iguais)"
+    },
+    "machine_type": {
+      "type": "string",
+      "enum": [
+        "wash",
+        "dry",
+        "iron",
+        "dry_clean"
+      ],
+      "description": "Tipo de processo da m\u00e1quina"
+    },
+    "active": { "type": "boolean", "default": true },
+    "operational_status": {
+      "type": "string",
+      "enum": ["idle", "reserved", "running", "paused", "finished", "maintenance", "out_of_service"],
+      "default": "idle"
+    },
+    "capacity_kg": { "type": "number" },
+    "capacity_items": { "type": "number" },
+    "minimum_load_percent": { "type": "number", "default": 0 },
+    "maximum_load_percent": { "type": "number", "default": 100 },
+    "production_batch_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "stage": { "type": "string" },
+    "hourly_cost": { "type": "number", "default": 0 },
+    "cycle_energy_cost": { "type": "number", "default": 0 },
+    "cycle_water_cost": { "type": "number", "default": 0 },
+    "utilization_percent_30d": { "type": "number", "default": 0 },
+    "last_started_at": { "type": "string", "format": "date-time" },
+    "last_completed_at": { "type": "string", "format": "date-time" },
+    "last_maintenance_at": { "type": "string", "format": "date-time" },
+    "next_maintenance_at": { "type": "string", "format": "date-time" },
+    "maintenance_notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true },
+    "minutes": {
+      "type": "number",
+      "description": "Dura\u00e7\u00e3o em minutos do ciclo"
+    },
+    "ends_at": {
+      "type": "number",
+      "description": "Timestamp (ms) de quando o ciclo termina"
+    },
+    "finished": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se o ciclo j\u00e1 terminou"
+    }
+  },
+  "required": [
+    "machine_id"
+  ]
+}

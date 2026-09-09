@@ -1,0 +1,74 @@
+{
+  "name": "RecurringExpense",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o da despesa"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categoria da despesa"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Valor da despesa em BRL"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "cash",
+        "pix",
+        "credit",
+        "debit",
+        "boleto",
+        "transfer",
+        "link",
+        "other"
+      ],
+      "default": "boleto",
+      "description": "Forma de pagamento"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "recurring",
+        "one_time"
+      ],
+      "default": "recurring",
+      "description": "Recorrente (mensal) ou avulsa"
+    },
+    "day_of_month": {
+      "type": "number",
+      "default": 5,
+      "description": "Dia do m\u00eas em que a despesa recorrente \u00e9 lan\u00e7ada (1-31)"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data programada para despesa avulsa"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Se a despesa recorrente est\u00e1 ativa"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "ID da unidade respons\u00e1vel"
+    },
+    "last_generated_month": {
+      "type": "string",
+      "description": "M\u00eas (YYYY-MM) em que esta recorrente j\u00e1 foi lan\u00e7ada pela \u00faltima vez, evita duplica\u00e7\u00e3o"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es"
+    }
+  },
+  "required": [
+    "description",
+    "category",
+    "amount"
+  ]
+}

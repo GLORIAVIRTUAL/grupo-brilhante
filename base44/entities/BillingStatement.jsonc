@@ -1,0 +1,40 @@
+{
+  "name": "BillingStatement",
+  "type": "object",
+  "properties": {
+    "statement_number": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "billing_agreement_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "issued", "partially_paid", "paid", "overdue", "disputed", "cancelled"],
+      "default": "draft"
+    },
+    "period_start": { "type": "string", "format": "date" },
+    "period_end": { "type": "string", "format": "date" },
+    "issue_date": { "type": "string", "format": "date" },
+    "due_date": { "type": "string", "format": "date" },
+    "order_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "accounts_receivable_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "payment_receipt_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "subtotal": { "type": "number", "default": 0 },
+    "discount_amount": { "type": "number", "default": 0 },
+    "addition_amount": { "type": "number", "default": 0 },
+    "interest_amount": { "type": "number", "default": 0 },
+    "total_amount": { "type": "number", "default": 0 },
+    "paid_amount": { "type": "number", "default": 0 },
+    "open_amount": { "type": "number", "default": 0 },
+    "cost_centers": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "purchase_order_numbers": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "fiscal_document_id": { "type": "string" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "issued_by_user_id": { "type": "string" },
+    "cancelled_at": { "type": "string", "format": "date-time" },
+    "cancelled_by_user_id": { "type": "string" },
+    "cancellation_reason": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["statement_number", "unit_id", "status", "period_start", "period_end", "due_date", "total_amount", "open_amount"]
+}

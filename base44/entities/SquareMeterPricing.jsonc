@@ -1,0 +1,27 @@
+{
+  "name": "SquareMeterPricing",
+  "type": "object",
+  "properties": {
+    "cortina_tipo_I": {
+      "type": "number",
+      "default": 30,
+      "description": "Pre\u00e7o por m\u00b2 da cortina Tipo I"
+    },
+    "cortina_tipo_II": {
+      "type": "number",
+      "default": 45,
+      "description": "Pre\u00e7o por m\u00b2 da cortina Tipo II (Especial)"
+    },
+    "cortina_tipo_III": {
+      "type": "number",
+      "default": 65,
+      "description": "Pre\u00e7o por m\u00b2 da cortina Tipo III (Dupla)"
+    },
+    "tapete": {
+      "type": "number",
+      "default": 80,
+      "description": "Pre\u00e7o por m\u00b2 de tapete (quadrangular/retangular e circular)"
+    }
+  },
+  "required": []
+}

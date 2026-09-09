@@ -1,0 +1,32 @@
+{
+  "name": "PriceRule",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "product_id": { "type": "string" },
+    "service_id": { "type": "string" },
+    "customer_group": { "type": "string" },
+    "priority": { "type": "string", "enum": ["normal", "high", "urgent"] },
+    "base_price": { "type": "number" },
+    "additional_percent": { "type": "number", "default": 0 },
+    "additional_amount": { "type": "number", "default": 0 },
+    "minimum_price": { "type": "number" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "version": { "type": "string", "default": "1" },
+    "active": { "type": "boolean", "default": true },
+    "status": { "type": "string", "enum": ["draft", "scheduled", "active", "retired", "cancelled"], "default": "draft" },
+    "parent_rule_id": { "type": "string" },
+    "supersedes_rule_id": { "type": "string" },
+    "specificity_key": { "type": "string", "description": "Chave determinística usada para detectar sobreposição ambígua" },
+    "currency": { "type": "string", "default": "BRL" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "change_reason": { "type": "string" },
+    "simulation_snapshot": { "type": "object", "additionalProperties": true },
+    "retired_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["name", "base_price", "version"]
+}

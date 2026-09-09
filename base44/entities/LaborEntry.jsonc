@@ -1,0 +1,29 @@
+{
+  "name": "LaborEntry",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "production_batch_id": { "type": "string" },
+    "garment_item_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "activity": {
+      "type": "string",
+      "enum": ["setup", "washing", "drying", "dry_cleaning", "ironing", "finishing", "quality_control", "packaging", "rework", "cleaning", "maintenance_support", "other"]
+    },
+    "status": { "type": "string", "enum": ["running", "paused", "completed", "cancelled"], "default": "running" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "paused_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "duration_minutes": { "type": "number", "default": 0 },
+    "accumulated_minutes": { "type": "number", "default": 0 },
+    "pause_count": { "type": "number", "default": 0 },
+    "hourly_cost": { "type": "number", "default": 0 },
+    "labor_cost": { "type": "number", "default": 0 },
+    "pause_reason": { "type": "string" },
+    "is_rework": { "type": "boolean", "default": false },
+    "request_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "production_batch_id", "operator_user_id", "activity", "status", "started_at"]
+}

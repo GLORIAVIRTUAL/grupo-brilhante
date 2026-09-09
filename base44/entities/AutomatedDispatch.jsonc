@@ -1,0 +1,55 @@
+{
+  "name": "AutomatedDispatch",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "consent_request",
+        "birthday",
+        "satisfaction_survey",
+        "inactive_customer",
+        "order_reminder",
+        "promotional",
+        "follow_up"
+      ],
+      "description": "Tipo de disparo autom\u00e1tico"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "ID do cliente que recebeu"
+    },
+    "message": {
+      "type": "string",
+      "description": "Conte\u00fado da mensagem enviada"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "sent",
+        "delivered",
+        "read",
+        "failed"
+      ],
+      "default": "sent"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefone do destinat\u00e1rio"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Dados adicionais do disparo"
+    }
+  },
+  "required": [
+    "type",
+    "customer_id",
+    "message",
+    "phone"
+  ]
+}

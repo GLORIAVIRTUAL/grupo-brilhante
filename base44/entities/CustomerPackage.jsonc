@@ -1,0 +1,36 @@
+{
+  "name": "CustomerPackage",
+  "type": "object",
+  "properties": {
+    "customer_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "exhausted", "expired", "cancelled"], "default": "draft" },
+    "service_balances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service_id": { "type": "string" },
+          "service_name": { "type": "string" },
+          "purchased_quantity": { "type": "number" },
+          "remaining_quantity": { "type": "number" },
+          "unit_value": { "type": "number" }
+        },
+        "required": ["service_id", "purchased_quantity", "remaining_quantity"]
+      },
+      "default": []
+    },
+    "purchase_amount": { "type": "number", "default": 0 },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "purchased_at": { "type": "string", "format": "date-time" },
+    "payment_receipt_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_id", "name", "code", "status", "service_balances"]
+}

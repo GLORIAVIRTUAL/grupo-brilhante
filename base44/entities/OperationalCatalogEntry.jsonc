@@ -1,0 +1,28 @@
+{
+  "name": "OperationalCatalogEntry",
+  "type": "object",
+  "properties": {
+    "catalog_type": {
+      "type": "string",
+      "enum": ["color", "material", "pattern", "size", "brand", "damage", "risk", "garment_detail", "pickup_failure_reason", "delivery_failure_reason"]
+    },
+    "label": { "type": "string" },
+    "slug": { "type": "string" },
+    "code": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "synonyms": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "category": { "type": "string" },
+    "description": { "type": "string" },
+    "color_hex": { "type": "string" },
+    "icon": { "type": "string" },
+    "favorite": { "type": "boolean", "default": false },
+    "sort_order": { "type": "number", "default": 0 },
+    "active": { "type": "boolean", "default": true },
+    "usage_count": { "type": "number", "default": 0 },
+    "last_used_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "change_reason": { "type": "string" }
+  },
+  "required": ["catalog_type", "label", "slug"]
+}

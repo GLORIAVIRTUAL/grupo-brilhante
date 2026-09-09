@@ -1,0 +1,39 @@
+{
+  "name": "PurchaseDocument",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "supplier_id": { "type": "string" },
+    "supplier_tax_id": { "type": "string" },
+    "supplier_name": { "type": "string" },
+    "document_type": { "type": "string", "enum": ["nfe", "nfce", "invoice", "receipt", "other"] },
+    "document_number": { "type": "string" },
+    "series": { "type": "string" },
+    "access_key": { "type": "string" },
+    "document_asset_id": { "type": "string" },
+    "file_hash": { "type": "string" },
+    "issue_date": { "type": "string", "format": "date-time" },
+    "entry_date": { "type": "string", "format": "date-time" },
+    "due_date": { "type": "string", "format": "date-time" },
+    "subtotal": { "type": "number", "default": 0 },
+    "discount": { "type": "number", "default": 0 },
+    "freight": { "type": "number", "default": 0 },
+    "taxes": { "type": "number", "default": 0 },
+    "total": { "type": "number", "default": 0 },
+    "currency": { "type": "string", "default": "BRL" },
+    "status": {
+      "type": "string",
+      "enum": ["received", "extracting", "human_review", "approved", "partially_received", "received_complete", "rejected", "cancelled"],
+      "default": "received"
+    },
+    "extraction_confidence": { "type": "number" },
+    "ai_job_id": { "type": "string" },
+    "human_review_id": { "type": "string" },
+    "accounts_payable_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "document_asset_id", "file_hash", "status"]
+}

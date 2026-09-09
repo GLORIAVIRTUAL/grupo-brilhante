@@ -1,0 +1,29 @@
+{
+  "name": "OperationalAlert",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "alert_key": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["low_stock", "stockout", "expiring_lot", "expired_lot", "inventory_variance", "machine_overload", "machine_idle", "machine_stopped", "batch_delayed", "capacity_bottleneck", "consumption_variance", "cost_variance", "loss", "quality", "other"]
+    },
+    "severity": { "type": "string", "enum": ["info", "warning", "critical"], "default": "warning" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "entity_type": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["open", "acknowledged", "resolved", "dismissed"], "default": "open" },
+    "first_detected_at": { "type": "string", "format": "date-time" },
+    "last_detected_at": { "type": "string", "format": "date-time" },
+    "acknowledged_at": { "type": "string", "format": "date-time" },
+    "acknowledged_by_user_id": { "type": "string" },
+    "resolved_at": { "type": "string", "format": "date-time" },
+    "resolved_by_user_id": { "type": "string" },
+    "resolution_note": { "type": "string" },
+    "metric_value": { "type": "number" },
+    "threshold_value": { "type": "number" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "alert_key", "category", "severity", "title", "status", "first_detected_at"]
+}

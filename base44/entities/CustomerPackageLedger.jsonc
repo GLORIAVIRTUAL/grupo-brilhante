@@ -1,0 +1,22 @@
+{
+  "name": "CustomerPackageLedger",
+  "type": "object",
+  "properties": {
+    "customer_package_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "service_id": { "type": "string" },
+    "entry_type": { "type": "string", "enum": ["grant", "consume", "reverse", "expire", "adjustment", "migration"] },
+    "quantity": { "type": "number" },
+    "balance_after": { "type": "number" },
+    "order_id": { "type": "string" },
+    "garment_item_id": { "type": "string" },
+    "reference_entry_id": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_package_id", "customer_id", "service_id", "entry_type", "quantity", "balance_after", "occurred_at", "reason", "idempotency_key"]
+}

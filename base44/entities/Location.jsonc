@@ -1,0 +1,20 @@
+{
+  "name": "Location",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "location_type": {
+      "type": "string",
+      "enum": ["reception", "production", "machine", "rack", "shelf", "locker", "dispatch", "third_party", "other"]
+    },
+    "parent_location_id": { "type": "string" },
+    "capacity": { "type": "number" },
+    "current_occupancy": { "type": "number", "default": 0 },
+    "active": { "type": "boolean", "default": true },
+    "scan_required": { "type": "boolean", "default": true },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "code", "name", "location_type"]
+}

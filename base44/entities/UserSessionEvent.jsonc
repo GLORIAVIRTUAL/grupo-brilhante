@@ -1,0 +1,24 @@
+{
+  "name": "UserSessionEvent",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": ["login_observed", "logout_observed", "step_up_requested", "step_up_verified", "mfa_enrollment_confirmed", "session_revoked", "access_denied", "account_suspended"]
+    },
+    "provider": { "type": "string", "enum": ["base44", "external_idp", "application"], "default": "application" },
+    "session_reference_hash": { "type": "string" },
+    "ip_hash": { "type": "string" },
+    "user_agent_hash": { "type": "string" },
+    "operation": { "type": "string" },
+    "verified": { "type": "boolean", "default": false },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "recorded_by_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["user_id", "event_type", "occurred_at"]
+}

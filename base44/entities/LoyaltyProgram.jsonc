@@ -1,0 +1,26 @@
+{
+  "name": "LoyaltyProgram",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "paused", "retired"], "default": "draft" },
+    "earning_type": { "type": "string", "enum": ["amount", "service", "visit", "manual"], "default": "amount" },
+    "points_per_currency": { "type": "number", "default": 0 },
+    "currency_per_point": { "type": "number", "default": 0 },
+    "minimum_redeem_points": { "type": "number", "default": 0 },
+    "maximum_redeem_percent": { "type": "number", "default": 100 },
+    "expiration_days": { "type": "number", "default": 365 },
+    "eligible_service_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "eligible_customer_groups": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "version": { "type": "number", "default": 1 },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "change_reason": { "type": "string" }
+  },
+  "required": ["name", "code", "status", "version"]
+}

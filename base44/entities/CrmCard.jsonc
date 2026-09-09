@@ -1,0 +1,81 @@
+{
+  "name": "CrmCard",
+  "type": "object",
+  "properties": {
+    "pipeline_type": {
+      "type": "string",
+      "enum": [
+        "NEW_CUSTOMER",
+        "QUOTE",
+        "COMPLAINT",
+        "PLAN",
+        "PAYMENT",
+        "ORDER"
+      ]
+    },
+    "stage": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "default": "MEDIUM"
+    },
+    "customer_source": {
+      "type": "string",
+      "enum": [
+        "SITE_QUOTE",
+        "COUNTER_MANUAL",
+        "WHATSAPP_HUMAN",
+        "WHATSAPP_GLORIA"
+      ],
+      "description": "Origem inicial do cliente no CRM"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "User ID of the staff member"
+    },
+    "due_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sla_breach_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "ID da unidade respons\u00e1vel pelo card"
+    },
+    "linked_quote_id": {
+      "type": "string"
+    },
+    "linked_order_id": {
+      "type": "string"
+    },
+    "linked_ticket_id": {
+      "type": "string"
+    },
+    "complaint_summary": {
+      "type": "string",
+      "description": "Motivo da reclama\u00e7\u00e3o caso seja pipeline COMPLAINT"
+    },
+    "receipt_url": {
+      "type": "string",
+      "description": "URL da imagem do comprovante de pagamento"
+    }
+  },
+  "required": [
+    "pipeline_type",
+    "stage",
+    "customer_id"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "LoyaltyLedger",
+  "type": "object",
+  "properties": {
+    "customer_id": { "type": "string" },
+    "program_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "entry_type": { "type": "string", "enum": ["earn", "redeem", "expire", "reverse", "adjustment", "migration"] },
+    "points": { "type": "number" },
+    "balance_after": { "type": "number" },
+    "monetary_value": { "type": "number", "default": 0 },
+    "order_id": { "type": "string" },
+    "payment_receipt_id": { "type": "string" },
+    "voucher_id": { "type": "string" },
+    "reference_entry_id": { "type": "string" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_id", "entry_type", "points", "balance_after", "occurred_at", "reason", "idempotency_key"]
+}

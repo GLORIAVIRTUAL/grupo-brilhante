@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 265 65% 13%; /* #1a0b36 */
+    --foreground: 0 0% 100%;
+    
+    --card: 265 65% 15%;
+    --card-foreground: 0 0% 100%;
+ 
+    --popover: 265 65% 13%;
+    --popover-foreground: 0 0% 100%;
+ 
+    --primary: 24 100% 50%; /* #FF6600 */
+    --primary-foreground: 0 0% 100%;
+ 
+    --secondary: 264 79% 35%; /* #4C12A1 */
+    --secondary-foreground: 0 0% 100%;
+ 
+    --muted: 265 30% 25%;
+    --muted-foreground: 265 20% 70%;
+ 
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
+ 
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+ 
+    --border: 265 30% 25%;
+    --input: 265 30% 25%;
+    --ring: 24 100% 50%;
+  }
+}
+
+body {
+  @apply bg-[#1a0b36] text-white;
+}
+
+/* Custom Scrollbar for the "High Tech" feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 102, 0, 0.5);
+}
+
+/* Glassmorphism utilities if needed */
+.glass {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+}

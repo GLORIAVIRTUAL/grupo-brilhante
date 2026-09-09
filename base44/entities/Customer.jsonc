@@ -1,0 +1,275 @@
+{
+  "name": "Customer",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferred_language": {
+      "type": "string",
+      "enum": [
+        "pt",
+        "en",
+        "es"
+      ],
+      "default": "pt"
+    },
+    "birthdate": {
+      "type": "string",
+      "format": "date"
+    },
+    "zip_code": {
+      "type": "string",
+      "description": "CEP"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "opt_in_whatsapp": {
+      "type": "boolean",
+      "default": false
+    },
+    "opt_in_whatsapp_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "opt_out_whatsapp_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "whatsapp_consent_status": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "pending",
+        "accepted",
+        "revoked"
+      ],
+      "default": "unknown"
+    },
+    "whatsapp_consent_requested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "whatsapp_consent_request_text": {
+      "type": "string"
+    },
+    "whatsapp_consent_response_text": {
+      "type": "string"
+    },
+    "whatsapp_consent_source": {
+      "type": "string"
+    },
+    "opt_in_email": {
+      "type": "boolean",
+      "default": false
+    },
+    "last_inbound_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_outbound_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "vip"
+      ],
+      "default": "active"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "address_number": {
+      "type": "string"
+    },
+    "address_complement": {
+      "type": "string"
+    },
+    "neighborhood": {
+      "type": "string",
+      "description": "Bairro (exigido pelo Asaas ao gerar cobran\u00e7as)"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "ID da unidade preferida do cliente"
+    },
+    "preferred_unit_name": {
+      "type": "string",
+      "description": "Nome da unidade preferida do cliente"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "company",
+        "agreement_member"
+      ],
+      "default": "individual"
+    },
+    "legal_name": {
+      "type": "string"
+    },
+    "tax_id": {
+      "type": "string",
+      "description": "CPF ou CNPJ normalizado"
+    },
+    "municipal_registration": {
+      "type": "string"
+    },
+    "billing_email": {
+      "type": "string"
+    },
+    "billing_agreement_id": {
+      "type": "string"
+    },
+    "billing_status": {
+      "type": "string",
+      "enum": [
+        "cash_only",
+        "approved",
+        "suspended",
+        "blocked"
+      ],
+      "default": "cash_only"
+    },
+    "billing_cycle": {
+      "type": "string",
+      "enum": [
+        "per_order",
+        "weekly",
+        "biweekly",
+        "monthly"
+      ],
+      "default": "per_order"
+    },
+    "payment_term_days": {
+      "type": "number",
+      "default": 0
+    },
+    "credit_limit": {
+      "type": "number",
+      "default": 0
+    },
+    "credit_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "credit_used": {
+      "type": "number",
+      "default": 0
+    },
+    "credit_available": {
+      "type": "number",
+      "default": 0
+    },
+    "credit_reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "credit_reviewed_by_user_id": {
+      "type": "string"
+    },
+    "cost_center": {
+      "type": "string"
+    },
+    "purchase_order_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "invoice_notes": {
+      "type": "string"
+    },
+    "customer_group": {
+      "type": "string"
+    },
+    "segment": {
+      "type": "string",
+      "enum": [
+        "new",
+        "active",
+        "loyal",
+        "vip",
+        "at_risk",
+        "inactive",
+        "corporate"
+      ]
+    },
+    "first_order_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_order_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "orders_count": {
+      "type": "number",
+      "default": 0
+    },
+    "garments_count": {
+      "type": "number",
+      "default": 0
+    },
+    "lifetime_value": {
+      "type": "number",
+      "default": 0
+    },
+    "average_ticket": {
+      "type": "number",
+      "default": 0
+    },
+    "average_monthly_value": {
+      "type": "number",
+      "default": 0
+    },
+    "active_months": {
+      "type": "number",
+      "default": 0
+    },
+    "loyalty_points_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "loyalty_program_id": {
+      "type": "string"
+    },
+    "last_crm_snapshot_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "marketing_profile": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "service_preferences": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "relationship_owner_user_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "full_name"
+  ]
+}

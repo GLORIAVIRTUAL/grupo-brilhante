@@ -1,0 +1,103 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Activity, Award, Banknote, CalendarDays, Gift, Loader2, PackageCheck, RefreshCcw, ShoppingBag, Ticket, TriangleAlert, UsersRound } from 'lucide-react';
+import { toast } from 'sonner';
+
+export default function Customer360Dialog({ customer, open, onClose }) {
+  const [snapshot, setSnapshot] = useState(null);
+  const [programs, setPrograms] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState('');
+  const [pointsForm, setPointsForm] = useState({ entry_type: 'adjustment', points: '', reason: '' });
+  const [voucherForm, setVoucherForm] = useState({ voucher_type: 'fixed_amount', amount: '', percent: '', valid_until: '', reason: '' });
+  const [packageForm, setPackageForm] = useState({ name: '', service_id: '', quantity: '', unit_value: '', valid_until: '', reason: '' });
+
+  const load = async () => {
+    if (!customer?.id) return;
+    setLoading(true);
+    try {
+      const [response, programList, serviceList] = await Promise.all([
+        base44.functions.invoke('manage_loyalty_crm', { action: 'snapshot', customer_id: customer.id }),
+        base44.entities.LoyaltyProgram.list('-version', 1000),
+        base44.entities.LaundryService.list('name', 2000),
+      ]);
+      setSnapshot(response.data);
+      setPrograms(programList.filter((program) => program.status === 'active' && (!program.unit_id || program.unit_id === customer.unit_id)));
+      setServices(serviceList.filter((service) => service.active !== false && (!service.unit_id || service.unit_id === customer.unit_id)));
+      setPackageForm((current) => ({ ...current, service_id: current.service_id || serviceList.find((service) => service.active !== false)?.id || '' }));
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.error || 'Não foi possível montar a visão 360.');
+    } finally { setLoading(false); }
+  };
+
+  useEffect(() => { if (open) load(); }, [open, customer?.id]);
+
+  const program = programs.find((item) => item.id === snapshot?.customer?.loyalty_program_id) || programs[0];
+  const metrics = snapshot?.metrics || {};
+  const topServices = snapshot?.top_services || [];
+  const vouchers = snapshot?.recent?.vouchers || [];
+  const packages = snapshot?.recent?.packages || [];
+  const ledger = snapshot?.recent?.loyalty_entries || [];
+
+  const postPoints = async () => {
+    if (!program) return toast.error('Cadastre e ative um programa de fidelidade primeiro.');
+    setBusy('points');
+    try {
+      await base44.functions.invoke('manage_loyalty_crm', { action: 'post_points', customer_id: customer.id, program_id: program.id, entry_type: pointsForm.entry_type, points: Number(pointsForm.points), reason: pointsForm.reason, idempotency_key: `manual-points:${customer.id}:${Date.now()}` });
+      toast.success('Razão de fidelidade atualizado.'); setPointsForm({ entry_type: 'adjustment', points: '', reason: '' }); await load();
+    } catch (error) { toast.error(error?.response?.data?.error || 'Não foi possível atualizar os pontos.'); }
+    finally { setBusy(''); }
+  };
+
+  const issueVoucher = async () => {
+    setBusy('voucher');
+    try {
+      await base44.functions.invoke('manage_loyalty_crm', { action: 'issue_voucher', customer_id: customer.id, unit_id: customer.unit_id, program_id: program?.id, voucher_type: voucherForm.voucher_type, amount: Number(voucherForm.amount || 0), percent: Number(voucherForm.percent || 0), valid_until: voucherForm.valid_until || undefined, reason: voucherForm.reason, idempotency_key: `voucher:${customer.id}:${Date.now()}` });
+      toast.success('Voucher emitido.'); setVoucherForm({ voucher_type: 'fixed_amount', amount: '', percent: '', valid_until: '', reason: '' }); await load();
+    } catch (error) { toast.error(error?.response?.data?.error || 'Não foi possível emitir o voucher.'); }
+    finally { setBusy(''); }
+  };
+
+  const createPackage = async () => {
+    const service = services.find((item) => item.id === packageForm.service_id);
+    setBusy('package');
+    try {
+      await base44.functions.invoke('manage_loyalty_crm', { action: 'create_package', customer_id: customer.id, name: packageForm.name || `Pacote ${service?.name || 'de serviços'}`, service_balances: [{ service_id: service.id, service_name: service.name, purchased_quantity: Number(packageForm.quantity), unit_value: Number(packageForm.unit_value || 0) }], purchase_amount: Number(packageForm.quantity || 0) * Number(packageForm.unit_value || 0), valid_until: packageForm.valid_until || undefined, reason: packageForm.reason, idempotency_key: `package:${customer.id}:${Date.now()}` });
+      toast.success('Pacote registrado.'); setPackageForm({ name: '', service_id: services[0]?.id || '', quantity: '', unit_value: '', valid_until: '', reason: '' }); await load();
+    } catch (error) { toast.error(error?.response?.data?.error || 'Não foi possível criar o pacote.'); }
+    finally { setBusy(''); }
+  };
+
+  const activeVouchers = vouchers.filter((item) => ['active', 'reserved'].includes(item.status));
+  const activePackages = packages.filter((item) => item.status === 'active');
+  const serviceTotal = useMemo(() => topServices.reduce((sum, item) => sum + Number(item.count || 0), 0), [topServices]);
+
+  return <Dialog open={open} onOpenChange={(value) => !value && onClose()}><DialogContent className="max-h-[94vh] max-w-7xl overflow-y-auto border-white/10 bg-[#160a2b] text-white"><DialogHeader><DialogTitle className="flex flex-wrap items-center gap-2 text-2xl"><UsersRound className="h-6 w-6 text-orange-400" />{snapshot?.customer?.full_name || customer?.full_name || 'Cliente'}<SegmentBadge segment={metrics.segment || customer?.segment} /></DialogTitle><DialogDescription className="text-white/40">Visão consolidada de relacionamento, consumo, crédito, fidelidade e operação.</DialogDescription></DialogHeader>
+    {loading ? <div className="flex items-center justify-center py-20 text-white/40"><Loader2 className="mr-2 h-5 w-5 animate-spin" />Calculando visão 360...</div> : <Tabs defaultValue="overview" className="space-y-4"><TabsList className="flex h-auto flex-wrap border border-white/10 bg-white/5"><TabsTrigger value="overview"><Activity className="mr-2 h-4 w-4" />Visão 360</TabsTrigger><TabsTrigger value="loyalty"><Award className="mr-2 h-4 w-4" />Fidelidade</TabsTrigger><TabsTrigger value="vouchers"><Gift className="mr-2 h-4 w-4" />Vouchers</TabsTrigger><TabsTrigger value="packages"><PackageCheck className="mr-2 h-4 w-4" />Pacotes</TabsTrigger></TabsList>
+      <TabsContent value="overview" className="space-y-4"><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6"><Metric icon={Banknote} label="Valor total" value={currency(metrics.lifetime_value)} /><Metric icon={ShoppingBag} label="Pedidos" value={metrics.orders_count || 0} /><Metric icon={Ticket} label="Ticket médio" value={currency(metrics.average_ticket)} /><Metric icon={CalendarDays} label="Meses ativos" value={metrics.active_months || 0} /><Metric icon={Award} label="Pontos" value={metrics.loyalty_points_balance || 0} /><Metric icon={TriangleAlert} label="Vencido" value={currency(metrics.overdue_receivables)} tone={Number(metrics.overdue_receivables) > 0 ? 'red' : 'green'} /></div><div className="grid gap-4 lg:grid-cols-3"><Card className="border-white/10 bg-white/[0.035] text-white lg:col-span-2"><CardHeader><CardTitle>Preferências de serviços</CardTitle></CardHeader><CardContent className="space-y-3">{topServices.map((item) => <div key={item.name}><div className="mb-1 flex justify-between text-sm"><span>{item.name}</span><span className="text-white/40">{item.count}</span></div><div className="h-2 overflow-hidden rounded-full bg-white/5"><div className="h-full rounded-full bg-gradient-to-r from-orange-500 to-violet-500" style={{ width: `${serviceTotal ? Math.max(5, item.count / serviceTotal * 100) : 0}%` }} /></div></div>)}{topServices.length === 0 && <Empty text="Ainda não há serviços suficientes para formar preferências." />}</CardContent></Card><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Relacionamento</CardTitle></CardHeader><CardContent className="space-y-3"><Info label="Primeiro pedido" value={date(metrics.first_order_at)} /><Info label="Último pedido" value={date(metrics.last_order_at)} /><Info label="Dias sem comprar" value={metrics.days_since_last_order ?? '—'} /><Info label="Conversas" value={metrics.conversations_count || 0} /><Info label="Coletas / entregas" value={`${metrics.pickups_count || 0} / ${metrics.deliveries_count || 0}`} /><Info label="Contas em aberto" value={currency(metrics.open_receivables)} /></CardContent></Card></div><RecentActivity snapshot={snapshot} /></TabsContent>
+      <TabsContent value="loyalty" className="space-y-4"><div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]"><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Extrato de pontos</CardTitle></CardHeader><CardContent className="space-y-2">{ledger.map((item) => <div key={item.id} className="flex items-center justify-between rounded-xl border border-white/10 p-3"><div><p className="text-sm font-medium">{item.reason}</p><p className="text-xs text-white/35">{dateTime(item.occurred_at)} · {item.entry_type}</p></div><div className="text-right"><p className={Number(item.points) >= 0 ? 'font-bold text-emerald-300' : 'font-bold text-red-300'}>{Number(item.points) >= 0 ? '+' : ''}{item.points}</p><p className="text-xs text-white/35">saldo {item.balance_after}</p></div></div>)}{ledger.length === 0 && <Empty text="Nenhum lançamento de fidelidade." />}</CardContent></Card><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Ajuste controlado</CardTitle></CardHeader><CardContent className="space-y-4"><Info label="Programa" value={program?.name || 'Não configurado'} /><Field label="Operação"><Select value={pointsForm.entry_type} onValueChange={(value) => setPointsForm({ ...pointsForm, entry_type: value })}><SelectTrigger className="border-white/10 bg-black/20"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="adjustment">Ajuste</SelectItem><SelectItem value="earn">Crédito manual</SelectItem><SelectItem value="redeem">Resgate</SelectItem><SelectItem value="expire">Expiração</SelectItem></SelectContent></Select></Field><Field label="Pontos"><Input type="number" value={pointsForm.points} onChange={(event) => setPointsForm({ ...pointsForm, points: event.target.value })} className="border-white/10 bg-black/20" /></Field><Field label="Justificativa"><Input value={pointsForm.reason} onChange={(event) => setPointsForm({ ...pointsForm, reason: event.target.value })} placeholder="Mínimo 8 caracteres" className="border-white/10 bg-black/20" /></Field><Button onClick={postPoints} disabled={busy === 'points' || !pointsForm.points || pointsForm.reason.trim().length < 8 || !program} className="w-full bg-violet-600 hover:bg-violet-500">{busy === 'points' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Registrar no razão</Button></CardContent></Card></div></TabsContent>
+      <TabsContent value="vouchers" className="space-y-4"><div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]"><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Vouchers do cliente</CardTitle></CardHeader><CardContent className="grid gap-3 sm:grid-cols-2">{vouchers.map((voucher) => <div key={voucher.id} className="rounded-2xl border border-white/10 bg-black/15 p-4"><div className="flex items-center justify-between"><p className="font-mono font-bold tracking-wider">{voucher.code}</p><Badge variant="outline" className={['active', 'reserved'].includes(voucher.status) ? 'border-emerald-500/20 text-emerald-300' : 'border-white/10 text-white/35'}>{voucher.status}</Badge></div><p className="mt-3 text-2xl font-bold text-orange-300">{voucher.voucher_type === 'percent' ? `${voucher.percent}%` : currency(voucher.amount)}</p><p className="mt-1 text-xs text-white/35">Validade: {date(voucher.valid_until)}</p></div>)}{vouchers.length === 0 && <div className="sm:col-span-2"><Empty text="Nenhum voucher emitido." /></div>}</CardContent></Card><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Emitir voucher</CardTitle></CardHeader><CardContent className="space-y-4"><Field label="Tipo"><Select value={voucherForm.voucher_type} onValueChange={(value) => setVoucherForm({ ...voucherForm, voucher_type: value })}><SelectTrigger className="border-white/10 bg-black/20"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="fixed_amount">Valor fixo</SelectItem><SelectItem value="percent">Percentual</SelectItem><SelectItem value="complimentary">Cortesia</SelectItem></SelectContent></Select></Field>{voucherForm.voucher_type === 'percent' ? <Field label="Percentual"><Input type="number" value={voucherForm.percent} onChange={(event) => setVoucherForm({ ...voucherForm, percent: event.target.value })} className="border-white/10 bg-black/20" /></Field> : <Field label="Valor"><Input type="number" step="0.01" value={voucherForm.amount} onChange={(event) => setVoucherForm({ ...voucherForm, amount: event.target.value })} className="border-white/10 bg-black/20" /></Field>}<Field label="Validade"><Input type="datetime-local" value={voucherForm.valid_until} onChange={(event) => setVoucherForm({ ...voucherForm, valid_until: event.target.value })} className="border-white/10 bg-black/20" /></Field><Field label="Justificativa"><Input value={voucherForm.reason} onChange={(event) => setVoucherForm({ ...voucherForm, reason: event.target.value })} className="border-white/10 bg-black/20" /></Field><Button onClick={issueVoucher} disabled={busy === 'voucher' || voucherForm.reason.trim().length < 8} className="w-full bg-orange-500 hover:bg-orange-400">{busy === 'voucher' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Emitir voucher</Button></CardContent></Card></div></TabsContent>
+      <TabsContent value="packages" className="space-y-4"><div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]"><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Pacotes e saldos</CardTitle></CardHeader><CardContent className="space-y-3">{packages.map((pkg) => <div key={pkg.id} className="rounded-2xl border border-white/10 bg-black/15 p-4"><div className="flex flex-wrap items-center justify-between gap-2"><div><p className="font-semibold">{pkg.name}</p><p className="text-xs text-white/35">{pkg.code} · validade {date(pkg.valid_until)}</p></div><Badge variant="outline" className={pkg.status === 'active' ? 'border-emerald-500/20 text-emerald-300' : 'border-white/10 text-white/35'}>{pkg.status}</Badge></div><div className="mt-3 grid gap-2 sm:grid-cols-2">{(pkg.service_balances || []).map((item) => <Info key={item.service_id} label={item.service_name || item.service_id} value={`${item.remaining_quantity} de ${item.purchased_quantity}`} />)}</div></div>)}{packages.length === 0 && <Empty text="Nenhum pacote contratado." />}</CardContent></Card><Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle>Novo pacote</CardTitle></CardHeader><CardContent className="space-y-4"><Field label="Nome"><Input value={packageForm.name} onChange={(event) => setPackageForm({ ...packageForm, name: event.target.value })} className="border-white/10 bg-black/20" /></Field><Field label="Serviço"><Select value={packageForm.service_id} onValueChange={(value) => setPackageForm({ ...packageForm, service_id: value })}><SelectTrigger className="border-white/10 bg-black/20"><SelectValue /></SelectTrigger><SelectContent>{services.map((service) => <SelectItem key={service.id} value={service.id}>{service.name}</SelectItem>)}</SelectContent></Select></Field><div className="grid grid-cols-2 gap-3"><Field label="Quantidade"><Input type="number" min="1" value={packageForm.quantity} onChange={(event) => setPackageForm({ ...packageForm, quantity: event.target.value })} className="border-white/10 bg-black/20" /></Field><Field label="Valor unitário"><Input type="number" step="0.01" value={packageForm.unit_value} onChange={(event) => setPackageForm({ ...packageForm, unit_value: event.target.value })} className="border-white/10 bg-black/20" /></Field></div><Field label="Validade"><Input type="datetime-local" value={packageForm.valid_until} onChange={(event) => setPackageForm({ ...packageForm, valid_until: event.target.value })} className="border-white/10 bg-black/20" /></Field><Field label="Justificativa"><Input value={packageForm.reason} onChange={(event) => setPackageForm({ ...packageForm, reason: event.target.value })} className="border-white/10 bg-black/20" /></Field><Button onClick={createPackage} disabled={busy === 'package' || !packageForm.service_id || !packageForm.quantity || packageForm.reason.trim().length < 8} className="w-full bg-cyan-500 text-slate-950 hover:bg-cyan-400">{busy === 'package' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Criar pacote</Button></CardContent></Card></div></TabsContent>
+    </Tabs>}
+  </DialogContent></Dialog>;
+}
+
+function RecentActivity({ snapshot }) { const orders = snapshot?.recent?.orders || []; const quotes = snapshot?.recent?.quotes || []; return <Card className="border-white/10 bg-white/[0.035] text-white"><CardHeader><CardTitle className="flex items-center gap-2"><RefreshCcw className="h-5 w-5 text-violet-300" />Atividade recente</CardTitle></CardHeader><CardContent className="grid gap-4 lg:grid-cols-2"><div><p className="mb-2 text-xs uppercase tracking-wide text-white/35">Pedidos</p>{orders.slice(0, 5).map((item) => <div key={item.id} className="mb-2 flex items-center justify-between rounded-xl border border-white/10 p-3"><span className="text-sm">{item.ticket_number || item.id.slice(0, 8)}</span><span className="text-sm text-white/45">{currency(item.total_amount)}</span></div>)}{orders.length === 0 && <Empty text="Sem pedidos." />}</div><div><p className="mb-2 text-xs uppercase tracking-wide text-white/35">Orçamentos</p>{quotes.slice(0, 5).map((item) => <div key={item.id} className="mb-2 flex items-center justify-between rounded-xl border border-white/10 p-3"><span className="text-sm">{item.quote_number || item.id.slice(0, 8)}</span><span className="text-sm text-white/45">{item.status} · {currency(item.total)}</span></div>)}{quotes.length === 0 && <Empty text="Sem orçamentos." />}</div></CardContent></Card>; }
+function SegmentBadge({ segment }) { const style = segment === 'vip' ? 'border-amber-400/30 text-amber-200' : segment === 'at_risk' || segment === 'inactive' ? 'border-red-400/30 text-red-200' : 'border-emerald-400/30 text-emerald-200'; return <Badge variant="outline" className={style}>{segment || 'new'}</Badge>; }
+function Metric({ icon: Icon, label, value, tone = 'default' }) { return <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4"><div className={`flex items-center gap-2 text-xs ${tone === 'red' ? 'text-red-300' : tone === 'green' ? 'text-emerald-300' : 'text-white/40'}`}><Icon className="h-4 w-4" />{label}</div><p className="mt-2 text-xl font-bold text-white">{value}</p></div>; }
+function Field({ label, children }) { return <div className="space-y-2"><Label>{label}</Label>{children}</div>; }
+function Info({ label, value }) { return <div className="rounded-xl border border-white/10 bg-black/15 p-3"><p className="text-xs text-white/35">{label}</p><p className="mt-1 break-words text-sm text-white/75">{value ?? '—'}</p></div>; }
+function Empty({ text }) { return <div className="rounded-xl border border-dashed border-white/10 p-5 text-center text-sm text-white/35">{text}</div>; }
+function currency(value) { return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+function date(value) { return value ? new Date(value).toLocaleDateString('pt-BR') : '—'; }
+function dateTime(value) { return value ? new Date(value).toLocaleString('pt-BR') : '—'; }

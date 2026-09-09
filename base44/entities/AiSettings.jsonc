@@ -1,0 +1,17 @@
+{
+  "name": "AiSettings",
+  "type": "object",
+  "properties": {
+    "model": {
+      "type": "string",
+      "default": "gpt-4o-mini",
+      "description": "Modelo da OpenAI usado pela Gl\u00f3ria nas conversas"
+    },
+    "temperature": {
+      "type": "number",
+      "default": 0.3,
+      "description": "Temperatura (0 = preciso, 1 = criativo)"
+    }
+  },
+  "required": []
+}

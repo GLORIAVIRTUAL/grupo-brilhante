@@ -1,0 +1,41 @@
+{
+  "name": "ConsumptionRecipe",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "name": { "type": "string" },
+    "service_id": { "type": "string" },
+    "product_id": { "type": "string" },
+    "machine_type": { "type": "string" },
+    "stage": { "type": "string", "enum": ["washing", "drying", "dry_cleaning", "ironing", "finishing", "quality_control", "packaging"] },
+    "machine_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "basis": { "type": "string", "enum": ["per_piece", "per_kg", "per_cycle", "per_square_meter"], "default": "per_piece" },
+    "expected_output_quantity": { "type": "number", "default": 1 },
+    "waste_tolerance_percent": { "type": "number", "default": 5 },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stock_item_id": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit": { "type": "string" },
+          "minimum_quantity": { "type": "number" },
+          "maximum_quantity": { "type": "number" },
+          "allow_substitution": { "type": "boolean", "default": false },
+          "substitute_stock_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+          "notes": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "version": { "type": "string", "default": "1" },
+    "estimated_material_cost": { "type": "number", "default": 0 },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "active": { "type": "boolean", "default": true },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" }
+  },
+  "required": ["name", "basis", "version"]
+}

@@ -1,0 +1,59 @@
+{
+  "name": "Unit",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome da unidade, ex: Rio Branco - RS"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Subdom\u00ednio associado \u00e0 unidade, ex: riobranco"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Email do propriet\u00e1rio da unidade"
+    },
+    "address": {
+      "type": "string",
+      "description": "Endere\u00e7o completo da unidade (usado como origem nas rotas de coleta)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "pending"
+      ],
+      "default": "pending"
+    },
+    "plan_price": {
+      "type": "number",
+      "default": 489
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "paid",
+        "late",
+        "trial",
+        "cancelled"
+      ],
+      "default": "trial",
+      "description": "Status do pagamento da mensalidade"
+    },
+    "last_payment_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "subdomain",
+    "owner_email"
+  ]
+}

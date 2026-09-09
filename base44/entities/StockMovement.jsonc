@@ -1,0 +1,38 @@
+{
+  "name": "StockMovement",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "stock_item_id": { "type": "string" },
+    "stock_lot_id": { "type": "string" },
+    "movement_type": {
+      "type": "string",
+      "enum": ["purchase_entry", "consumption", "consumption_reversal", "reservation", "reservation_release", "adjustment_in", "adjustment_out", "transfer_in", "transfer_out", "loss", "return_to_supplier", "inventory_difference"]
+    },
+    "quantity": { "type": "number" },
+    "unit_cost": { "type": "number" },
+    "total_cost": { "type": "number" },
+    "balance_before": { "type": "number" },
+    "balance_after": { "type": "number" },
+    "purchase_document_id": { "type": "string" },
+    "purchase_item_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "garment_item_id": { "type": "string" },
+    "machine_id": { "type": "string" },
+    "production_batch_id": { "type": "string" },
+    "consumption_recipe_id": { "type": "string" },
+    "batch_number": { "type": "string" },
+    "expiry_date": { "type": "string", "format": "date-time" },
+    "source_unit_id": { "type": "string" },
+    "destination_unit_id": { "type": "string" },
+    "transfer_id": { "type": "string" },
+    "reversal_of_movement_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["posted", "reversed", "cancelled"], "default": "posted" },
+    "operator_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "stock_item_id", "movement_type", "quantity", "occurred_at"]
+}

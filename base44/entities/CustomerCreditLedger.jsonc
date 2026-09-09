@@ -1,0 +1,29 @@
+{
+  "name": "CustomerCreditLedger",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "entry_type": {
+      "type": "string",
+      "enum": ["grant", "payment", "refund", "reversal", "adjustment_in", "adjustment_out", "expiration", "transfer_in", "transfer_out"]
+    },
+    "amount": { "type": "number" },
+    "signed_amount": { "type": "number" },
+    "balance_after": { "type": "number" },
+    "status": { "type": "string", "enum": ["posted", "reversed", "cancelled"], "default": "posted" },
+    "payment_receipt_id": { "type": "string" },
+    "payment_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "accounts_receivable_id": { "type": "string" },
+    "source_entry_id": { "type": "string" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "operator_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "customer_id", "entry_type", "amount", "signed_amount", "balance_after", "status", "occurred_at", "operator_user_id", "reason", "idempotency_key"]
+}

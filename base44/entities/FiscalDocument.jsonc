@@ -1,0 +1,254 @@
+{
+  "name": "FiscalDocument",
+  "type": "object",
+  "properties": {
+    "unit_id": {
+      "type": "string"
+    },
+    "fiscal_profile_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "order_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "accounts_receivable_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "billing_statement_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "rps",
+        "nfse"
+      ],
+      "default": "rps"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready",
+        "queued",
+        "processing",
+        "authorized",
+        "rejected",
+        "cancel_requested",
+        "cancelled",
+        "substituted",
+        "error"
+      ],
+      "default": "draft"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "disabled",
+        "homologation",
+        "production"
+      ],
+      "default": "disabled"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "none",
+        "poa_direct",
+        "national_nfse",
+        "external_provider",
+        "focusnfe"
+      ],
+      "default": "none"
+    },
+    "rps_number": {
+      "type": "number"
+    },
+    "rps_series": {
+      "type": "string"
+    },
+    "nfse_number": {
+      "type": "string"
+    },
+    "verification_code": {
+      "type": "string"
+    },
+    "external_protocol": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "service_city_code": {
+      "type": "string"
+    },
+    "service_code": {
+      "type": "string"
+    },
+    "service_description": {
+      "type": "string"
+    },
+    "taxation_code": {
+      "type": "string"
+    },
+    "subtotal": {
+      "type": "number",
+      "default": 0
+    },
+    "discount_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "deduction_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "taxable_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "iss_rate": {
+      "type": "number",
+      "default": 0
+    },
+    "iss_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "iss_withheld": {
+      "type": "boolean",
+      "default": false
+    },
+    "total_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "recipient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "legal_name": {
+          "type": "string"
+        },
+        "tax_id": {
+          "type": "string"
+        },
+        "municipal_registration": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "address_number": {
+          "type": "string"
+        },
+        "address_complement": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "xml_asset_id": {
+      "type": "string"
+    },
+    "pdf_asset_id": {
+      "type": "string"
+    },
+    "provider_payload_hash": {
+      "type": "string"
+    },
+    "last_error_code": {
+      "type": "string"
+    },
+    "last_error_message": {
+      "type": "string"
+    },
+    "attempt_count": {
+      "type": "number",
+      "default": 0
+    },
+    "authorized_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancelled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancellation_reason": {
+      "type": "string"
+    },
+    "substituted_by_document_id": {
+      "type": "string"
+    },
+    "idempotency_key": {
+      "type": "string"
+    },
+    "created_by_user_id": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "unit_id",
+    "fiscal_profile_id",
+    "document_type",
+    "status",
+    "environment",
+    "provider",
+    "competence_date",
+    "service_description",
+    "total_amount",
+    "recipient",
+    "idempotency_key"
+  ]
+}

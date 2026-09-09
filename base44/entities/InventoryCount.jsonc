@@ -1,0 +1,48 @@
+{
+  "name": "InventoryCount",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "code": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "counting", "review", "approved", "cancelled"], "default": "draft" },
+    "scope": { "type": "string", "enum": ["all", "category", "selected_items"], "default": "all" },
+    "category": { "type": "string" },
+    "selected_stock_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "blind_count": { "type": "boolean", "default": true },
+    "freeze_movements": { "type": "boolean", "default": false },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "started_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stock_item_id": { "type": "string" },
+          "system_quantity": { "type": "number" },
+          "counted_quantity": { "type": "number" },
+          "difference": { "type": "number" },
+          "average_cost_snapshot": { "type": "number" },
+          "difference_value": { "type": "number" },
+          "stock_lot_id": { "type": "string" },
+          "reason": { "type": "string" },
+          "review_status": { "type": "string", "enum": ["pending", "accepted", "recount_required"], "default": "pending" },
+          "movement_id": { "type": "string" },
+          "counted_by_user_id": { "type": "string" },
+          "counted_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "default": []
+    },
+    "item_count": { "type": "number", "default": 0 },
+    "counted_item_count": { "type": "number", "default": 0 },
+    "variance_item_count": { "type": "number", "default": 0 },
+    "total_variance_value": { "type": "number", "default": 0 },
+    "notes": { "type": "string" },
+    "cancellation_reason": { "type": "string" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["unit_id", "code", "status"]
+}

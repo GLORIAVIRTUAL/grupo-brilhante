@@ -1,0 +1,97 @@
+{
+  "name": "DocumentAsset",
+  "type": "object",
+  "properties": {
+    "unit_id": {
+      "type": "string"
+    },
+    "owner_user_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "garment_photo",
+        "garment_label",
+        "garment_damage",
+        "purchase_invoice",
+        "utility_bill",
+        "service_invoice",
+        "payment_receipt",
+        "delivery_proof",
+        "third_party_document",
+        "other"
+      ]
+    },
+    "storage_key": {
+      "type": "string",
+      "description": "Identificador privado do objeto; não deve ser uma URL pública permanente"
+    },
+    "original_filename": {
+      "type": "string"
+    },
+    "safe_filename": {
+      "type": "string"
+    },
+    "mime_type": {
+      "type": "string"
+    },
+    "size_bytes": {
+      "type": "number"
+    },
+    "sha256": {
+      "type": "string"
+    },
+    "scan_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "clean",
+        "rejected",
+        "quarantined",
+        "not_configured"
+      ],
+      "default": "pending"
+    },
+    "scan_details": {
+      "type": "string"
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "valid",
+        "invalid"
+      ],
+      "default": "pending"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "private",
+        "customer_shared",
+        "internal_shared"
+      ],
+      "default": "private"
+    },
+    "retention_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "unit_id",
+    "document_type",
+    "storage_key",
+    "mime_type",
+    "size_bytes",
+    "sha256"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "ReworkCase",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "garment_item_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "quality_inspection_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["open", "approved", "in_progress", "quality_control", "completed", "rejected", "cancelled"], "default": "open" },
+    "reason_code": { "type": "string" },
+    "description": { "type": "string" },
+    "root_cause": { "type": "string" },
+    "responsible_team": { "type": "string" },
+    "responsible_user_id": { "type": "string" },
+    "third_party_job_id": { "type": "string" },
+    "priority": { "type": "string", "enum": ["normal", "high", "critical"], "default": "normal" },
+    "estimated_cost": { "type": "number", "default": 0 },
+    "actual_cost": { "type": "number", "default": 0 },
+    "opened_at": { "type": "string", "format": "date-time" },
+    "due_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "opened_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "before_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "after_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "customer_impact": { "type": "string", "enum": ["none", "delay", "discount", "refund", "replacement", "complaint"] },
+    "customer_notified_at": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "garment_item_id", "status", "reason_code", "description", "opened_at", "opened_by_user_id"]
+}

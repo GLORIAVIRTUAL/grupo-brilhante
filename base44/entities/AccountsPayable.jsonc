@@ -1,0 +1,42 @@
+{
+  "name": "AccountsPayable",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "supplier_id": { "type": "string" },
+    "supplier_name": { "type": "string" },
+    "purchase_document_id": { "type": "string" },
+    "financial_document_id": { "type": "string" },
+    "description": { "type": "string" },
+    "category": { "type": "string" },
+    "cost_center": { "type": "string" },
+    "competence_date": { "type": "string", "format": "date-time" },
+    "issue_date": { "type": "string", "format": "date-time" },
+    "due_date": { "type": "string", "format": "date-time" },
+    "original_amount": { "type": "number" },
+    "discount_amount": { "type": "number", "default": 0 },
+    "interest_amount": { "type": "number", "default": 0 },
+    "fine_amount": { "type": "number", "default": 0 },
+    "paid_amount": { "type": "number", "default": 0 },
+    "open_amount": { "type": "number" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "pending_approval", "approved", "partially_paid", "paid", "overdue", "cancelled"],
+      "default": "pending_approval"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": ["not_required", "pending", "approved", "rejected"],
+      "default": "pending"
+    },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "paid_at": { "type": "string", "format": "date-time" },
+    "payment_method": { "type": "string" },
+    "bank_transaction_id": { "type": "string" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "description", "due_date", "original_amount", "open_amount", "status"]
+}

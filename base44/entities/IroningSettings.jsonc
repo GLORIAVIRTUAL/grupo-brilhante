@@ -1,0 +1,22 @@
+{
+  "name": "IroningSettings",
+  "type": "object",
+  "properties": {
+    "percent": {
+      "type": "number",
+      "default": 70,
+      "description": "Percentual do valor da lavagem cobrado para APENAS passar a pe\u00e7a (ex: 70 = 70%)"
+    },
+    "days_label": {
+      "type": "string",
+      "default": "Segunda a Sexta",
+      "description": "Dias em que o servi\u00e7o de passadoria \u00e9 realizado"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Se o servi\u00e7o de passadoria avulsa est\u00e1 dispon\u00edvel"
+    }
+  },
+  "required": []
+}

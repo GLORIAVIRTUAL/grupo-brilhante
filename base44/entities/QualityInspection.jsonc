@@ -1,0 +1,34 @@
+{
+  "name": "QualityInspection",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "garment_item_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "inspection_type": { "type": "string", "enum": ["intake", "in_process", "final", "return_from_third_party", "rework"] },
+    "status": { "type": "string", "enum": ["pending", "approved", "approved_with_observation", "rejected", "cancelled"], "default": "pending" },
+    "checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "label": { "type": "string" },
+          "result": { "type": "string", "enum": ["pass", "fail", "not_applicable"] },
+          "notes": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "defect_codes": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "severity": { "type": "string", "enum": ["none", "minor", "major", "critical"], "default": "none" },
+    "asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "inspector_user_id": { "type": "string" },
+    "inspector_name": { "type": "string" },
+    "inspected_at": { "type": "string", "format": "date-time" },
+    "rework_case_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["unit_id", "garment_item_id", "inspection_type", "status", "inspector_user_id", "inspected_at"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "HumanReview",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "review_type": {
+      "type": "string",
+      "enum": ["garment_recognition", "purchase_document", "financial_document", "payment_receipt", "stock_divergence", "quality_exception", "other"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "approved", "corrected", "rejected", "cancelled"],
+      "default": "pending"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "critical"],
+      "default": "normal"
+    },
+    "entity_type": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "ai_job_id": { "type": "string" },
+    "document_asset_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "summary": { "type": "string" },
+    "proposed_data": { "type": "object", "additionalProperties": true },
+    "corrected_data": { "type": "object", "additionalProperties": true },
+    "assigned_user_id": { "type": "string" },
+    "reviewed_by_user_id": { "type": "string" },
+    "due_at": { "type": "string", "format": "date-time" },
+    "reviewed_at": { "type": "string", "format": "date-time" },
+    "decision_reason": { "type": "string" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["unit_id", "review_type", "status", "summary"]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "DeliveryReceipt",
+  "type": "object",
+  "properties": {
+    "receipt_number": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "order_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "garment_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "delivery_type": { "type": "string", "enum": ["counter_pickup", "courier_delivery", "locker_pickup", "other"], "default": "counter_pickup" },
+    "delivery_scope": { "type": "string", "enum": ["total", "partial"] },
+    "piece_count": { "type": "number" },
+    "delivered_value": { "type": "number" },
+    "outstanding_value_at_delivery": { "type": "number", "default": 0 },
+    "released_with_outstanding_balance": { "type": "boolean", "default": false },
+    "release_reason": { "type": "string" },
+    "recipient_name": { "type": "string" },
+    "recipient_document_last4": { "type": "string" },
+    "recipient_relationship": { "type": "string" },
+    "signature_asset_id": { "type": "string" },
+    "proof_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "operator_user_id": { "type": "string" },
+    "delivered_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string" },
+    "status": { "type": "string", "enum": ["completed", "cancelled"], "default": "completed" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["receipt_number", "unit_id", "customer_id", "order_ids", "garment_item_ids", "piece_count", "recipient_name", "delivered_at", "idempotency_key"]
+}

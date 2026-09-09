@@ -1,0 +1,23 @@
+{
+  "name": "ProductionCostProfile",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "name": { "type": "string" },
+    "labor_hourly_cost_default": { "type": "number", "default": 0 },
+    "energy_kwh_cost": { "type": "number", "default": 0 },
+    "water_m3_cost": { "type": "number", "default": 0 },
+    "overhead_percent": { "type": "number", "default": 0 },
+    "packaging_cost_per_piece": { "type": "number", "default": 0 },
+    "quality_cost_per_piece": { "type": "number", "default": 0 },
+    "operator_rates": { "type": "object", "additionalProperties": { "type": "number" } },
+    "active": { "type": "boolean", "default": true },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "name", "active", "valid_from"]
+}

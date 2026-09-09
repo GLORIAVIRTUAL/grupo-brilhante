@@ -1,0 +1,43 @@
+{
+  "name": "StockItem",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "sku": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "category": { "type": "string" },
+    "base_unit": {
+      "type": "string",
+      "enum": ["unit", "ml", "liter", "gram", "kg", "meter", "package", "box", "gallon"]
+    },
+    "purchase_unit": { "type": "string" },
+    "purchase_to_base_factor": { "type": "number", "default": 1 },
+    "current_quantity": { "type": "number", "default": 0 },
+    "reserved_quantity": { "type": "number", "default": 0 },
+    "available_quantity": { "type": "number", "default": 0 },
+    "minimum_quantity": { "type": "number", "default": 0 },
+    "maximum_quantity": { "type": "number" },
+    "reorder_quantity": { "type": "number", "default": 0 },
+    "reorder_lead_days": { "type": "number", "default": 0 },
+    "safety_stock_quantity": { "type": "number", "default": 0 },
+    "average_cost": { "type": "number", "default": 0 },
+    "last_cost": { "type": "number", "default": 0 },
+    "preferred_supplier_id": { "type": "string" },
+    "supplier_codes": { "type": "object", "additionalProperties": true },
+    "barcode": { "type": "string" },
+    "storage_location": { "type": "string" },
+    "abc_class": { "type": "string", "enum": ["A", "B", "C", "unclassified"], "default": "unclassified" },
+    "batch_control": { "type": "boolean", "default": false },
+    "expiry_control": { "type": "boolean", "default": false },
+    "negative_stock_allowed": { "type": "boolean", "default": false },
+    "last_inventory_at": { "type": "string", "format": "date-time" },
+    "last_movement_at": { "type": "string", "format": "date-time" },
+    "consumption_30d": { "type": "number", "default": 0 },
+    "average_daily_consumption": { "type": "number", "default": 0 },
+    "estimated_stockout_at": { "type": "string", "format": "date-time" },
+    "active": { "type": "boolean", "default": true },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "sku", "name", "base_unit"]
+}

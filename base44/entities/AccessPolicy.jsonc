@@ -1,0 +1,43 @@
+{
+  "name": "AccessPolicy",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "role": {
+      "type": "string",
+      "enum": ["super_admin", "admin", "manager", "attendant", "cashier", "production", "driver", "inventory", "finance", "auditor"]
+    },
+    "permissions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "denied_permissions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "critical_permissions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "require_mfa": { "type": "boolean", "default": false },
+    "step_up_max_age_minutes": { "type": "number", "default": 15 },
+    "session_max_age_minutes": { "type": "number", "default": 720 },
+    "allowed_weekdays": { "type": "array", "items": { "type": "number" }, "default": [0, 1, 2, 3, 4, 5, 6] },
+    "allowed_start_time": { "type": "string" },
+    "allowed_end_time": { "type": "string" },
+    "segregation_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": { "type": "string" },
+          "conflicts_with": { "type": "array", "items": { "type": "string" } },
+          "requires_different_user": { "type": "boolean", "default": true }
+        }
+      },
+      "default": []
+    },
+    "version": { "type": "number", "default": 1 },
+    "status": { "type": "string", "enum": ["draft", "active", "retired"], "default": "draft" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "change_reason": { "type": "string" }
+  },
+  "required": ["name", "code", "role", "version", "status"]
+}

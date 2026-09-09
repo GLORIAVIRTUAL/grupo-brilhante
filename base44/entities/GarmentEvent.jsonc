@@ -1,0 +1,55 @@
+{
+  "name": "GarmentEvent",
+  "type": "object",
+  "properties": {
+    "garment_item_id": { "type": "string" },
+    "order_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "created",
+        "identified",
+        "customer_accepted",
+        "tagged",
+        "queued",
+        "status_changed",
+        "location_changed",
+        "machine_assigned",
+        "sent_to_third_party",
+        "returned_from_third_party",
+        "quality_checked",
+        "rework_opened",
+        "rework_completed",
+        "ready",
+        "delivery_started",
+        "delivered",
+        "cancelled",
+        "note_added",
+        "photo_added"
+      ]
+    },
+    "from_status": { "type": "string" },
+    "to_status": { "type": "string" },
+    "from_location_id": { "type": "string" },
+    "to_location_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "operator_name": { "type": "string" },
+    "reason": { "type": "string" },
+    "notes": { "type": "string" },
+    "asset_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": [
+    "garment_item_id",
+    "unit_id",
+    "event_type",
+    "occurred_at"
+  ]
+}

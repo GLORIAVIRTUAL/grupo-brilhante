@@ -1,0 +1,32 @@
+{
+  "name": "LaundryService",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "description": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["cleaning", "ironing", "repair", "special_treatment", "packaging", "delivery", "other"]
+    },
+    "base_price": { "type": "number" },
+    "estimated_minutes": { "type": "number" },
+    "requires_third_party": { "type": "boolean", "default": false },
+    "requires_customer_acceptance": { "type": "boolean", "default": false },
+    "compatible_product_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "production_steps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "consumption_recipe_id": { "type": "string" },
+    "active": { "type": "boolean", "default": true },
+    "unit_id": { "type": "string" },
+    "catalog_version": { "type": "string", "default": "1" }
+  },
+  "required": ["name", "code", "base_price"]
+}

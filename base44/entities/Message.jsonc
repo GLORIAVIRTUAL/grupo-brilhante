@@ -1,0 +1,60 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "IN",
+        "OUT"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "TEXT",
+        "IMAGE",
+        "AUDIO",
+        "DOC"
+      ]
+    },
+    "text": {
+      "type": "string"
+    },
+    "media_file_id": {
+      "type": "string"
+    },
+    "raw_payload": {
+      "type": "object"
+    },
+    "language_detected": {
+      "type": "string"
+    },
+    "sent_by": {
+      "type": "string",
+      "description": "Nome de quem enviou a mensagem de sa\u00edda (atendente humano). Vazio = enviado pela Gl\u00f3ria (IA)."
+    },
+    "ai_pending": {
+      "type": "boolean",
+      "default": false,
+      "description": "Marcado pelo webhook quando esta mensagem deve ser respondida pela IA. Dispara o gatilho autom\u00e1tico que chama a Gl\u00f3ria."
+    },
+    "ai_source": {
+      "type": "string",
+      "description": "Origem da conex\u00e3o para a IA responder pelo sender correto (ex: zapi_moinhos)."
+    },
+    "ai_answered": {
+      "type": "boolean",
+      "default": false,
+      "description": "Trava de idempot\u00eancia: marcado quando a IA j\u00e1 processou esta mensagem. Impede resposta duplicada."
+    }
+  },
+  "required": [
+    "conversation_id",
+    "direction",
+    "type"
+  ]
+}

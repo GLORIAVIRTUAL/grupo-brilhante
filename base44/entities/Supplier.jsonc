@@ -1,0 +1,23 @@
+{
+  "name": "Supplier",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "corporate_name": { "type": "string" },
+    "trade_name": { "type": "string" },
+    "tax_id": { "type": "string", "description": "CNPJ normalizado, sem pontuação" },
+    "state_registration": { "type": "string" },
+    "email": { "type": "string" },
+    "phones": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "address": { "type": "object", "additionalProperties": true },
+    "payment_terms_days": { "type": "number" },
+    "lead_time_days": { "type": "number" },
+    "active": { "type": "boolean", "default": true },
+    "quality_score": { "type": "number" },
+    "delivery_score": { "type": "number" },
+    "price_score": { "type": "number" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["corporate_name", "tax_id"]
+}

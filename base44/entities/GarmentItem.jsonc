@@ -1,0 +1,184 @@
+{
+  "name": "GarmentItem",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "quote_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "ticket_number": {
+      "type": "string"
+    },
+    "garment_code": {
+      "type": "string",
+      "description": "Código único impresso em QR ou código de barras"
+    },
+    "label_print_count": { "type": "number", "default": 0 },
+    "label_last_printed_at": { "type": "string", "format": "date-time" },
+    "label_last_printed_by_user_id": { "type": "string" },
+    "label_last_reprint_reason": { "type": "string" },
+    "product_id": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "estimated_weight_kg": { "type": "number" },
+    "actual_weight_kg": { "type": "number" },
+    "current_production_batch_id": { "type": "string" },
+    "current_production_stage": { "type": "string" },
+    "production_batch_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "material_cost": { "type": "number", "default": 0 },
+    "labor_cost": { "type": "number", "default": 0 },
+    "machine_cost": { "type": "number", "default": 0 },
+    "total_production_cost": { "type": "number", "default": 0 },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "color": { "type": "string" },
+        "brand": { "type": "string" },
+        "pattern": { "type": "string" },
+        "size": { "type": "string" },
+        "material": { "type": "string" },
+        "width_cm": { "type": "number" },
+        "height_cm": { "type": "number" },
+        "freeform": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "properties": {
+        "damages": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "risk_tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "condition_checked": { "type": "boolean", "default": false },
+        "customer_authorized_risks": { "type": "boolean", "default": false }
+      }
+    },
+    "photo_asset_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service_id": { "type": "string" },
+          "name": { "type": "string" },
+          "quantity": { "type": "number", "default": 1 },
+          "unit_price": { "type": "number" },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "queued", "processing", "quality_control", "completed", "cancelled"],
+            "default": "pending"
+          },
+          "machine_id": { "type": "string" },
+          "production_batch_id": { "type": "string" },
+          "consumption_recipe_id": { "type": "string" },
+          "estimated_material_cost": { "type": "number", "default": 0 },
+          "actual_material_cost": { "type": "number", "default": 0 },
+          "started_at": { "type": "string", "format": "date-time" },
+          "completed_at": { "type": "string", "format": "date-time" },
+          "third_party_job_id": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "catalog_version": {
+      "type": "string"
+    },
+    "subtotal": {
+      "type": "number",
+      "default": 0
+    },
+    "discount_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "additional_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "total_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "recognition_confidence": {
+      "type": "number"
+    },
+    "recognition_status": {
+      "type": "string",
+      "enum": ["manual", "suggested", "confirmed", "rejected"],
+      "default": "manual"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "awaiting_approval",
+        "received",
+        "tagged",
+        "queued",
+        "washing",
+        "drying",
+        "ironing",
+        "quality_control",
+        "ready",
+        "with_third_party",
+        "rework",
+        "out_for_delivery",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_label": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["normal", "high", "urgent"],
+      "default": "normal"
+    },
+    "received_at": { "type": "string", "format": "date-time" },
+    "due_at": { "type": "string", "format": "date-time" },
+    "ready_at": { "type": "string", "format": "date-time" },
+    "delivered_at": { "type": "string", "format": "date-time" },
+    "customer_accepted_at": { "type": "string", "format": "date-time" },
+    "customer_acceptance_asset_id": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "customer_id",
+    "unit_id",
+    "garment_code",
+    "product_name",
+    "status"
+  ]
+}

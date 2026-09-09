@@ -1,0 +1,124 @@
+{
+  "name": "Quote",
+  "type": "object",
+  "properties": {
+    "customer_id": { "type": "string" },
+    "unit_id": { "type": "string", "description": "Unidade responsável pelo orçamento" },
+    "status": {
+      "type": "string",
+      "enum": ["DRAFT", "HUMAN_REVIEW", "APPROVED", "SENT", "EXPIRED", "ACCEPTED", "REJECTED", "CANCELLED"],
+      "default": "DRAFT"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["management_manual", "management_vision", "counter", "whatsapp", "customer_portal", "import"],
+      "default": "management_manual"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line_id": { "type": "string" },
+          "product_id": { "type": "string" },
+          "garment_type": { "type": "string" },
+          "qty": { "type": "number" },
+          "unit_price": { "type": "number" },
+          "subtotal": { "type": "number" },
+          "discount_amount": { "type": "number", "default": 0 },
+          "additional_amount": { "type": "number", "default": 0 },
+          "total_amount": { "type": "number" },
+          "confidence": { "type": "number" },
+          "recognition_status": {
+            "type": "string",
+            "enum": ["manual", "suggested", "confirmed", "rejected"],
+            "default": "manual"
+          },
+          "image_ids": { "type": "array", "items": { "type": "string" } },
+          "document_asset_ids": { "type": "array", "items": { "type": "string" } },
+          "image_url": { "type": "string", "description": "Campo legado mantido para compatibilidade" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "color": { "type": "string" },
+              "brand": { "type": "string" },
+              "pattern": { "type": "string" },
+              "size": { "type": "string" },
+              "material": { "type": "string" },
+              "width_cm": { "type": "number" },
+              "height_cm": { "type": "number" },
+              "freeform": { "type": "object", "additionalProperties": true }
+            }
+          },
+          "damages": { "type": "array", "items": { "type": "string" } },
+          "risk_tags": { "type": "array", "items": { "type": "string" } },
+          "condition_checked": { "type": "boolean", "default": false },
+          "customer_authorized_risks": { "type": "boolean", "default": false },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "service_id": { "type": "string" },
+                "name": { "type": "string" },
+                "unit_price": { "type": "number" },
+                "quantity": { "type": "number", "default": 1 }
+              }
+            }
+          },
+          "notes": { "type": "string" },
+          "review_reason": { "type": "string" }
+        }
+      }
+    },
+    "quote_number": { "type": "string" },
+    "root_quote_id": { "type": "string" },
+    "current_version_id": { "type": "string" },
+    "previous_quote_id": { "type": "string" },
+    "superseded_by_quote_id": { "type": "string" },
+    "version_number": { "type": "number", "default": 1 },
+    "subtotal": { "type": "number" },
+    "discount": { "type": "number" },
+    "addition": { "type": "number" },
+    "total": { "type": "number" },
+    "price_adjustments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["discount", "addition"] },
+          "scope": { "type": "string", "enum": ["quote", "item", "service"] },
+          "amount": { "type": "number" },
+          "percent": { "type": "number" },
+          "reason": { "type": "string" },
+          "approved_by_user_id": { "type": "string" },
+          "approval_policy_id": { "type": "string" },
+          "approval_policy_version": { "type": "number" },
+          "applied_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "default": []
+    },
+    "catalog_version": { "type": "string" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "sent_at": { "type": "string", "format": "date-time" },
+    "superseded_at": { "type": "string", "format": "date-time" },
+    "reopened_at": { "type": "string", "format": "date-time" },
+    "reopened_by_user_id": { "type": "string" },
+    "cancelled_at": { "type": "string", "format": "date-time" },
+    "cancelled_by_user_id": { "type": "string" },
+    "cancellation_reason": { "type": "string" },
+    "status_reason": { "type": "string" },
+    "customer_message": { "type": "string" },
+    "human_adjustments": { "type": "string" },
+    "review_deadline_at": { "type": "string", "format": "date-time" },
+    "reviewed_at": { "type": "string", "format": "date-time" },
+    "reviewed_by_user_id": { "type": "string" },
+    "accepted_at": { "type": "string", "format": "date-time" },
+    "rejected_at": { "type": "string", "format": "date-time" },
+    "rejection_reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_id"]
+}

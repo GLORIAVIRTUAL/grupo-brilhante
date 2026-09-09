@@ -1,0 +1,23 @@
+{
+  "name": "ProductionEvent",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "production_batch_id": { "type": "string" },
+    "garment_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "event_type": {
+      "type": "string",
+      "enum": ["created", "planned", "queued", "capacity_overridden", "started", "paused", "resumed", "consumption_posted", "loss_posted", "completed", "cancelled", "reopened", "machine_changed", "operator_changed"]
+    },
+    "previous_status": { "type": "string" },
+    "new_status": { "type": "string" },
+    "machine_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" },
+    "snapshot": { "type": "object", "additionalProperties": true },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "production_batch_id", "event_type", "occurred_at"]
+}

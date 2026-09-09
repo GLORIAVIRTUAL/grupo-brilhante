@@ -1,0 +1,78 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "customer_id": { "type": "string" },
+    "source_quote_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": [
+        "awaiting_approval",
+        "pending",
+        "processing",
+        "partially_ready",
+        "ready",
+        "out_for_delivery",
+        "partially_delivered",
+        "delivered",
+        "finished",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": ["unpaid", "partial", "pending_confirmation", "paid", "refunded", "cancelled"],
+      "default": "unpaid"
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": ["not_scheduled", "scheduled", "partial", "completed", "cancelled"],
+      "default": "not_scheduled"
+    },
+    "unit_id": { "type": "string" },
+    "expected_finish_at": { "type": "string", "format": "date-time" },
+    "closed_at": { "type": "string", "format": "date-time" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "cancelled_at": { "type": "string", "format": "date-time" },
+    "cancel_reason": { "type": "string" },
+    "subtotal_amount": { "type": "number", "default": 0 },
+    "discount_amount": { "type": "number", "default": 0 },
+    "additional_amount": { "type": "number", "default": 0 },
+    "total_amount": { "type": "number" },
+    "paid_amount": { "type": "number", "default": 0 },
+    "open_amount": { "type": "number", "default": 0 },
+    "billing_type": { "type": "string", "enum": ["immediate", "invoiced", "customer_balance", "courtesy"], "default": "immediate" },
+    "billing_agreement_id": { "type": "string" },
+    "billing_statement_id": { "type": "string" },
+    "accounts_receivable_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "payment_receipt_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "fiscal_document_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "fiscal_status": { "type": "string", "enum": ["not_issued", "draft", "ready", "queued", "authorized", "rejected", "cancelled"], "default": "not_issued" },
+    "cost_center": { "type": "string" },
+    "purchase_order_number": { "type": "string" },
+    "ticket_number": { "type": "string" },
+    "piece_count": { "type": "number", "default": 0 },
+    "ready_piece_count": { "type": "number", "default": 0 },
+    "delivered_piece_count": { "type": "number", "default": 0 },
+    "customer_acceptance_status": {
+      "type": "string",
+      "enum": ["not_required", "pending", "accepted", "rejected"],
+      "default": "pending"
+    },
+    "customer_accepted_at": { "type": "string", "format": "date-time" },
+    "customer_acceptance_asset_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "origin": {
+      "type": "string",
+      "enum": ["management", "counter", "whatsapp", "customer_portal", "import", "other"],
+      "default": "management"
+    },
+    "wash_time": { "type": "number", "description": "Tempo de lavagem em minutos" },
+    "dry_time": { "type": "number", "description": "Tempo de secagem em minutos" },
+    "dry_clean_time": { "type": "number", "description": "Tempo de lavagem a seco em minutos" },
+    "iron_time": { "type": "number", "description": "Tempo de passar em minutos" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["customer_id", "status"]
+}

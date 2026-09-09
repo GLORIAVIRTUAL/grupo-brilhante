@@ -1,0 +1,164 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "create",
+        "view",
+        "update",
+        "delete",
+        "approve",
+        "reject",
+        "export",
+        "login",
+        "logout",
+        "upload",
+        "download",
+        "reconcile",
+        "refund",
+        "status_change",
+        "permission_change",
+        "ai_review"
+      ],
+      "default": "delete",
+      "description": "Ação de negócio ou segurança registrada"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "payment",
+        "finance_entry",
+        "order",
+        "quote",
+        "garment_item",
+        "purchase_document",
+        "stock_item",
+        "stock_movement",
+        "supplier",
+        "accounts_payable",
+        "accounts_receivable",
+        "cash_session",
+        "cash_movement",
+        "financial_document",
+        "third_party_job",
+        "rework",
+        "quality_check",
+        "document_asset",
+        "ai_job",
+        "human_review",
+        "user",
+        "unit",
+        "integration",
+        "access_policy",
+        "price_rule",
+        "operational_catalog",
+        "loyalty_program",
+        "loyalty_ledger",
+        "voucher",
+        "customer_package",
+        "vehicle",
+        "field_route",
+        "field_route_stop",
+        "driver_shift",
+        "specialized_report"
+      ],
+      "description": "Tipo do registro afetado"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID do registro afetado"
+    },
+    "item_label": {
+      "type": "string",
+      "description": "Identificação legível do registro"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Justificativa humana ou técnica da ação"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_role": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string",
+      "description": "Identificador de correlação da requisição"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "ip_hash": {
+      "type": "string",
+      "description": "Hash opcional do IP, evitando registrar o endereço bruto"
+    },
+    "before_data": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "after_data": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "success": {
+      "type": "boolean",
+      "default": true
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["security", "commercial", "finance", "fiscal", "inventory", "production", "quality", "crm", "loyalty", "analytics", "logistics", "integration", "system"]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["info", "notice", "warning", "critical"],
+      "default": "info"
+    },
+    "result": {
+      "type": "string",
+      "enum": ["success", "denied", "validation_error", "failure"],
+      "default": "success"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["web", "mobile", "api", "webhook", "automation", "system"],
+      "default": "web"
+    },
+    "retention_class": {
+      "type": "string",
+      "enum": ["standard", "financial", "fiscal", "security", "privacy"],
+      "default": "standard"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "masked_fields": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    }
+  },
+  "required": [
+    "entity_type",
+    "reason"
+  ]
+}

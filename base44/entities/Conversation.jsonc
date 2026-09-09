@@ -1,0 +1,48 @@
+{
+  "name": "Conversation",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "WHATSAPP",
+        "INSTAGRAM",
+        "MESSENGER"
+      ],
+      "default": "WHATSAPP"
+    },
+    "zapi_instance_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "OPEN",
+        "CLOSED"
+      ],
+      "default": "OPEN"
+    },
+    "last_message_id": {
+      "type": "string"
+    },
+    "last_message_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "handoff_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Store conversation state, e.g. { flow: 'QUOTE', step: 1 }"
+    }
+  },
+  "required": [
+    "customer_id",
+    "channel"
+  ]
+}

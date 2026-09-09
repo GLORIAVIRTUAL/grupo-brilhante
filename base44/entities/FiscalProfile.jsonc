@@ -1,0 +1,133 @@
+{
+  "name": "FiscalProfile",
+  "type": "object",
+  "properties": {
+    "unit_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready_for_homologation",
+        "active",
+        "suspended"
+      ],
+      "default": "draft"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "none",
+        "poa_direct",
+        "national_nfse",
+        "external_provider",
+        "focusnfe"
+      ],
+      "default": "none"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "disabled",
+        "homologation",
+        "production"
+      ],
+      "default": "disabled"
+    },
+    "municipality_code": {
+      "type": "string",
+      "default": "4314902"
+    },
+    "municipality_name": {
+      "type": "string",
+      "default": "Porto Alegre"
+    },
+    "state": {
+      "type": "string",
+      "description": "UF do municipio de prestacao (ex: PE)"
+    },
+    "legal_name": {
+      "type": "string"
+    },
+    "trade_name": {
+      "type": "string"
+    },
+    "tax_id": {
+      "type": "string"
+    },
+    "municipal_registration": {
+      "type": "string"
+    },
+    "tax_regime": {
+      "type": "string"
+    },
+    "special_tax_regime": {
+      "type": "string"
+    },
+    "service_code": {
+      "type": "string"
+    },
+    "service_description": {
+      "type": "string"
+    },
+    "municipal_tax_code": {
+      "type": "string"
+    },
+    "iss_rate": {
+      "type": "number"
+    },
+    "iss_withheld": {
+      "type": "boolean",
+      "default": false
+    },
+    "rps_series": {
+      "type": "string"
+    },
+    "next_rps_number": {
+      "type": "number",
+      "default": 1
+    },
+    "credential_reference": {
+      "type": "string",
+      "description": "Identificador de secret/certificado no cofre da plataforma; nunca o valor"
+    },
+    "certificate_reference": {
+      "type": "string",
+      "description": "Identificador do certificado no cofre da plataforma; nunca o conteudo"
+    },
+    "last_validation_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_validation_status": {
+      "type": "string",
+      "enum": [
+        "not_tested",
+        "success",
+        "failed"
+      ],
+      "default": "not_tested"
+    },
+    "created_by_user_id": {
+      "type": "string"
+    },
+    "updated_by_user_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "unit_id",
+    "status",
+    "provider",
+    "environment",
+    "municipality_code"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "RouteEvent",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "route_id": { "type": "string" },
+    "route_stop_id": { "type": "string" },
+    "pickup_id": { "type": "string" },
+    "driver_user_id": { "type": "string" },
+    "vehicle_id": { "type": "string" },
+    "event_type": { "type": "string", "enum": ["route_assigned", "route_started", "route_paused", "route_resumed", "location", "en_route", "arrived", "service_started", "proof_added", "stop_completed", "stop_failed", "stop_skipped", "route_completed", "route_cancelled"] },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "location": { "type": "object", "additionalProperties": true },
+    "accuracy_meters": { "type": "number" },
+    "reason_code": { "type": "string" },
+    "notes": { "type": "string" },
+    "proof_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "idempotency_key": { "type": "string" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "route_id", "event_type", "occurred_at", "idempotency_key"]
+}

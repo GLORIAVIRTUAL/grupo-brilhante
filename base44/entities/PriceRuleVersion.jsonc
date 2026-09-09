@@ -1,0 +1,19 @@
+{
+  "name": "PriceRuleVersion",
+  "type": "object",
+  "properties": {
+    "price_rule_id": { "type": "string" },
+    "root_rule_id": { "type": "string" },
+    "version": { "type": "number" },
+    "status": { "type": "string", "enum": ["draft", "simulated", "approved", "active", "retired", "cancelled"] },
+    "snapshot": { "type": "object", "additionalProperties": true },
+    "simulation_result": { "type": "object", "additionalProperties": true },
+    "change_reason": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "created_at_business": { "type": "string", "format": "date-time" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["price_rule_id", "root_rule_id", "version", "status", "snapshot", "change_reason"]
+}

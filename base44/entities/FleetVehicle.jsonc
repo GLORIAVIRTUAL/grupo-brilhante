@@ -1,0 +1,31 @@
+{
+  "name": "FleetVehicle",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "code": { "type": "string" },
+    "plate": { "type": "string" },
+    "description": { "type": "string" },
+    "vehicle_type": { "type": "string", "enum": ["motorcycle", "car", "van", "truck", "bicycle", "other"] },
+    "status": { "type": "string", "enum": ["available", "assigned", "in_route", "maintenance", "inactive"], "default": "available" },
+    "capacity_kg": { "type": "number", "default": 0 },
+    "capacity_volume_m3": { "type": "number", "default": 0 },
+    "capacity_stops": { "type": "number", "default": 0 },
+    "odometer_km": { "type": "number", "default": 0 },
+    "fuel_type": { "type": "string" },
+    "cost_per_km": { "type": "number", "default": 0 },
+    "insurance_valid_until": { "type": "string", "format": "date" },
+    "registration_valid_until": { "type": "string", "format": "date" },
+    "next_maintenance_at_km": { "type": "number" },
+    "next_maintenance_at": { "type": "string", "format": "date" },
+    "current_driver_user_id": { "type": "string" },
+    "last_location": { "type": "object", "additionalProperties": true },
+    "last_location_at": { "type": "string", "format": "date-time" },
+    "active": { "type": "boolean", "default": true },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "change_reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["unit_id", "code", "plate", "vehicle_type", "status"]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "QuoteVersion",
+  "type": "object",
+  "properties": {
+    "quote_id": { "type": "string" },
+    "root_quote_id": { "type": "string" },
+    "previous_version_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "version_number": { "type": "number" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "sent", "accepted", "rejected", "expired", "superseded", "cancelled"],
+      "default": "draft"
+    },
+    "snapshot": { "type": "object", "additionalProperties": true },
+    "subtotal": { "type": "number" },
+    "discount_amount": { "type": "number", "default": 0 },
+    "addition_amount": { "type": "number", "default": 0 },
+    "total_amount": { "type": "number" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "change_type": {
+      "type": "string",
+      "enum": ["created", "edited", "repriced", "duplicated", "reopened", "sent", "accepted", "rejected", "cancelled", "expired"]
+    },
+    "change_reason": { "type": "string" },
+    "price_override": { "type": "boolean", "default": false },
+    "price_override_amount": { "type": "number", "default": 0 },
+    "created_by_user_id": { "type": "string" },
+    "created_by_name": { "type": "string" },
+    "created_at_business": { "type": "string", "format": "date-time" },
+    "request_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["quote_id", "root_quote_id", "unit_id", "customer_id", "version_number", "status", "snapshot", "total_amount", "change_type", "created_by_user_id", "created_at_business"]
+}

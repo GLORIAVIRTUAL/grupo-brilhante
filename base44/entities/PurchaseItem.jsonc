@@ -1,0 +1,29 @@
+{
+  "name": "PurchaseItem",
+  "type": "object",
+  "properties": {
+    "purchase_document_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "line_number": { "type": "number" },
+    "supplier_code": { "type": "string" },
+    "description_original": { "type": "string" },
+    "stock_item_id": { "type": "string" },
+    "match_status": { "type": "string", "enum": ["matched", "suggested", "new_item", "ignored"], "default": "suggested" },
+    "match_confidence": { "type": "number" },
+    "invoiced_quantity": { "type": "number" },
+    "received_quantity": { "type": "number", "default": 0 },
+    "accepted_quantity": { "type": "number", "default": 0 },
+    "purchase_unit": { "type": "string" },
+    "conversion_factor": { "type": "number", "default": 1 },
+    "base_quantity": { "type": "number" },
+    "unit_price": { "type": "number" },
+    "discount": { "type": "number", "default": 0 },
+    "taxes": { "type": "number", "default": 0 },
+    "total": { "type": "number" },
+    "batch_number": { "type": "string" },
+    "expiry_date": { "type": "string", "format": "date-time" },
+    "divergence_reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["purchase_document_id", "unit_id", "description_original", "invoiced_quantity", "unit_price"]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "PaymentReceipt",
+  "type": "object",
+  "properties": {
+    "receipt_number": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "order_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "accounts_receivable_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "payment_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "allocation_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "cash_session_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "pending_confirmation", "partially_settled", "settled", "partially_reversed", "reversed", "cancelled"],
+      "default": "draft"
+    },
+    "currency": { "type": "string", "default": "BRL" },
+    "amount_due": { "type": "number" },
+    "amount_tendered": { "type": "number" },
+    "amount_applied": { "type": "number" },
+    "pending_amount": { "type": "number", "default": 0 },
+    "change_amount": { "type": "number", "default": 0 },
+    "reversed_amount": { "type": "number", "default": 0 },
+    "tenders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "payment_id": { "type": "string" },
+          "method": { "type": "string" },
+          "provider": { "type": "string" },
+          "tendered_amount": { "type": "number" },
+          "applied_amount": { "type": "number" },
+          "change_amount": { "type": "number", "default": 0 },
+          "status": { "type": "string" },
+          "external_reference": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "operator_user_id": { "type": "string" },
+    "operator_name": { "type": "string" },
+    "settled_at": { "type": "string", "format": "date-time" },
+    "reversed_at": { "type": "string", "format": "date-time" },
+    "reversed_by_user_id": { "type": "string" },
+    "reversal_reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "request_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["receipt_number", "unit_id", "customer_id", "status", "currency", "amount_due", "amount_tendered", "amount_applied", "operator_user_id", "idempotency_key"]
+}

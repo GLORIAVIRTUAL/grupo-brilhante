@@ -1,0 +1,184 @@
+{
+  "name": "Pickup",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "ID do cliente"
+    },
+    "scheduled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora da coleta"
+    },
+    "created_by_name": {
+      "type": "string",
+      "description": "Nome de quem inseriu o agendamento no sistema"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "completed",
+        "cancelled",
+        "missed"
+      ],
+      "default": "scheduled"
+    },
+    "service_kind": {
+      "type": "string",
+      "enum": [
+        "dirty",
+        "clean"
+      ],
+      "default": "dirty",
+      "description": "dirty = Coleta Suja (retirada de roupas sujas), clean = Entrega Limpa (devolu\u00e7\u00e3o de roupas limpas)"
+    },
+    "address": {
+      "type": "string",
+      "description": "Endere\u00e7o da coleta"
+    },
+    "neighborhood": {
+      "type": "string",
+      "description": "Bairro da coleta"
+    },
+    "fee": {
+      "type": "number",
+      "default": 0,
+      "description": "Taxa de coleta (0 = gr\u00e1tis)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es sobre a coleta"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "human",
+        "ai"
+      ],
+      "default": "human",
+      "description": "Quem realizou o agendamento"
+    },
+    "priority": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se a coleta \u00e9 priorit\u00e1ria"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "fixed",
+        "extra"
+      ],
+      "default": "regular",
+      "description": "Tipo de coleta (normal, fixa ou encaixe)"
+    },
+    "ticket_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se o ticket/or\u00e7amento j\u00e1 foi gerado para esta coleta"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "route_id": {
+      "type": "string"
+    },
+    "route_stop_id": {
+      "type": "string"
+    },
+    "driver_user_id": {
+      "type": "string"
+    },
+    "driver_name": {
+      "type": "string"
+    },
+    "vehicle_id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "number"
+    },
+    "planned_arrival_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "arrival_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "service_started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "attempt_count": {
+      "type": "number",
+      "default": 0
+    },
+    "failure_reason_code": {
+      "type": "string"
+    },
+    "failure_notes": {
+      "type": "string"
+    },
+    "confirmation_code_hash": {
+      "type": "string"
+    },
+    "proof_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "signature_asset_id": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "recipient_document_last4": {
+      "type": "string"
+    },
+    "geo_check_in": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "geo_check_out": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "last_location": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "distance_km": {
+      "type": "number",
+      "default": 0
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 0
+    },
+    "idempotency_key": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "customer_id",
+    "scheduled_at"
+  ]
+}

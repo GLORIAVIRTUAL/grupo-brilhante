@@ -1,0 +1,71 @@
+{
+  "name": "ProcessedEvent",
+  "type": "object",
+  "properties": {
+    "event_key": {
+      "type": "string",
+      "description": "Chave idempotente \u00fanica definida pelo provedor ou comando"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "stripe",
+        "asaas",
+        "whatsapp",
+        "document",
+        "scheduler",
+        "user_command",
+        "internal"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "processing"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "payload_hash": {
+      "type": "string"
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "attempts": {
+      "type": "number",
+      "default": 1
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "unit_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_key",
+    "event_type",
+    "source",
+    "status"
+  ]
+}

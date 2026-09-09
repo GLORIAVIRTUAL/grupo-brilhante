@@ -1,0 +1,41 @@
+{
+  "name": "Resposta da Gl\u00f3ria",
+  "description": "Quando chega uma mensagem do cliente marcada para a IA, chama a Gl\u00f3ria para responder.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "resposta_da_gloria",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "dispatch_ai_reply": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "aiReplyFromWorkflow",
+            "args": {
+              "message_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Responder com a Gl\u00f3ria",
+            "description": "Chama a IA (a pr\u00f3pria fun\u00e7\u00e3o ignora mensagens que n\u00e3o est\u00e3o pendentes)"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "Message"
+    }
+  }
+}

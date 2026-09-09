@@ -1,0 +1,29 @@
+{
+  "name": "ThirdPartyJob",
+  "type": "object",
+  "properties": {
+    "unit_id": { "type": "string" },
+    "partner_id": { "type": "string" },
+    "code": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "approved", "sent", "in_progress", "returned", "quality_control", "completed", "cancelled"], "default": "draft" },
+    "garment_item_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "service_description": { "type": "string" },
+    "estimated_cost": { "type": "number", "default": 0 },
+    "actual_cost": { "type": "number", "default": 0 },
+    "sent_at": { "type": "string", "format": "date-time" },
+    "expected_return_at": { "type": "string", "format": "date-time" },
+    "returned_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "sent_by_user_id": { "type": "string" },
+    "received_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "outbound_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "return_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "quality_inspection_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "invoice_document_id": { "type": "string" },
+    "accounts_payable_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "request_id": { "type": "string" }
+  },
+  "required": ["unit_id", "partner_id", "code", "status"]
+}

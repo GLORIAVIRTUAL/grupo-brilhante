@@ -1,0 +1,29 @@
+{
+  "name": "Voucher",
+  "type": "object",
+  "properties": {
+    "code": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "program_id": { "type": "string" },
+    "voucher_type": { "type": "string", "enum": ["fixed_amount", "percent", "service", "complimentary"] },
+    "amount": { "type": "number", "default": 0 },
+    "percent": { "type": "number", "default": 0 },
+    "service_id": { "type": "string" },
+    "minimum_order_amount": { "type": "number", "default": 0 },
+    "maximum_discount_amount": { "type": "number", "default": 0 },
+    "usage_limit": { "type": "number", "default": 1 },
+    "usage_count": { "type": "number", "default": 0 },
+    "status": { "type": "string", "enum": ["draft", "active", "reserved", "redeemed", "expired", "cancelled"], "default": "draft" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "redeemed_at": { "type": "string", "format": "date-time" },
+    "redeemed_order_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["code", "voucher_type", "status", "usage_limit"]
+}
