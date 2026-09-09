@@ -21,15 +21,14 @@ export default function LaundryFactoryV2() {
 
         {/* Top Row: Washers, Dryer, Dry Clean */}
         <div className="flex items-center justify-around w-full gap-4 md:gap-8 flex-wrap md:flex-nowrap">
-          <MachineDropZone machineId="WSH-9001" timeKey="wash_time" accent="text-blue-400" accentRing="ring-blue-400">
-            <WasherMachine label="LAVAR 1" code="WSH-9001" />
-          </MachineDropZone>
-          <MachineDropZone machineId="WSH-9002" timeKey="wash_time" accent="text-blue-400" accentRing="ring-blue-400">
-            <WasherMachine label="LAVAR 2" code="WSH-9002" />
-          </MachineDropZone>
-          <MachineDropZone machineId="WSH-9003" timeKey="wash_time" accent="text-blue-400" accentRing="ring-blue-400">
-            <WasherMachine label="LAVAR 3" code="WSH-9003" />
-          </MachineDropZone>
+          {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
+            const code = `WSH-90${String(n).padStart(2, '0')}`;
+            return (
+              <MachineDropZone key={code} machineId={code} timeKey="wash_time" accent="text-blue-400" accentRing="ring-blue-400">
+                <WasherMachine label={`LAVAR ${n}`} code={code} />
+              </MachineDropZone>
+            );
+          })}
           <MachineDropZone machineId="DRY-7000" timeKey="dry_time" accent="text-blue-400" accentRing="ring-blue-400">
             <DryerMachine label="SECAR 1" code="DRY-7000" />
           </MachineDropZone>
