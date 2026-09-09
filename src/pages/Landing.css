@@ -130,6 +130,7 @@ a{color:inherit;text-decoration:none}
   margin:0 0 24px;
   font-weight:700;
   max-width:670px;
+  color:#17364F !important;
 }
 
 .gb-hero p{
@@ -322,6 +323,11 @@ a{color:inherit;text-decoration:none}
   line-height:1.12;
   letter-spacing:-1px;
   margin:0 0 13px;
+  color:#17364F;
+}
+
+.gb-section.white .gb-section-wrap h2{
+  color:#17364F;
 }
 
 .gb-lead{
