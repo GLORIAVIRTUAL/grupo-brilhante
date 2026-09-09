@@ -97,8 +97,14 @@ export const AuthProvider = ({ children }) => {
         const accessResponse = await base44.functions.invoke('check_access_session', {});
         access = accessResponse?.data || {};
       } catch (accessError) {
-        // Sem confirmação server-side da política, nenhuma rota protegida é liberada.
-        throw accessError;
+        // MFA temporariamente desativado: ignora exigência de MFA e prossegue com a sessão.
+        const accessCode = accessError?.response?.data?.code || accessError?.data?.code;
+        if (accessCode === 'MFA_REQUIRED') {
+          access = {};
+        } else {
+          // Sem confirmação server-side da política, nenhuma rota protegida é liberada.
+          throw accessError;
+        }
       }
       setUser({
         ...currentUser,
