@@ -128,7 +128,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
 
             <div className="flex items-center justify-between pt-3 border-t border-white/5">
               <div className="flex -space-x-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 border border-[#2a1b4e] flex items-center justify-center text-[8px] font-bold text-white">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#216FA1] to-[#2d8ac4] border border-[#17364F] flex items-center justify-center text-[8px] font-bold text-white">
                   {customer?.full_name?.charAt(0) || '?'}
                 </div>
               </div>

@@ -14,11 +14,11 @@ const round = (value) => Math.round((Number(value || 0) + Number.EPSILON) * 100)
 const methods = [
   { value: 'cash', label: 'Dinheiro', icon: Banknote, tone: 'text-emerald-300' },
   { value: 'pix', label: 'Pix', icon: Landmark, tone: 'text-cyan-300' },
-  { value: 'credit', label: 'Crédito', icon: CreditCard, tone: 'text-violet-300' },
+  { value: 'credit', label: 'Crédito', icon: CreditCard, tone: 'text-blue-300' },
   { value: 'debit', label: 'Débito', icon: CreditCard, tone: 'text-sky-300' },
   { value: 'bank_transfer', label: 'Transferência', icon: Landmark, tone: 'text-blue-300' },
   { value: 'boleto', label: 'Boleto', icon: WalletCards, tone: 'text-amber-300' },
-  { value: 'customer_balance', label: 'Crédito do cliente', icon: WalletCards, tone: 'text-fuchsia-300' },
+  { value: 'customer_balance', label: 'Crédito do cliente', icon: WalletCards, tone: 'text-blue-300' },
   { value: 'courtesy', label: 'Cortesia', icon: CheckCircle2, tone: 'text-pink-300' },
 ];
 
@@ -197,16 +197,16 @@ export default function PaymentReceiptDialog({ open, onOpenChange, order, receiv
 
   return (
     <Dialog open={open} onOpenChange={(value) => !busy && onOpenChange(value)}>
-      <DialogContent className="max-h-[92vh] max-w-4xl overflow-y-auto border-white/10 bg-[#170c2b] text-white">
+      <DialogContent className="max-h-[92vh] max-w-4xl overflow-y-auto border-white/10 bg-[#17364F] text-white">
         <DialogHeader>
           <div className="flex items-center gap-3"><div className="rounded-2xl bg-emerald-500/15 p-2.5 text-emerald-300"><WalletCards className="h-5 w-5" /></div><div><DialogTitle>Receber pagamento</DialogTitle><DialogDescription className="text-white/50">Combine meios, receba parcialmente e mantenha cada aplicação auditável.</DialogDescription></div></div>
         </DialogHeader>
 
         {effectiveOrder && Number(effectiveOrder.paid_amount || 0) <= 0 && (
-          <div className="grid gap-4 rounded-3xl border border-violet-400/15 bg-violet-500/[0.06] p-4 lg:grid-cols-2">
+          <div className="grid gap-4 rounded-3xl border border-[#216FA1]/15 bg-[#216FA1]/[0.06] p-4 lg:grid-cols-2">
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-semibold text-violet-200"><TicketPercent className="h-4 w-4" />Aplicar voucher antes do pagamento</div>
-              <div className="flex gap-2"><Input value={voucherCode} onChange={(event) => setVoucherCode(event.target.value.toUpperCase())} placeholder="Código do voucher" className="border-white/10 bg-black/20" /><Button type="button" variant="outline" onClick={applyVoucher} disabled={benefitBusy || !voucherCode.trim()} className="border-violet-400/25 text-violet-100">Aplicar</Button></div>
+              <div className="flex items-center gap-2 text-sm font-semibold text-blue-200"><TicketPercent className="h-4 w-4" />Aplicar voucher antes do pagamento</div>
+              <div className="flex gap-2"><Input value={voucherCode} onChange={(event) => setVoucherCode(event.target.value.toUpperCase())} placeholder="Código do voucher" className="border-white/10 bg-black/20" /><Button type="button" variant="outline" onClick={applyVoucher} disabled={benefitBusy || !voucherCode.trim()} className="border-[#216FA1]/25 text-blue-100">Aplicar</Button></div>
               {benefits.applied?.vouchers?.filter((item) => item.status === 'applied').map((item) => <p key={item.idempotency_key} className="text-xs text-emerald-300">{item.code}: -{money(item.value)}</p>)}
             </div>
             <div className="space-y-3">
@@ -221,7 +221,7 @@ export default function PaymentReceiptDialog({ open, onOpenChange, order, receiv
           <Summary label="Saldo devido" value={money(amountDue)} tone="text-white" />
           <Summary label="Apresentado" value={money(tenderedTotal)} tone="text-sky-300" />
           <Summary label="Aplicação imediata" value={money(immediateApplied)} tone="text-emerald-300" />
-          <Summary label={changeAmount > 0 ? 'Troco' : 'Restará em aberto'} value={money(changeAmount > 0 ? changeAmount : remainingAfterConfirmed)} tone={changeAmount > 0 ? 'text-amber-300' : 'text-violet-300'} />
+          <Summary label={changeAmount > 0 ? 'Troco' : 'Restará em aberto'} value={money(changeAmount > 0 ? changeAmount : remainingAfterConfirmed)} tone={changeAmount > 0 ? 'text-amber-300' : 'text-blue-300'} />
         </div>
 
         <div className="space-y-3">
@@ -237,7 +237,7 @@ export default function PaymentReceiptDialog({ open, onOpenChange, order, receiv
                   <div className="space-y-2"><Label>Valor</Label><Input type="number" min="0.01" step="0.01" value={tender.amount} onChange={(event) => updateTender(tender.id, { amount: event.target.value })} className="border-white/10 bg-black/20" /></div>
                   {tender.method === 'credit' ? <div className="space-y-2"><Label>Parcelas</Label><Input type="number" min="1" max="24" value={tender.installments} onChange={(event) => updateTender(tender.id, { installments: event.target.value })} className="border-white/10 bg-black/20" /></div> : <div className="space-y-2"><Label>Referência</Label><Input value={tender.external_reference} onChange={(event) => updateTender(tender.id, { external_reference: event.target.value })} placeholder="NSU, E2E ou documento" className="border-white/10 bg-black/20" /></div>}
                 </div>
-                {tender.method === 'customer_balance' && <p className="mt-3 text-xs text-fuchsia-200">Disponível: {money(customer?.credit_balance || 0)}</p>}
+                {tender.method === 'customer_balance' && <p className="mt-3 text-xs text-blue-200">Disponível: {money(customer?.credit_balance || 0)}</p>}
                 {tender.method === 'courtesy' && <div className="mt-3 space-y-2"><Label>Motivo obrigatório</Label><Input value={tender.reason} onChange={(event) => updateTender(tender.id, { reason: event.target.value })} className="border-pink-500/20 bg-pink-500/5" /></div>}
                 {requiresExternalConfirmation && <label className="mt-3 flex cursor-pointer items-center gap-2 rounded-2xl border border-white/10 bg-black/15 p-3 text-sm text-white/70"><input type="checkbox" checked={tender.confirmed} onChange={(event) => updateTender(tender.id, { confirmed: event.target.checked })} className="h-4 w-4 accent-emerald-500" /><span>Confirmado no terminal, banco ou conciliação</span>{!tender.confirmed && <Badge variant="outline" className="ml-auto border-amber-500/30 text-amber-200">Pendente</Badge>}</label>}
               </div>

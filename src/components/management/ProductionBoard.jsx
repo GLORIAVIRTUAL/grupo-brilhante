@@ -8,9 +8,9 @@ import { Badge } from '@/components/ui/badge';
 
 const COLUMNS = [
   { key: 'intake', label: 'Entrada', statuses: ['draft', 'awaiting_approval', 'received', 'tagged'], color: 'from-sky-500 to-cyan-400' },
-  { key: 'queue', label: 'Fila', statuses: ['queued'], color: 'from-violet-500 to-fuchsia-400' },
+  { key: 'queue', label: 'Fila', statuses: ['queued'], color: 'from-[#216FA1] to-[#2d8ac4]' },
   { key: 'production', label: 'Em produção', statuses: ['washing', 'drying', 'ironing'], color: 'from-orange-500 to-amber-400' },
-  { key: 'quality', label: 'Qualidade', statuses: ['quality_control'], color: 'from-indigo-500 to-blue-400' },
+  { key: 'quality', label: 'Qualidade', statuses: ['quality_control'], color: 'from-[#216FA1] to-blue-400' },
   { key: 'exceptions', label: 'Exceções', statuses: ['with_third_party', 'rework'], color: 'from-red-500 to-rose-400' },
   { key: 'ready', label: 'Prontas', statuses: ['ready', 'out_for_delivery'], color: 'from-emerald-500 to-teal-400' },
 ];
@@ -37,10 +37,10 @@ function GarmentCard({ garment, customerName, onAdvance, onInspect, busy }) {
   const isOverdue = garment.due_at && new Date(garment.due_at) < new Date() && !['ready', 'out_for_delivery', 'delivered'].includes(garment.status);
 
   return (
-    <article className="rounded-2xl border border-white/10 bg-[#1b1030] p-4 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-white/20">
+    <article className="rounded-2xl border border-white/10 bg-[#17364F] p-4 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-white/20">
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <div className="rounded-xl bg-white/5 p-2"><Shirt className="h-4 w-4 text-violet-300" /></div>
+          <div className="rounded-xl bg-white/5 p-2"><Shirt className="h-4 w-4 text-blue-300" /></div>
           <div className="min-w-0"><p className="truncate text-sm font-semibold text-white">{garment.product_name}</p><p className="text-xs text-white/40">{garment.garment_code}</p></div>
         </div>
         <Badge variant="outline" className={isOverdue ? 'border-red-500/30 text-red-300' : 'border-white/10 text-white/55'}>{STATUS_LABEL[garment.status] || garment.status}</Badge>
@@ -52,7 +52,7 @@ function GarmentCard({ garment, customerName, onAdvance, onInspect, busy }) {
         {garment.due_at && <div className={`flex items-center gap-2 ${isOverdue ? 'text-red-300' : ''}`}><Clock3 className="h-3.5 w-3.5" /><span>{new Date(garment.due_at).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</span></div>}
       </div>
       {garment.status === 'quality_control' ? (
-        <Button size="sm" onClick={() => onInspect?.(garment)} className="mt-4 w-full bg-indigo-500 hover:bg-indigo-400">Inspecionar qualidade</Button>
+        <Button size="sm" onClick={() => onInspect?.(garment)} className="mt-4 w-full bg-[#216FA1] hover:bg-[#2d8ac4]">Inspecionar qualidade</Button>
       ) : next ? (
         <Button size="sm" variant="outline" disabled={busy} onClick={() => onAdvance(garment, next[0])} className="mt-4 w-full border-white/10 bg-white/5 hover:bg-white/10">
           {busy ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <ArrowRight className="mr-2 h-3.5 w-3.5" />}{next[1]}

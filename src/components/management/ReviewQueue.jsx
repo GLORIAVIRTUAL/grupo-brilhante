@@ -60,13 +60,13 @@ export default function ReviewQueue({ reviews = [], selectedUnitId, onRefresh })
         {pending.map((review) => (
           <article key={review.id} className="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
             <div className="flex items-start justify-between gap-3">
-              <div className="flex gap-3"><div className="rounded-xl bg-violet-500/15 p-2 text-violet-300"><FileSearch className="h-5 w-5" /></div><div><h3 className="font-semibold text-white">{LABELS[review.review_type] || review.review_type}</h3><p className="mt-1 text-sm text-white/55">{review.summary}</p></div></div>
+              <div className="flex gap-3"><div className="rounded-xl bg-[#216FA1]/15 p-2 text-blue-300"><FileSearch className="h-5 w-5" /></div><div><h3 className="font-semibold text-white">{LABELS[review.review_type] || review.review_type}</h3><p className="mt-1 text-sm text-white/55">{review.summary}</p></div></div>
               <Badge variant="outline" className={PRIORITY[review.priority] || PRIORITY.normal}>{review.priority}</Badge>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">{(review.reason_codes || []).map((reason) => <Badge key={reason} variant="outline" className="border-white/10 text-white/45">{reason.replaceAll('_', ' ')}</Badge>)}</div>
             <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
               <div className="flex items-center gap-2 text-xs text-white/40"><Clock3 className="h-3.5 w-3.5" />{review.due_at ? new Date(review.due_at).toLocaleString('pt-BR') : 'Sem prazo definido'}</div>
-              <Button size="sm" onClick={() => resolve(review)} disabled={busyId === review.id} className="bg-violet-500 hover:bg-violet-400">{busyId === review.id ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <Check className="mr-2 h-3.5 w-3.5" />}Revisado</Button>
+              <Button size="sm" onClick={() => resolve(review)} disabled={busyId === review.id} className="bg-[#216FA1] hover:bg-[#2d8ac4]">{busyId === review.id ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <Check className="mr-2 h-3.5 w-3.5" />}Revisado</Button>
             </div>
           </article>
         ))}

@@ -306,7 +306,7 @@ export default function Layout({ children }) {
                   to={item.path}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative
                     ${isActive 
-                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border border-white/10' 
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border border-white/10' 
                       : 'hover:bg-white/5 text-gray-400 hover:text-white'
                     }`}
                 >

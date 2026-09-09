@@ -143,7 +143,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
 
   return (
     <section className="space-y-5">
-      <div className="rounded-3xl border border-sky-500/20 bg-gradient-to-br from-sky-500/10 to-violet-500/5 p-5">
+      <div className="rounded-3xl border border-sky-500/20 bg-gradient-to-br from-sky-500/10 to-[#216FA1]/5 p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex gap-3">
             <div className="rounded-2xl bg-sky-500/15 p-2.5 text-sky-300"><Landmark className="h-5 w-5" /></div>
@@ -211,7 +211,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
 
         <div className="space-y-5">
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-            <div className="flex items-center gap-2"><FileCheck2 className="h-5 w-5 text-violet-300" /><h3 className="font-semibold text-white">Preparar RPS</h3></div>
+            <div className="flex items-center gap-2"><FileCheck2 className="h-5 w-5 text-blue-300" /><h3 className="font-semibold text-white">Preparar RPS</h3></div>
             <p className="mt-1 text-sm text-white/40">Gera o documento interno e reserva a numeração.</p>
             <div className="mt-4 space-y-3">
               <select value={source} onChange={(e) => setSource(e.target.value)} className="h-10 w-full rounded-md border border-white/10 bg-black/25 px-3 text-sm text-white">
@@ -219,7 +219,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
                 <optgroup label="Pedidos">{eligibleOrders.slice(0, 300).map((order) => <option key={order.id} value={`order:${order.id}`}>{order.ticket_number || order.id} · {money(order.total_amount)}</option>)}</optgroup>
                 <optgroup label="Faturamentos">{eligibleStatements.slice(0, 100).map((statement) => <option key={statement.id} value={`statement:${statement.id}`}>{statement.statement_number} · {money(statement.total_amount)}</option>)}</optgroup>
               </select>
-              <Button onClick={prepare} disabled={busy || !profile || !source} className="w-full bg-violet-500 hover:bg-violet-400"><ShieldCheck className="mr-2 h-4 w-4" />Preparar e validar localmente</Button>
+              <Button onClick={prepare} disabled={busy || !profile || !source} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4]"><ShieldCheck className="mr-2 h-4 w-4" />Preparar e validar localmente</Button>
             </div>
             <div className="mt-5 border-t border-white/10 pt-4">
               <Label>Importar nota já emitida (referência Focus NFe)</Label>

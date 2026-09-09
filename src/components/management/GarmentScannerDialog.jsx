@@ -101,7 +101,7 @@ export default function GarmentScannerDialog({ open, onOpenChange, onScan, title
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-xl border-white/10 bg-[#170c2b] text-white">
+      <DialogContent className="max-w-xl border-white/10 bg-[#17364F] text-white">
         <DialogHeader><div className="flex items-center gap-3"><div className="rounded-2xl bg-cyan-500/15 p-2.5 text-cyan-300"><ScanLine className="h-5 w-5" /></div><div><DialogTitle>{title}</DialogTitle><DialogDescription className="text-white/50">{description}</DialogDescription></div></div></DialogHeader>
 
         <div className="space-y-5">
@@ -114,8 +114,8 @@ export default function GarmentScannerDialog({ open, onOpenChange, onScan, title
           </div>
 
           <form onSubmit={(event) => { event.preventDefault(); submit(manualCode); }} className="space-y-3">
-            <Label className="flex items-center gap-2"><Keyboard className="h-4 w-4 text-violet-300" />Código manual ou leitor USB</Label>
-            <div className="flex gap-2"><Input autoFocus value={manualCode} onChange={(event) => setManualCode(event.target.value)} placeholder="Ex.: P-ABC12345-001" className="border-white/10 bg-black/20 font-mono uppercase" /><Button type="submit" className="bg-violet-500 hover:bg-violet-400">Localizar</Button></div>
+            <Label className="flex items-center gap-2"><Keyboard className="h-4 w-4 text-blue-300" />Código manual ou leitor USB</Label>
+            <div className="flex gap-2"><Input autoFocus value={manualCode} onChange={(event) => setManualCode(event.target.value)} placeholder="Ex.: P-ABC12345-001" className="border-white/10 bg-black/20 font-mono uppercase" /><Button type="submit" className="bg-[#216FA1] hover:bg-[#2d8ac4]">Localizar</Button></div>
             <p className="text-xs text-white/35">Leitores USB funcionam como teclado: aponte para a etiqueta e pressione o gatilho.</p>
           </form>
         </div>

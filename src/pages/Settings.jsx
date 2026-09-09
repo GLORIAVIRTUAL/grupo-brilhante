@@ -638,7 +638,7 @@ Templates WhatsApp (3) — JSON [
           <TabsTrigger value="unit_access" className="w-auto md:w-full justify-start data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-gray-400">
             <ShieldCheck className="w-4 h-4 mr-2" /> Governança & Acessos
           </TabsTrigger>
-          <TabsTrigger value="pricing_rules" className="w-auto md:w-full justify-start data-[state=active]:bg-violet-600 data-[state=active]:text-white text-gray-400">
+          <TabsTrigger value="pricing_rules" className="w-auto md:w-full justify-start data-[state=active]:bg-[#216FA1] data-[state=active]:text-white text-gray-400">
             <Tags className="w-4 h-4 mr-2" /> Regras de Preço
           </TabsTrigger>
           <TabsTrigger value="operational_catalogs" className="w-auto md:w-full justify-start data-[state=active]:bg-orange-600 data-[state=active]:text-white text-gray-400">
@@ -1048,7 +1048,7 @@ Templates WhatsApp (3) — JSON [
                </div>
                
                <div className="flex justify-end">
-                 <Button className="bg-[#216FA1] hover:bg-[#5d1dbf] text-white">
+                 <Button className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white">
                    <Save className="w-4 h-4 mr-2" /> Salvar Alterações
                  </Button>
                </div>

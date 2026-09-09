@@ -144,15 +144,15 @@ export default function ManualGarmentCharacteristics({ pieces, activePieceId, on
               <div className="space-y-2"><Label>Detalhes e acessórios</Label><Input value={activePiece.attributes?.freeform?.details || ''} onChange={(event) => updateAttribute('freeform', { ...(activePiece.attributes?.freeform || {}), details: event.target.value })} placeholder="Ex.: cinto, pedras, bordado, forro" className="border-white/10 bg-black/20" /></div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="space-y-2"><Label className="flex items-center gap-2"><Ruler className="h-4 w-4 text-violet-300" />Largura (cm)</Label><Input type="number" min="0" step="0.1" value={activePiece.attributes?.width_cm ?? ''} onChange={(event) => updateAttribute('width_cm', event.target.value === '' ? undefined : Number(event.target.value))} className="border-white/10 bg-black/20" /></div>
-              <div className="space-y-2"><Label className="flex items-center gap-2"><Ruler className="h-4 w-4 text-violet-300" />Altura/comprimento (cm)</Label><Input type="number" min="0" step="0.1" value={activePiece.attributes?.height_cm ?? ''} onChange={(event) => updateAttribute('height_cm', event.target.value === '' ? undefined : Number(event.target.value))} className="border-white/10 bg-black/20" /></div>
+              <div className="space-y-2"><Label className="flex items-center gap-2"><Ruler className="h-4 w-4 text-blue-300" />Largura (cm)</Label><Input type="number" min="0" step="0.1" value={activePiece.attributes?.width_cm ?? ''} onChange={(event) => updateAttribute('width_cm', event.target.value === '' ? undefined : Number(event.target.value))} className="border-white/10 bg-black/20" /></div>
+              <div className="space-y-2"><Label className="flex items-center gap-2"><Ruler className="h-4 w-4 text-blue-300" />Altura/comprimento (cm)</Label><Input type="number" min="0" step="0.1" value={activePiece.attributes?.height_cm ?? ''} onChange={(event) => updateAttribute('height_cm', event.target.value === '' ? undefined : Number(event.target.value))} className="border-white/10 bg-black/20" /></div>
             </div>
           </section>
 
-          <section className="space-y-4 rounded-3xl border border-violet-400/20 bg-violet-500/[0.055] p-5">
+          <section className="space-y-4 rounded-3xl border border-[#216FA1]/20 bg-[#216FA1]/[0.055] p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div><h4 className="flex items-center gap-2 font-semibold"><Wrench className="h-4 w-4 text-violet-300" />Serviços desta peça</h4><p className="text-sm text-white/40">Combine limpeza, passadoria e tratamentos. O preço é recalculado no servidor.</p></div>
-              <div className="text-right"><p className="text-xs text-white/40">Total da peça</p><p className="text-xl font-bold text-violet-200">R$ {Number(activePiece.total_amount ?? activePiece.unit_price ?? 0).toFixed(2)}</p></div>
+              <div><h4 className="flex items-center gap-2 font-semibold"><Wrench className="h-4 w-4 text-blue-300" />Serviços desta peça</h4><p className="text-sm text-white/40">Combine limpeza, passadoria e tratamentos. O preço é recalculado no servidor.</p></div>
+              <div className="text-right"><p className="text-xs text-white/40">Total da peça</p><p className="text-xl font-bold text-blue-200">R$ {Number(activePiece.total_amount ?? activePiece.unit_price ?? 0).toFixed(2)}</p></div>
             </div>
 
             {compatibleServices.length > 0 ? (
@@ -160,10 +160,10 @@ export default function ManualGarmentCharacteristics({ pieces, activePieceId, on
                 {compatibleServices.map((service) => {
                   const selected = selectedServices.find((entry) => entry.service_id === service.id);
                   return (
-                    <div key={service.id} className={`rounded-2xl border p-3 transition ${selected ? 'border-violet-400/60 bg-violet-500/15' : 'border-white/10 bg-black/15 hover:border-white/20'}`}>
+                    <div key={service.id} className={`rounded-2xl border p-3 transition ${selected ? 'border-[#216FA1]/60 bg-[#216FA1]/15' : 'border-white/10 bg-black/15 hover:border-white/20'}`}>
                       <button type="button" onClick={() => toggleService(service)} disabled={isPricing} className="w-full text-left disabled:opacity-50">
-                        <div className="flex items-start justify-between gap-3"><div><p className="text-sm font-semibold text-white">{service.name}</p><p className="mt-1 text-xs text-white/40">{service.category?.replaceAll('_', ' ') || 'serviço'}{service.estimated_minutes ? ` · ${service.estimated_minutes} min` : ''}</p></div><div className={`flex h-6 w-6 items-center justify-center rounded-lg border ${selected ? 'border-violet-300 bg-violet-400 text-slate-950' : 'border-white/15 text-transparent'}`}><Check className="h-3.5 w-3.5" /></div></div>
-                        <p className="mt-3 text-sm font-medium text-violet-200">R$ {Number(selected?.unit_price ?? service.base_price ?? 0).toFixed(2)}</p>
+                        <div className="flex items-start justify-between gap-3"><div><p className="text-sm font-semibold text-white">{service.name}</p><p className="mt-1 text-xs text-white/40">{service.category?.replaceAll('_', ' ') || 'serviço'}{service.estimated_minutes ? ` · ${service.estimated_minutes} min` : ''}</p></div><div className={`flex h-6 w-6 items-center justify-center rounded-lg border ${selected ? 'border-blue-300 bg-blue-400 text-slate-950' : 'border-white/15 text-transparent'}`}><Check className="h-3.5 w-3.5" /></div></div>
+                        <p className="mt-3 text-sm font-medium text-blue-200">R$ {Number(selected?.unit_price ?? service.base_price ?? 0).toFixed(2)}</p>
                       </button>
                       {selected && <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3"><span className="text-xs text-white/40">Quantidade do serviço</span><div className="flex items-center gap-2 rounded-lg bg-black/20 p-1"><button type="button" disabled={isPricing || Number(selected.quantity || 1) <= 1} onClick={() => updateServiceQuantity(service.id, -1)} className="rounded p-1 hover:bg-white/10 disabled:opacity-30"><Minus className="h-3 w-3" /></button><span className="min-w-5 text-center text-xs font-semibold">{selected.quantity || 1}</span><button type="button" disabled={isPricing} onClick={() => updateServiceQuantity(service.id, 1)} className="rounded p-1 hover:bg-white/10 disabled:opacity-30"><Plus className="h-3 w-3" /></button></div></div>}
                     </div>
@@ -173,7 +173,7 @@ export default function ManualGarmentCharacteristics({ pieces, activePieceId, on
             ) : (
               <div className="rounded-2xl border border-dashed border-white/10 p-5 text-center text-sm text-white/40">Nenhum serviço estruturado está disponível para esta peça. O preço padrão do catálogo será preservado.</div>
             )}
-            {isPricing && <div className="flex items-center gap-2 text-xs text-violet-200"><Loader2 className="h-3.5 w-3.5 animate-spin" />Recalculando preço, prazo e etapas…</div>}
+            {isPricing && <div className="flex items-center gap-2 text-xs text-blue-200"><Loader2 className="h-3.5 w-3.5 animate-spin" />Recalculando preço, prazo e etapas…</div>}
             {selectedServices.length === 0 && compatibleServices.length > 0 && <p className="text-xs text-amber-200/80">Nenhum serviço selecionado. O sistema manterá o preço legado do produto.</p>}
           </section>
 

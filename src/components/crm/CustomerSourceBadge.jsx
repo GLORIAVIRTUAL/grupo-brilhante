@@ -4,7 +4,7 @@ const SOURCES = {
   SITE_QUOTE: { label: 'Orçamento do site', classes: 'border-cyan-400/30 bg-cyan-500/15 text-cyan-300' },
   COUNTER_MANUAL: { label: 'Manual do balcão', classes: 'border-amber-400/30 bg-amber-500/15 text-amber-300' },
   WHATSAPP_HUMAN: { label: 'WhatsApp humano', classes: 'border-emerald-400/30 bg-emerald-500/15 text-emerald-300' },
-  WHATSAPP_GLORIA: { label: 'WhatsApp GlórIA', classes: 'border-fuchsia-400/30 bg-fuchsia-500/15 text-fuchsia-300' },
+  WHATSAPP_GLORIA: { label: 'WhatsApp GlórIA', classes: 'border-[#216FA1]/30 bg-[#216FA1]/15 text-[#216FA1]' },
 };
 
 export default function CustomerSourceBadge({ source }) {

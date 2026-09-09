@@ -141,7 +141,7 @@ export function MachineProvider({ children }) {
     const DONE_COLOR = 'bg-green-500/25 text-green-300 border-green-500/50';
     const LABELS = {
       wash: { running: 'Lavando', done: 'Lavado', color: 'bg-blue-500/20 text-blue-300 border-blue-500/40' },
-      dry: { running: 'Secando', done: 'Seco', color: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/40' },
+      dry: { running: 'Secando', done: 'Seco', color: 'bg-blue-500/20 text-blue-300 border-blue-500/40' },
       iron: { running: 'Passando', done: 'Passado', color: 'bg-orange-500/20 text-orange-300 border-orange-500/40' },
       dry_clean: { running: 'Lavando a seco', done: 'Lavado a seco', color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' },
     };

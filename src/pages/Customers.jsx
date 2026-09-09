@@ -555,7 +555,7 @@ export default function Customers() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => setCustomer360(customer)}
-                                    className="h-8 w-8 hover:bg-violet-500/15 hover:text-violet-300 text-gray-400"
+                                    className="h-8 w-8 hover:bg-[#216FA1]/15 hover:text-[#216FA1] text-gray-400"
                                     title="CRM 360"
                                 >
                                     <Sparkles className="w-4 h-4" />

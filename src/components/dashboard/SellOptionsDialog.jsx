@@ -13,7 +13,7 @@ export default function SellOptionsDialog({ open, onOpenChange, onPhotoQuote, on
         <div className="flex flex-col gap-3 py-2">
           <Button
             onClick={onPhotoQuote}
-            className="justify-start gap-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 py-6 text-base font-bold"
+            className="justify-start gap-3 bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] py-6 text-base font-bold"
           >
             <Camera className="h-5 w-5" /> Orçamento por fotos
           </Button>

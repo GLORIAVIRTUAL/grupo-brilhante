@@ -55,7 +55,7 @@ export default function GarmentLabelPrintDialog({ open, onOpenChange, garments =
 
   return (
     <Dialog open={open} onOpenChange={(nextOpen) => !busy && onOpenChange(nextOpen)}>
-      <DialogContent className="max-h-[90vh] max-w-3xl overflow-hidden border-white/10 bg-[#170c2b] p-0 text-white">
+      <DialogContent className="max-h-[90vh] max-w-3xl overflow-hidden border-white/10 bg-[#17364F] p-0 text-white">
         <DialogHeader className="border-b border-white/10 px-6 py-5"><div className="flex items-center gap-3"><div className="rounded-2xl bg-orange-500/15 p-2.5 text-orange-300"><Printer className="h-5 w-5" /></div><div><DialogTitle>Imprimir etiquetas das peças</DialogTitle><DialogDescription className="text-white/50">Formato térmico 62 × 40 mm com QR e código legível.</DialogDescription></div></div></DialogHeader>
 
         <div className="grid min-h-0 md:grid-cols-[1fr_260px]">
@@ -73,7 +73,7 @@ export default function GarmentLabelPrintDialog({ open, onOpenChange, garments =
           <aside className="space-y-5 p-5">
             <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4"><p className="text-xs text-white/40">Selecionadas</p><p className="mt-1 text-3xl font-bold">{selected.length}</p><p className="mt-2 text-xs text-white/35">As etiquetas não exibem nome ou telefone do cliente.</p></div>
             {reprintCount > 0 && <div className="space-y-2 rounded-2xl border border-amber-400/20 bg-amber-500/5 p-4"><Label className="text-amber-200">Motivo da reimpressão</Label><Input value={reason} onChange={(event) => setReason(event.target.value)} placeholder="Ex.: etiqueta danificada" className="border-amber-400/20 bg-black/20" /><p className="text-xs text-amber-100/50">{reprintCount} peça(s) já possuem impressão registrada.</p></div>}
-            <Button onClick={print} disabled={busy || selected.length === 0} className="w-full bg-gradient-to-r from-orange-500 to-fuchsia-500">{busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Printer className="mr-2 h-4 w-4" />}Registrar e imprimir</Button>
+            <Button onClick={print} disabled={busy || selected.length === 0} className="w-full bg-gradient-to-r from-orange-500 to-[#216FA1]">{busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Printer className="mr-2 h-4 w-4" />}Registrar e imprimir</Button>
           </aside>
         </div>
       </DialogContent>

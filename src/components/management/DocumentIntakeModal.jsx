@@ -103,10 +103,10 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-2xl border-white/10 bg-[#170c2b] text-white">
+      <DialogContent className="max-w-2xl border-white/10 bg-[#17364F] text-white">
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <div className="rounded-2xl bg-gradient-to-br from-orange-500 to-fuchsia-600 p-2.5"><ReceiptText className="h-5 w-5" /></div>
+            <div className="rounded-2xl bg-gradient-to-br from-orange-500 to-[#216FA1] p-2.5"><ReceiptText className="h-5 w-5" /></div>
             <div><DialogTitle>{title}</DialogTitle><DialogDescription className="text-white/50">O sistema extrai os dados; nenhum estoque ou pagamento é alterado antes da aprovação.</DialogDescription></div>
           </div>
         </DialogHeader>
@@ -122,14 +122,14 @@ export default function DocumentIntakeModal({ open, onOpenChange, mode = 'purcha
                 </Select>
               </div>
             )}
-            <Label className="flex cursor-pointer flex-col items-center justify-center rounded-3xl border border-dashed border-violet-400/40 bg-violet-500/5 px-6 py-10 text-center hover:bg-violet-500/10">
-              <UploadCloud className="h-10 w-10 text-violet-300" />
+            <Label className="flex cursor-pointer flex-col items-center justify-center rounded-3xl border border-dashed border-[#216FA1]/40 bg-[#216FA1]/5 px-6 py-10 text-center hover:bg-[#216FA1]/10">
+              <UploadCloud className="h-10 w-10 text-blue-300" />
               <span className="mt-3 font-semibold">Fotografe ou selecione PDF, XML, JPG, PNG ou WEBP</span>
               <span className="mt-1 max-w-md text-sm font-normal text-white/45">Prefira o XML da NF-e quando disponível. Arquivos duplicados são bloqueados pelo hash.</span>
               <Input type="file" accept={mode === 'purchase' ? 'image/jpeg,image/png,image/webp,application/pdf,application/xml,text/xml,.xml' : 'image/jpeg,image/png,image/webp,application/pdf'} onChange={(event) => setFile(event.target.files?.[0] || null)} className="sr-only" />
             </Label>
             {file && <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3"><span className="truncate text-sm">{file.name}</span><Badge variant="outline">{(file.size / 1024 / 1024).toFixed(2)} MB</Badge></div>}
-            <Button onClick={processFile} disabled={busy || !file} className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500">
+            <Button onClick={processFile} disabled={busy || !file} className="w-full bg-gradient-to-r from-[#216FA1] to-[#2d8ac4]">
               {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileSearch className="mr-2 h-4 w-4" />}Ler e preparar rascunho
             </Button>
           </div>

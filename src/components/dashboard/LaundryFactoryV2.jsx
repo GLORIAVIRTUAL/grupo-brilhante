@@ -8,7 +8,7 @@ import MachineDropZone from '@/components/dashboard/MachineDropZone';
 
 export default function LaundryFactoryV2() {
   return (
-    <div className="w-full relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#17364F] via-[#2a1b4e] to-[#17364F] border border-white/10 shadow-2xl flex items-center justify-center p-8 py-12 group">
+    <div className="w-full relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#17364F] via-[#10243a] to-[#17364F] border border-white/10 shadow-2xl flex items-center justify-center p-8 py-12 group">
       
       {/* Tech Grid Background */}
       <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
@@ -30,7 +30,7 @@ export default function LaundryFactoryV2() {
           <MachineDropZone machineId="WSH-9003" timeKey="wash_time" accent="text-blue-400" accentRing="ring-blue-400">
             <WasherMachine label="LAVAR 3" code="WSH-9003" />
           </MachineDropZone>
-          <MachineDropZone machineId="DRY-7000" timeKey="dry_time" accent="text-fuchsia-400" accentRing="ring-fuchsia-400">
+          <MachineDropZone machineId="DRY-7000" timeKey="dry_time" accent="text-blue-400" accentRing="ring-blue-400">
             <DryerMachine label="SECAR 1" code="DRY-7000" />
           </MachineDropZone>
           <MachineDropZone machineId="DRC-5000" timeKey="dry_clean_time" accent="text-emerald-400" accentRing="ring-emerald-400">

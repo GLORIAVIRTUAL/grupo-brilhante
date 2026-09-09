@@ -372,13 +372,13 @@ Regras obrigatórias:
                     <Button variant="outline" className="bg-transparent border-white/15 text-white hover:bg-white/10">Abrir arte</Button>
                   </a>
                   <a href={generatedImage} download target="_blank" rel="noopener noreferrer">
-                    <Button className="bg-[#216FA1] text-white hover:bg-[#5b17bf]">Baixar arte</Button>
+                    <Button className="bg-[#216FA1] text-white hover:bg-[#2d8ac4]">Baixar arte</Button>
                   </a>
                   <Button onClick={handleSaveCampaign} disabled={saveCampaignMutation.isPending || !generatedImage || !modelText.trim()} className="bg-white/10 text-white hover:bg-white/15">
                     {saveCampaignMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     {saveCampaignMutation.isPending ? 'Salvando...' : 'Salvar campanha'}
                   </Button>
-                  <Button onClick={handleGenerateVideo} disabled={videoSending || !generatedImage || !modelText.trim()} className="bg-[#2d8ac4] text-white hover:bg-[#7b24ca]">
+                  <Button onClick={handleGenerateVideo} disabled={videoSending || !generatedImage || !modelText.trim()} className="bg-[#2d8ac4] text-white hover:bg-[#2d8ac4]">
                     {videoSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Clapperboard className="w-4 h-4" />}
                     {videoSending ? 'Pedindo vídeo...' : 'Gerar vídeo'}
                   </Button>

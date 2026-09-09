@@ -27,7 +27,7 @@ export default function SavedCampaignCard({ campaign, onLoad, onDelete }) {
         </p>
 
         <div className="flex flex-wrap gap-3">
-          <Button onClick={() => onLoad(campaign)} className="bg-[#216FA1] text-white hover:bg-[#5b17bf]">
+          <Button onClick={() => onLoad(campaign)} className="bg-[#216FA1] text-white hover:bg-[#2d8ac4]">
             <History className="w-4 h-4" />
             Usar novamente
           </Button>

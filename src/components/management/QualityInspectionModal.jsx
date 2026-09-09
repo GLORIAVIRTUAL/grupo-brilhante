@@ -60,9 +60,9 @@ export default function QualityInspectionModal({ garment, open, onOpenChange, on
 
   return (
     <Dialog open={open} onOpenChange={(value) => !busy && onOpenChange(value)}>
-      <DialogContent className="max-w-2xl border-white/10 bg-[#170c2b] text-white">
+      <DialogContent className="max-w-2xl border-white/10 bg-[#17364F] text-white">
         <DialogHeader>
-          <div className="flex items-center gap-3"><div className="rounded-2xl bg-indigo-500/20 p-2.5 text-indigo-300"><ShieldCheck className="h-5 w-5" /></div><div><DialogTitle>Controle de qualidade</DialogTitle><DialogDescription className="text-white/50">{garment?.garment_code} · {garment?.product_name}</DialogDescription></div></div>
+          <div className="flex items-center gap-3"><div className="rounded-2xl bg-[#216FA1]/20 p-2.5 text-blue-300"><ShieldCheck className="h-5 w-5" /></div><div><DialogTitle>Controle de qualidade</DialogTitle><DialogDescription className="text-white/50">{garment?.garment_code} · {garment?.product_name}</DialogDescription></div></div>
         </DialogHeader>
         <div className="space-y-3 py-2">
           {checklist.map((item) => (

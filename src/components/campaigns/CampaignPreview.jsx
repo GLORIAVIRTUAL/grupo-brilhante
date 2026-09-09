@@ -75,7 +75,7 @@ export default function CampaignPreview({ imageUrl, overlayCopy }) {
             <ExternalLink className="w-4 h-4" /> Abrir fundo
           </Button>
         </a>
-        <Button onClick={handleDownload} className="gap-2 bg-[#216FA1] text-white hover:bg-[#5b17bf]">
+        <Button onClick={handleDownload} className="gap-2 bg-[#216FA1] text-white hover:bg-[#2d8ac4]">
           <Download className="w-4 h-4" /> Baixar arte final
         </Button>
       </div>

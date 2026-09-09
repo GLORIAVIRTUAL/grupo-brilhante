@@ -262,7 +262,7 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
 
             <Button
               onClick={handleUse}
-              className="w-full bg-[#216FA1] hover:bg-[#5b17bf]"
+              className="w-full bg-[#216FA1] hover:bg-[#2d8ac4]"
             >
               Usar tudo na criação da campanha →
             </Button>

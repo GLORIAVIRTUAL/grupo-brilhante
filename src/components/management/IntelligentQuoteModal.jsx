@@ -200,10 +200,10 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[94vh] max-w-6xl overflow-hidden border-white/10 bg-[#170c2b] p-0 text-white">
+      <DialogContent className="max-h-[94vh] max-w-6xl overflow-hidden border-white/10 bg-[#17364F] p-0 text-white">
         <DialogHeader className="border-b border-white/10 px-6 py-5">
           <div className="flex items-center gap-3">
-            <div className="rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 p-2.5 shadow-lg shadow-violet-900/30"><Sparkles className="h-5 w-5" /></div>
+            <div className="rounded-2xl bg-gradient-to-br from-[#216FA1] to-[#2d8ac4] p-2.5 shadow-lg shadow-blue-900/30"><Sparkles className="h-5 w-5" /></div>
             <div>
               <DialogTitle className="text-xl">Orçamento inteligente por imagens</DialogTitle>
               <DialogDescription className="text-white/50">A IA prepara o rascunho; o funcionário confirma antes de criar qualquer pedido ou cobrança.</DialogDescription>
@@ -211,7 +211,7 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2">
             {['Capturar', 'Revisar', 'Finalizar'].map((label, index) => (
-              <div key={label} className={`rounded-full px-3 py-1.5 text-center text-xs font-medium ${step >= index + 1 ? 'bg-violet-500 text-white' : 'bg-white/5 text-white/35'}`}>{index + 1}. {label}</div>
+              <div key={label} className={`rounded-full px-3 py-1.5 text-center text-xs font-medium ${step >= index + 1 ? 'bg-[#216FA1] text-white' : 'bg-white/5 text-white/35'}`}>{index + 1}. {label}</div>
             ))}
           </div>
         </DialogHeader>
@@ -221,11 +221,11 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
             {step === 1 && (
               <div className="space-y-6">
                 <div className="grid gap-4 lg:grid-cols-[1fr_280px]">
-                  <div className="rounded-3xl border border-dashed border-violet-400/40 bg-violet-500/5 p-8 text-center">
-                    <Camera className="mx-auto h-10 w-10 text-violet-300" />
+                  <div className="rounded-3xl border border-dashed border-[#216FA1]/40 bg-[#216FA1]/5 p-8 text-center">
+                    <Camera className="mx-auto h-10 w-10 text-blue-300" />
                     <h3 className="mt-3 text-lg font-semibold">Fotografe frente, verso, etiqueta e avarias</h3>
                     <p className="mx-auto mt-2 max-w-xl text-sm text-white/50">Use boa iluminação e evite peças sobrepostas. São aceitas até 12 imagens JPG, PNG ou WEBP.</p>
-                    <Label className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-violet-500 px-4 py-2 text-sm font-semibold hover:bg-violet-400">
+                    <Label className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#216FA1] px-4 py-2 text-sm font-semibold hover:bg-[#2d8ac4]">
                       <Plus className="h-4 w-4" /> Adicionar fotos
                       <input type="file" accept="image/jpeg,image/png,image/webp" multiple capture="environment" onChange={addFiles} className="sr-only" />
                     </Label>
@@ -242,7 +242,7 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
                       <div className="flex items-center gap-2 font-semibold text-emerald-300"><ShieldCheck className="h-4 w-4" /> Fluxo supervisionado</div>
                       <p className="mt-2">O preço vem do catálogo cadastrado. Imagens de baixa confiança entram em revisão.</p>
                     </div>
-                    <Button onClick={analyze} disabled={busy || !customerId || files.length === 0} className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                    <Button onClick={analyze} disabled={busy || !customerId || files.length === 0} className="w-full bg-gradient-to-r from-[#216FA1] to-[#2d8ac4]">
                       {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />} Analisar {files.length || ''} foto{files.length === 1 ? '' : 's'}
                     </Button>
                   </div>
@@ -265,7 +265,7 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
                 ))}
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-3">
                   <Button variant="ghost" onClick={() => setStep(1)} disabled={busy}><ChevronLeft className="mr-2 h-4 w-4" />Voltar às fotos</Button>
-                  <Button onClick={saveQuote} disabled={busy || unresolved.length > 0} className="bg-violet-500 hover:bg-violet-400">Salvar orçamento <ChevronRight className="ml-2 h-4 w-4" /></Button>
+                  <Button onClick={saveQuote} disabled={busy || unresolved.length > 0} className="bg-[#216FA1] hover:bg-[#2d8ac4]">Salvar orçamento <ChevronRight className="ml-2 h-4 w-4" /></Button>
                 </div>
               </div>
             )}
