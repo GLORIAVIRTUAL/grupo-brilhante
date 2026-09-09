@@ -248,7 +248,8 @@ export default function Layout({ children }) {
 
   // Check for Public Pages (Landing, Register) and Admin Pages (Full Screen)
   // Added /login to this list
-  const isPublicOrAdminPage = ['/landing', '/landing-page', '/admin', '/register-unit', '/login', '/PaymentSuccess'].some(route => location.pathname.startsWith(route)) || location.pathname === '/';
+  const currentPathLower = location.pathname.toLowerCase();
+  const isPublicOrAdminPage = ['/landing', '/landing-page', '/admin', '/register-unit', '/login', '/paymentsuccess'].some(route => currentPathLower.startsWith(route)) || location.pathname === '/';
   
   if (isPublicOrAdminPage) {
     return <main>{children}</main>;
