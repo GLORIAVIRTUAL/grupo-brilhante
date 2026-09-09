@@ -1,0 +1,22 @@
+{
+  "name": "PublicLeadSubmission",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "submission_key": { "type": "string" },
+    "origin": { "type": "string" },
+    "ip_hash": { "type": "string" },
+    "user_agent_hash": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "status": { "type": "string", "enum": ["accepted", "duplicate", "rejected", "converted"], "default": "accepted" },
+    "business_party_id": { "type": "string" },
+    "prospect_id": { "type": "string" },
+    "sales_opportunity_id": { "type": "string" },
+    "communication_consent_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "utm": { "type": "object", "additionalProperties": true },
+    "submitted_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "submission_key", "origin", "ip_hash", "payload_hash", "status", "submitted_at"]
+}

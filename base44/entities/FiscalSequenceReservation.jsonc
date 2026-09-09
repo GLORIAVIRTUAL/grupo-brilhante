@@ -1,0 +1,20 @@
+{
+  "name": "FiscalSequenceReservation",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "fiscal_profile_id": { "type": "string" },
+    "fiscal_document_id": { "type": "string" },
+    "series": { "type": "string" },
+    "number": { "type": "number" },
+    "reservation_key": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "status": { "type": "string", "enum": ["reserved", "consumed", "conflict", "released"], "default": "reserved" },
+    "reserved_at": { "type": "string", "format": "date-time" },
+    "consumed_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "fiscal_profile_id", "series", "number", "reservation_key", "payload_hash", "status", "reserved_at"]
+}

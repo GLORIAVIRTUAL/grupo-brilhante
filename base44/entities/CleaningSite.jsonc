@@ -1,0 +1,26 @@
+{
+  "name": "CleaningSite",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "party_address_id": { "type": "string" },
+    "site_code": { "type": "string" },
+    "name": { "type": "string" },
+    "site_type": { "type": "string", "enum": ["office", "hospital", "clinic", "school", "industry", "condominium", "retail", "warehouse", "public", "other"] },
+    "timezone": { "type": "string", "default": "America/Sao_Paulo" },
+    "operational_owner_user_id": { "type": "string" },
+    "customer_responsible_name": { "type": "string" },
+    "customer_responsible_contact_id": { "type": "string" },
+    "sla": { "type": "object", "additionalProperties": true },
+    "access_instructions": { "type": "string" },
+    "risk_notes": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "inactive"], "default": "draft" },
+    "starts_on": { "type": "string", "format": "date" },
+    "ends_on": { "type": "string", "format": "date" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "business_contract_id", "site_code", "name", "site_type", "status"]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ReportDefinition",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "report_code": { "type": "string" },
+    "name": { "type": "string" },
+    "category": { "type": "string", "enum": ["financial", "sales", "procurement", "inventory", "hospital", "linen", "cleaning", "crm", "service", "custom"] },
+    "dataset": { "type": "string" },
+    "filters": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "columns": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "grouping": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "metrics": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "sort": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "allowed_roles": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "favorite_user_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "export_formats": { "type": "array", "items": { "type": "string", "enum": ["csv", "xlsx", "pdf", "json"] }, "default": ["csv"] },
+    "version": { "type": "number", "default": 1 },
+    "status": { "type": "string", "enum": ["draft", "active", "inactive"], "default": "draft" },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "report_code", "name", "category", "dataset", "columns", "version", "status"]
+}

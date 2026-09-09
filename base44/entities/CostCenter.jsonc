@@ -1,0 +1,21 @@
+{
+  "name": "CostCenter",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "parent_id": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "cost_center_type": { "type": "string", "enum": ["administrative", "commercial", "production", "logistics", "hospital", "linen", "cleaning", "shared", "other"] },
+    "status": { "type": "string", "enum": ["active", "inactive"], "default": "active" },
+    "valid_from": { "type": "string", "format": "date" },
+    "valid_until": { "type": "string", "format": "date" },
+    "manager_user_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "code", "name", "status"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "WeighingRecord",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_unit_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "hospital_pickup_id": { "type": "string" },
+    "hospital_processing_lot_id": { "type": "string" },
+    "weighing_number": { "type": "string" },
+    "direction": { "type": "string", "enum": ["incoming_soiled", "outgoing_clean", "reweigh", "loss", "return"], "default": "incoming_soiled" },
+    "gross_weight_kg": { "type": "number" },
+    "tare_weight_kg": { "type": "number", "default": 0 },
+    "net_weight_kg": { "type": "number" },
+    "piece_count": { "type": "number", "default": 0 },
+    "linen_category": { "type": "string" },
+    "contamination_class": { "type": "string", "enum": ["standard", "infectious", "chemical", "mixed", "unknown"], "default": "unknown" },
+    "scale_identifier": { "type": "string" },
+    "scale_ticket": { "type": "string" },
+    "weighed_at": { "type": "string", "format": "date-time" },
+    "operator_user_id": { "type": "string" },
+    "witness_user_id": { "type": "string" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "quality_status": { "type": "string", "enum": ["pending", "accepted", "disputed", "rejected"], "default": "pending" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "business_party_id", "business_contract_id", "weighing_number", "direction", "gross_weight_kg", "tare_weight_kg", "net_weight_kg", "weighed_at", "operator_user_id", "idempotency_key"]
+}

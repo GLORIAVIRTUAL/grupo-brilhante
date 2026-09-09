@@ -1,10 +1,25 @@
-# GL-RIA Laundry 5àSec
+# ERP Grupo Brilhante
 
-Aplicação de gestão de lavanderia construída sobre **React, Vite e Base44**, com CRM, atendimento, coletas, financeiro e operação multiunidade. Esta branch acrescenta uma central operacional moderna na página **Gestão**, mantendo os fluxos existentes e introduzindo rastreabilidade por peça, orçamento assistido por imagens, leitura de documentos, estoque, contas, caixa, qualidade, terceiros e revisão humana.
+ERP empresarial construído sobre **React, Vite e Base44** para o Grupo Brilhante. A solução preserva os fluxos herdados de lavanderia e acrescenta multiempresa por CNPJ, cadastro unificado, CRM B2B, contratos, ordens de serviço, financeiro corporativo, compras, Banco do Brasil, Focus NFe, lavanderia hospitalar, enxovais, limpeza, terceirização, atendimento e inteligência gerencial.
 
 > A inteligência artificial prepara rascunhos e sugestões. Criação de pedido, movimentação de estoque, lançamento financeiro e confirmação de pagamento permanecem ações explícitas, autenticadas e auditadas.
 
-## Recursos principais
+> Banco, fiscal, DP, migração e entregas externas são implementados por filas e gateways internos, permanecendo desativados até configuração, homologação e autorização específicas.
+
+## Módulos empresariais
+
+| Módulo | Capacidades |
+|---|---|
+| Estrutura empresarial | Grupo econômico, CNPJs, unidades, centros de custo, depósitos, contas bancárias e grants por empresa. |
+| Cadastro e comercial B2B | Parte unificada, contatos, endereços, documentos, oportunidades, atividades, contratos versionados, preços e OS. |
+| Financeiro empresarial | Períodos, projeções, intercompany, migração Conta Azul em dry-run, cobranças BB e conciliação auditada. |
+| Fiscal | Perfis por CNPJ, reserva de RPS, filas Focus NFe, webhook idempotente e produção bloqueada por gate. |
+| Suprimentos | Requisições, pedidos, recebimento físico, divergências, lotes e transferências entre depósitos. |
+| Hospitalar e enxovais | Coleta, pesagem, processamento, qualidade, medição, patrimônio, QR, inventário e perdas. |
+| Limpeza e terceirização | Locais, postos, escalas, checklists, inspeções, ocorrências, SLA, medições e staging de DP. |
+| Atendimento e BI | Consentimentos, templates, conhecimento, handoff humano/IA, site B2B, relatórios e resumo executivo. |
+
+## Recursos herdados preservados
 
 | Área | Recursos implementados |
 |---|---|
@@ -36,6 +51,8 @@ Preencha somente as variáveis do ambiente de desenvolvimento autorizado. Os val
 O frontend pode ser compilado e os invariantes da evolução podem ser verificados com:
 
 ```bash
+npm run validate:schemas
+npm run validate:erp
 npm run build
 python3 scripts/validate-laundry-evolution.py
 ```
@@ -53,6 +70,11 @@ npm run validate:wave4
 
 | Documento | Finalidade |
 |---|---|
+| [`docs/erp-grupo-brilhante-implementation-report.md`](docs/erp-grupo-brilhante-implementation-report.md) | Escopo implementado, módulos, validações e condicionantes. |
+| [`docs/erp-grupo-brilhante-release-readiness.md`](docs/erp-grupo-brilhante-release-readiness.md) | Bootstrap, homologação, gates, smoke tests e rollback. |
+| [`docs/erp-grupo-brilhante-architecture.md`](docs/erp-grupo-brilhante-architecture.md) | Arquitetura multiempresa, integrações e decisões transacionais. |
+| [`docs/banco-do-brasil-homologation.md`](docs/banco-do-brasil-homologation.md) | Homologação de Cobrança, Pix, webhooks e conciliação BB. |
+| [`docs/focus-nfe-homologation.md`](docs/focus-nfe-homologation.md) | Homologação fiscal por CNPJ e promoção controlada da Focus NFe. |
 | [`docs/setup-integrations.md`](docs/setup-integrations.md) | Segredos, integrações, hosts permitidos e configuração por ambiente. |
 | [`docs/operations-guide.md`](docs/operations-guide.md) | Uso dos novos fluxos de Gestão. |
 | [`docs/manual-garment-characteristics.md`](docs/manual-garment-characteristics.md) | Características e conferência individual das peças no orçamento manual. |

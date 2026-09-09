@@ -1,0 +1,25 @@
+{
+  "name": "ReportSchedule",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "report_definition_id": { "type": "string" },
+    "name": { "type": "string" },
+    "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "quarterly"] },
+    "timezone": { "type": "string", "default": "America/Sao_Paulo" },
+    "schedule": { "type": "object", "additionalProperties": true },
+    "recipient_channels": { "type": "array", "items": { "type": "string", "enum": ["email", "whatsapp", "internal"] }, "default": ["internal"] },
+    "recipients": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "export_format": { "type": "string", "enum": ["csv", "xlsx", "pdf", "json"], "default": "csv" },
+    "status": { "type": "string", "enum": ["active", "paused", "disabled"], "default": "paused" },
+    "last_run_at": { "type": "string", "format": "date-time" },
+    "next_run_at": { "type": "string", "format": "date-time" },
+    "last_result": { "type": "object", "additionalProperties": true },
+    "created_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "report_definition_id", "name", "frequency", "timezone", "export_format", "status"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "CleaningOccurrence",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "cleaning_site_id": { "type": "string" },
+    "work_post_id": { "type": "string" },
+    "cleaning_inspection_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
+    "occurrence_number": { "type": "string" },
+    "occurrence_type": { "type": "string", "enum": ["customer_request", "nonconformity", "absence", "coverage_gap", "material_shortage", "accident", "supervisor_visit", "complaint", "praise", "other"] },
+    "priority": { "type": "string", "enum": ["low", "normal", "high", "critical"], "default": "normal" },
+    "status": { "type": "string", "enum": ["open", "assigned", "in_progress", "resolved", "customer_validation", "closed", "cancelled"], "default": "open" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "opened_at": { "type": "string", "format": "date-time" },
+    "due_at": { "type": "string", "format": "date-time" },
+    "resolved_at": { "type": "string", "format": "date-time" },
+    "closed_at": { "type": "string", "format": "date-time" },
+    "assigned_user_id": { "type": "string" },
+    "supervisor_user_id": { "type": "string" },
+    "resolution": { "type": "string" },
+    "sla_breached": { "type": "boolean", "default": false },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "business_contract_id", "cleaning_site_id", "occurrence_number", "occurrence_type", "priority", "status", "title", "opened_at", "idempotency_key"]
+}

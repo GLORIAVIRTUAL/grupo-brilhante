@@ -1,0 +1,29 @@
+{
+  "name": "PayrollSyncJob",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "provider": { "type": "string" },
+    "direction": { "type": "string", "enum": ["import_schedules", "import_absences", "import_employees", "validate_only"] },
+    "period_start": { "type": "string", "format": "date" },
+    "period_end": { "type": "string", "format": "date" },
+    "status": { "type": "string", "enum": ["draft", "staged", "validated", "queued", "processing", "completed", "partial", "failed", "cancelled"], "default": "draft" },
+    "source_document_asset_id": { "type": "string" },
+    "integration_job_id": { "type": "string" },
+    "record_count": { "type": "number", "default": 0 },
+    "valid_count": { "type": "number", "default": 0 },
+    "invalid_count": { "type": "number", "default": 0 },
+    "validation_summary": { "type": "object", "additionalProperties": true },
+    "requested_by_user_id": { "type": "string" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string" },
+    "error_code": { "type": "string" },
+    "error_message": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "provider", "direction", "period_start", "period_end", "status", "requested_by_user_id", "idempotency_key"]
+}

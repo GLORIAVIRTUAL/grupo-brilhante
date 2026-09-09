@@ -9,12 +9,19 @@
         "COMPLAINT",
         "SLA_BREACH",
         "SYSTEM_ERROR",
-        "NEW_IMAGES"
+        "NEW_IMAGES",
+        "EXECUTIVE_SUMMARY",
+        "REPORT_READY",
+        "APPROVAL_REQUIRED"
       ]
     },
     "target_team": {
       "type": "string"
     },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "target_user_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "status": { "type": "string", "enum": ["pending", "sent", "acknowledged", "dismissed"], "default": "pending" },
     "payload": {
       "type": "object"
     },

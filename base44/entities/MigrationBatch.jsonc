@@ -1,0 +1,29 @@
+{
+  "name": "MigrationBatch",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "source_system": { "type": "string", "enum": ["conta_azul", "spreadsheet", "legacy_erp", "other"], "default": "conta_azul" },
+    "batch_type": { "type": "string", "enum": ["parties", "accounts_payable", "accounts_receivable", "bank_transactions", "categories", "cost_centers", "contracts", "full"] },
+    "document_asset_id": { "type": "string" },
+    "source_hash": { "type": "string" },
+    "mapping_version": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "validated", "dry_run", "pending_approval", "approved", "processing", "completed", "completed_with_errors", "rejected", "rolled_back", "repair_required"], "default": "draft" },
+    "total_records": { "type": "number", "default": 0 },
+    "valid_records": { "type": "number", "default": 0 },
+    "warning_records": { "type": "number", "default": 0 },
+    "error_records": { "type": "number", "default": 0 },
+    "imported_records": { "type": "number", "default": 0 },
+    "skipped_records": { "type": "number", "default": 0 },
+    "reconciliation_summary": { "type": "object", "additionalProperties": true },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "approved_by_user_id": { "type": "string" },
+    "processed_at": { "type": "string", "format": "date-time" },
+    "rolled_back_at": { "type": "string", "format": "date-time" },
+    "rollback_reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "source_system", "batch_type", "source_hash", "mapping_version", "status", "idempotency_key"]
+}

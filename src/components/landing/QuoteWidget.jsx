@@ -9,6 +9,7 @@ export default function QuoteWidget({ unitId }) {
   const [form, setForm] = useState({ name: '', phone: '', message: '' });
   const [honeypot, setHoneypot] = useState('');
   const [conversationId, setConversationId] = useState(null);
+  const [widgetSession, setWidgetSession] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,11 +42,13 @@ export default function QuoteWidget({ unitId }) {
       });
       const data = res?.data || res;
       if (data?.error) return setError(data.error);
+      if (!data.session_key || !data.session_token) return setError('Não foi possível criar uma sessão segura de atendimento.');
       setConversationId(data.conversation_id);
+      setWidgetSession({ key: data.session_key, token: data.session_token, expiresAt: data.expires_at });
       setSince(new Date().toISOString());
-      setMessages([{ id: 'welcome', direction: 'OUT', text: 'Olá! Sou a Glória, da 5àsec. Já recebi seu contato e vou montar seu orçamento. Pode me contar quais peças deseja orçar? 👗', created_date: new Date().toISOString() }]);
+      setMessages([{ id: 'welcome', direction: 'OUT', text: 'Olá! Sou a assistente virtual do Grupo Brilhante. Já recebi seu contato. Conte como podemos ajudar sua empresa.', created_date: new Date().toISOString() }]);
       setStage('chat');
-    } catch (err) {
+    } catch {
       setError('Não foi possível iniciar o chat. Tente novamente.');
     } finally {
       setLoading(false);
@@ -53,10 +56,12 @@ export default function QuoteWidget({ unitId }) {
   };
 
   const pollMessages = useCallback(async () => {
-    if (!conversationId) return;
+    if (!conversationId || !widgetSession) return;
     try {
       const res = await base44.functions.invoke('landing_widget_messages', {
         conversation_id: conversationId,
+        session_key: widgetSession.key,
+        session_token: widgetSession.token,
         since,
       });
       const data = res?.data || res;
@@ -68,27 +73,33 @@ export default function QuoteWidget({ unitId }) {
         });
         setSince(new Date().toISOString());
       }
-    } catch (err) {
+    } catch {
       /* polling silencioso */
     }
-  }, [conversationId, since]);
+  }, [conversationId, widgetSession, since]);
 
   useEffect(() => {
-    if (stage !== 'chat' || !conversationId) return;
+    if (stage !== 'chat' || !conversationId || !widgetSession) return;
     pollMessages();
     pollRef.current = setInterval(pollMessages, 3000);
     return () => clearInterval(pollRef.current);
-  }, [stage, conversationId, pollMessages]);
+  }, [stage, conversationId, widgetSession, pollMessages]);
 
   const sendMessage = async (e) => {
     e?.preventDefault();
     const text = input.trim();
-    if (!text || !conversationId) return;
+    if (!text || !conversationId || !widgetSession) return;
     setInput('');
     setMessages((prev) => [...prev, { id: `local-${Date.now()}`, direction: 'IN', text, created_date: new Date().toISOString() }]);
     try {
-      await base44.functions.invoke('landing_widget_send', { conversation_id: conversationId, text, honeypot });
-    } catch (err) {
+      await base44.functions.invoke('landing_widget_send', {
+        conversation_id: conversationId,
+        session_key: widgetSession.key,
+        session_token: widgetSession.token,
+        text,
+        honeypot,
+      });
+    } catch {
       setError('Não foi possível enviar. Tente novamente.');
     }
   };
@@ -112,7 +123,7 @@ export default function QuoteWidget({ unitId }) {
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm">Glória · 5àsec</p>
+                  <p className="text-white font-bold text-sm">Assistente · Grupo Brilhante</p>
                   <p className="text-white/70 text-xs flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-green-400" /> Online 24/7
                   </p>
@@ -126,7 +137,7 @@ export default function QuoteWidget({ unitId }) {
             {/* Lead capture */}
             {stage === 'lead' && (
               <div className="p-5 overflow-y-auto">
-                <p className="text-white text-sm mb-4">Faça seu orçamento de roupas em segundos. A Glória responde pelo chat e no seu WhatsApp.</p>
+                <p className="text-white text-sm mb-4">Fale com o Grupo Brilhante e descreva o serviço que sua empresa precisa.</p>
                 <form onSubmit={startConversation} className="space-y-3">
                   <input value={honeypot} onChange={(e) => setHoneypot(e.target.value)} type="text" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                   <div>
@@ -164,7 +175,7 @@ export default function QuoteWidget({ unitId }) {
                     className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] text-white font-semibold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
                   >
                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                    {loading ? 'Iniciando...' : 'Iniciar orçamento'}
+                    {loading ? 'Iniciando...' : 'Iniciar atendimento'}
                   </button>
                 </form>
               </div>
@@ -208,7 +219,7 @@ export default function QuoteWidget({ unitId }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-orange-500/40 flex items-center justify-center"
+        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/40 flex items-center justify-center"
       >
         {open ? <X className="w-6 h-6 text-white" /> : <MessageSquare className="w-6 h-6 text-white" />}
         {!open && <span className="absolute top-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[#17364F] animate-pulse" />}

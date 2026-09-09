@@ -2,23 +2,103 @@
   "name": "CashMovement",
   "type": "object",
   "properties": {
-    "cash_session_id": { "type": "string" },
-    "unit_id": { "type": "string" },
-    "movement_type": { "type": "string", "enum": ["sale", "supply", "withdrawal", "refund", "deposit", "adjustment_in", "adjustment_out"] },
-    "amount": { "type": "number" },
-    "payment_method": { "type": "string" },
-    "payment_id": { "type": "string" },
-    "payment_receipt_id": { "type": "string" },
-    "order_id": { "type": "string" },
-    "customer_id": { "type": "string" },
-    "supplier_id": { "type": "string" },
-    "category": { "type": "string" },
-    "reason": { "type": "string" },
-    "operator_user_id": { "type": "string" },
-    "approved_by_user_id": { "type": "string" },
-    "occurred_at": { "type": "string", "format": "date-time" },
-    "request_id": { "type": "string" },
-    "metadata": { "type": "object", "additionalProperties": true }
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "cost_center_id": {
+      "type": "string"
+    },
+    "bank_account_id": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "native",
+        "conta_azul",
+        "bank",
+        "provider",
+        "migration",
+        "other"
+      ],
+      "default": "native"
+    },
+    "migration_record_id": {
+      "type": "string"
+    },
+    "cash_session_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "movement_type": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "supply",
+        "withdrawal",
+        "refund",
+        "deposit",
+        "adjustment_in",
+        "adjustment_out"
+      ]
+    },
+    "amount": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "payment_id": {
+      "type": "string"
+    },
+    "payment_receipt_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "supplier_id": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "operator_user_id": {
+      "type": "string"
+    },
+    "approved_by_user_id": {
+      "type": "string"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
   },
-  "required": ["cash_session_id", "unit_id", "movement_type", "amount", "operator_user_id", "occurred_at"]
+  "required": [
+    "cash_session_id",
+    "unit_id",
+    "movement_type",
+    "amount",
+    "operator_user_id",
+    "occurred_at"
+  ]
 }

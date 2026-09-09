@@ -2,6 +2,8 @@
   "name": "Supplier",
   "type": "object",
   "properties": {
+    "business_party_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
     "unit_id": { "type": "string" },
     "corporate_name": { "type": "string" },
     "trade_name": { "type": "string" },
@@ -13,6 +15,7 @@
     "payment_terms_days": { "type": "number" },
     "lead_time_days": { "type": "number" },
     "active": { "type": "boolean", "default": true },
+    "status": { "type": "string", "enum": ["draft", "active", "blocked", "inactive"], "default": "active" },
     "quality_score": { "type": "number" },
     "delivery_score": { "type": "number" },
     "price_score": { "type": "number" },

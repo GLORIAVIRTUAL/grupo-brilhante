@@ -1,0 +1,31 @@
+{
+  "name": "BusinessParty",
+  "type": "object",
+  "properties": {
+    "party_type": { "type": "string", "enum": ["person", "company"], "default": "company" },
+    "legal_name": { "type": "string" },
+    "trade_name": { "type": "string" },
+    "tax_id": { "type": "string" },
+    "tax_id_type": { "type": "string", "enum": ["cpf", "cnpj"] },
+    "state_registration": { "type": "string" },
+    "municipal_registration": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "blocked", "inactive"], "default": "draft" },
+    "segment": { "type": "string", "enum": ["hospital", "hotel", "restaurant", "industry", "retail", "condominium", "office", "public_sector", "partner", "individual", "other"], "default": "other" },
+    "relationship_owner_user_id": { "type": "string" },
+    "risk_rating": { "type": "string", "enum": ["low", "medium", "high", "restricted"], "default": "medium" },
+    "credit_limit": { "type": "number", "default": 0 },
+    "billing_terms_days": { "type": "number", "default": 0 },
+    "default_legal_entity_id": { "type": "string" },
+    "default_unit_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "supplier_id": { "type": "string" },
+    "external_ids": { "type": "object", "additionalProperties": true },
+    "source_system": { "type": "string", "enum": ["native", "conta_azul", "migration", "other"], "default": "native" },
+    "migration_record_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["party_type", "legal_name", "tax_id", "tax_id_type", "status"]
+}

@@ -19,7 +19,7 @@ const isHoliday = (d) => {
 };
 
 // Verifica se há capacidade num turno específico (manhã ou tarde) para uma data.
-async function hasCapacity(base44, date, period) {
+async function hasCapacity(base44, date, period, scope) {
     const sched = getPickupScheduleForDate(date);
     if (!sched.isOpen) return false;
     const checkDate = new Date(`${date}T12:00:00-03:00`);
@@ -28,9 +28,14 @@ async function hasCapacity(base44, date, period) {
     if (period === 'afternoon' && sched.afternoonSlots.length === 0) return false;
     const range = getPickupDateRange(date);
     const dayPickups = await base44.asServiceRole.entities.Pickup.filter({
+        unit_id: scope.unitId,
         scheduled_at: { $gte: range.start, $lte: range.end },
         status: { $ne: 'cancelled' }
     });
+    // Toda coleta confirmada ou fixa ocupa capacidade do turno. Encaixes têm
+    // limite operacional adicional de dois por dia, conforme a regra legada.
+    const encaixeCount = dayPickups.filter((pickup) => pickup.metadata?.encaixe === true).length;
+    if (encaixeCount >= 2) return false;
     const capacity = period === 'morning' ? sched.morningCapacity : sched.afternoonCapacity;
     const count = dayPickups.filter(p => {
         const h = getPickupLocalHour(p.scheduled_at);
@@ -43,7 +48,10 @@ async function hasCapacity(base44, date, period) {
 // Regra: se agora é manhã e a tarde de hoje tem vaga → hoje à tarde.
 //        Senão, procura a próxima manhã útil (pulando feriados/fins de semana).
 // Retorna { date, period, schedule, slot } ou null se não houver turno nos próximos 7 dias.
-export async function findNextEncaixeSlot(base44) {
+export async function findNextEncaixeSlot(base44, scope = {}) {
+    const unitId = String(scope.unitId || '').trim();
+    if (!unitId) throw new Error('unit_scope_required');
+    const normalizedScope = { unitId, legalEntityId: scope.legalEntityId || null };
     const nowBRT = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
     const currentHour = nowBRT.getHours();
     const isMorning = currentHour < 12;
@@ -54,7 +62,7 @@ export async function findNextEncaixeSlot(base44) {
     // Manhã → tenta tarde de hoje (se ainda dentro do horário de agendamento)
     if (isMorning && currentHour < 16) {
         const todayKey = dateKey(nowBRT);
-        if (await hasCapacity(base44, todayKey, 'afternoon')) {
+        if (await hasCapacity(base44, todayKey, 'afternoon', normalizedScope)) {
             targetDate = todayKey;
             targetPeriod = 'afternoon';
         }
@@ -66,7 +74,7 @@ export async function findNextEncaixeSlot(base44) {
             const future = new Date(nowBRT);
             future.setDate(future.getDate() + i);
             const futureKey = dateKey(future);
-            if (await hasCapacity(base44, futureKey, 'morning')) {
+            if (await hasCapacity(base44, futureKey, 'morning', normalizedScope)) {
                 targetDate = futureKey;
                 targetPeriod = 'morning';
                 break;
@@ -80,7 +88,7 @@ export async function findNextEncaixeSlot(base44) {
             const future = new Date(nowBRT);
             future.setDate(future.getDate() + i);
             const futureKey = dateKey(future);
-            if (await hasCapacity(base44, futureKey, 'afternoon')) {
+            if (await hasCapacity(base44, futureKey, 'afternoon', normalizedScope)) {
                 targetDate = futureKey;
                 targetPeriod = 'afternoon';
                 break;
@@ -96,6 +104,7 @@ export async function findNextEncaixeSlot(base44) {
     // Encontra o primeiro slot livre (sem colisão com coletas existentes)
     const range = getPickupDateRange(targetDate);
     const existingPickups = await base44.asServiceRole.entities.Pickup.filter({
+        unit_id: normalizedScope.unitId,
         scheduled_at: { $gte: range.start, $lte: range.end },
         status: { $ne: 'cancelled' }
     });

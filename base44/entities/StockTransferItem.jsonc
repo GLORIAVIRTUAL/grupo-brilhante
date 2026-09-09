@@ -1,0 +1,21 @@
+{
+  "name": "StockTransferItem",
+  "type": "object",
+  "properties": {
+    "stock_transfer_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "source_stock_item_id": { "type": "string" },
+    "destination_stock_item_id": { "type": "string" },
+    "stock_lot_id": { "type": "string" },
+    "requested_quantity": { "type": "number" },
+    "dispatched_quantity": { "type": "number", "default": 0 },
+    "received_quantity": { "type": "number", "default": 0 },
+    "unit_cost": { "type": "number", "default": 0 },
+    "source_movement_id": { "type": "string" },
+    "destination_movement_id": { "type": "string" },
+    "line_status": { "type": "string", "enum": ["requested", "dispatched", "partially_received", "received", "cancelled"], "default": "requested" },
+    "divergence_reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["stock_transfer_id", "legal_entity_id", "source_stock_item_id", "requested_quantity", "line_status"]
+}

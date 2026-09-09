@@ -3,7 +3,12 @@
   "type": "object",
   "properties": {
     "customer_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
+    "legal_entity_id": { "type": "string", "description": "Empresa legal responsável pelo orçamento" },
     "unit_id": { "type": "string", "description": "Unidade responsável pelo orçamento" },
+    "cost_center_id": { "type": "string" },
     "status": {
       "type": "string",
       "enum": ["DRAFT", "HUMAN_REVIEW", "APPROVED", "SENT", "EXPIRED", "ACCEPTED", "REJECTED", "CANCELLED"],

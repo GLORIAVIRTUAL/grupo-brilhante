@@ -1,4 +1,4 @@
-import { enforceExistingUserSecurity } from '../../shared/functionSecurity.js';
+import { enforceAuthenticatedUser, enforceExistingUserSecurity } from '../../shared/functionSecurity.js';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
 const ALLOWED_ROLES = new Set(['super_admin', 'admin', 'manager', 'inventory', 'finance']);
@@ -29,6 +29,10 @@ Deno.serve(async (req) => {
 
     const document = await base44.asServiceRole.entities.PurchaseDocument.get(purchaseDocumentId);
     if (!document) return Response.json({ error: 'purchase_document_not_found', request_id: requestId }, { status: 404 });
+    if (document.legal_entity_id) {
+      await enforceAuthenticatedUser(base44, req, user, { permission: 'receipts.manage', legalEntityId: document.legal_entity_id, unitId: document.unit_id, source: 'approve_purchase_document' });
+      return Response.json({ error: 'use_goods_receipt_workflow', purchase_document_id: document.id, purchase_order_id: document.purchase_order_id, request_id: requestId }, { status: 409 });
+    }
     if (!canAccessUnit(user, document.unit_id)) return Response.json({ error: 'forbidden_unit', request_id: requestId }, { status: 403 });
     const openCounts = await base44.asServiceRole.entities.InventoryCount.filter({ unit_id: document.unit_id });
     if (openCounts.some((count: any) => count.status === 'counting' && count.freeze_movements === true)) {

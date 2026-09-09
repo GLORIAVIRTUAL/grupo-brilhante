@@ -1,0 +1,23 @@
+{
+  "name": "ExecutiveSummarySnapshot",
+  "type": "object",
+  "properties": {
+    "business_group_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "summary_date": { "type": "string", "format": "date" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["generated", "reviewed", "distributed", "failed"], "default": "generated" },
+    "financial": { "type": "object", "additionalProperties": true },
+    "commercial": { "type": "object", "additionalProperties": true },
+    "operations": { "type": "object", "additionalProperties": true },
+    "service": { "type": "object", "additionalProperties": true },
+    "pending_decisions": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "alerts": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "report_definition_id": { "type": "string" },
+    "document_asset_id": { "type": "string" },
+    "distribution_channels": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "summary_date", "generated_at", "status", "idempotency_key"]
+}

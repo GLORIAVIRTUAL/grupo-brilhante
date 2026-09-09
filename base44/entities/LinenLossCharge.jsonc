@@ -1,0 +1,28 @@
+{
+  "name": "LinenLossCharge",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_unit_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "linen_inventory_session_id": { "type": "string" },
+    "hospital_delivery_conference_id": { "type": "string" },
+    "charge_number": { "type": "string" },
+    "charge_type": { "type": "string", "enum": ["loss", "damage", "lifetime_exceeded", "contractual_adjustment"] },
+    "status": { "type": "string", "enum": ["draft", "customer_review", "approved", "waived", "invoiced", "disputed", "cancelled"], "default": "draft" },
+    "items": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "quantity": { "type": "number", "default": 0 },
+    "amount": { "type": "number", "default": 0 },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "accounts_receivable_id": { "type": "string" },
+    "hospital_billing_measurement_id": { "type": "string" },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "idempotency_key": { "type": "string" },
+    "reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "business_contract_id", "charge_number", "charge_type", "status", "idempotency_key"]
+}

@@ -2,6 +2,14 @@
   "name": "FiscalProfile",
   "type": "object",
   "properties": {
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "unit_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
     "unit_id": {
       "type": "string"
     },
@@ -81,12 +89,60 @@
       "type": "boolean",
       "default": false
     },
+    "operation_nature": {
+      "type": "string",
+      "enum": ["1", "2", "3", "4", "5", "6"],
+      "default": "1"
+    },
+    "simple_national_opt_in": {
+      "type": "boolean",
+      "default": false
+    },
+    "cultural_incentive": {
+      "type": "boolean",
+      "default": false
+    },
+    "cnae_code": {
+      "type": "string"
+    },
+    "nbs_code": {
+      "type": "string"
+    },
+    "operation_indicator_code": {
+      "type": "string"
+    },
+    "ibs_cbs_tax_classification": {
+      "type": "string"
+    },
     "rps_series": {
       "type": "string"
     },
     "next_rps_number": {
       "type": "number",
       "default": 1
+    },
+    "provider_company_reference": {
+      "type": "string",
+      "description": "Identificador da empresa no provedor, nunca uma credencial"
+    },
+    "external_requests_enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "production_enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "webhook_configured": {
+      "type": "boolean",
+      "default": false
+    },
+    "homologation_approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "homologation_approved_by_user_id": {
+      "type": "string"
     },
     "credential_reference": {
       "type": "string",

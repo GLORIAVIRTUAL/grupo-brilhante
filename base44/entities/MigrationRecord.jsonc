@@ -1,0 +1,28 @@
+{
+  "name": "MigrationRecord",
+  "type": "object",
+  "properties": {
+    "migration_batch_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "source_system": { "type": "string" },
+    "source_entity": { "type": "string" },
+    "source_record_id": { "type": "string" },
+    "source_hash": { "type": "string" },
+    "source_sequence": { "type": "number" },
+    "target_entity": { "type": "string" },
+    "target_record_id": { "type": "string" },
+    "operation": { "type": "string", "enum": ["create", "update", "skip", "reject"] },
+    "status": { "type": "string", "enum": ["pending", "validated", "warning", "error", "imported", "skipped", "rolled_back", "repair_required"], "default": "pending" },
+    "validation_messages": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "safe_error_code": { "type": "string" },
+    "payload": { "type": "object", "additionalProperties": true },
+    "normalized_payload": { "type": "object", "additionalProperties": true },
+    "before_snapshot": { "type": "object", "additionalProperties": true },
+    "after_snapshot": { "type": "object", "additionalProperties": true },
+    "reconciled": { "type": "boolean", "default": false },
+    "processed_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["migration_batch_id", "legal_entity_id", "source_system", "source_entity", "source_record_id", "source_hash", "operation", "status"]
+}

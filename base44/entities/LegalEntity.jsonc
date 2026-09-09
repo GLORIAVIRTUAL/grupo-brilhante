@@ -1,0 +1,43 @@
+{
+  "name": "LegalEntity",
+  "type": "object",
+  "properties": {
+    "group_id": { "type": "string" },
+    "code": { "type": "string" },
+    "legal_name": { "type": "string" },
+    "trade_name": { "type": "string" },
+    "tax_id": { "type": "string", "description": "CPF/CNPJ somente com dígitos" },
+    "state_registration": { "type": "string" },
+    "municipal_registration": { "type": "string" },
+    "tax_regime": { "type": "string", "enum": ["simples_nacional", "lucro_presumido", "lucro_real", "mei", "non_profit", "other"] },
+    "status": { "type": "string", "enum": ["draft", "active", "suspended", "inactive"], "default": "draft" },
+    "implementation_status": { "type": "string", "enum": ["not_started", "mapping", "migration", "homologation", "ready", "live", "suspended"], "default": "not_started" },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "number": { "type": "string" },
+        "complement": { "type": "string" },
+        "district": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "zip_code": { "type": "string" },
+        "country": { "type": "string", "default": "BR" },
+        "municipality_code": { "type": "string" }
+      }
+    },
+    "billing_email": { "type": "string" },
+    "finance_email": { "type": "string" },
+    "phone": { "type": "string" },
+    "website_url": { "type": "string" },
+    "default_cost_center_id": { "type": "string" },
+    "default_bank_account_id": { "type": "string" },
+    "default_warehouse_id": { "type": "string" },
+    "fiscal_profile_id": { "type": "string" },
+    "go_live_at": { "type": "string", "format": "date-time" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["group_id", "code", "legal_name", "trade_name", "tax_id", "status"]
+}

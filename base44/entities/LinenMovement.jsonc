@@ -1,0 +1,29 @@
+{
+  "name": "LinenMovement",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "linen_catalog_item_id": { "type": "string" },
+    "linen_asset_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "movement_type": { "type": "string", "enum": ["acquisition", "delivery", "customer_use", "pickup", "soiled_entry", "processing_entry", "clean_output", "warehouse_return", "damage", "loss", "recovery", "inventory_adjustment", "retirement", "reversal" ] },
+    "quantity": { "type": "number" },
+    "from_location_type": { "type": "string", "enum": ["warehouse", "customer", "vehicle", "production", "route", "unknown"] },
+    "from_location_id": { "type": "string" },
+    "to_location_type": { "type": "string", "enum": ["warehouse", "customer", "vehicle", "production", "route", "unknown"] },
+    "to_location_id": { "type": "string" },
+    "hospital_pickup_id": { "type": "string" },
+    "hospital_processing_lot_id": { "type": "string" },
+    "hospital_delivery_conference_id": { "type": "string" },
+    "linen_inventory_session_id": { "type": "string" },
+    "linen_loss_charge_id": { "type": "string" },
+    "operator_user_id": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string" },
+    "reason": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "linen_catalog_item_id", "movement_type", "quantity", "operator_user_id", "occurred_at", "idempotency_key"]
+}

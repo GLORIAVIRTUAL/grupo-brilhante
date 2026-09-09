@@ -1,0 +1,29 @@
+{
+  "name": "IntegrationJob",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "provider": { "type": "string" },
+    "operation": { "type": "string" },
+    "entity_type": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "status": { "type": "string", "enum": ["pending", "processing", "retry_scheduled", "completed", "failed", "repair_required", "cancelled"], "default": "pending" },
+    "attempt_count": { "type": "number", "default": 0 },
+    "max_attempts": { "type": "number", "default": 5 },
+    "next_attempt_at": { "type": "string", "format": "date-time" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "last_error_code": { "type": "string" },
+    "last_error_message": { "type": "string" },
+    "provider_reference": { "type": "string" },
+    "request_snapshot": { "type": "object", "additionalProperties": true },
+    "response_snapshot": { "type": "object", "additionalProperties": true },
+    "checkpoints": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "provider", "operation", "idempotency_key", "payload_hash", "status"]
+}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Ban, CheckCircle2, FileCheck2, Landmark, Loader2, Save, ShieldCheck, Send, RefreshCw, XCircle, ExternalLink, Trash2 } from 'lucide-react';
+import { Ban, CheckCircle2, FileCheck2, Landmark, Loader2, Save, ShieldCheck, Send, RefreshCw, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -32,7 +32,8 @@ const STATUS_COLORS = {
 
 export default function FiscalReadinessPanel({ profiles = [], documents = [], orders = [], statements = [], selectedUnitId, defaultUnitId, onRefresh }) {
   const unitId = selectedUnitId === 'all' ? defaultUnitId : selectedUnitId;
-  const profile = profiles.find((item) => item.unit_id === unitId) || null;
+  const profile = profiles.find((item) => item.unit_id === unitId || (item.unit_ids || []).includes(unitId)) || null;
+  const legalEntityId = profile?.legal_entity_id || orders.find((item) => item.unit_id === unitId)?.legal_entity_id || statements.find((item) => item.unit_id === unitId)?.legal_entity_id || '';
   const scopedDocuments = documents.filter((item) => selectedUnitId === 'all' || item.unit_id === selectedUnitId);
   const eligibleOrders = orders.filter((order) => order.unit_id === unitId && order.status !== 'cancelled' && (order.fiscal_document_ids || []).length === 0 && Number(order.total_amount || 0) > 0);
   const eligibleStatements = statements.filter((statement) => statement.unit_id === unitId && ['review', 'issued', 'partially_paid', 'paid'].includes(statement.status) && !statement.fiscal_document_id);
@@ -40,13 +41,13 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
   const [source, setSource] = useState('');
   const [cancelTarget, setCancelTarget] = useState(null);
   const [cancelReason, setCancelReason] = useState('');
-  const [refInput, setRefInput] = useState('');
+  const [actionReason, setActionReason] = useState('Configuração e operação fiscal autorizada.');
   const [form, setForm] = useState({
     legal_name: profile?.legal_name || '', trade_name: profile?.trade_name || '', tax_id: profile?.tax_id || '',
     municipal_registration: profile?.municipal_registration || '', service_code: profile?.service_code || '',
     service_description: profile?.service_description || 'Serviços de lavanderia', municipal_tax_code: profile?.municipal_tax_code || '',
     iss_rate: profile?.iss_rate ?? '', rps_series: profile?.rps_series || '1', next_rps_number: profile?.next_rps_number || 1,
-    provider: profile?.provider || 'focusnfe', environment: profile?.environment || 'homologation',
+    provider: profile?.provider || 'focusnfe', environment: profile?.environment || 'disabled',
   });
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
       municipal_registration: profile.municipal_registration || '', service_code: profile.service_code || '',
       service_description: profile.service_description || 'Serviços de lavanderia', municipal_tax_code: profile.municipal_tax_code || '',
       iss_rate: profile.iss_rate ?? '', rps_series: profile.rps_series || '1', next_rps_number: profile.next_rps_number || 1,
-      provider: profile.provider || 'focusnfe', environment: profile.environment || 'homologation',
+      provider: profile.provider || 'focusnfe', environment: profile.environment || 'disabled',
     });
   }, [profile?.id]);
 
@@ -82,21 +83,22 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
       onRefresh?.();
       return response.data;
     } catch (error) {
-      console.error(error);
       const code = error.response?.data?.error;
       const messages = {
         fiscal_profile_incomplete: 'Complete o perfil fiscal antes de preparar o RPS.',
         fiscal_recipient_incomplete: 'Complete os dados fiscais e o e-mail do tomador.',
-        focusnfe_token_not_configured: 'Token da Focus NFe não configurado. Defina o secret FOCUSNFE_TOKEN.',
+        focusnfe_token_not_configured: 'Token da Focus NFe não configurado no cofre do ambiente.',
+        fiscal_external_requests_disabled: 'As chamadas fiscais externas estão desativadas por segurança.',
+        fiscal_production_disabled: 'A emissão em produção permanece bloqueada.',
         provider_not_focusnfe: 'O provedor fiscal selecionado não suporta transmissão.',
         fiscal_not_ready: 'O documento não está pronto para transmissão.',
-        focusnfe_rejected: 'A Focus NFe rejeitou a emissão. Verifique os dados do perfil e do tomador.',
-        focusnfe_request_failed: 'Falha na comunicação com a Focus NFe. Tente novamente.',
-        focusnfe_not_found: 'Documento não encontrado na Focus NFe.',
-        focusnfe_cancel_rejected: 'A Focus NFe rejeitou o cancelamento.',
+        rps_sequence_conflict: 'Foi detectada concorrência na sequência de RPS. Revise a numeração antes de tentar novamente.',
+        unit_company_mismatch: 'A unidade não pertence ao CNPJ selecionado.',
+        fiscal_profile_scope_mismatch: 'O perfil fiscal não pertence ao mesmo CNPJ da operação.',
         focusnfe_ref_required: 'Informe a referência da nota na Focus NFe.',
-        authorized_document_must_be_cancelled_first: 'Cancele a NFSe autorizada antes de excluir o registro.',
-        manager_approval_required: 'Apenas gestores podem excluir ou cancelar notas.',
+        only_authorized_nfse_can_be_cancelled: 'Somente uma NFS-e autorizada pode ser enviada para cancelamento.',
+        fiscal_document_not_retirable: 'O documento ainda não pode ser aposentado.',
+        manager_approval_required: 'Apenas gestores podem cancelar ou aposentar documentos.',
       };
       toast.error(messages[code] || 'Não foi possível concluir a operação fiscal.');
       throw error;
@@ -104,7 +106,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
   };
 
   const saveProfile = () => execute({
-    action: 'save_profile', unit_id: unitId, fiscal_profile_id: profile?.id,
+    action: 'save_profile', legal_entity_id: legalEntityId, unit_id: unitId, unit_ids: [unitId], fiscal_profile_id: profile?.id, reason: actionReason,
     provider: form.provider, environment: form.environment,
     municipality_code: '4314902', municipality_name: 'Porto Alegre',
     ...form, iss_rate: Number(form.iss_rate || 0), next_rps_number: Number(form.next_rps_number || 1),
@@ -114,29 +116,23 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
     if (!source) return toast.error('Selecione um pedido ou faturamento.');
     const [type, id] = source.split(':');
     await execute({
-      action: 'prepare', unit_id: unitId, fiscal_profile_id: profile?.id,
+      action: 'prepare', legal_entity_id: legalEntityId, unit_id: unitId, fiscal_profile_id: profile?.id,
       order_ids: type === 'order' ? [id] : [], billing_statement_id: type === 'statement' ? id : undefined,
       competence_date: new Date().toISOString().slice(0, 10), idempotency_key: crypto.randomUUID(),
     }, 'RPS preparado localmente.');
     setSource('');
   };
 
-  const transmit = (docId) => execute({ action: 'transmit', fiscal_document_id: docId }, 'NFSe enviada à Focus NFe. Consulte o status em instantes.');
-  const consult = (docId) => execute({ action: 'consult', fiscal_document_id: docId }, 'Status da NFSe atualizado.');
+  const transmit = (docId) => execute({ action: 'queue_transmission', fiscal_document_id: docId, reason: actionReason, operation_key: crypto.randomUUID() }, 'Emissão enfileirada. O gateway só executará quando a homologação estiver habilitada.');
+  const consult = (docId) => execute({ action: 'queue_consult', fiscal_document_id: docId, reason: actionReason, operation_key: crypto.randomUUID() }, 'Consulta enfileirada no gateway interno.');
   const cancelDraft = (docId) => execute({ action: 'cancel_draft', fiscal_document_id: docId, reason: 'Cancelamento local do RPS antes da transmissão.' }, 'RPS cancelado localmente.');
-  const importRef = async () => {
-    const ref = refInput.trim();
-    if (!ref) return toast.error('Informe a referência da nota na Focus NFe.');
-    await execute({ action: 'import_ref', unit_id: unitId, ref }, 'Nota importada da Focus NFe.');
-    setRefInput('');
-  };
-  const deleteDocument = async (docId) => {
-    if (!window.confirm('Excluir definitivamente este registro de nota do sistema?')) return;
-    await execute({ action: 'delete', fiscal_document_id: docId, reason: 'Exclusão manual pelo painel fiscal.' }, 'Registro fiscal excluído.');
+  const retireDocument = async (docId) => {
+    if (!window.confirm('Aposentar este registro fiscal local sem excluí-lo?')) return;
+    await execute({ action: 'retire', fiscal_document_id: docId, reason: actionReason }, 'Registro fiscal aposentado com trilha de auditoria.');
   };
   const cancelNfse = async () => {
     if (!cancelTarget || cancelReason.trim().length < 15) return toast.error('A justificativa deve ter no mínimo 15 caracteres.');
-    await execute({ action: 'cancel_nfse', fiscal_document_id: cancelTarget, reason: cancelReason.trim() }, 'NFSe cancelada na Focus NFe.');
+    await execute({ action: 'queue_cancel', fiscal_document_id: cancelTarget, reason: cancelReason.trim(), operation_key: crypto.randomUUID() }, 'Cancelamento enfileirado. A nota só mudará para cancelada após confirmação do provedor.');
     setCancelTarget(null);
     setCancelReason('');
   };
@@ -149,11 +145,11 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
             <div className="rounded-2xl bg-sky-500/15 p-2.5 text-sky-300"><Landmark className="h-5 w-5" /></div>
             <div>
               <h2 className="font-semibold text-white">Emissão de NFSe — Focus NFe</h2>
-              <p className="mt-1 max-w-2xl text-sm leading-relaxed text-white/45">Integração ativa com a API da Focus NFe. O sistema prepara o RPS, transmite para a Focus NFe e consulta o status de autorização. Em homologação as notas não têm validade fiscal.</p>
+              <p className="mt-1 max-w-2xl text-sm leading-relaxed text-white/45">O sistema prepara o RPS por CNPJ e enfileira comandos para um gateway interno. Chamadas externas e produção permanecem bloqueadas até aprovação explícita da homologação.</p>
             </div>
           </div>
           <Badge variant="outline" className={isFocusNfe ? 'border-emerald-500/30 text-emerald-300' : 'border-amber-500/30 text-amber-200'}>
-            {isFocusNfe ? <><CheckCircle2 className="mr-1 h-3 w-3" />Focus NFe · {environmentLabel}</> : <><Ban className="mr-1 h-3 w-3" />Transmissão desativada</>}
+            {isFocusNfe && profile?.external_requests_enabled ? <><CheckCircle2 className="mr-1 h-3 w-3" />Focus NFe · {environmentLabel}</> : <><Ban className="mr-1 h-3 w-3" />Transmissão externa bloqueada</>}
           </Badge>
         </div>
       </div>
@@ -163,7 +159,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-white">Perfil fiscal da unidade</h3>
-              <p className="text-sm text-white/40">Configure o provedor e os dados do prestador.</p>
+              <p className="text-sm text-white/40">Configure o CNPJ prestador e os dados do serviço. A ativação externa ocorre em gate administrativo separado.</p>
             </div>
             {profile && <Badge variant="outline" className={profile.status === 'ready_for_homologation' ? 'border-emerald-500/30 text-emerald-300' : 'border-white/10 text-white/50'}>{profile.status}</Badge>}
           </div>
@@ -203,7 +199,8 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
           </div>
 
           {!readiness.ready && <p className="mt-3 text-xs text-amber-200">Faltam: {readiness.missing.join(', ')}.</p>}
-          <Button onClick={saveProfile} disabled={busy || !unitId} className="mt-4 w-full bg-sky-500 hover:bg-sky-400">
+          <div className="mt-4 space-y-2"><Label>Justificativa das operações</Label><Input value={actionReason} onChange={(e) => setActionReason(e.target.value)} minLength={8} className="border-white/10 bg-black/20" /></div>
+          <Button onClick={saveProfile} disabled={busy || !unitId || !legalEntityId || actionReason.trim().length < 8} className="mt-4 w-full bg-sky-500 hover:bg-sky-400">
             {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
             Salvar perfil {isFocusNfe ? `· Focus NFe (${environmentLabel})` : ''}
           </Button>
@@ -221,14 +218,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
               </select>
               <Button onClick={prepare} disabled={busy || !profile || !source} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4]"><ShieldCheck className="mr-2 h-4 w-4" />Preparar e validar localmente</Button>
             </div>
-            <div className="mt-5 border-t border-white/10 pt-4">
-              <Label>Importar nota já emitida (referência Focus NFe)</Label>
-              <div className="mt-2 flex gap-2">
-                <Input value={refInput} onChange={(e) => setRefInput(e.target.value)} placeholder="ex: 5asec-unidade-1-4" className="border-white/10 bg-black/20" />
-                <Button onClick={importRef} disabled={busy || !profile || !refInput.trim()} variant="outline" className="border-white/10 bg-white/5 shrink-0"><RefreshCw className="mr-1 h-3.5 w-3.5" />Importar</Button>
-              </div>
-              <p className="mt-2 text-xs text-white/35">Traz para o painel notas transmitidas que ainda não aparecem aqui, com o status atual (processando, autorizada, etc.).</p>
-            </div>
+            <div className="mt-5 border-t border-white/10 pt-4 text-xs leading-5 text-white/40">Notas externas devem ser reconciliadas por job interno e webhook autenticado. A consulta direta por referência foi aposentada para evitar acesso fiscal fora do escopo do CNPJ.</div>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
@@ -258,11 +248,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
                       )}
                       {document.status === 'authorized' && (
                         <>
-                          {document.metadata?.focusnfe_ref && (
-                            <a href={`${document.environment === 'production' ? 'https://api.focusnfe.com.br' : 'https://homologacao.focusnfe.com.br'}/v2/nfse/${encodeURIComponent(document.metadata.focusnfe_ref)}.pdf`} target="_blank" rel="noopener noreferrer">
-                              <Button size="sm" variant="outline" className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300"><ExternalLink className="mr-1 h-3.5 w-3.5" />PDF</Button>
-                            </a>
-                          )}
+                          {document.pdf_asset_id && <Badge variant="outline" className="border-emerald-500/30 text-emerald-300">PDF arquivado</Badge>}
                           <Button size="sm" variant="outline" disabled={busy} onClick={() => { setCancelTarget(document.id); setCancelReason(''); }} className="border-red-500/20 bg-red-500/5 text-red-300"><XCircle className="mr-1 h-3.5 w-3.5" />Cancelar</Button>
                         </>
                       )}
@@ -272,8 +258,8 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
                       {['draft', 'ready', 'rejected', 'error'].includes(document.status) && (
                         <Button size="sm" variant="ghost" disabled={busy} onClick={() => cancelDraft(document.id)} className="text-white/40 hover:text-red-300">Descartar</Button>
                       )}
-                      {document.status !== 'authorized' && (
-                        <Button size="sm" variant="ghost" disabled={busy} onClick={() => deleteDocument(document.id)} className="text-white/40 hover:text-red-300"><Trash2 className="mr-1 h-3.5 w-3.5" />Excluir</Button>
+                      {document.status !== 'authorized' && !document.retired_at && (
+                        <Button size="sm" variant="ghost" disabled={busy} onClick={() => retireDocument(document.id)} className="text-white/40 hover:text-red-300">Aposentar</Button>
                       )}
                     </div>
                   </div>
@@ -289,7 +275,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setCancelTarget(null)}>
           <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#17364F] p-6" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold text-white">Cancelar NFSe na Focus NFe</h3>
-            <p className="mt-1 text-sm text-white/50">Informe a justificativa do cancelamento (mínimo 15 caracteres). A NFSe será cancelada junto à prefeitura.</p>
+            <p className="mt-1 text-sm text-white/50">Informe a justificativa (15 a 255 caracteres). O pedido será enfileirado e a NFS-e só será marcada como cancelada após confirmação da Focus NFe/prefeitura.</p>
             <textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} rows={3} className="mt-4 w-full rounded-md border border-white/10 bg-black/20 p-3 text-sm text-white" placeholder="Ex: Erro na descrição do serviço, solicitado pelo cliente..." />
             <div className="mt-4 flex justify-end gap-2">
               <Button variant="outline" onClick={() => setCancelTarget(null)} className="border-white/10">Fechar</Button>

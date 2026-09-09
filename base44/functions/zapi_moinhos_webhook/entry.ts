@@ -510,7 +510,8 @@ export default async function(req) {
         if (!payload.fromMe && (type === 'IMAGE' || type === 'TEXT' || type === 'AUDIO' || type === 'DOC')) {
             await base44.asServiceRole.entities.Message.update(message.id, {
                 ai_pending: true,
-                ai_source: 'zapi_moinhos'
+                ai_source: 'zapi_moinhos',
+                workflow_dispatch_token: crypto.randomUUID()
             });
             return Response.json({ status: "success", messageId: message.id, note: "ai_queued" });
         }

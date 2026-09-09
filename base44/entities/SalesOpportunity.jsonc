@@ -1,0 +1,28 @@
+{
+  "name": "SalesOpportunity",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "title": { "type": "string" },
+    "source": { "type": "string", "enum": ["referral", "website", "whatsapp", "prospecting", "campaign", "partner", "existing_customer", "tender", "other"], "default": "other" },
+    "stage": { "type": "string", "enum": ["lead", "qualification", "diagnosis", "proposal", "negotiation", "approval", "won", "lost", "cancelled"], "default": "lead" },
+    "temperature": { "type": "string", "enum": ["cold", "warm", "hot"], "default": "cold" },
+    "score": { "type": "number", "minimum": 0, "maximum": 100, "default": 0 },
+    "estimated_value": { "type": "number", "default": 0 },
+    "probability_percent": { "type": "number", "minimum": 0, "maximum": 100, "default": 0 },
+    "expected_close_date": { "type": "string", "format": "date" },
+    "owner_user_id": { "type": "string" },
+    "next_action": { "type": "string" },
+    "next_action_at": { "type": "string", "format": "date-time" },
+    "lost_reason": { "type": "string" },
+    "lost_competitor": { "type": "string" },
+    "won_contract_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["open", "won", "lost", "cancelled"], "default": "open" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "business_party_id", "title", "stage", "status"]
+}

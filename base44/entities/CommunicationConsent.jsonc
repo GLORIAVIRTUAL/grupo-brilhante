@@ -1,0 +1,29 @@
+{
+  "name": "CommunicationConsent",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "prospect_id": { "type": "string" },
+    "channel": { "type": "string", "enum": ["whatsapp", "email", "sms", "phone", "site", "instagram", "other"] },
+    "purpose": { "type": "string", "enum": ["service", "transactional", "billing", "collection", "survey", "marketing", "campaign", "other"] },
+    "status": { "type": "string", "enum": ["pending", "granted", "denied", "revoked", "blocked"], "default": "pending" },
+    "source": { "type": "string" },
+    "preference": { "type": "string", "enum": ["preferred", "allowed", "avoid", "blocked"], "default": "allowed" },
+    "frequency_limit_per_week": { "type": "number", "default": 0 },
+    "quiet_hours": { "type": "object", "additionalProperties": true },
+    "granted_at": { "type": "string", "format": "date-time" },
+    "revoked_at": { "type": "string", "format": "date-time" },
+    "blocked_at": { "type": "string", "format": "date-time" },
+    "proof_document_asset_id": { "type": "string" },
+    "proof_hash": { "type": "string" },
+    "ip_hash": { "type": "string" },
+    "user_agent_hash": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "channel", "purpose", "status", "source", "idempotency_key"]
+}

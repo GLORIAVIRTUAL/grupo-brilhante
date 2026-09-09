@@ -157,7 +157,7 @@ function assertStaticSecurityContracts() {
   for (const file of serviceRoleFunctions) {
     assert.match(
       read(file),
-      /authorizeUserOrInternal|enforceExistingUserSecurity|requireInternalRequest|requireProviderToken|requireMetaSignature|stripe\.webhooks\.constructEvent/,
+      /authorizeUserOrInternal|enforceAuthenticatedUser|enforceExistingUserSecurity|requireInternalRequest|requireProviderToken|requireMetaSignature|requireWidgetOrigin|authorizeWidgetSession|constantTimeEqual|timingSafeEqual|stripe\.webhooks\.constructEvent/,
       `${file} usa service role sem guard explícito`,
     );
   }

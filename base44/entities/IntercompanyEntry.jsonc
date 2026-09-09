@@ -1,0 +1,31 @@
+{
+  "name": "IntercompanyEntry",
+  "type": "object",
+  "properties": {
+    "entry_key": { "type": "string" },
+    "source_legal_entity_id": { "type": "string" },
+    "destination_legal_entity_id": { "type": "string" },
+    "source_unit_id": { "type": "string" },
+    "destination_unit_id": { "type": "string" },
+    "source_business_party_id": { "type": "string" },
+    "destination_business_party_id": { "type": "string" },
+    "source_cost_center_id": { "type": "string" },
+    "destination_cost_center_id": { "type": "string" },
+    "source_accounts_receivable_id": { "type": "string" },
+    "destination_accounts_payable_id": { "type": "string" },
+    "competence_date": { "type": "string", "format": "date" },
+    "due_date": { "type": "string", "format": "date" },
+    "description": { "type": "string" },
+    "amount": { "type": "number" },
+    "currency": { "type": "string", "default": "BRL" },
+    "status": { "type": "string", "enum": ["draft", "pending_approval", "posted", "settled", "cancelled", "repair_required"], "default": "draft" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "approved_by_user_id": { "type": "string" },
+    "cancelled_at": { "type": "string", "format": "date-time" },
+    "cancellation_reason": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["entry_key", "source_legal_entity_id", "destination_legal_entity_id", "source_unit_id", "destination_unit_id", "source_business_party_id", "destination_business_party_id", "competence_date", "description", "amount", "status", "idempotency_key"]
+}

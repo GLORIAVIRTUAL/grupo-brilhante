@@ -1,0 +1,22 @@
+{
+  "name": "BankReconciliationMatch",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "reconciliation_batch_id": { "type": "string" },
+    "bank_transaction_id": { "type": "string" },
+    "candidate_entity_type": { "type": "string", "enum": ["bank_charge", "accounts_receivable", "accounts_payable", "payment", "cash_movement", "other"] },
+    "candidate_entity_id": { "type": "string" },
+    "confidence_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+    "match_reasons": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "amount_difference": { "type": "number", "default": 0 },
+    "date_difference_days": { "type": "number", "default": 0 },
+    "status": { "type": "string", "enum": ["suggested", "accepted", "rejected", "superseded"], "default": "suggested" },
+    "decided_at": { "type": "string", "format": "date-time" },
+    "decided_by_user_id": { "type": "string" },
+    "decision_reason": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "bank_transaction_id", "candidate_entity_type", "candidate_entity_id", "confidence_percent", "status"]
+}

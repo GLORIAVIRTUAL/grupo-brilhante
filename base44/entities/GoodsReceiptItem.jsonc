@@ -1,0 +1,29 @@
+{
+  "name": "GoodsReceiptItem",
+  "type": "object",
+  "properties": {
+    "goods_receipt_id": { "type": "string" },
+    "purchase_order_item_id": { "type": "string" },
+    "purchase_item_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "stock_item_id": { "type": "string" },
+    "description": { "type": "string" },
+    "received_quantity": { "type": "number" },
+    "accepted_quantity": { "type": "number", "default": 0 },
+    "rejected_quantity": { "type": "number", "default": 0 },
+    "base_quantity": { "type": "number", "default": 0 },
+    "purchase_unit": { "type": "string" },
+    "conversion_factor": { "type": "number", "default": 1 },
+    "unit_price": { "type": "number", "default": 0 },
+    "batch_number": { "type": "string" },
+    "expiry_date": { "type": "string", "format": "date-time" },
+    "quality_status": { "type": "string", "enum": ["not_required", "pending", "approved", "rejected"], "default": "not_required" },
+    "divergence_reason": { "type": "string" },
+    "stock_movement_id": { "type": "string" },
+    "line_status": { "type": "string", "enum": ["received", "partially_accepted", "accepted", "rejected"], "default": "received" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["goods_receipt_id", "legal_entity_id", "unit_id", "warehouse_id", "description", "received_quantity", "purchase_unit", "line_status"]
+}

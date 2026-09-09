@@ -29,7 +29,7 @@ export default async function(req) {
         if (!conversation) return Response.json({ handled: false, reason: 'no_conversation', request_id: requestId });
 
         const message = await base44.asServiceRole.entities.Message.get(message_id).catch(() => null);
-        if (!message) return Response.json({ handled: false, reason: 'no_message', request_id: requestId });
+        if (!message || message.conversation_id !== conversation.id) return Response.json({ handled: false, reason: 'message_conversation_mismatch', request_id: requestId });
 
         const currentState = conversation.metadata || {};
 
@@ -55,6 +55,12 @@ export default async function(req) {
 
         const customer = await base44.asServiceRole.entities.Customer.get(conversation.customer_id).catch(() => null);
         if (!customer) return Response.json({ handled: false, reason: 'no_customer', request_id: requestId });
+        const unitId = currentState.unit_id || customer.unit_id || null;
+        if (!unitId) return Response.json({ handled: false, reason: 'unit_scope_missing', request_id: requestId }, { status: 409 });
+        const unit = await base44.asServiceRole.entities.Unit.get(unitId).catch(() => null);
+        if (!unit?.legal_entity_id || (customer.unit_id && customer.unit_id !== unit.id)) {
+            return Response.json({ handled: false, reason: 'enterprise_scope_invalid', request_id: requestId }, { status: 409 });
+        }
 
         const hasSavedAddress = customer.address && customer.address_number;
 
@@ -62,7 +68,9 @@ export default async function(req) {
             await invokeSender({
                 phone: customer.phones && customer.phones[0],
                 message: `Recebi a confirmação do seu pagamento! ✅ Como você já pagou antecipado, sua coleta entrará como encaixe no próximo turno disponível. 🚚\n\nPara agendar, preciso do seu endereço completo: rua, número, complemento e bairro. 😊`,
-                conversation_id: conversation.id
+                conversation_id: conversation.id,
+                customer_id: customer.id,
+                unit_id: unit.id
             });
             // Limpa o flow para a IA não reprocessar
             currentState.payment_confirmed = false;
@@ -71,12 +79,14 @@ export default async function(req) {
             return Response.json({ handled: true, action: 'encaixe_needs_address', request_id: requestId });
         }
 
-        const encaixe = await findNextEncaixeSlot(base44);
+        const encaixe = await findNextEncaixeSlot(base44, { unitId: unit.id, legalEntityId: unit.legal_entity_id });
         if (!encaixe) {
             await invokeSender({
                 phone: customer.phones && customer.phones[0],
                 message: `Recebi a confirmação do seu pagamento! ✅ No momento não há turnos disponíveis para encaixe nos próximos dias. Vou verificar a agenda e te retornar com uma data específica. 😊`,
-                conversation_id: conversation.id
+                conversation_id: conversation.id,
+                customer_id: customer.id,
+                unit_id: unit.id
             });
             currentState.payment_confirmed = false;
             currentState.flow = null;
@@ -87,6 +97,7 @@ export default async function(req) {
         // Cancela coletas antigas agendadas
         const oldPickups = await base44.asServiceRole.entities.Pickup.filter({
             customer_id: customer.id,
+            unit_id: unit.id,
             status: 'scheduled'
         });
         for (const op of oldPickups) {
@@ -97,7 +108,8 @@ export default async function(req) {
 
         await base44.asServiceRole.entities.Pickup.create({
             customer_id: customer.id,
-            unit_id: currentState.unit_id || '6a99e42ee48200f5d8ddd176',
+            legal_entity_id: unit.legal_entity_id,
+            unit_id: unit.id,
             scheduled_at: encaixe.slotIso,
             address: fullAddress,
             neighborhood: customer.neighborhood,
@@ -105,7 +117,7 @@ export default async function(req) {
             fee: 0,
             notes: 'ENCAIXE — pagamento antecipado via Pix confirmado',
             source: 'ai',
-            created_by_name: 'Glória (IA)',
+            created_by_name: 'Automação de atendimento',
             metadata: { encaixe: true, payment_confirmed: true }
         });
 
@@ -119,7 +131,9 @@ export default async function(req) {
         await invokeSender({
             phone: customer.phones && customer.phones[0],
             message: `Recebi a confirmação do seu pagamento! ✅ Como você já pagou antecipado, sua coleta entrará como encaixe no próximo turno disponível: ${formatEncaixeDate(encaixe.date)}, turno da ${shiftLabel}. 🚚\n\nEndereço: ${fullAddress}\n\nAguarde nosso motorista! 😊`,
-            conversation_id: conversation.id
+            conversation_id: conversation.id,
+            customer_id: customer.id,
+            unit_id: unit.id
         });
 
         return Response.json({ handled: true, action: 'encaixe_scheduled', date: encaixe.date, period: encaixe.period, request_id: requestId });

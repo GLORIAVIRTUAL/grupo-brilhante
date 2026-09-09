@@ -1,0 +1,24 @@
+{
+  "name": "FiscalWebhookEvent",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "fiscal_document_id": { "type": "string" },
+    "provider": { "type": "string", "enum": ["focusnfe"] },
+    "environment": { "type": "string", "enum": ["homologation", "production"] },
+    "event_key": { "type": "string" },
+    "event_type": { "type": "string" },
+    "provider_reference": { "type": "string" },
+    "provider_status": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "safe_payload": { "type": "object", "additionalProperties": true },
+    "received_at": { "type": "string", "format": "date-time" },
+    "processed_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["received", "validated", "processed", "ignored", "repair_required"], "default": "received" },
+    "safe_error_code": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["provider", "environment", "event_key", "payload_hash", "received_at", "status", "idempotency_key"]
+}

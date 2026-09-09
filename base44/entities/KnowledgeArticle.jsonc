@@ -1,0 +1,26 @@
+{
+  "name": "KnowledgeArticle",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "article_code": { "type": "string" },
+    "title": { "type": "string" },
+    "category": { "type": "string" },
+    "audience": { "type": "string", "enum": ["internal", "customer", "ai_only", "internal_and_ai", "public"] },
+    "content": { "type": "string" },
+    "keywords": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "segment_tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "allowed_actions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "prohibited_actions": { "type": "array", "items": { "type": "string" }, "default": ["financial_irreversible", "fiscal_irreversible", "contract_irreversible"] },
+    "version": { "type": "number", "default": 1 },
+    "status": { "type": "string", "enum": ["draft", "review", "active", "superseded", "inactive"], "default": "draft" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_until": { "type": "string", "format": "date-time" },
+    "approved_by_user_id": { "type": "string" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "source_document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "article_code", "title", "audience", "content", "version", "status"]
+}

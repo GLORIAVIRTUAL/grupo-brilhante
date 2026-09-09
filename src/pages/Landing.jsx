@@ -9,6 +9,7 @@ import StructureGallery from '@/components/landing/StructureGallery';
 import BrilavSection from '@/components/landing/BrilavSection';
 import FaqSection from '@/components/landing/FaqSection';
 import ContactSection from '@/components/landing/ContactSection';
+import B2BLeadForm from '@/components/landing/B2BLeadForm';
 import SiteFooter from '@/components/landing/SiteFooter';
 
 const LOGO = 'https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/ebd27cafa_marcabrilhante.png';
@@ -24,5 +25,5 @@ const buildWhatsappUrl = (subject = '') => `https://wa.me/${WHATSAPP_NUMBER}?tex
 
 export default function Landing() {
   const whatsappUrl = buildWhatsappUrl();
-  return <div className="site-page"><SiteHeader logo={LOGO} whatsappUrl={whatsappUrl} /><main><HeroSection image={IMAGES.cleaning} whatsappUrl={whatsappUrl} /><ServicesSection buildWhatsappUrl={buildWhatsappUrl} /><ProcessSection /><GroupSection image={IMAGES.reception} whatsappUrl={whatsappUrl} /><StructureGallery /><BrilavSection image={IMAGES.laundry} whatsappUrl={buildWhatsappUrl('Brilav — lavanderia hospitalar')} /><FaqSection /><ContactSection image={IMAGES.hospital} whatsappUrl={buildWhatsappUrl('contato comercial')} /></main><SiteFooter logo={LOGO} /></div>;
+  return <div className="site-page"><SiteHeader logo={LOGO} whatsappUrl={whatsappUrl} /><main><HeroSection image={IMAGES.cleaning} whatsappUrl={whatsappUrl} /><ServicesSection buildWhatsappUrl={buildWhatsappUrl} /><ProcessSection /><GroupSection image={IMAGES.reception} whatsappUrl={whatsappUrl} /><StructureGallery /><BrilavSection image={IMAGES.laundry} whatsappUrl={buildWhatsappUrl('Brilav — lavanderia hospitalar')} /><FaqSection /><ContactSection image={IMAGES.hospital} whatsappUrl={buildWhatsappUrl('contato comercial')} /><section id="diagnostico" className="lead-section"><div className="lead-copy"><p className="eyebrow">Diagnóstico empresarial</p><h2>Conte como funciona sua operação.</h2><p>Informe o segmento, o serviço e o volume aproximado. A solicitação entra no funil B2B com origem e consentimento rastreáveis; nenhuma cobrança ou compromisso contratual é criado automaticamente.</p></div><div className="lead-form-card"><B2BLeadForm /></div></section></main><SiteFooter logo={LOGO} /></div>;
 }

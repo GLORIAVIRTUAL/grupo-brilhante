@@ -2,6 +2,15 @@
   "name": "FiscalDocument",
   "type": "object",
   "properties": {
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "business_party_id": {
+      "type": "string"
+    },
+    "service_order_id": {
+      "type": "string"
+    },
     "unit_id": {
       "type": "string"
     },
@@ -86,6 +95,23 @@
     },
     "external_protocol": {
       "type": "string"
+    },
+    "provider_reference": {
+      "type": "string"
+    },
+    "provider_status": {
+      "type": "string"
+    },
+    "integration_job_id": {
+      "type": "string"
+    },
+    "last_provider_response_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "safe_provider_snapshot": {
+      "type": "object",
+      "additionalProperties": true
     },
     "competence_date": {
       "type": "string",
@@ -222,6 +248,13 @@
       "type": "string"
     },
     "substituted_by_document_id": {
+      "type": "string"
+    },
+    "retired_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "retired_by_user_id": {
       "type": "string"
     },
     "idempotency_key": {

@@ -1,0 +1,29 @@
+{
+  "name": "WorkSchedule",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "cleaning_site_id": { "type": "string" },
+    "work_post_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "schedule_date": { "type": "string", "format": "date" },
+    "shift_name": { "type": "string" },
+    "starts_at": { "type": "string", "format": "date-time" },
+    "ends_at": { "type": "string", "format": "date-time" },
+    "planned_employee_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "actual_employee_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "planned_headcount": { "type": "number", "default": 0 },
+    "actual_headcount": { "type": "number", "default": 0 },
+    "absence_count": { "type": "number", "default": 0 },
+    "replacement_count": { "type": "number", "default": 0 },
+    "coverage_status": { "type": "string", "enum": ["pending", "covered", "partial", "uncovered", "cancelled"], "default": "pending" },
+    "source": { "type": "string", "enum": ["manual", "payroll_staging", "payroll_confirmed", "migration"], "default": "manual" },
+    "payroll_sync_job_id": { "type": "string" },
+    "supervisor_user_id": { "type": "string" },
+    "notes": { "type": "string" },
+    "idempotency_key": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "cleaning_site_id", "work_post_id", "schedule_date", "starts_at", "ends_at", "planned_headcount", "coverage_status", "source", "idempotency_key"]
+}

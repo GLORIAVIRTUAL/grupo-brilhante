@@ -17,6 +17,10 @@ export async function notifyPaymentConfirmed(base44, customerId) {
   if (!phone) return { notified: false, reason: 'no_phone' };
 
   const state = conversation.metadata || {};
+  const unitId = state.unit_id || customer.unit_id || null;
+  if (!unitId) return { notified: false, reason: 'unit_scope_missing' };
+  const unit = await db.Unit.get(unitId).catch(() => null);
+  if (!unit?.legal_entity_id) return { notified: false, reason: 'legal_entity_scope_missing' };
   const source = state.source || null;
   const senderFn = source === 'whatsapp_moinhos'
     ? 'whatsapp_moinhos_sender'
@@ -26,11 +30,13 @@ export async function notifyPaymentConfirmed(base44, customerId) {
     phone,
     message,
     conversation_id: conversation.id,
+    customer_id: customer.id,
+    unit_id: unit.id,
     _internal_token: Deno.env.get('INTERNAL_FUNCTION_TOKEN'),
   }).catch(() => null);
 
   const hasAddress = customer.address && customer.address_number;
-  const encaixe = hasAddress ? await findNextEncaixeSlot(base44).catch(() => null) : null;
+  const encaixe = hasAddress ? await findNextEncaixeSlot(base44, { unitId: unit.id, legalEntityId: unit.legal_entity_id }).catch(() => null) : null;
 
   if (!hasAddress) {
     await send('Recebi a confirmação do seu pagamento! ✅ Como você pagou antecipado, sua coleta entra como encaixe no próximo turno disponível. 🚚\n\nPara agendar, me envie seu endereço completo: rua, número, complemento e bairro. 😊');
@@ -52,7 +58,8 @@ export async function notifyPaymentConfirmed(base44, customerId) {
 
   await db.Pickup.create({
     customer_id: customer.id,
-    unit_id: state.unit_id,
+    legal_entity_id: unit.legal_entity_id,
+    unit_id: unit.id,
     scheduled_at: encaixe.slotIso,
     address: fullAddress,
     neighborhood: customer.neighborhood,
@@ -61,7 +68,7 @@ export async function notifyPaymentConfirmed(base44, customerId) {
     fee: 0,
     notes: 'ENCAIXE — pagamento antecipado via Pix confirmado',
     source: 'ai',
-    created_by_name: 'Glória (IA)',
+    created_by_name: 'Automação de atendimento',
     metadata: { encaixe: true, payment_confirmed: true },
   });
 

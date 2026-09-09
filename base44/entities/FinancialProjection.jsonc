@@ -1,0 +1,22 @@
+{
+  "name": "FinancialProjection",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "cost_center_id": { "type": "string" },
+    "scenario": { "type": "string", "enum": ["baseline", "optimistic", "conservative", "custom"], "default": "baseline" },
+    "projection_date": { "type": "string", "format": "date" },
+    "competence_date": { "type": "string", "format": "date" },
+    "category": { "type": "string" },
+    "description": { "type": "string" },
+    "direction": { "type": "string", "enum": ["inflow", "outflow"] },
+    "amount": { "type": "number" },
+    "probability_percent": { "type": "number", "minimum": 0, "maximum": 100, "default": 100 },
+    "source_type": { "type": "string", "enum": ["accounts_receivable", "accounts_payable", "contract", "recurring_expense", "manual", "migration", "other"] },
+    "source_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "realized", "cancelled"], "default": "active" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "scenario", "projection_date", "direction", "amount", "status"]
+}

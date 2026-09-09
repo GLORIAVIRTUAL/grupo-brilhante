@@ -1,0 +1,23 @@
+{
+  "name": "PurchaseRequisitionItem",
+  "type": "object",
+  "properties": {
+    "purchase_requisition_id": { "type": "string" },
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "warehouse_id": { "type": "string" },
+    "stock_item_id": { "type": "string" },
+    "description": { "type": "string" },
+    "requested_quantity": { "type": "number" },
+    "approved_quantity": { "type": "number", "default": 0 },
+    "ordered_quantity": { "type": "number", "default": 0 },
+    "purchase_unit": { "type": "string" },
+    "estimated_unit_price": { "type": "number", "default": 0 },
+    "preferred_supplier_id": { "type": "string" },
+    "needed_by": { "type": "string", "format": "date-time" },
+    "line_status": { "type": "string", "enum": ["requested", "approved", "rejected", "partially_ordered", "ordered", "cancelled"], "default": "requested" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["purchase_requisition_id", "legal_entity_id", "unit_id", "warehouse_id", "description", "requested_quantity", "purchase_unit", "line_status"]
+}

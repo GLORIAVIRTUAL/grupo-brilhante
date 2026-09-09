@@ -1,0 +1,33 @@
+{
+  "name": "HospitalProcessingLot",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "business_party_id": { "type": "string" },
+    "business_contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
+    "lot_number": { "type": "string" },
+    "status": { "type": "string", "enum": ["classified", "queued", "washing", "drying", "finishing", "quality", "approved", "expedition", "delivered", "quarantine", "rework", "cancelled"], "default": "classified" },
+    "contamination_class": { "type": "string", "enum": ["standard", "infectious", "chemical", "mixed", "unknown"], "default": "unknown" },
+    "linen_category": { "type": "string" },
+    "incoming_weight_kg": { "type": "number", "default": 0 },
+    "clean_weight_kg": { "type": "number", "default": 0 },
+    "loss_weight_kg": { "type": "number", "default": 0 },
+    "piece_count": { "type": "number", "default": 0 },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "quality_approved_at": { "type": "string", "format": "date-time" },
+    "quality_approved_by_user_id": { "type": "string" },
+    "assigned_user_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "production_batch_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "weighing_record_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "process_events": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "nonconformities": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "default": [] },
+    "document_asset_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "idempotency_key": { "type": "string" },
+    "notes": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "unit_id", "business_party_id", "business_contract_id", "lot_number", "status", "idempotency_key"]
+}

@@ -2,24 +2,123 @@
   "name": "BankTransaction",
   "type": "object",
   "properties": {
-    "unit_id": { "type": "string" },
-    "bank_account_id": { "type": "string" },
-    "external_id": { "type": "string" },
-    "transaction_date": { "type": "string", "format": "date-time" },
-    "posted_at": { "type": "string", "format": "date-time" },
-    "description": { "type": "string" },
-    "counterparty_name": { "type": "string" },
-    "counterparty_tax_id": { "type": "string" },
-    "transaction_type": { "type": "string", "enum": ["credit", "debit", "fee", "refund", "transfer"] },
-    "amount": { "type": "number" },
-    "currency": { "type": "string", "default": "BRL" },
-    "status": { "type": "string", "enum": ["unmatched", "suggested", "matched", "ignored"], "default": "unmatched" },
-    "matched_entity_type": { "type": "string" },
-    "matched_entity_id": { "type": "string" },
-    "match_confidence": { "type": "number" },
-    "reconciled_by_user_id": { "type": "string" },
-    "reconciled_at": { "type": "string", "format": "date-time" },
-    "raw_data": { "type": "object", "additionalProperties": true }
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "cost_center_id": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "native",
+        "conta_azul",
+        "bank",
+        "provider",
+        "migration",
+        "other"
+      ],
+      "default": "native"
+    },
+    "migration_record_id": {
+      "type": "string"
+    },
+    "reconciliation_batch_id": {
+      "type": "string"
+    },
+    "import_hash": {
+      "type": "string"
+    },
+    "idempotency_key": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "bank_account_id": {
+      "type": "string"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "type": "string"
+    },
+    "counterparty_name": {
+      "type": "string"
+    },
+    "counterparty_tax_id": {
+      "type": "string"
+    },
+    "transaction_type": {
+      "type": "string",
+      "enum": [
+        "credit",
+        "debit",
+        "fee",
+        "refund",
+        "transfer"
+      ]
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "BRL"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unmatched",
+        "suggested",
+        "matched",
+        "ignored"
+      ],
+      "default": "unmatched"
+    },
+    "matched_entity_type": {
+      "type": "string"
+    },
+    "matched_entity_id": {
+      "type": "string"
+    },
+    "match_confidence": {
+      "type": "number"
+    },
+    "reconciled_by_user_id": {
+      "type": "string"
+    },
+    "reconciled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "raw_data": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
   },
-  "required": ["unit_id", "external_id", "transaction_date", "transaction_type", "amount"]
+  "required": [
+    "unit_id",
+    "external_id",
+    "transaction_date",
+    "transaction_type",
+    "amount"
+  ]
 }

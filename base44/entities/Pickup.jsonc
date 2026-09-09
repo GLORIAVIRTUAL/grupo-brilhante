@@ -80,9 +80,14 @@
       "default": false,
       "description": "Indica se o ticket/or\u00e7amento j\u00e1 foi gerado para esta coleta"
     },
+    "legal_entity_id": {
+      "type": "string"
+    },
     "unit_id": {
       "type": "string"
     },
+    "contract_id": { "type": "string" },
+    "service_order_id": { "type": "string" },
     "route_id": {
       "type": "string"
     },

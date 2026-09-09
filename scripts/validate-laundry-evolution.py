@@ -98,7 +98,9 @@ def main() -> int:
             if not line or line.startswith("#") or "=" not in line:
                 continue
             key, value = line.split("=", 1)
-            if value and value not in {"false", "true"}:
+            sensitive_key = re.search(r"(SECRET|TOKEN|PASSWORD|PRIVATE_KEY|CLIENT_SECRET|ACCESS_TOKEN|CERTIFICATE)", key)
+            public_configuration = re.search(r"(_HEADER|_ENVIRONMENT|_MODE|_ENABLED|_URL|_BASE_URL|_PATH|_ALLOWLIST|_ID|_TIMEOUT|_LIMIT|_MINUTES)$", key)
+            if value and value not in {"false", "true", "sandbox", "homologation", "production"} and sensitive_key and not public_configuration:
                 fail(f"Valor potencialmente sensível em .env.example:{line_number} ({key})", failures)
         env_text = env_example.read_text(encoding="utf-8")
         for key in [
@@ -227,9 +229,11 @@ def main() -> int:
             fail(f"Fechamento de caixa sem garantia obrigatória: {marker}", failures)
 
     fiscal = (FUNCTIONS / "manage_fiscal_document" / "entry.ts").read_text(encoding="utf-8")
-    for marker in ["fiscal_transmission_not_implemented", "national_nfse", "FiscalEvent", "fiscal_document_ids"]:
+    for marker in ["external_requests_enabled", "production_enabled", "IntegrationJob", "FiscalSequenceReservation", "queue_transmission", "fiscal_document_ids"]:
         if marker not in fiscal:
             fail(f"Estrutura fiscal sem garantia obrigatória: {marker}", failures)
+    if re.search(r"\bfetch\s*\(", fiscal):
+        fail("Endpoint humano fiscal não pode transmitir diretamente ao provedor", failures)
 
     fiscal_event_schema = load_json(ENTITIES / "FiscalEvent.jsonc")
     for field in ["message", "payload_hash", "actor_user_id", "actor_name"]:

@@ -2,46 +2,210 @@
   "name": "AccountsReceivable",
   "type": "object",
   "properties": {
-    "unit_id": { "type": "string" },
-    "customer_id": { "type": "string" },
-    "order_id": { "type": "string" },
-    "quote_id": { "type": "string" },
-    "billing_statement_id": { "type": "string" },
-    "billing_agreement_id": { "type": "string" },
-    "fiscal_document_id": { "type": "string" },
-    "receivable_number": { "type": "string" },
-    "installment_number": { "type": "number", "default": 1 },
-    "installment_count": { "type": "number", "default": 1 },
-    "competence": { "type": "string", "description": "Competência YYYY-MM" },
-    "description": { "type": "string" },
-    "issue_date": { "type": "string", "format": "date-time" },
-    "due_date": { "type": "string", "format": "date-time" },
-    "original_amount": { "type": "number" },
-    "discount_amount": { "type": "number", "default": 0 },
-    "interest_amount": { "type": "number", "default": 0 },
-    "paid_amount": { "type": "number", "default": 0 },
-    "open_amount": { "type": "number" },
+    "legal_entity_id": {
+      "type": "string"
+    },
+    "cost_center_id": {
+      "type": "string"
+    },
+    "bank_account_id": {
+      "type": "string"
+    },
+    "competence_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "native",
+        "conta_azul",
+        "bank",
+        "provider",
+        "migration",
+        "other"
+      ],
+      "default": "native"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "migration_record_id": {
+      "type": "string"
+    },
+    "business_party_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "quote_id": {
+      "type": "string"
+    },
+    "billing_statement_id": {
+      "type": "string"
+    },
+    "billing_agreement_id": {
+      "type": "string"
+    },
+    "fiscal_document_id": {
+      "type": "string"
+    },
+    "hospital_billing_measurement_id": {
+      "type": "string"
+    },
+    "linen_loss_charge_id": {
+      "type": "string"
+    },
+    "service_measurement_id": {
+      "type": "string"
+    },
+    "receivable_number": {
+      "type": "string"
+    },
+    "installment_number": {
+      "type": "number",
+      "default": 1
+    },
+    "installment_count": {
+      "type": "number",
+      "default": 1
+    },
+    "competence": {
+      "type": "string",
+      "description": "Competência YYYY-MM"
+    },
+    "description": {
+      "type": "string"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "original_amount": {
+      "type": "number"
+    },
+    "discount_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "interest_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "paid_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "open_amount": {
+      "type": "number"
+    },
     "status": {
       "type": "string",
-      "enum": ["draft", "open", "partially_paid", "paid", "overdue", "cancelled", "written_off"],
+      "enum": [
+        "draft",
+        "open",
+        "partially_paid",
+        "paid",
+        "overdue",
+        "cancelled",
+        "written_off"
+      ],
       "default": "open"
     },
-    "billing_type": { "type": "string", "enum": ["immediate", "invoiced", "customer_balance", "courtesy"], "default": "immediate" },
-    "payment_receipt_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
-    "payment_allocation_ids": { "type": "array", "items": { "type": "string" }, "default": [] },
-    "collection_status": { "type": "string", "enum": ["not_started", "reminded", "negotiating", "promised", "disputed"], "default": "not_started" },
-    "paid_at": { "type": "string", "format": "date-time" },
-    "overdue_since": { "type": "string", "format": "date-time" },
-    "cancelled_at": { "type": "string", "format": "date-time" },
-    "cancelled_by_user_id": { "type": "string" },
-    "cancellation_reason": { "type": "string" },
-    "written_off_at": { "type": "string", "format": "date-time" },
-    "written_off_by_user_id": { "type": "string" },
-    "write_off_reason": { "type": "string" },
-    "cost_center": { "type": "string" },
-    "purchase_order_number": { "type": "string" },
-    "notes": { "type": "string" },
-    "metadata": { "type": "object", "additionalProperties": true }
+    "billing_type": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "invoiced",
+        "customer_balance",
+        "courtesy"
+      ],
+      "default": "immediate"
+    },
+    "payment_receipt_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "payment_allocation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "collection_status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "reminded",
+        "negotiating",
+        "promised",
+        "disputed"
+      ],
+      "default": "not_started"
+    },
+    "paid_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "overdue_since": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancelled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancelled_by_user_id": {
+      "type": "string"
+    },
+    "cancellation_reason": {
+      "type": "string"
+    },
+    "written_off_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "written_off_by_user_id": {
+      "type": "string"
+    },
+    "write_off_reason": {
+      "type": "string"
+    },
+    "cost_center": {
+      "type": "string"
+    },
+    "purchase_order_number": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
   },
-  "required": ["unit_id", "customer_id", "description", "due_date", "original_amount", "open_amount", "status"]
+  "required": [
+    "unit_id",
+    "description",
+    "due_date",
+    "original_amount",
+    "open_amount",
+    "status"
+  ]
 }

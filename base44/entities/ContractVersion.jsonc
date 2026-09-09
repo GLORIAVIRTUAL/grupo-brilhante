@@ -1,0 +1,22 @@
+{
+  "name": "ContractVersion",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "version_number": { "type": "number" },
+    "version_type": { "type": "string", "enum": ["initial", "renewal", "adjustment", "addendum", "correction"], "default": "initial" },
+    "snapshot": { "type": "object", "additionalProperties": true },
+    "change_summary": { "type": "string" },
+    "change_reason": { "type": "string" },
+    "valid_from": { "type": "string", "format": "date" },
+    "valid_until": { "type": "string", "format": "date" },
+    "status": { "type": "string", "enum": ["draft", "pending_approval", "approved", "superseded", "rejected"], "default": "draft" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "approved_by_user_id": { "type": "string" },
+    "document_asset_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "contract_id", "version_number", "snapshot", "change_reason", "status"]
+}

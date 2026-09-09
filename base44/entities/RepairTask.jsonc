@@ -1,0 +1,29 @@
+{
+  "name": "RepairTask",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "domain": { "type": "string", "enum": ["security", "commercial", "finance", "banking", "fiscal", "purchases", "inventory", "production", "hospital", "linen", "cleaning", "integration", "migration", "system"] },
+    "entity_type": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "source_event_id": { "type": "string" },
+    "integration_job_id": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"], "default": "medium" },
+    "status": { "type": "string", "enum": ["open", "assigned", "in_progress", "waiting", "resolved", "cancelled"], "default": "open" },
+    "required_permission": { "type": "string" },
+    "assigned_to_user_id": { "type": "string" },
+    "due_at": { "type": "string", "format": "date-time" },
+    "resolution": { "type": "string" },
+    "resolution_action": { "type": "string", "enum": ["completed", "compensated", "ignored_with_approval", "reprocessed", "cancelled"] },
+    "resolved_by_user_id": { "type": "string" },
+    "resolved_at": { "type": "string", "format": "date-time" },
+    "checkpoints": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "context_snapshot": { "type": "object", "additionalProperties": true },
+    "created_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "domain", "title", "description", "severity", "status"]
+}

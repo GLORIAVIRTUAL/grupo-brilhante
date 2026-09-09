@@ -1,0 +1,32 @@
+{
+  "name": "Warehouse",
+  "type": "object",
+  "properties": {
+    "legal_entity_id": { "type": "string" },
+    "unit_id": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "warehouse_type": { "type": "string", "enum": ["central", "production", "consumables", "linen", "vehicle", "customer", "quarantine", "third_party", "other"] },
+    "status": { "type": "string", "enum": ["active", "blocked", "inactive"], "default": "active" },
+    "allows_negative_stock": { "type": "boolean", "default": false },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "number": { "type": "string" },
+        "complement": { "type": "string" },
+        "district": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "zip_code": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" }
+      }
+    },
+    "manager_user_id": { "type": "string" },
+    "created_by_user_id": { "type": "string" },
+    "updated_by_user_id": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["legal_entity_id", "code", "name", "warehouse_type", "status"]
+}
