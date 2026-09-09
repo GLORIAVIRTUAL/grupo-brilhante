@@ -119,7 +119,7 @@ export default function PerformanceMaxCampaignForm() {
           <Switch checked={startPaused} onCheckedChange={setStartPaused} />
         </div>
 
-        <Button onClick={handleCreate} disabled={loading} className="w-full bg-[#FF6600] hover:bg-[#FF6600]/90">
+        <Button onClick={handleCreate} disabled={loading} className="w-full bg-[#216FA1] hover:bg-[#216FA1]/90">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-2" /> Criar Performance Max</>}
         </Button>
 

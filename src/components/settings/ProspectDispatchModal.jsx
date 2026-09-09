@@ -80,10 +80,10 @@ export default function ProspectDispatchModal({ open, onOpenChange, prospects, s
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl flex items-center gap-2">
-            <Send className="w-5 h-5 text-[#FF6600]" />
+            <Send className="w-5 h-5 text-[#216FA1]" />
             Disparo para Prospecção
           </DialogTitle>
         </DialogHeader>
@@ -99,7 +99,7 @@ export default function ProspectDispatchModal({ open, onOpenChange, prospects, s
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-gray-300">
-                <Mail className="w-4 h-4 text-[#FF6600]" /> E-mail
+                <Mail className="w-4 h-4 text-[#216FA1]" /> E-mail
               </div>
               <Switch checked={sendEmail} onCheckedChange={setSendEmail} />
             </div>
@@ -129,12 +129,12 @@ export default function ProspectDispatchModal({ open, onOpenChange, prospects, s
             <div className="border border-dashed border-white/10 rounded-xl p-4 bg-white/5 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <ImageIcon className="w-4 h-4 text-[#FF6600]" />
+                  <ImageIcon className="w-4 h-4 text-[#216FA1]" />
                   Enviar imagem junto com a mensagem.
                 </div>
                 <label className="inline-flex">
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-                  <span className="cursor-pointer px-4 py-2 rounded-lg bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm">
+                  <span className="cursor-pointer px-4 py-2 rounded-lg bg-[#216FA1] hover:bg-[#2d8ac4] text-white text-sm">
                     {uploadingImage ? 'Enviando...' : 'Escolher imagem'}
                   </span>
                 </label>
@@ -160,7 +160,7 @@ export default function ProspectDispatchModal({ open, onOpenChange, prospects, s
             </div>
           </div>
 
-          <Button onClick={handleSend} disabled={sending} className="w-full bg-[#FF6600] hover:bg-[#e55c00] gap-2 h-12 text-lg">
+          <Button onClick={handleSend} disabled={sending} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] gap-2 h-12 text-lg">
             {sending ? <><Loader2 className="w-5 h-5 animate-spin" /> Enviando...</> : <><Send className="w-5 h-5" /> Enviar Disparo ({targetCount})</>}
           </Button>
         </div>

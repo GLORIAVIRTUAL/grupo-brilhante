@@ -118,7 +118,7 @@ export default function VideoCampaignForm() {
           )}
         </div>
         {!channelUrl && (
-          <a href="https://www.youtube.com/create_channel" target="_blank" rel="noopener noreferrer" className="text-xs text-[#FF6600] hover:underline mt-2 inline-flex items-center gap-1">
+          <a href="https://www.youtube.com/create_channel" target="_blank" rel="noopener noreferrer" className="text-xs text-[#216FA1] hover:underline mt-2 inline-flex items-center gap-1">
             Não tem canal? Criar grátis → <ExternalLink className="w-3 h-3" />
           </a>
         )}
@@ -167,7 +167,7 @@ export default function VideoCampaignForm() {
             </p>
             <ol className="list-decimal list-inside space-y-0.5 ml-1">
               <li>Ter um <strong>canal no YouTube</strong> (pode ser da unidade, criado com qualquer conta Google).
-                {' '}<a href="https://www.youtube.com/create_channel" target="_blank" rel="noopener noreferrer" className="text-[#FF6600] underline">Criar canal grátis →</a>
+                {' '}<a href="https://www.youtube.com/create_channel" target="_blank" rel="noopener noreferrer" className="text-[#216FA1] underline">Criar canal grátis →</a>
               </li>
               <li>Fazer <strong>upload do vídeo</strong> lá (pode marcar como "não listado" pra não aparecer nas buscas).</li>
               <li>Copiar a URL do vídeo e colar acima.</li>
@@ -186,7 +186,7 @@ export default function VideoCampaignForm() {
           <Switch checked={startPaused} onCheckedChange={setStartPaused} />
         </div>
 
-        <Button onClick={handleCreate} disabled={loading || !videoId} className="w-full bg-[#FF6600] hover:bg-[#FF6600]/90">
+        <Button onClick={handleCreate} disabled={loading || !videoId} className="w-full bg-[#216FA1] hover:bg-[#216FA1]/90">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-2" /> Criar Campanha de Vídeo</>}
         </Button>
 

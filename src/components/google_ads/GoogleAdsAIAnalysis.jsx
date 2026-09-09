@@ -141,7 +141,7 @@ Seja DIRETO, técnico e prático. Identifique campanhas com problemas (CTR baixo
           {/* Resumo + Nota */}
           <div className="flex gap-4 items-start">
             <div className="flex-shrink-0 w-20 h-20 rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-[#FF6600]">{analysis.nota_geral}</div>
+              <div className="text-2xl font-bold text-[#216FA1]">{analysis.nota_geral}</div>
               <div className="text-[10px] text-gray-400 uppercase">Nota /10</div>
             </div>
             <div className="flex-1 p-4 rounded-lg bg-white/5 border border-white/10">
@@ -166,7 +166,7 @@ Seja DIRETO, técnico e prático. Identifique campanhas com problemas (CTR baixo
                         <div className={`font-semibold text-sm ${style.text}`}>{insight.titulo}</div>
                         <p className="text-xs text-gray-300 mt-1">{insight.descricao}</p>
                         <div className="mt-2 text-xs text-gray-400">
-                          <span className="text-[#FF6600] font-semibold">▶ Ação:</span> {insight.acao_recomendada}
+                          <span className="text-[#216FA1] font-semibold">▶ Ação:</span> {insight.acao_recomendada}
                         </div>
                       </div>
                     </div>
@@ -202,8 +202,8 @@ Seja DIRETO, técnico e prático. Identifique campanhas com problemas (CTR baixo
 
           {/* Próximos passos */}
           {analysis.proximos_passos?.length > 0 && (
-            <div className="p-4 rounded-lg bg-[#FF6600]/10 border border-[#FF6600]/30">
-              <div className="flex items-center gap-2 text-[#FF6600] text-sm font-semibold mb-2">
+            <div className="p-4 rounded-lg bg-[#216FA1]/10 border border-[#216FA1]/30">
+              <div className="flex items-center gap-2 text-[#216FA1] text-sm font-semibold mb-2">
                 <Target className="w-4 h-4" /> Próximos passos práticos
               </div>
               <ol className="text-sm text-gray-200 space-y-1.5 list-decimal list-inside">

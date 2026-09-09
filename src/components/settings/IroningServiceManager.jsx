@@ -44,7 +44,7 @@ export default function IroningServiceManager() {
   };
 
   if (loading) {
-    return <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>;
+    return <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>;
   }
 
   const pct = parseFloat(String(percent).replace(',', '.')) || 0;

@@ -106,7 +106,7 @@ export default function SearchCampaignForm({ prefill }) {
           <Switch checked={startPaused} onCheckedChange={setStartPaused} />
         </div>
 
-        <Button onClick={handleCreate} disabled={loading} className="w-full bg-[#FF6600] hover:bg-[#FF6600]/90">
+        <Button onClick={handleCreate} disabled={loading} className="w-full bg-[#216FA1] hover:bg-[#216FA1]/90">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-2" /> Criar Campanha</>}
         </Button>
 
@@ -120,7 +120,7 @@ export default function SearchCampaignForm({ prefill }) {
           <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-300 text-sm">
             <div className="flex items-center gap-2 font-semibold mb-2"><CheckCircle2 className="w-4 h-4" /> Campanha criada!</div>
             <p className="text-xs">ID: <span className="font-mono">{result.campaign_id}</span></p>
-            <a href={`https://ads.google.com/aw/campaigns?campaignId=${result.campaign_id}`} target="_blank" rel="noopener noreferrer" className="text-[#FF6600] underline text-xs">Abrir no Google Ads →</a>
+            <a href={`https://ads.google.com/aw/campaigns?campaignId=${result.campaign_id}`} target="_blank" rel="noopener noreferrer" className="text-[#216FA1] underline text-xs">Abrir no Google Ads →</a>
           </div>
         )}
       </div>

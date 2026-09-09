@@ -71,7 +71,7 @@ export default function GoogleAdsResults() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold flex items-center gap-2 text-white">
-          <BarChart3 className="w-5 h-5 text-[#FF6600]" />
+          <BarChart3 className="w-5 h-5 text-[#216FA1]" />
           Resultados (últimos 30 dias)
         </h3>
         <Button onClick={load} disabled={loading} variant="outline" className="border-white/10">
@@ -96,7 +96,7 @@ export default function GoogleAdsResults() {
         </Card>
         <Card className="bg-white/5 border-white/10 p-4 text-white">
           <div className="text-xs text-gray-400 uppercase">Investido</div>
-          <div className="text-2xl font-bold text-[#FF6600] mt-1">R$ {totals.cost.toFixed(2)}</div>
+          <div className="text-2xl font-bold text-[#216FA1] mt-1">R$ {totals.cost.toFixed(2)}</div>
         </Card>
         <Card className="bg-white/5 border-white/10 p-4 text-white">
           <div className="text-xs text-gray-400 uppercase">Conversões</div>
@@ -138,7 +138,7 @@ export default function GoogleAdsResults() {
                   <td className="px-4 py-3 text-right text-gray-300">{(c.clicks || 0).toLocaleString('pt-BR')}</td>
                   <td className="px-4 py-3 text-right text-gray-300">{((c.ctr || 0) * 100).toFixed(2)}%</td>
                   <td className="px-4 py-3 text-right text-gray-300">R$ {(c.avg_cpc_brl || 0).toFixed(2)}</td>
-                  <td className="px-4 py-3 text-right text-[#FF6600] font-semibold">R$ {(c.cost_brl || 0).toFixed(2)}</td>
+                  <td className="px-4 py-3 text-right text-[#216FA1] font-semibold">R$ {(c.cost_brl || 0).toFixed(2)}</td>
                   <td className="px-4 py-3 text-right text-green-400">{(c.conversions || 0).toFixed(0)}</td>
                   <td className="px-4 py-3 text-center">
                     {c.status !== 'REMOVED' && (

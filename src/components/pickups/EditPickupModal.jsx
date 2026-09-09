@@ -175,7 +175,7 @@ export default function EditPickupModal({ pickup, isOpen, onClose, customerMap }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white sm:max-w-[480px]">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white sm:max-w-[480px]">
         <DialogHeader>
           <DialogTitle>Editar Coleta</DialogTitle>
         </DialogHeader>
@@ -196,7 +196,7 @@ export default function EditPickupModal({ pickup, isOpen, onClose, customerMap }
                 <SelectTrigger className="bg-white/5 border-white/10">
                   <SelectValue placeholder="Selecione o turno" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#1a0b36] border-white/10 text-white">
+                <SelectContent className="bg-[#17364F] border-white/10 text-white">
                   <SelectItem value="manha">Manhã (8h às 12h)</SelectItem>
                   <SelectItem value="tarde">Tarde (13h às 16h)</SelectItem>
                 </SelectContent>
@@ -226,7 +226,7 @@ export default function EditPickupModal({ pickup, isOpen, onClose, customerMap }
                   className="bg-white/5 border-white/10"
                   placeholder="00000-000"
                 />
-                {fetchingCep && <div className="absolute right-3 top-2.5 w-4 h-4 rounded-full border-2 border-white/20 border-t-[#FF6600] animate-spin" />}
+                {fetchingCep && <div className="absolute right-3 top-2.5 w-4 h-4 rounded-full border-2 border-white/20 border-t-[#216FA1] animate-spin" />}
               </div>
             </div>
             <div className="space-y-2 col-span-2">
@@ -275,7 +275,7 @@ export default function EditPickupModal({ pickup, isOpen, onClose, customerMap }
             <Button variant="ghost" onClick={onClose} className="text-white hover:bg-white/10">
               Cancelar
             </Button>
-            <Button onClick={handleSave} disabled={saving} className="bg-[#FF6600] hover:bg-[#e55c00] text-white">
+            <Button onClick={handleSave} disabled={saving} className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white">
               {saving ? 'Salvando...' : 'Salvar'}
             </Button>
           </div>

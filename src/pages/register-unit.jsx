@@ -65,8 +65,8 @@ export default function RegisterUnit() {
             {step === 1 ? (
                 <Card className="bg-white/5 backdrop-blur-xl border-white/10 text-white shadow-xl">
                     <CardHeader>
-                        <div className="w-12 h-12 bg-[#FF6600]/20 rounded-lg flex items-center justify-center mb-4">
-                            <Building2 className="w-6 h-6 text-[#FF6600]" />
+                        <div className="w-12 h-12 bg-[#216FA1]/20 rounded-lg flex items-center justify-center mb-4">
+                            <Building2 className="w-6 h-6 text-[#216FA1]" />
                         </div>
                         <CardTitle>Dados da Unidade</CardTitle>
                         <CardDescription className="text-gray-400">Preencha as informações para configurar o ambiente.</CardDescription>
@@ -80,7 +80,7 @@ export default function RegisterUnit() {
                                     placeholder="Ex: 5àsec Rio Branco"
                                     value={formData.name}
                                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FF6600]"
+                                    className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#216FA1]"
                                     required
                                 />
                             </div>
@@ -93,7 +93,7 @@ export default function RegisterUnit() {
                                         placeholder="riobranco"
                                         value={formData.subdomain}
                                         onChange={(e) => setFormData({...formData, subdomain: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '')})}
-                                        className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FF6600] rounded-r-none"
+                                        className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#216FA1] rounded-r-none"
                                         required
                                     />
                                     <div className="bg-white/10 border border-l-0 border-white/10 h-10 px-3 flex items-center text-sm text-gray-400 rounded-r-md whitespace-nowrap">
@@ -111,7 +111,7 @@ export default function RegisterUnit() {
                                     placeholder="seu@email.com"
                                     value={formData.owner_email}
                                     onChange={(e) => setFormData({...formData, owner_email: e.target.value})}
-                                    className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FF6600]"
+                                    className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#216FA1]"
                                     required
                                 />
                             </div>
@@ -122,7 +122,7 @@ export default function RegisterUnit() {
                                         Cancelar
                                     </Button>
                                 </Link>
-                                <Button type="submit" disabled={loading} className="w-full bg-[#FF6600] hover:bg-[#e55c00] text-white">
+                                <Button type="submit" disabled={loading} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] text-white">
                                     {loading ? <Loader2 className="animate-spin mr-2" /> : "Criar Unidade"}
                                 </Button>
                             </div>
@@ -140,7 +140,7 @@ export default function RegisterUnit() {
                             A unidade <strong className="text-white">{formData.name}</strong> foi configurada com sucesso.
                         </p>
                         
-                        <div className="bg-black/30 p-4 rounded-lg border border-white/10 font-mono text-sm text-[#FF6600] break-all">
+                        <div className="bg-black/30 p-4 rounded-lg border border-white/10 font-mono text-sm text-[#216FA1] break-all">
                             {`https://${formData.subdomain}.chat5asec.com.br`}
                         </div>
 
@@ -156,7 +156,7 @@ export default function RegisterUnit() {
                                 Cadastrar Outra
                             </Button>
                             <Link to="/admin">
-                                <Button className="bg-[#FF6600] hover:bg-[#e55c00]">
+                                <Button className="bg-[#216FA1] hover:bg-[#2d8ac4]">
                                     Voltar ao Painel ADM
                                 </Button>
                             </Link>

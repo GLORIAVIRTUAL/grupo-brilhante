@@ -271,12 +271,12 @@ Regras obrigatórias:
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="flex items-center gap-3 text-3xl font-bold text-white">
-            <Sparkles className="w-8 h-8 text-[#FF6600]" />
+            <Sparkles className="w-8 h-8 text-[#216FA1]" />
             Campanhas
           </h1>
           <p className="mt-1 text-gray-400">Agora a IA usa suas referências para montar a arte completa em 9:16, ideal para stories e reels.</p>
         </div>
-        <Badge className="border border-[#FF6600]/30 bg-[#FF6600]/15 px-3 py-1 text-[#FF6600]">
+        <Badge className="border border-[#216FA1]/30 bg-[#216FA1]/15 px-3 py-1 text-[#216FA1]">
         Qualidade HD • 9:16 • 1080x1920
         </Badge>
       </div>
@@ -350,7 +350,7 @@ Regras obrigatórias:
             </div>
           </div>
 
-          <Button onClick={handleGenerate} disabled={generating} className="h-12 w-full gap-2 bg-[#FF6600] text-base hover:bg-[#e55c00]">
+          <Button onClick={handleGenerate} disabled={generating} className="h-12 w-full gap-2 bg-[#216FA1] text-base hover:bg-[#2d8ac4]">
             {generating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Wand2 className="w-5 h-5" />}
             {generating ? 'Gerando campanha...' : 'Gerar arte com referências'}
           </Button>
@@ -359,7 +359,7 @@ Regras obrigatórias:
         <div className="space-y-6">
           <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
             <div className="flex items-center gap-2 font-semibold text-white">
-              <ImageIcon className="w-5 h-5 text-[#FF6600]" /> Arte final
+              <ImageIcon className="w-5 h-5 text-[#216FA1]" /> Arte final
             </div>
 
             {generatedImage ? (
@@ -372,13 +372,13 @@ Regras obrigatórias:
                     <Button variant="outline" className="bg-transparent border-white/15 text-white hover:bg-white/10">Abrir arte</Button>
                   </a>
                   <a href={generatedImage} download target="_blank" rel="noopener noreferrer">
-                    <Button className="bg-[#4C12A1] text-white hover:bg-[#5b17bf]">Baixar arte</Button>
+                    <Button className="bg-[#216FA1] text-white hover:bg-[#5b17bf]">Baixar arte</Button>
                   </a>
                   <Button onClick={handleSaveCampaign} disabled={saveCampaignMutation.isPending || !generatedImage || !modelText.trim()} className="bg-white/10 text-white hover:bg-white/15">
                     {saveCampaignMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     {saveCampaignMutation.isPending ? 'Salvando...' : 'Salvar campanha'}
                   </Button>
-                  <Button onClick={handleGenerateVideo} disabled={videoSending || !generatedImage || !modelText.trim()} className="bg-[#6a1cb3] text-white hover:bg-[#7b24ca]">
+                  <Button onClick={handleGenerateVideo} disabled={videoSending || !generatedImage || !modelText.trim()} className="bg-[#2d8ac4] text-white hover:bg-[#7b24ca]">
                     {videoSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Clapperboard className="w-4 h-4" />}
                     {videoSending ? 'Pedindo vídeo...' : 'Gerar vídeo'}
                   </Button>
@@ -401,7 +401,7 @@ Regras obrigatórias:
 
           <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
             <div className="flex items-center gap-2 font-semibold text-white">
-              <Sparkles className="w-5 h-5 text-[#FF6600]" /> Texto para Instagram
+              <Sparkles className="w-5 h-5 text-[#216FA1]" /> Texto para Instagram
             </div>
 
             <Textarea
@@ -420,7 +420,7 @@ Regras obrigatórias:
             <h2 className="text-xl font-semibold text-white">Campanhas salvas</h2>
             <p className="mt-1 text-sm text-gray-400">Guarde a arte com a legenda para reutilizar depois.</p>
           </div>
-          <Badge className="border border-[#FF6600]/30 bg-[#FF6600]/15 px-3 py-1 text-[#FF6600]">
+          <Badge className="border border-[#216FA1]/30 bg-[#216FA1]/15 px-3 py-1 text-[#216FA1]">
             {savedCampaigns.length} salvas
           </Badge>
         </div>

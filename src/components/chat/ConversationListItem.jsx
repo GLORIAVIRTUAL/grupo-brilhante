@@ -31,7 +31,7 @@ export default function ConversationListItem({
           hasUnread
             ? 'text-green-400 font-bold'
             : conversation.handoff_required
-              ? 'text-[#FF6600] animate-pulse font-bold'
+              ? 'text-[#216FA1] animate-pulse font-bold'
               : isActive ? 'text-white' : 'text-gray-200'
         }`}>
           {conversation.handoff_required && '🔔 '}
@@ -54,18 +54,18 @@ export default function ConversationListItem({
       <div className="flex justify-between items-center gap-2">
         <div className="max-w-[80%]">
           <p className={`text-sm truncate ${hasUnread ? 'text-green-200 font-medium' : 'text-gray-400'}`}>
-            {conversation.handoff_required && <span className="text-[#FF6600] font-bold mr-1">[HUMANO]</span>}
+            {conversation.handoff_required && <span className="text-[#216FA1] font-bold mr-1">[HUMANO]</span>}
             {hasUnread && <span className="mr-1">💬</span>}
             {preview || 'Toque para ver as mensagens'}
           </p>
           {unitLabel && (
-            <p className="mt-1 text-[11px] font-medium text-[#FF6600] truncate">
+            <p className="mt-1 text-[11px] font-medium text-[#216FA1] truncate">
               Unidade: {unitLabel}
             </p>
           )}
         </div>
         {conversation.handoff_required && (
-          <span className="w-2 h-2 rounded-full bg-[#FF6600] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#216FA1] animate-pulse" />
         )}
       </div>
     </div>

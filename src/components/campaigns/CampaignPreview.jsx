@@ -55,7 +55,7 @@ export default function CampaignPreview({ imageUrl, overlayCopy }) {
             )}
 
             {copy.cta && (
-              <div className="mt-3 inline-flex rounded-full bg-[#FF6600] px-4 py-2 text-sm font-semibold text-white">
+              <div className="mt-3 inline-flex rounded-full bg-[#216FA1] px-4 py-2 text-sm font-semibold text-white">
                 {copy.cta}
               </div>
             )}
@@ -75,7 +75,7 @@ export default function CampaignPreview({ imageUrl, overlayCopy }) {
             <ExternalLink className="w-4 h-4" /> Abrir fundo
           </Button>
         </a>
-        <Button onClick={handleDownload} className="gap-2 bg-[#4C12A1] text-white hover:bg-[#5b17bf]">
+        <Button onClick={handleDownload} className="gap-2 bg-[#216FA1] text-white hover:bg-[#5b17bf]">
           <Download className="w-4 h-4" /> Baixar arte final
         </Button>
       </div>

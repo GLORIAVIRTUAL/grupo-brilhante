@@ -14,14 +14,14 @@ export default function DateRangeFilter({ value, onChange, customRange, onCustom
   return (
     <div className="flex flex-col gap-2 md:items-end">
       <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 p-1">
-        <Calendar className="ml-2 h-4 w-4 text-[#FF6600]" />
+        <Calendar className="ml-2 h-4 w-4 text-[#216FA1]" />
         {PRESETS.map((preset) => (
           <button
             key={preset.key}
             onClick={() => onChange(preset.key)}
             className={`whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all ${
               value === preset.key
-                ? 'bg-[#FF6600] text-white shadow-lg shadow-orange-500/20'
+                ? 'bg-[#216FA1] text-white shadow-lg shadow-orange-500/20'
                 : 'text-white/60 hover:bg-white/5 hover:text-white'
             }`}
           >

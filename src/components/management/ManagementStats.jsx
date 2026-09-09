@@ -9,9 +9,9 @@ export default function ManagementStats({ totalIncome, totalExpense, balance, av
     { label: 'Entradas', value: fmt(totalIncome), icon: TrendingUp, color: 'text-[#25D366]' },
     { label: 'Saídas', value: fmt(totalExpense), icon: TrendingDown, color: 'text-red-400' },
     { label: 'Taxas de Cartão', value: fmt(totalCardFees), icon: CreditCard, color: 'text-amber-400' },
-    { label: 'Saldo', value: fmt(balance), icon: Wallet, color: balance >= 0 ? 'text-[#FF6600]' : 'text-red-400' },
+    { label: 'Saldo', value: fmt(balance), icon: Wallet, color: balance >= 0 ? 'text-[#216FA1]' : 'text-red-400' },
     { label: 'Lucro Líquido', value: fmt(netProfit), icon: PiggyBank, color: (netProfit ?? 0) >= 0 ? 'text-emerald-400' : 'text-red-400' },
-    { label: 'Prazo Médio de Entrega', value: avgDeliveryDays != null ? `${avgDeliveryDays.toFixed(1)} dias` : '—', icon: Clock, color: 'text-[#4C12A1]' }
+    { label: 'Prazo Médio de Entrega', value: avgDeliveryDays != null ? `${avgDeliveryDays.toFixed(1)} dias` : '—', icon: Clock, color: 'text-[#216FA1]' }
   ];
 
   return (

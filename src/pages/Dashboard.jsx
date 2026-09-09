@@ -247,7 +247,7 @@ export default function Dashboard() {
   if (unitsLoading || (loading && !hasLoadedOnce)) {
     return (
       <div className="flex h-96 items-center justify-center text-gray-400">
-        <Loader2 className="mr-2 h-6 w-6 animate-spin text-[#FF6600]" /> Carregando dashboard...
+        <Loader2 className="mr-2 h-6 w-6 animate-spin text-[#216FA1]" /> Carregando dashboard...
       </div>
     );
   }
@@ -265,7 +265,7 @@ export default function Dashboard() {
             </p>
             {user && (
               <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-tr from-[#FF6600] to-yellow-500 text-[11px] font-bold text-white">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-tr from-[#216FA1] to-yellow-500 text-[11px] font-bold text-white">
                   {(user.full_name || user.email || '?').charAt(0).toUpperCase()}
                 </span>
                 Logado como <span className="font-semibold text-white">{user.full_name || user.email}</span>
@@ -331,7 +331,7 @@ export default function Dashboard() {
       <div>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">Serviços de Hoje</h2>
-          <Link to="/pickups" className="flex items-center gap-1 text-sm text-[#FF6600] transition-colors hover:text-white">
+          <Link to="/pickups" className="flex items-center gap-1 text-sm text-[#216FA1] transition-colors hover:text-white">
             Ver coletas <ArrowRight className="h-3 w-3" />
           </Link>
         </div>

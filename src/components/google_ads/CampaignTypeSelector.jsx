@@ -49,7 +49,7 @@ export default function CampaignTypeSelector({ selected, onSelect }) {
             onClick={() => onSelect(t.id)}
             className={`p-4 cursor-pointer transition-all border ${
               isActive
-                ? 'bg-[#FF6600]/15 border-[#FF6600] shadow-lg shadow-orange-500/20'
+                ? 'bg-[#216FA1]/15 border-[#216FA1] shadow-lg shadow-orange-500/20'
                 : 'bg-white/5 border-white/10 hover:bg-white/10'
             }`}
           >

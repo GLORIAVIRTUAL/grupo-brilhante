@@ -65,7 +65,7 @@ Regras:
     <div className="grid lg:grid-cols-2 gap-6">
       <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6 text-white">
         <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-white">
-          <Sparkles className="w-5 h-5 text-[#FF6600]" />
+          <Sparkles className="w-5 h-5 text-[#216FA1]" />
           Briefing da Campanha
         </h3>
         <div className="space-y-4">
@@ -99,7 +99,7 @@ Regras:
           <Button
             onClick={handleGenerate}
             disabled={loading || !city}
-            className="w-full bg-[#FF6600] hover:bg-[#FF6600]/90"
+            className="w-full bg-[#216FA1] hover:bg-[#216FA1]/90"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Sparkles className="w-4 h-4 mr-2" /> Gerar Estratégia com IA</>}
           </Button>
@@ -118,7 +118,7 @@ Regras:
         )}
         {loading && (
           <div className="text-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-[#FF6600] mx-auto" />
+            <Loader2 className="w-8 h-8 animate-spin text-[#216FA1] mx-auto" />
             <p className="text-gray-400 mt-3 text-sm">A IA está pesquisando o melhor para você...</p>
           </div>
         )}
@@ -132,7 +132,7 @@ Regras:
               <div className="text-gray-400 text-xs uppercase mb-1">Headlines ({result.headlines?.length})</div>
               <div className="flex flex-wrap gap-1">
                 {result.headlines?.map((h, i) => (
-                  <span key={i} className="px-2 py-1 bg-[#FF6600]/20 text-[#FF6600] rounded text-xs">{h}</span>
+                  <span key={i} className="px-2 py-1 bg-[#216FA1]/20 text-[#216FA1] rounded text-xs">{h}</span>
                 ))}
               </div>
             </div>

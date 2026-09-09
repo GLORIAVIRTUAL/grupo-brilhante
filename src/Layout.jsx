@@ -92,10 +92,10 @@ export default function Layout({ children }) {
                     onClick: () => navigate('/chat')
                 },
                 duration: 5000,
-                className: "bg-[#4C12A1] border-white/10 text-white shadow-lg shadow-purple-900/50",
+                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-purple-900/50",
                 descriptionClassName: "text-gray-300",
-                actionButtonStyle: { background: "#FF6600", color: "white" },
-                icon: <MessageSquare className="w-5 h-5 text-[#FF6600]" />,
+                actionButtonStyle: { background: "#216FA1", color: "white" },
+                icon: <MessageSquare className="w-5 h-5 text-[#216FA1]" />,
             });
 
             // Update badge if not currently on chat page
@@ -209,10 +209,10 @@ export default function Layout({ children }) {
                     onClick: () => navigate('/chat')
                 },
                 duration: 10000,
-                className: "bg-[#4C12A1] border-white/10 text-white shadow-lg shadow-purple-900/50",
+                className: "bg-[#216FA1] border-white/10 text-white shadow-lg shadow-purple-900/50",
                 descriptionClassName: "text-gray-300",
-                actionButtonStyle: { background: "#FF6600", color: "white" },
-                icon: <ImageIcon className="w-5 h-5 text-[#FF6600]" />
+                actionButtonStyle: { background: "#216FA1", color: "white" },
+                icon: <ImageIcon className="w-5 h-5 text-[#216FA1]" />
             });
         }
     });
@@ -281,10 +281,10 @@ export default function Layout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a0b36] text-white font-sans selection:bg-[#FF6600] selection:text-white overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#17364F] text-white font-sans selection:bg-[#216FA1] selection:text-white overflow-x-hidden relative">
       {/* Background Elements for depth */}
-      <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#4C12A1] blur-[150px] opacity-40 pointer-events-none" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#FF6600] blur-[150px] opacity-20 pointer-events-none" />
+      <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#216FA1] blur-[150px] opacity-40 pointer-events-none" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#216FA1] blur-[150px] opacity-20 pointer-events-none" />
 
       <div className="flex min-h-screen relative z-10">
         {/* Sidebar */}
@@ -306,14 +306,14 @@ export default function Layout({ children }) {
                   to={item.path}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative
                     ${isActive 
-                      ? 'bg-gradient-to-r from-[#4C12A1] to-[#6a1cb3] shadow-lg shadow-purple-900/30 border border-white/10' 
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border border-white/10' 
                       : 'hover:bg-white/5 text-gray-400 hover:text-white'
                     }`}
                 >
                   <div className="relative">
-                      <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-[#FF6600] transition-colors'}`} />
+                      <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-[#216FA1] transition-colors'}`} />
                       {item.path === '/chat' && unreadCount > 0 && (
-                          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse border border-[#1a0b36]" />
+                          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse border border-[#17364F]" />
                       )}
                   </div>
                   <span className="hidden lg:block font-medium flex-1">
@@ -327,7 +327,7 @@ export default function Layout({ children }) {
                   {isActive && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="absolute left-0 w-1 h-8 bg-[#FF6600] rounded-r-full hidden lg:block" 
+                      className="absolute left-0 w-1 h-8 bg-[#216FA1] rounded-r-full hidden lg:block" 
                     />
                   )}
                 </Link>
@@ -339,11 +339,11 @@ export default function Layout({ children }) {
                 to="/dispatches"
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative border
                   ${location.pathname === '/dispatches'
-                    ? 'bg-gradient-to-r from-[#4C12A1] to-[#6a1cb3] shadow-lg shadow-purple-900/30 border-white/10'
-                    : 'bg-[#FF6600]/15 border-[#FF6600]/30 text-gray-200 hover:bg-[#FF6600]/25 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
+                    : 'bg-[#216FA1]/15 border-[#216FA1]/30 text-gray-200 hover:bg-[#216FA1]/25 hover:text-white'
                   }`}
               >
-                <Send className={`w-5 h-5 ${location.pathname === '/dispatches' ? 'text-white' : 'text-[#FF6600]'}`} />
+                <Send className={`w-5 h-5 ${location.pathname === '/dispatches' ? 'text-white' : 'text-[#216FA1]'}`} />
                 <span className="hidden lg:block font-medium flex-1">Disparos</span>
               </Link>
             )}
@@ -354,7 +354,7 @@ export default function Layout({ children }) {
                   onClick={() => setMarketingOpen(prev => !prev)}
                   className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative w-full border
                     ${marketingPaths.includes(location.pathname)
-                      ? 'bg-gradient-to-r from-[#4C12A1] to-[#6a1cb3] shadow-lg shadow-purple-900/30 border-white/10'
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-purple-900/30 border-white/10'
                       : 'bg-green-400/15 border-green-400/30 hover:bg-green-400/25 text-gray-200 hover:text-white'
                     }`}
                 >
@@ -377,7 +377,7 @@ export default function Layout({ children }) {
                               : 'hover:bg-white/5 text-gray-400 hover:text-white'
                             }`}
                         >
-                          <sub.icon className={`w-4 h-4 ${isActive ? 'text-[#FF6600]' : 'text-gray-400 group-hover:text-[#FF6600] transition-colors'}`} />
+                          <sub.icon className={`w-4 h-4 ${isActive ? 'text-[#216FA1]' : 'text-gray-400 group-hover:text-[#216FA1] transition-colors'}`} />
                           <span className="hidden lg:block font-medium text-sm">{sub.label}</span>
                         </Link>
                       );
@@ -395,7 +395,7 @@ export default function Layout({ children }) {
                         to={item.path}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all duration-200 group"
                     >
-                        <item.icon className="w-5 h-5 text-gray-400 group-hover:text-[#FF6600] transition-colors" />
+                        <item.icon className="w-5 h-5 text-gray-400 group-hover:text-[#216FA1] transition-colors" />
                         <span className="hidden lg:block font-medium">{item.label}</span>
                     </Link>
                  ))}
@@ -441,10 +441,10 @@ export default function Layout({ children }) {
                     className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
                     title={soundEnabled ? "Desativar notificações sonoras" : "Ativar notificações sonoras"}
                 >
-                    {soundEnabled ? <Volume2 className="w-5 h-5 text-[#FF6600]" /> : <VolumeX className="w-5 h-5" />}
+                    {soundEnabled ? <Volume2 className="w-5 h-5 text-[#216FA1]" /> : <VolumeX className="w-5 h-5" />}
                 </button>
                 <NotificationsMenu />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FF6600] to-yellow-500 flex items-center justify-center text-xs font-bold shadow-lg shadow-orange-500/20">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#216FA1] to-yellow-500 flex items-center justify-center text-xs font-bold shadow-lg shadow-orange-500/20">
                     AD
                 </div>
             </div>
@@ -456,7 +456,7 @@ export default function Layout({ children }) {
         </div>
 
           <footer className="py-6 text-center text-xs text-gray-500 border-t border-white/5 bg-black/20">
-            Desenvolvido por <a href="https://gloriavirtual.com" target="_blank" rel="noopener noreferrer" className="text-[#FF6600] hover:underline">gloriavirtual.com</a>
+            Desenvolvido por <a href="https://gloriavirtual.com" target="_blank" rel="noopener noreferrer" className="text-[#216FA1] hover:underline">gloriavirtual.com</a>
           </footer>
           </main>
       </div>

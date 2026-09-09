@@ -184,10 +184,10 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl flex items-center gap-2">
-            <Send className="w-5 h-5 text-[#FF6600]" />
+            <Send className="w-5 h-5 text-[#216FA1]" />
             Novo Disparo via WhatsApp
           </DialogTitle>
         </DialogHeader>
@@ -228,12 +228,12 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
             <div className="border border-dashed border-white/10 rounded-xl p-4 bg-white/5 space-y-3">
               <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
                 <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <ImageIcon className="w-4 h-4 text-[#FF6600]" />
+                  <ImageIcon className="w-4 h-4 text-[#216FA1]" />
                   Suba uma imagem para enviar junto com a mensagem.
                 </div>
                 <label className="inline-flex">
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-                  <span className="cursor-pointer px-4 py-2 rounded-lg bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm transition-colors">
+                  <span className="cursor-pointer px-4 py-2 rounded-lg bg-[#216FA1] hover:bg-[#2d8ac4] text-white text-sm transition-colors">
                     {uploadingImage ? 'Enviando...' : 'Escolher imagem'}
                   </span>
                 </label>
@@ -291,7 +291,7 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
                     {selectedCustomers.map(id => {
                       const c = customers.find(x => x.id === id);
                       return (
-                        <Badge key={id} className="bg-[#FF6600]/20 text-[#FF6600] border-[#FF6600]/30 gap-1 cursor-pointer" onClick={() => toggleCustomer(id)}>
+                        <Badge key={id} className="bg-[#216FA1]/20 text-[#216FA1] border-[#216FA1]/30 gap-1 cursor-pointer" onClick={() => toggleCustomer(id)}>
                           {c?.full_name || id}
                           <X className="w-3 h-3" />
                         </Badge>
@@ -312,7 +312,7 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
                         onClick={() => toggleCustomer(c.id)}
                         className={`w-full text-left p-2 rounded-lg flex items-center justify-between transition-colors ${
                           selectedCustomers.includes(c.id)
-                            ? 'bg-[#FF6600]/10 border border-[#FF6600]/30'
+                            ? 'bg-[#216FA1]/10 border border-[#216FA1]/30'
                             : 'hover:bg-white/5'
                         }`}
                       >
@@ -321,7 +321,7 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
                           <p className="text-xs text-gray-400">{c.phones?.[0]}</p>
                         </div>
                         {selectedCustomers.includes(c.id) && (
-                          <div className="w-5 h-5 rounded-full bg-[#FF6600] flex items-center justify-center">
+                          <div className="w-5 h-5 rounded-full bg-[#216FA1] flex items-center justify-center">
                             <span className="text-white text-xs">✓</span>
                           </div>
                         )}
@@ -337,7 +337,7 @@ export default function NewDispatchModal({ open, onOpenChange, onSent }) {
           <Button
             onClick={handleSend}
             disabled={sending}
-            className="w-full bg-[#FF6600] hover:bg-[#e55c00] gap-2 h-12 text-lg"
+            className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] gap-2 h-12 text-lg"
           >
             {sending ? (
               <><Loader2 className="w-5 h-5 animate-spin" /> Agendando...</>

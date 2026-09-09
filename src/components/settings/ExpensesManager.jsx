@@ -111,7 +111,7 @@ export default function ExpensesManager() {
         <div className="text-xs text-gray-400 mt-0.5 flex items-center gap-2 flex-wrap">
           <span>{exp.category}</span>
           {unitNameById(exp.unit_id) && (
-            <span className="px-2 py-0.5 rounded-full bg-[#FF6600]/15 text-[#FF6600]">{unitNameById(exp.unit_id)}</span>
+            <span className="px-2 py-0.5 rounded-full bg-[#216FA1]/15 text-[#216FA1]">{unitNameById(exp.unit_id)}</span>
           )}
           {exp.kind === 'recurring' ? (
             <span className="flex items-center gap-1 text-teal-400"><RefreshCw className="w-3 h-3" /> Todo dia {exp.day_of_month}</span>
@@ -169,7 +169,7 @@ export default function ExpensesManager() {
       </CardContent>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-lg max-h-[85vh] overflow-y-auto">
+        <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader><DialogTitle>{editing ? 'Editar Despesa' : 'Nova Despesa'}</DialogTitle></DialogHeader>
           <div className="space-y-4 py-2">
             <div className="grid grid-cols-2 gap-2">

@@ -60,11 +60,11 @@ const modules = [
 
 export default function ModulesSection() {
   return (
-    <section id="modulos" className="py-24 bg-[#1a0b36] relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-[#1a0b36] pointer-events-none" />
+    <section id="modulos" className="py-24 bg-[#17364F] relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-[#17364F] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <span className="text-[#FF6600] uppercase tracking-widest text-xs font-bold">Plataforma completa</span>
+          <span className="text-[#216FA1] uppercase tracking-widest text-xs font-bold">Plataforma completa</span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mt-3">Muito mais que atendimento</h2>
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
             Um sistema único que cuida do atendimento, das coletas, do financeiro, dos disparos e do marketing da sua unidade.
@@ -79,7 +79,7 @@ export default function ModulesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-[#FF6600]/30 transition-colors"
+              className="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-[#216FA1]/30 transition-colors"
             >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${mod.color} flex items-center justify-center mb-5`}>
                 <mod.icon className="w-6 h-6 text-white" />
@@ -90,7 +90,7 @@ export default function ModulesSection() {
               <ul className="space-y-3">
                 {mod.features.map((f, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
-                    <f.icon className="w-4 h-4 text-[#FF6600] shrink-0" />
+                    <f.icon className="w-4 h-4 text-[#216FA1] shrink-0" />
                     <span>{f.text}</span>
                   </li>
                 ))}

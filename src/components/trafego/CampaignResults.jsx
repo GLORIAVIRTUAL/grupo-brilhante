@@ -20,7 +20,7 @@ const DATE_PRESETS = [
   { value: 'last_90d', label: 'Últimos 90 dias' },
 ];
 
-const COLORS = ['#FF6600', '#4C12A1', '#6a1cb3', '#FFB800', '#25D366', '#3b82f6'];
+const COLORS = ['#216FA1', '#216FA1', '#2d8ac4', '#FFB800', '#25D366', '#3b82f6'];
 
 function KpiCard({ icon: Icon, label, value, sub }) {
   return (
@@ -86,7 +86,7 @@ export default function CampaignResults() {
   if (loadingCampaigns || loadingInsights) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#FF6600]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#216FA1]" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ export default function CampaignResults() {
             Atualizar
           </Button>
         </div>
-        <Badge className="border border-[#FF6600]/30 bg-[#FF6600]/15 text-[#FF6600]">
+        <Badge className="border border-[#216FA1]/30 bg-[#216FA1]/15 text-[#216FA1]">
           {insights.length} campanhas com dados
         </Badge>
       </div>
@@ -144,10 +144,10 @@ export default function CampaignResults() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" />
                 <XAxis dataKey="name" stroke="#888" fontSize={11} />
                 <YAxis stroke="#888" fontSize={11} />
-                <Tooltip contentStyle={{ background: '#1a0b36', border: '1px solid #ffffff20', borderRadius: 8 }} />
+                <Tooltip contentStyle={{ background: '#17364F', border: '1px solid #ffffff20', borderRadius: 8 }} />
                 <Legend />
-                <Bar dataKey="Gasto" fill="#FF6600" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="Cliques" fill="#4C12A1" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="Gasto" fill="#216FA1" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="Cliques" fill="#216FA1" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -162,7 +162,7 @@ export default function CampaignResults() {
                     <Pie data={reachData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} label={(e) => `${e.name}`}>
                       {reachData.map((entry, idx) => <Cell key={idx} fill={entry.fill} />)}
                     </Pie>
-                    <Tooltip contentStyle={{ background: '#1a0b36', border: '1px solid #ffffff20', borderRadius: 8 }} />
+                    <Tooltip contentStyle={{ background: '#17364F', border: '1px solid #ffffff20', borderRadius: 8 }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -176,10 +176,10 @@ export default function CampaignResults() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" />
                   <XAxis dataKey="name" stroke="#888" fontSize={11} />
                   <YAxis stroke="#888" fontSize={11} />
-                  <Tooltip contentStyle={{ background: '#1a0b36', border: '1px solid #ffffff20', borderRadius: 8 }} />
+                  <Tooltip contentStyle={{ background: '#17364F', border: '1px solid #ffffff20', borderRadius: 8 }} />
                   <Legend />
-                  <Line type="monotone" dataKey="CPC" stroke="#FF6600" strokeWidth={2} />
-                  <Line type="monotone" dataKey="CTR" stroke="#4C12A1" strokeWidth={2} />
+                  <Line type="monotone" dataKey="CPC" stroke="#216FA1" strokeWidth={2} />
+                  <Line type="monotone" dataKey="CTR" stroke="#216FA1" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
             </div>

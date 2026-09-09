@@ -611,7 +611,7 @@ Templates WhatsApp (3) — JSON [
           <TabsTrigger value="connection" className="w-auto md:w-full justify-start data-[state=active]:bg-green-600 data-[state=active]:text-white text-gray-400">
             <QrCode className="w-4 h-4 mr-2" /> Conexão WhatsApp
           </TabsTrigger>
-          <TabsTrigger value="services" className="w-auto md:w-full justify-start data-[state=active]:bg-[#FF6600] data-[state=active]:text-white text-gray-400">
+          <TabsTrigger value="services" className="w-auto md:w-full justify-start data-[state=active]:bg-[#216FA1] data-[state=active]:text-white text-gray-400">
             <Shirt className="w-4 h-4 mr-2" /> Serviços e Preços
           </TabsTrigger>
           <TabsTrigger value="special_services" className="w-auto md:w-full justify-start data-[state=active]:bg-pink-600 data-[state=active]:text-white text-gray-400">
@@ -632,7 +632,7 @@ Templates WhatsApp (3) — JSON [
           <TabsTrigger value="ai_telemetry" className="w-auto md:w-full justify-start data-[state=active]:bg-orange-600 data-[state=active]:text-white text-gray-400">
             <Sparkles className="w-4 h-4 mr-2" /> Telemetria da IA
           </TabsTrigger>
-          <TabsTrigger value="general" className="w-auto md:w-full justify-start data-[state=active]:bg-[#4C12A1] data-[state=active]:text-white text-gray-400">
+          <TabsTrigger value="general" className="w-auto md:w-full justify-start data-[state=active]:bg-[#216FA1] data-[state=active]:text-white text-gray-400">
             <SettingsIcon className="w-4 h-4 mr-2" /> Geral
           </TabsTrigger>
           <TabsTrigger value="unit_access" className="w-auto md:w-full justify-start data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-gray-400">
@@ -725,11 +725,11 @@ Templates WhatsApp (3) — JSON [
                     }
                   }}>
                     <DialogTrigger asChild>
-                      <Button className="bg-[#FF6600] hover:bg-[#ff7b24] text-white">
+                      <Button className="bg-[#216FA1] hover:bg-[#ff7b24] text-white">
                         <Plus className="w-4 h-4 mr-2" /> Novo Serviço
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="bg-[#1a0b36] border border-white/10 text-white">
+                    <DialogContent className="bg-[#17364F] border border-white/10 text-white">
                   <DialogHeader>
                     <DialogTitle>{editingProduct ? 'Editar Serviço' : 'Adicionar Serviço'}</DialogTitle>
                   </DialogHeader>
@@ -788,7 +788,7 @@ Templates WhatsApp (3) — JSON [
                         />
                       </div>
                     </div>
-                    <Button onClick={handleCreateProduct} className="w-full bg-[#FF6600] hover:bg-[#ff7b24] mt-4">
+                    <Button onClick={handleCreateProduct} className="w-full bg-[#216FA1] hover:bg-[#ff7b24] mt-4">
                       Salvar
                     </Button>
                   </div>
@@ -798,7 +798,7 @@ Templates WhatsApp (3) — JSON [
             </CardHeader>
             <CardContent>
               {loading ? (
-                <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+                <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                   {products
@@ -809,7 +809,7 @@ Templates WhatsApp (3) — JSON [
                       layout
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start justify-between gap-3 group hover:border-[#FF6600]/30 transition-colors"
+                      className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start justify-between gap-3 group hover:border-[#216FA1]/30 transition-colors"
                     >
                       <div className="flex items-start gap-3 min-w-0 flex-1">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-blue-300 shrink-0">
@@ -827,7 +827,7 @@ Templates WhatsApp (3) — JSON [
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="font-bold text-[#FF6600]">R$ {product.price.toFixed(2)}</div>
+                        <div className="font-bold text-[#216FA1]">R$ {product.price.toFixed(2)}</div>
                         <div className="flex gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button 
                             onClick={() => handleEditProduct(product)}
@@ -1010,7 +1010,7 @@ Templates WhatsApp (3) — JSON [
              </CardHeader>
              <CardContent className="space-y-4">
                <div className="flex items-center gap-4">
-                 <Clock className="w-5 h-5 text-[#FF6600]" />
+                 <Clock className="w-5 h-5 text-[#216FA1]" />
                  <Input 
                     value={config.operatingHours}
                     onChange={(e) => setConfig({...config, operatingHours: e.target.value})}
@@ -1043,12 +1043,12 @@ Templates WhatsApp (3) — JSON [
                  <textarea 
                     value={config.welcomeMessage}
                     onChange={(e) => setConfig({...config, welcomeMessage: e.target.value})}
-                    className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-md p-3 text-sm focus:outline-none focus:border-[#FF6600]/50"
+                    className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-md p-3 text-sm focus:outline-none focus:border-[#216FA1]/50"
                  />
                </div>
                
                <div className="flex justify-end">
-                 <Button className="bg-[#4C12A1] hover:bg-[#5d1dbf] text-white">
+                 <Button className="bg-[#216FA1] hover:bg-[#5d1dbf] text-white">
                    <Save className="w-4 h-4 mr-2" /> Salvar Alterações
                  </Button>
                </div>

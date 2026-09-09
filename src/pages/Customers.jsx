@@ -329,12 +329,12 @@ export default function Customers() {
             <DialogTrigger asChild>
                 <Button 
                     onClick={() => { setEditingCustomer(null); setFormData({ full_name: "", email: "", phone: "", address: "", address_number: "", address_complement: "", status: "active", birthdate: "", zip_code: "", neighborhood: "", tax_id: "", unit_id: "" }); }}
-                    className="bg-[#FF6600] hover:bg-[#ff7b24] text-white gap-2"
+                    className="bg-[#216FA1] hover:bg-[#ff7b24] text-white gap-2"
                 >
                     <Plus className="w-4 h-4" /> Novo Cliente
                 </Button>
             </DialogTrigger>
-            <DialogContent className="bg-[#1a0b36] border border-white/10 text-white sm:max-w-[425px]">
+            <DialogContent className="bg-[#17364F] border border-white/10 text-white sm:max-w-[425px]">
                 <DialogHeader>
                 <DialogTitle>{editingCustomer ? 'Editar Cliente' : 'Novo Cliente'}</DialogTitle>
                 </DialogHeader>
@@ -468,7 +468,7 @@ export default function Customers() {
                     </div>
                     <div className="pt-4 flex justify-end gap-2">
                         <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="hover:bg-white/10 text-white">Cancelar</Button>
-                        <Button type="submit" className="bg-[#FF6600] hover:bg-[#ff7b24]">Salvar</Button>
+                        <Button type="submit" className="bg-[#216FA1] hover:bg-[#ff7b24]">Salvar</Button>
                     </div>
                 </form>
             </DialogContent>
@@ -524,7 +524,7 @@ export default function Customers() {
                         <TableCell className="text-gray-300">
                             {customer.phones?.[0] && (
                                 <div className="flex items-center gap-2">
-                                    <Phone className="w-3 h-3 text-[#FF6600]" />
+                                    <Phone className="w-3 h-3 text-[#216FA1]" />
                                     <span>{customer.phones[0]}</span>
                                 </div>
                             )}
@@ -532,7 +532,7 @@ export default function Customers() {
                         <TableCell className="text-gray-300">
                              {customer.email && (
                                 <div className="flex items-center gap-2">
-                                    <Mail className="w-3 h-3 text-[#FF6600]" />
+                                    <Mail className="w-3 h-3 text-[#216FA1]" />
                                     <span>{customer.email}</span>
                                 </div>
                             )}
@@ -546,7 +546,7 @@ export default function Customers() {
                                     variant="ghost" 
                                     size="icon"
                                     onClick={() => navigate(`/chat?customer_id=${customer.id}`)}
-                                    className="h-8 w-8 hover:bg-white/10 hover:text-[#FF6600] text-gray-400"
+                                    className="h-8 w-8 hover:bg-white/10 hover:text-[#216FA1] text-gray-400"
                                     title="Enviar Mensagem"
                                 >
                                     <MessageSquare className="w-4 h-4" />

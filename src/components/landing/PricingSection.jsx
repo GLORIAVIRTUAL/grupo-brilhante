@@ -62,8 +62,8 @@ const plans = [
 
 export default function PricingSection() {
   return (
-    <section id="preco" className="py-24 bg-[#1a0b36] text-white relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#FF6600]/10 rounded-full blur-[120px] pointer-events-none" />
+    <section id="preco" className="py-24 bg-[#17364F] text-white relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#216FA1]/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
          <h2 className="text-3xl md:text-4xl font-bold mb-14">Escolha o plano da sua unidade</h2>
@@ -77,17 +77,17 @@ export default function PricingSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className={`relative flex flex-col text-left bg-white/5 backdrop-blur-xl rounded-3xl p-8 transition-colors shadow-2xl ${
-                plan.highlight ? 'border-2 border-[#FF6600] lg:scale-105' : 'border border-white/10 hover:border-[#FF6600]/50'
+                plan.highlight ? 'border-2 border-[#216FA1] lg:scale-105' : 'border border-white/10 hover:border-[#216FA1]/50'
               }`}
             >
               {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FF6600] text-white text-xs font-bold uppercase tracking-wider px-4 py-1 rounded-full">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#216FA1] text-white text-xs font-bold uppercase tracking-wider px-4 py-1 rounded-full">
                   Mais popular
                 </span>
               )}
 
-              <div className="w-12 h-12 rounded-xl bg-[#FF6600]/15 flex items-center justify-center mb-5">
-                <plan.icon className="w-6 h-6 text-[#FF6600]" />
+              <div className="w-12 h-12 rounded-xl bg-[#216FA1]/15 flex items-center justify-center mb-5">
+                <plan.icon className="w-6 h-6 text-[#216FA1]" />
               </div>
 
               <h3 className="text-2xl font-bold">{plan.name}</h3>
@@ -101,7 +101,7 @@ export default function PricingSection() {
               <ul className="space-y-3 text-sm text-gray-300 mb-8 flex-1">
                 {plan.features.map((feat, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#FF6600] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#216FA1] shrink-0 mt-0.5" />
                     <span>{feat}</span>
                   </li>
                 ))}
@@ -109,7 +109,7 @@ export default function PricingSection() {
 
               <a href="https://wa.me/5587988020504" target="_blank" rel="noopener noreferrer">
                 <Button className={`w-full h-12 text-base font-medium ${
-                  plan.highlight ? 'bg-[#FF6600] hover:bg-[#e55c00] text-white' : 'bg-white/10 hover:bg-white/20 text-white border border-white/10'
+                  plan.highlight ? 'bg-[#216FA1] hover:bg-[#2d8ac4] text-white' : 'bg-white/10 hover:bg-white/20 text-white border border-white/10'
                 }`}>
                   Falar com Consultor
                 </Button>

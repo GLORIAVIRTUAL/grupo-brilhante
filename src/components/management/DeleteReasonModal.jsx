@@ -31,7 +31,7 @@ export default function DeleteReasonModal({ open, onClose, onConfirm, title, ite
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white sm:max-w-[440px]">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white sm:max-w-[440px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-red-400">
             <AlertTriangle className="h-5 w-5" /> {title || 'Confirmar exclusão'}

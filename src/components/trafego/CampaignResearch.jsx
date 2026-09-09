@@ -129,7 +129,7 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
       {/* Input */}
       <div className="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
         <div className="flex items-center gap-2 font-semibold text-white">
-          <Lightbulb className="w-5 h-5 text-[#FF6600]" /> Briefing da campanha
+          <Lightbulb className="w-5 h-5 text-[#216FA1]" /> Briefing da campanha
         </div>
 
         <div className="space-y-2">
@@ -163,7 +163,7 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
           />
         </div>
 
-        <Button onClick={handleResearch} disabled={loading} className="h-12 w-full gap-2 bg-[#FF6600] hover:bg-[#e55c00]">
+        <Button onClick={handleResearch} disabled={loading} className="h-12 w-full gap-2 bg-[#216FA1] hover:bg-[#2d8ac4]">
           {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
           {loading ? 'Analisando...' : 'Gerar estratégia completa com IA'}
         </Button>
@@ -172,7 +172,7 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
       {/* Result */}
       <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
         <div className="flex items-center gap-2 font-semibold text-white">
-          <Target className="w-5 h-5 text-[#FF6600]" /> Recomendação completa da IA
+          <Target className="w-5 h-5 text-[#216FA1]" /> Recomendação completa da IA
         </div>
 
         {!recommendation && (
@@ -183,11 +183,11 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
 
         {recommendation && (
           <div className="space-y-4 text-sm">
-            <div className="rounded-xl bg-gradient-to-r from-[#4C12A1]/40 to-[#FF6600]/20 p-4">
+            <div className="rounded-xl bg-gradient-to-r from-[#216FA1]/40 to-[#216FA1]/20 p-4">
               <div className="text-xs uppercase tracking-wide text-gray-300">Nome sugerido / Tipo</div>
               <div className="mt-1 text-lg font-bold text-white">{recommendation.suggested_campaign_name}</div>
               <div className="text-xs text-gray-300 mt-1">{recommendation.campaign_type_name}</div>
-              <Badge className="mt-2 border border-[#FF6600]/30 bg-[#FF6600]/15 text-[#FF6600]">
+              <Badge className="mt-2 border border-[#216FA1]/30 bg-[#216FA1]/15 text-[#216FA1]">
                 {OBJECTIVE_LABELS[recommendation.meta_objective] || recommendation.meta_objective}
               </Badge>
             </div>
@@ -198,7 +198,7 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
                 <div className="space-y-1 text-gray-300">
                   <div><b>Idade:</b> {recommendation.target_audience.age_min}-{recommendation.target_audience.age_max}</div>
                   <div><b>Gênero:</b> {recommendation.target_audience.genders}</div>
-                  <div className="flex gap-1"><MapPin className="w-3.5 h-3.5 mt-0.5 text-[#FF6600] flex-shrink-0" /> <span><b>Local:</b> {recommendation.target_audience.locations}</span></div>
+                  <div className="flex gap-1"><MapPin className="w-3.5 h-3.5 mt-0.5 text-[#216FA1] flex-shrink-0" /> <span><b>Local:</b> {recommendation.target_audience.locations}</span></div>
                   {recommendation.target_audience.interests?.length > 0 && (
                     <div><b>Interesses:</b> {recommendation.target_audience.interests.join(', ')}</div>
                   )}
@@ -210,8 +210,8 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
             )}
 
             {recommendation.copy && (
-              <div className="rounded-xl border border-[#FF6600]/30 bg-[#FF6600]/5 p-4 space-y-2">
-                <div className="flex items-center gap-2 text-white"><MessageSquare className="w-4 h-4 text-[#FF6600]" /> Copy pronta</div>
+              <div className="rounded-xl border border-[#216FA1]/30 bg-[#216FA1]/5 p-4 space-y-2">
+                <div className="flex items-center gap-2 text-white"><MessageSquare className="w-4 h-4 text-[#216FA1]" /> Copy pronta</div>
                 <div className="text-gray-300 space-y-1.5">
                   <div><span className="text-xs text-gray-400">Título:</span> <div className="font-semibold text-white">{recommendation.copy.headline}</div></div>
                   <div><span className="text-xs text-gray-400">Texto principal:</span> <div className="text-white">{recommendation.copy.primary_text}</div></div>
@@ -255,14 +255,14 @@ Tom da copy: premium, prático, conveniente. Português brasileiro informal mas 
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#FF6600]/20 bg-[#FF6600]/5 p-4">
-              <div className="text-xs uppercase tracking-wide text-[#FF6600]">Por que funciona</div>
+            <div className="rounded-xl border border-[#216FA1]/20 bg-[#216FA1]/5 p-4">
+              <div className="text-xs uppercase tracking-wide text-[#216FA1]">Por que funciona</div>
               <p className="mt-1 text-gray-300 leading-relaxed">{recommendation.strategic_reasoning}</p>
             </div>
 
             <Button
               onClick={handleUse}
-              className="w-full bg-[#4C12A1] hover:bg-[#5b17bf]"
+              className="w-full bg-[#216FA1] hover:bg-[#5b17bf]"
             >
               Usar tudo na criação da campanha →
             </Button>

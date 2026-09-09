@@ -33,19 +33,19 @@ export default function TrafegoGoogle() {
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="bg-white/5 border border-white/10 flex-wrap h-auto">
-          <TabsTrigger value="status" className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white">
+          <TabsTrigger value="status" className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white">
             <Clock className="w-4 h-4 mr-2" /> Status
           </TabsTrigger>
-          <TabsTrigger value="diagnose" className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white">
+          <TabsTrigger value="diagnose" className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white">
             <Stethoscope className="w-4 h-4 mr-2" /> Diagnóstico
           </TabsTrigger>
-          <TabsTrigger value="research" className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white">
+          <TabsTrigger value="research" className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white">
             <Sparkles className="w-4 h-4 mr-2" /> Pesquisa IA
           </TabsTrigger>
-          <TabsTrigger value="create" className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white">
+          <TabsTrigger value="create" className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white">
             <Send className="w-4 h-4 mr-2" /> Criar Campanha
           </TabsTrigger>
-          <TabsTrigger value="results" className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white">
+          <TabsTrigger value="results" className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white">
             <BarChart3 className="w-4 h-4 mr-2" /> Resultados
           </TabsTrigger>
         </TabsList>

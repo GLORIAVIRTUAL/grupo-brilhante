@@ -8,14 +8,14 @@ import MachineDropZone from '@/components/dashboard/MachineDropZone';
 
 export default function LaundryFactoryV2() {
   return (
-    <div className="w-full relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#1a0b36] via-[#2a1b4e] to-[#1a0b36] border border-white/10 shadow-2xl flex items-center justify-center p-8 py-12 group">
+    <div className="w-full relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#17364F] via-[#2a1b4e] to-[#17364F] border border-white/10 shadow-2xl flex items-center justify-center p-8 py-12 group">
       
       {/* Tech Grid Background */}
       <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
       
       {/* Ambient Glow */}
       <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px]" />
-      <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-[#FF6600]/10 rounded-full blur-[100px]" />
+      <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-[#216FA1]/10 rounded-full blur-[100px]" />
 
       <div className="flex flex-col gap-12 w-full max-w-5xl relative z-10">
 

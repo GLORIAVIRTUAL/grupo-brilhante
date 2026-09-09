@@ -17,9 +17,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-[#1a0b36]">
+    <div className="flex items-center justify-center h-screen bg-[#17364F]">
       <div className="flex flex-col items-center gap-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FF6600]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#216FA1]"></div>
         <p className="text-white/50 text-sm">Carregando...</p>
       </div>
     </div>

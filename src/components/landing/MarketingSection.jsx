@@ -46,16 +46,16 @@ const cards = [
 
 export default function MarketingSection() {
   return (
-    <section id="marketing" className="py-24 bg-gradient-to-b from-[#1a0b36] to-[#0f0622] relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#FF6600]/10 rounded-full blur-[140px] pointer-events-none" />
+    <section id="marketing" className="py-24 bg-gradient-to-b from-[#17364F] to-[#0f0622] relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#216FA1]/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#FF6600]/15 border border-[#FF6600]/30 rounded-full px-4 py-1.5 mb-5">
-            <Sparkles className="w-4 h-4 text-[#FF6600]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FF6600]">A maior novidade</span>
+          <div className="inline-flex items-center gap-2 bg-[#216FA1]/15 border border-[#216FA1]/30 rounded-full px-4 py-1.5 mb-5">
+            <Sparkles className="w-4 h-4 text-[#216FA1]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[#216FA1]">A maior novidade</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white">
-            Uma agência de marketing <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6600] to-orange-400">dentro do sistema</span>
+            Uma agência de marketing <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#216FA1] to-orange-400">dentro do sistema</span>
           </h2>
           <p className="text-gray-300 mt-5 max-w-3xl mx-auto text-lg">
             Algo que nenhum outro sistema no mundo tem: o franqueado não precisa mais contratar agência de marketing nem gestor de tráfego. Está tudo aqui.
@@ -70,10 +70,10 @@ export default function MarketingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:border-[#FF6600]/40 transition-colors"
+              className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:border-[#216FA1]/40 transition-colors"
             >
-              <div className="w-12 h-12 bg-[#FF6600]/15 rounded-xl flex items-center justify-center mb-5">
-                <card.icon className="w-6 h-6 text-[#FF6600]" />
+              <div className="w-12 h-12 bg-[#216FA1]/15 rounded-xl flex items-center justify-center mb-5">
+                <card.icon className="w-6 h-6 text-[#216FA1]" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{card.title}</h3>
               <p className="text-gray-400 leading-relaxed text-sm">{card.desc}</p>
@@ -82,7 +82,7 @@ export default function MarketingSection() {
         </div>
 
         <div className="mt-12 flex items-center justify-center gap-3 text-gray-300 text-sm">
-          <PauseCircle className="w-5 h-5 text-[#FF6600]" />
+          <PauseCircle className="w-5 h-5 text-[#216FA1]" />
           <span>Crie, pause e gerencie quantas campanhas quiser, sem custos extras de agência.</span>
         </div>
       </div>

@@ -217,7 +217,7 @@ Tom: premium, prático, conveniente. Linguagem brasileira informal mas profissio
       {/* 1. Dados da campanha */}
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl space-y-4">
         <div className="flex items-center gap-2 font-semibold text-white">
-          <Rocket className="w-5 h-5 text-[#FF6600]" /> 1. Configuração da campanha
+          <Rocket className="w-5 h-5 text-[#216FA1]" /> 1. Configuração da campanha
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -264,14 +264,14 @@ Tom: premium, prático, conveniente. Linguagem brasileira informal mas profissio
       {/* 2. Mídia */}
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl space-y-4">
         <div className="flex items-center gap-2 font-semibold text-white">
-          <ImageIcon className="w-5 h-5 text-[#FF6600]" /> 2. Mídia do anúncio
+          <ImageIcon className="w-5 h-5 text-[#216FA1]" /> 2. Mídia do anúncio
         </div>
 
         <div className="flex gap-2">
-          <Button variant={mediaType === 'image' ? 'default' : 'outline'} onClick={() => setMediaType('image')} className={mediaType === 'image' ? 'bg-[#FF6600] hover:bg-[#e55c00]' : 'bg-transparent border-white/15 text-white hover:bg-white/10'}>
+          <Button variant={mediaType === 'image' ? 'default' : 'outline'} onClick={() => setMediaType('image')} className={mediaType === 'image' ? 'bg-[#216FA1] hover:bg-[#2d8ac4]' : 'bg-transparent border-white/15 text-white hover:bg-white/10'}>
             <ImageIcon className="w-4 h-4 mr-2" /> Imagem
           </Button>
-          <Button variant={mediaType === 'video' ? 'default' : 'outline'} onClick={() => setMediaType('video')} className={mediaType === 'video' ? 'bg-[#FF6600] hover:bg-[#e55c00]' : 'bg-transparent border-white/15 text-white hover:bg-white/10'}>
+          <Button variant={mediaType === 'video' ? 'default' : 'outline'} onClick={() => setMediaType('video')} className={mediaType === 'video' ? 'bg-[#216FA1] hover:bg-[#2d8ac4]' : 'bg-transparent border-white/15 text-white hover:bg-white/10'}>
             <Video className="w-4 h-4 mr-2" /> Vídeo
           </Button>
         </div>
@@ -304,7 +304,7 @@ Tom: premium, prático, conveniente. Linguagem brasileira informal mas profissio
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-semibold text-white">
-            <Rocket className="w-5 h-5 text-[#FF6600]" /> 3. Copy do anúncio
+            <Rocket className="w-5 h-5 text-[#216FA1]" /> 3. Copy do anúncio
           </div>
           <Button onClick={handleGenerateCopy} disabled={generatingCopy} variant="outline" className="bg-transparent border-white/15 text-white hover:bg-white/10">
             {generatingCopy ? <Loader2 className="w-4 h-4 animate-spin" /> : '✨'} Gerar copy com IA
@@ -343,15 +343,15 @@ Tom: premium, prático, conveniente. Linguagem brasileira informal mas profissio
       </div>
 
       {/* 4. Publicação */}
-      <div className="rounded-2xl border border-[#FF6600]/30 bg-gradient-to-r from-[#4C12A1]/30 to-[#FF6600]/10 p-5 space-y-4">
+      <div className="rounded-2xl border border-[#216FA1]/30 bg-gradient-to-r from-[#216FA1]/30 to-[#216FA1]/10 p-5 space-y-4">
         <div className="flex items-center gap-3">
-          <input type="checkbox" id="activate" checked={activate} onChange={(e) => setActivate(e.target.checked)} className="w-5 h-5 accent-[#FF6600]" />
+          <input type="checkbox" id="activate" checked={activate} onChange={(e) => setActivate(e.target.checked)} className="w-5 h-5 accent-[#216FA1]" />
           <label htmlFor="activate" className="text-white font-medium cursor-pointer">
             Ativar campanha imediatamente (sair online após análise da Meta)
           </label>
         </div>
 
-        <Button onClick={handlePublish} disabled={publishing || pages.length === 0} className="w-full h-14 text-lg bg-[#FF6600] hover:bg-[#e55c00]">
+        <Button onClick={handlePublish} disabled={publishing || pages.length === 0} className="w-full h-14 text-lg bg-[#216FA1] hover:bg-[#2d8ac4]">
           {publishing ? <Loader2 className="w-6 h-6 animate-spin" /> : <Rocket className="w-6 h-6" />}
           {publishing ? 'Publicando na Meta...' : (activate ? '🚀 Publicar e ATIVAR online' : 'Criar campanha pausada')}
         </Button>

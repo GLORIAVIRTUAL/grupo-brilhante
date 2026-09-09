@@ -54,7 +54,7 @@ export default function GoogleAdsApprovalStatus() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card className="bg-white/5 border-white/10 p-5 text-white">
           <div className="flex items-center gap-2 mb-2">
-            <ExternalLink className="w-4 h-4 text-[#FF6600]" />
+            <ExternalLink className="w-4 h-4 text-[#216FA1]" />
             <h4 className="font-semibold text-white text-sm">Acompanhar status</h4>
           </div>
           <p className="text-xs text-gray-400 mb-3">
@@ -64,7 +64,7 @@ export default function GoogleAdsApprovalStatus() {
             href="https://ads.google.com/aw/apicenter"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#FF6600] text-sm hover:underline inline-flex items-center gap-1"
+            className="text-[#216FA1] text-sm hover:underline inline-flex items-center gap-1"
           >
             Abrir Central de API <ExternalLink className="w-3 h-3" />
           </a>
@@ -72,7 +72,7 @@ export default function GoogleAdsApprovalStatus() {
 
         <Card className="bg-white/5 border-white/10 p-5 text-white">
           <div className="flex items-center gap-2 mb-2">
-            <Mail className="w-4 h-4 text-[#FF6600]" />
+            <Mail className="w-4 h-4 text-[#216FA1]" />
             <h4 className="font-semibold text-white text-sm">Notificação por email</h4>
           </div>
           <p className="text-xs text-gray-400">

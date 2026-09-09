@@ -75,10 +75,10 @@ export default function CustomerHistoryModal({ customer, isOpen, onClose }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-3xl h-[80vh] flex flex-col">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-3xl h-[80vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-2xl">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF6600] to-orange-600 flex items-center justify-center text-lg font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#216FA1] to-orange-600 flex items-center justify-center text-lg font-bold">
               {customer?.full_name?.charAt(0)}
             </div>
             <div>
@@ -92,13 +92,13 @@ export default function CustomerHistoryModal({ customer, isOpen, onClose }) {
 
         <Tabs defaultValue="orders" className="flex-1 flex flex-col mt-4">
           <TabsList className="bg-white/5 border border-white/5 w-full justify-start">
-            <TabsTrigger value="orders" className="data-[state=active]:bg-[#FF6600]">
+            <TabsTrigger value="orders" className="data-[state=active]:bg-[#216FA1]">
               <ShoppingBag className="w-4 h-4 mr-2" /> Pedidos ({orders.length})
             </TabsTrigger>
-            <TabsTrigger value="quotes" className="data-[state=active]:bg-[#FF6600]">
+            <TabsTrigger value="quotes" className="data-[state=active]:bg-[#216FA1]">
               <FileText className="w-4 h-4 mr-2" /> Orçamentos ({quotes.length})
             </TabsTrigger>
-            <TabsTrigger value="conversations" className="data-[state=active]:bg-[#FF6600]">
+            <TabsTrigger value="conversations" className="data-[state=active]:bg-[#216FA1]">
               <MessageSquare className="w-4 h-4 mr-2" /> Conversas ({conversations.length})
             </TabsTrigger>
           </TabsList>
@@ -123,7 +123,7 @@ export default function CustomerHistoryModal({ customer, isOpen, onClose }) {
                                </div>
                              </div>
                              <div className="text-right">
-                               <div className="text-lg font-bold text-[#FF6600]">
+                               <div className="text-lg font-bold text-[#216FA1]">
                                  R$ {order.total_amount?.toFixed(2)}
                                </div>
                                {order.closed_at && <div className="text-xs text-green-500 flex items-center justify-end gap-1"><CheckCircle2 className="w-3 h-3"/> Fechado</div>}

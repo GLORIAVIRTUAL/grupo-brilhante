@@ -32,8 +32,8 @@ export default function MovementDetailsModal({ open, onClose, movement, customer
 
     return `
       <html><head><meta charset="utf-8"><title>Lançamento</title></head>
-      <body style="font-family:Arial,sans-serif;color:#1a0b36;padding:24px;max-width:700px;margin:0 auto">
-        <h1 style="color:#FF6600;margin-bottom:4px">Detalhe do Lançamento</h1>
+      <body style="font-family:Arial,sans-serif;color:#17364F;padding:24px;max-width:700px;margin:0 auto">
+        <h1 style="color:#216FA1;margin-bottom:4px">Detalhe do Lançamento</h1>
         <p style="color:#666;margin-top:0">${fmtDate(movement.entry_date || movement.created_date)}</p>
         <table style="width:100%;margin:16px 0;border-collapse:collapse">
           <tr><td style="padding:6px 0;color:#666">Tipo</td><td style="padding:6px 0;text-align:right;font-weight:bold">${isIncome ? 'Entrada' : 'Saída'}</td></tr>
@@ -53,7 +53,7 @@ export default function MovementDetailsModal({ open, onClose, movement, customer
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>` : '<p style="color:#999">Sem itens detalhados para este lançamento.</p>'}
-        <h2 style="text-align:right;color:#FF6600;margin-top:24px">Total: ${money(movement.amount)}</h2>
+        <h2 style="text-align:right;color:#216FA1;margin-top:24px">Total: ${money(movement.amount)}</h2>
       </body></html>`;
   };
 
@@ -77,17 +77,17 @@ export default function MovementDetailsModal({ open, onClose, movement, customer
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-2xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-2xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Receipt className="h-5 w-5 text-[#FF6600]" /> Detalhe do Lançamento
+            <Receipt className="h-5 w-5 text-[#216FA1]" /> Detalhe do Lançamento
           </DialogTitle>
         </DialogHeader>
 
         <div ref={printRef} className="space-y-4">
           <div className="flex items-center justify-between rounded-lg bg-white/5 p-4 border border-white/10">
             <div className="flex items-center gap-2 text-gray-300">
-              <User className="h-4 w-4 text-[#FF6600]" />
+              <User className="h-4 w-4 text-[#216FA1]" />
               <span className="font-medium text-white">{customerName || 'Cliente não informado'}</span>
             </div>
             <span className={isIncome ? 'inline-flex items-center gap-1 text-[#25D366]' : 'inline-flex items-center gap-1 text-red-400'}>
@@ -143,7 +143,7 @@ export default function MovementDetailsModal({ open, onClose, movement, customer
             )}
             <div className="mt-3 flex justify-between border-t border-white/10 pt-3">
               <span className="text-gray-400">Total</span>
-              <span className="text-xl font-bold text-[#FF6600]">{money(movement.amount)}</span>
+              <span className="text-xl font-bold text-[#216FA1]">{money(movement.amount)}</span>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function MovementDetailsModal({ open, onClose, movement, customer
           <Button variant="outline" onClick={handleDownload} className="gap-2 border-white/10 bg-white/5 text-white hover:bg-white/10">
             <Download className="h-4 w-4" /> Baixar
           </Button>
-          <Button onClick={handlePrint} className="gap-2 bg-[#FF6600] hover:bg-[#FF6600]/90">
+          <Button onClick={handlePrint} className="gap-2 bg-[#216FA1] hover:bg-[#216FA1]/90">
             <Printer className="h-4 w-4" /> Imprimir
           </Button>
         </div>

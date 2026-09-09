@@ -1004,7 +1004,7 @@ export default function Chat() {
     const handleFullscreenChange = () => {
       const elem = document.getElementById('chat-container');
       if (!document.fullscreenElement && elem) {
-        elem.classList.remove('bg-[#1a0b36]', 'p-4');
+        elem.classList.remove('bg-[#17364F]', 'p-4');
       }
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -1024,7 +1024,7 @@ export default function Chat() {
           <div className="flex gap-1">
              <button 
                 onClick={() => setIsTestModalOpen(true)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-[#FF6600]"
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-[#216FA1]"
                 title="Ferramentas de Teste"
              >
                 <TestTube className="w-5 h-5" />
@@ -1042,7 +1042,7 @@ export default function Chat() {
             onClick={() => setConversationView('all')}
             className={`flex-1 rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
               conversationView === 'all'
-                ? 'border-[#FF6600]/40 bg-[#FF6600]/15 text-[#FF6600]'
+                ? 'border-[#216FA1]/40 bg-[#216FA1]/15 text-[#216FA1]'
                 : 'border-white/10 bg-white/5 text-gray-300 hover:bg-white/10'
             }`}
           >
@@ -1052,7 +1052,7 @@ export default function Chat() {
             onClick={() => setConversationView('unit')}
             className={`flex-1 rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
               conversationView === 'unit'
-                ? 'border-[#FF6600]/40 bg-[#FF6600]/15 text-[#FF6600]'
+                ? 'border-[#216FA1]/40 bg-[#216FA1]/15 text-[#216FA1]'
                 : 'border-white/10 bg-white/5 text-gray-300 hover:bg-white/10'
             }`}
           >
@@ -1086,12 +1086,12 @@ export default function Chat() {
             <select
               value={selectedUnitFilter}
               onChange={(e) => setSelectedUnitFilter(e.target.value)}
-              className="w-full rounded-xl border border-[#FF6600]/30 bg-[#FF6600]/10 px-3 py-2 text-xs font-medium text-[#FF6600] focus:outline-none focus:border-[#FF6600]/60"
+              className="w-full rounded-xl border border-[#216FA1]/30 bg-[#216FA1]/10 px-3 py-2 text-xs font-medium text-[#216FA1] focus:outline-none focus:border-[#216FA1]/60"
               style={{ colorScheme: 'dark' }}
             >
               <option value="" disabled>Selecione uma unidade...</option>
               {accessibleUnits.map((unit) => (
-                <option key={unit.id} value={unit.id} className="bg-[#1a0b36] text-white">
+                <option key={unit.id} value={unit.id} className="bg-[#17364F] text-white">
                   {unit.name}
                 </option>
               ))}
@@ -1106,7 +1106,7 @@ export default function Chat() {
             placeholder="Buscar cliente..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#FF6600]/50 transition-colors placeholder:text-gray-600 text-white"
+            className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#216FA1]/50 transition-colors placeholder:text-gray-600 text-white"
           />
         </div>
 
@@ -1178,7 +1178,7 @@ export default function Chat() {
         setIsForwardModalOpen(open);
         if (!open) resetForwardModal();
       }}>
-        <DialogContent className="bg-[#1a0b36] border border-white/10 text-white sm:max-w-[520px]">
+        <DialogContent className="bg-[#17364F] border border-white/10 text-white sm:max-w-[520px]">
           <DialogHeader>
             <DialogTitle>Encaminhar mensagem</DialogTitle>
           </DialogHeader>
@@ -1197,7 +1197,7 @@ export default function Chat() {
                     key={customer.id}
                     type="button"
                     onClick={() => setSelectedForwardCustomerId(customer.id)}
-                    className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-white/10 ${selectedForwardCustomerId === customer.id ? 'bg-[#FF6600]/20 text-white' : 'text-gray-200'}`}
+                    className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-white/10 ${selectedForwardCustomerId === customer.id ? 'bg-[#216FA1]/20 text-white' : 'text-gray-200'}`}
                   >
                     <span>{customer.full_name || customer.phones?.[0]}</span>
                     <span className="text-xs text-gray-400">{customer.phones?.[0]}</span>
@@ -1240,7 +1240,7 @@ export default function Chat() {
               <Button type="button" variant="ghost" onClick={() => setIsForwardModalOpen(false)} className="text-white hover:bg-white/10">
                 Cancelar
               </Button>
-              <Button type="button" onClick={handleForwardMessage} disabled={forwardingMessage} className="bg-[#FF6600] hover:bg-[#e55c00] text-white">
+              <Button type="button" onClick={handleForwardMessage} disabled={forwardingMessage} className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white">
                 {forwardingMessage ? 'Enviando...' : 'Encaminhar'}
               </Button>
             </div>
@@ -1251,10 +1251,10 @@ export default function Chat() {
       {/* Test Modal */}
       {isTestModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <div className="bg-[#1a0b36] border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+            <div className="bg-[#17364F] border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl">
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        <Bot className="w-5 h-5 text-[#FF6600]" />
+                        <Bot className="w-5 h-5 text-[#216FA1]" />
                         Simular Cliente (Teste)
                     </h3>
                     <button onClick={() => setIsTestModalOpen(false)} className="text-gray-400 hover:text-white">✕</button>
@@ -1267,7 +1267,7 @@ export default function Chat() {
                             value={testPhone}
                             onChange={e => setTestPhone(e.target.value)}
                             placeholder="5511999999999"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-[#FF6600]"
+                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-[#216FA1]"
                         />
                     </div>
                     <div>
@@ -1276,13 +1276,13 @@ export default function Chat() {
                             value={testMessage}
                             onChange={e => setTestMessage(e.target.value)}
                             placeholder="Ex: Olá, gostaria de um orçamento"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-[#FF6600] h-24 resize-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-[#216FA1] h-24 resize-none"
                         />
                     </div>
                     
                     <button 
                         onClick={handleSimulateIncoming}
-                        className="w-full bg-[#FF6600] hover:bg-[#e55c00] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                        className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                     >
                         <Bot className="w-4 h-4" />
                         Disparar como se fosse Cliente
@@ -1309,14 +1309,14 @@ export default function Chat() {
                  >
                      {sidebarCollapsed ? <ChevronsRight className="w-5 h-5" /> : <ChevronsLeft className="w-5 h-5" />}
                  </button>
-                 <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#FF6600] to-yellow-500 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                 <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#216FA1] to-yellow-500 flex items-center justify-center text-white font-bold text-lg shrink-0">
                     {getCustomerName(activeConversation).charAt(0)}
                  </div>
                  <div className="min-w-0">
                    <h3 className="font-bold text-lg text-white truncate">{getCustomerName(activeConversation)}</h3>
                    <div className="flex items-center gap-2 text-xs flex-wrap">
                         {activeConversation.handoff_required ? (
-                            <span className="text-[#FF6600] flex items-center gap-1 bg-[#FF6600]/10 px-2 py-0.5 rounded-full whitespace-nowrap">
+                            <span className="text-[#216FA1] flex items-center gap-1 bg-[#216FA1]/10 px-2 py-0.5 rounded-full whitespace-nowrap">
                                 <User className="w-3 h-3" /> Solicita Atendente
                             </span>
                         ) : (
@@ -1330,7 +1330,7 @@ export default function Chat() {
                             </span>
                         )}
                         {getCustomerUnitLabel(customers[activeConversation.customer_id]) && (
-                            <span className="text-[#FF6600] flex items-center gap-1 whitespace-nowrap bg-[#FF6600]/10 px-2 py-0.5 rounded-full">
+                            <span className="text-[#216FA1] flex items-center gap-1 whitespace-nowrap bg-[#216FA1]/10 px-2 py-0.5 rounded-full">
                                 {getCustomerUnitLabel(customers[activeConversation.customer_id])}
                             </span>
                         )}
@@ -1363,7 +1363,7 @@ export default function Chat() {
                            };
                            setIsQuoteModalOpen(true);
                        }}
-                       className="h-10 px-3 bg-[#FF6600]/10 text-[#FF6600] hover:bg-[#FF6600]/20 rounded-lg text-xs font-medium transition-colors border border-[#FF6600]/20 flex items-center gap-1.5 whitespace-nowrap"
+                       className="h-10 px-3 bg-[#216FA1]/10 text-[#216FA1] hover:bg-[#216FA1]/20 rounded-lg text-xs font-medium transition-colors border border-[#216FA1]/20 flex items-center gap-1.5 whitespace-nowrap"
                    >
                        <Zap className="w-3.5 h-3.5" /> Orçamento
                        </button>
@@ -1429,7 +1429,7 @@ export default function Chat() {
                           const elem = document.getElementById('chat-container');
                           if (!document.fullscreenElement) {
                               elem.requestFullscreen().then(() => {
-                                  elem.classList.add('bg-[#1a0b36]', 'p-4');
+                                  elem.classList.add('bg-[#17364F]', 'p-4');
                               }).catch(err => {
                                   console.log(`Error attempting to enable fullscreen: ${err.message}`);
                               });
@@ -1598,7 +1598,7 @@ export default function Chat() {
                                <Zap className="w-3 h-3 text-yellow-400" /> Respostas Rápidas
                            </button>
                        </PopoverTrigger>
-                       <PopoverContent className="w-72 p-2 bg-[#1a0b36] border-white/10 text-white mb-2">
+                       <PopoverContent className="w-72 p-2 bg-[#17364F] border-white/10 text-white mb-2">
                            <div className="space-y-1 max-h-60 overflow-y-auto custom-scrollbar pr-1">
                                {quickReplies.map((reply, i) => (
                                    <div key={i} className="flex items-center gap-1 group">
@@ -1634,12 +1634,12 @@ export default function Chat() {
                                        if (e.key === 'Enter') handleAddQuickReply();
                                    }}
                                    placeholder="Nova resposta rápida..."
-                                   className="flex-1 bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF6600]/50"
+                                   className="flex-1 bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-[#216FA1]/50"
                                />
                                <button 
                                    onClick={handleAddQuickReply}
                                    disabled={!newQuickReply.trim()}
-                                   className="bg-[#FF6600] text-white p-1.5 rounded-lg hover:bg-[#ff7b24] disabled:opacity-50 transition-colors flex items-center justify-center shrink-0"
+                                   className="bg-[#216FA1] text-white p-1.5 rounded-lg hover:bg-[#ff7b24] disabled:opacity-50 transition-colors flex items-center justify-center shrink-0"
                                >
                                    <Plus className="w-4 h-4" />
                                </button>
@@ -1648,7 +1648,7 @@ export default function Chat() {
                    </Popover>
                </div>
 
-               <div className="flex items-end gap-2 bg-white/5 border border-white/10 rounded-2xl p-2 focus-within:border-[#FF6600]/50 focus-within:bg-white/10 transition-all relative">
+               <div className="flex items-end gap-2 bg-white/5 border border-white/10 rounded-2xl p-2 focus-within:border-[#216FA1]/50 focus-within:bg-white/10 transition-all relative">
                   <input 
                       type="file" 
                       ref={fileInputRef} 
@@ -1670,7 +1670,7 @@ export default function Chat() {
                             <Smile className="w-5 h-5" />
                           </button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-64 p-2 bg-[#1a0b36] border-white/10 text-white" align="start" side="top">
+                      <PopoverContent className="w-64 p-2 bg-[#17364F] border-white/10 text-white" align="start" side="top">
                           <div className="grid grid-cols-6 gap-2">
                               {emojis.map(emoji => (
                                   <button 
@@ -1702,7 +1702,7 @@ export default function Chat() {
                   {inputText.trim() ? (
                       <button 
                         onClick={() => handleSendMessage()}
-                        className="p-3 bg-[#FF6600] hover:bg-[#ff7b24] text-white rounded-xl shadow-lg shadow-orange-500/20 transition-all"
+                        className="p-3 bg-[#216FA1] hover:bg-[#ff7b24] text-white rounded-xl shadow-lg shadow-orange-500/20 transition-all"
                       >
                         <Send className="w-5 h-5" />
                       </button>
@@ -1728,8 +1728,8 @@ export default function Chat() {
       ) : (
           <div className="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col items-center justify-center text-center p-8">
               <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6 animate-pulse">
-                  <div className="w-16 h-16 bg-[#FF6600]/20 rounded-full flex items-center justify-center">
-                      <Send className="w-8 h-8 text-[#FF6600]" />
+                  <div className="w-16 h-16 bg-[#216FA1]/20 rounded-full flex items-center justify-center">
+                      <Send className="w-8 h-8 text-[#216FA1]" />
                   </div>
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Selecione uma conversa</h3>

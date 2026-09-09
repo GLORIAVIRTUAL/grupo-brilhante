@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function LaundryFactory() {
   return (
-    <div className="w-full h-64 md:h-80 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#2a1b4e] to-[#1a0b36] border border-white/10 shadow-2xl flex items-center justify-center p-8">
+    <div className="w-full h-64 md:h-80 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#2a1b4e] to-[#17364F] border border-white/10 shadow-2xl flex items-center justify-center p-8">
       {/* Ambient Steam/Fog */}
       <motion.div 
         animate={{ opacity: [0.3, 0.6, 0.3], x: [-20, 20, -20] }}
@@ -17,7 +17,7 @@ export default function LaundryFactory() {
         <div className="relative group">
           <div className="w-32 h-40 bg-gray-200 rounded-2xl relative shadow-lg overflow-hidden border-4 border-gray-300 flex flex-col items-center">
             {/* Top Display Panel */}
-            <div className="w-full h-8 bg-[#4C12A1] flex items-center justify-center gap-1">
+            <div className="w-full h-8 bg-[#216FA1] flex items-center justify-center gap-1">
               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               <div className="w-12 h-2 bg-black/30 rounded-full" />
             </div>
@@ -33,7 +33,7 @@ export default function LaundryFactory() {
                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-300 opacity-60" />
                  {/* Clothes simulating shapes */}
                  <div className="absolute top-2 left-4 w-6 h-6 bg-white rounded-full opacity-80" />
-                 <div className="absolute bottom-4 right-6 w-8 h-8 bg-[#FF6600] rounded-sm opacity-80" />
+                 <div className="absolute bottom-4 right-6 w-8 h-8 bg-[#216FA1] rounded-sm opacity-80" />
                  <div className="absolute top-8 right-2 w-5 h-5 bg-purple-500 rounded-full opacity-80" />
               </motion.div>
               {/* Glass Reflection */}
@@ -87,7 +87,7 @@ export default function LaundryFactory() {
              />
 
              {/* Ironing Board Surface */}
-             <div className="w-32 h-4 bg-[#FF6600] rounded-full mt-2 relative z-10" />
+             <div className="w-32 h-4 bg-[#216FA1] rounded-full mt-2 relative z-10" />
              
              {/* Base */}
              <div className="w-24 h-16 bg-gray-300 rounded-t-lg mt-1 border border-gray-400 relative">

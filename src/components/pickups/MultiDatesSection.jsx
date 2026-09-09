@@ -19,14 +19,14 @@ export default function MultiDatesSection({ enabled, onToggle, count, onCountCha
   }
 
   return (
-    <div className="rounded-xl border border-[#FF6600]/30 bg-[#FF6600]/10 p-3 space-y-3">
+    <div className="rounded-xl border border-[#216FA1]/30 bg-[#216FA1]/10 p-3 space-y-3">
       <div className="flex items-center gap-3">
         <label className="text-sm font-medium text-gray-200 flex-1">Quantas vezes?</label>
         <Select value={String(count)} onValueChange={(v) => onCountChange(Number(v))}>
           <SelectTrigger className="w-28 bg-white/5 border-white/10">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-[#1a0b36] border-white/10 text-white">
+          <SelectContent className="bg-[#17364F] border-white/10 text-white">
             {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => (
               <SelectItem key={n} value={String(n)}>{n} vezes</SelectItem>
             ))}

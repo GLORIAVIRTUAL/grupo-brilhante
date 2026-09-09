@@ -64,7 +64,7 @@ export default function MachineDropZone({ machineId, timeKey, accent = 'text-blu
       onDrop={handleDrop}
       className={cn(
         'relative rounded-2xl transition-all',
-        isOver && `ring-2 ${accentRing} ring-offset-2 ring-offset-[#1a0b36] scale-105`
+        isOver && `ring-2 ${accentRing} ring-offset-2 ring-offset-[#17364F] scale-105`
       )}
     >
       {/* Pulso vermelho quando o tempo acaba */}

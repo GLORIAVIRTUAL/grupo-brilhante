@@ -67,7 +67,7 @@ export default function NewItemModal({ isOpen, onClose, pipeline, stage, unitId,
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white">
         <DialogHeader>
           <DialogTitle>Novo Card em {stage}</DialogTitle>
         </DialogHeader>
@@ -111,7 +111,7 @@ export default function NewItemModal({ isOpen, onClose, pipeline, stage, unitId,
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={onClose} className="hover:bg-white/10">Cancelar</Button>
-          <Button onClick={handleSubmit} disabled={loading} className="bg-[#FF6600] hover:bg-[#ff7b24]">
+          <Button onClick={handleSubmit} disabled={loading} className="bg-[#216FA1] hover:bg-[#ff7b24]">
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Criar
           </Button>

@@ -124,7 +124,7 @@ export default function PromotionsManager() {
               <Plus className="w-4 h-4 mr-2" /> Nova Promoção
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-[#1a0b36] border border-white/10 text-white">
+          <DialogContent className="bg-[#17364F] border border-white/10 text-white">
             <DialogHeader>
               <DialogTitle>{editing ? 'Editar Promoção' : 'Adicionar Promoção'}</DialogTitle>
             </DialogHeader>

@@ -58,7 +58,7 @@ export default function EditTicketModal({ ticket, open, onClose, onSave }) {
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white">
         <DialogHeader>
           <DialogTitle>Editar Ticket #{ticket?.ticket_number || ticket?.id?.slice(-6)}</DialogTitle>
         </DialogHeader>
@@ -93,7 +93,7 @@ export default function EditTicketModal({ ticket, open, onClose, onSave }) {
           </div>
 
           <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-semibold text-[#FF6600]">Tempos de Processo</p>
+            <p className="text-sm font-semibold text-[#216FA1]">Tempos de Processo</p>
             <TimeField label="Tempo de Lavagem" value={form.wash_time} onChange={(v) => setForm({ ...form, wash_time: v })} />
             <TimeField label="Tempo de Secagem" value={form.dry_time} onChange={(v) => setForm({ ...form, dry_time: v })} />
             <TimeField label="Tempo de Lavagem a Seco" value={form.dry_clean_time} onChange={(v) => setForm({ ...form, dry_clean_time: v })} />
@@ -102,7 +102,7 @@ export default function EditTicketModal({ ticket, open, onClose, onSave }) {
         </div>
         <DialogFooter>
           <Button type="button" variant="ghost" onClick={onClose} className="text-gray-300 hover:bg-white/10">Cancelar</Button>
-          <Button type="button" onClick={handleSave} disabled={saving} className="gap-2 bg-[#FF6600] hover:bg-[#FF6600]/90">
+          <Button type="button" onClick={handleSave} disabled={saving} className="gap-2 bg-[#216FA1] hover:bg-[#216FA1]/90">
             {saving && <Loader2 className="h-4 w-4 animate-spin" />} Salvar
           </Button>
         </DialogFooter>

@@ -247,7 +247,7 @@ export default function CampanhasRede() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-          <Network className="w-8 h-8 text-[#FF6600]" />
+          <Network className="w-8 h-8 text-[#216FA1]" />
           Campanhas da Rede
         </h1>
         <p className="text-gray-400 mt-1">
@@ -260,7 +260,7 @@ export default function CampanhasRede() {
         <Card className="bg-white/5 border-white/10">
           <CardHeader>
             <CardTitle className="text-white text-lg flex items-center gap-2">
-              <Upload className="w-5 h-5 text-[#FF6600]" />
+              <Upload className="w-5 h-5 text-[#216FA1]" />
               Arte e legenda
             </CardTitle>
           </CardHeader>
@@ -278,7 +278,7 @@ export default function CampanhasRede() {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300">Imagem da campanha</label>
               {!imagePreview ? (
-                <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-white/15 rounded-xl p-8 cursor-pointer hover:border-[#FF6600]/50 hover:bg-white/5 transition-colors">
+                <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-white/15 rounded-xl p-8 cursor-pointer hover:border-[#216FA1]/50 hover:bg-white/5 transition-colors">
                   <ImageIcon className="w-10 h-10 text-gray-500" />
                   <span className="text-sm text-gray-400">Clique para enviar a arte</span>
                   <span className="text-xs text-gray-600">PNG, JPG até 10MB</span>
@@ -300,7 +300,7 @@ export default function CampanhasRede() {
                   </button>
                   {uploading && (
                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                      <Loader2 className="w-8 h-8 text-[#FF6600] animate-spin" />
+                      <Loader2 className="w-8 h-8 text-[#216FA1] animate-spin" />
                     </div>
                   )}
                 </div>
@@ -341,7 +341,7 @@ export default function CampanhasRede() {
                 </div>
               </div>
               {scheduledDate && scheduledTime && (
-                <p className="text-xs text-[#FF6600]">
+                <p className="text-xs text-[#216FA1]">
                   Será publicado em {new Date(`${scheduledDate}T${scheduledTime}`).toLocaleString('pt-BR')}
                 </p>
               )}
@@ -373,7 +373,7 @@ export default function CampanhasRede() {
               <Button
                 onClick={handlePostInstagram}
                 disabled={posting || uploading}
-                className="flex-1 bg-[#FF6600] hover:bg-[#e55c00] disabled:opacity-50"
+                className="flex-1 bg-[#216FA1] hover:bg-[#2d8ac4] disabled:opacity-50"
               >
                 {posting ? (
                   <>
@@ -439,7 +439,7 @@ export default function CampanhasRede() {
             <h2 className="text-xl font-semibold text-white">Campanhas salvas</h2>
             <p className="mt-1 text-sm text-gray-400">Reutilize uma campanha da rede já salva.</p>
           </div>
-          <Badge className="border border-[#FF6600]/30 bg-[#FF6600]/15 px-3 py-1 text-[#FF6600]">
+          <Badge className="border border-[#216FA1]/30 bg-[#216FA1]/15 px-3 py-1 text-[#216FA1]">
             {savedCampaigns.length} salvas
           </Badge>
         </div>

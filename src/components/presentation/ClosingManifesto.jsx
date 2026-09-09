@@ -8,7 +8,7 @@ export default function ClosingManifesto({ lines = [], signature }) {
           key={i}
           className={
             i === 0
-              ? 'text-2xl md:text-4xl font-bold leading-tight bg-gradient-to-r from-white via-white to-[#FF6600] bg-clip-text text-transparent'
+              ? 'text-2xl md:text-4xl font-bold leading-tight bg-gradient-to-r from-white via-white to-[#216FA1] bg-clip-text text-transparent'
               : 'mt-5 text-base md:text-xl text-gray-300 leading-relaxed'
           }
         >
@@ -16,7 +16,7 @@ export default function ClosingManifesto({ lines = [], signature }) {
         </p>
       ))}
       {signature && (
-        <p className="mt-8 text-[#FF6600] font-semibold text-lg md:text-xl">{signature}</p>
+        <p className="mt-8 text-[#216FA1] font-semibold text-lg md:text-xl">{signature}</p>
       )}
     </div>
   );

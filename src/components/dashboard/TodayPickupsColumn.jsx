@@ -28,7 +28,7 @@ export default function TodayPickupsColumn({ pickups, customerMap, timesByCustom
   return (
     <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
       <div className="mb-5 flex items-center gap-2">
-        <Truck className="h-5 w-5 text-[#FF6600]" />
+        <Truck className="h-5 w-5 text-[#216FA1]" />
         <h3 className="text-lg font-bold text-white">Coletas de Hoje</h3>
         <span className="ml-auto rounded-full bg-white/10 px-2.5 py-0.5 text-xs text-white/60">
           {pickups.length}
@@ -49,7 +49,7 @@ export default function TodayPickupsColumn({ pickups, customerMap, timesByCustom
                         {...drag.draggableProps}
                         className={cn(
                           'flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 p-4 transition-colors hover:bg-white/10',
-                          snapshot.isDragging && 'ring-2 ring-[#FF6600] shadow-2xl'
+                          snapshot.isDragging && 'ring-2 ring-[#216FA1] shadow-2xl'
                         )}
                       >
                         <div
@@ -85,7 +85,7 @@ export default function TodayPickupsColumn({ pickups, customerMap, timesByCustom
                           ) : onGenerateTicket && (
                             <Button
                               size="sm"
-                              className="h-7 gap-1 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs px-2"
+                              className="h-7 gap-1 bg-[#216FA1] hover:bg-[#2d8ac4] text-white text-xs px-2"
                               title="Gerar Ticket / Orçamento"
                               onClick={() => onGenerateTicket(pickup)}
                             >

@@ -21,7 +21,7 @@ export default function TimeField({ label, value, onChange }) {
             onClick={() => onChange(p)}
             className={`h-8 rounded-md border text-xs ${
               num === p
-                ? 'border-[#FF6600] bg-[#FF6600]/20 text-[#FF6600]'
+                ? 'border-[#216FA1] bg-[#216FA1]/20 text-[#216FA1]'
                 : 'border-white/10 bg-white/5 text-gray-300 hover:bg-white/10'
             }`}
           >

@@ -85,11 +85,11 @@ export default function NotificationsMenu() {
            )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-80 p-0 bg-[#1a0b36] border border-white/10 text-white shadow-xl">
+      <PopoverContent align="end" className="w-80 p-0 bg-[#17364F] border border-white/10 text-white shadow-xl">
          <div className="flex items-center justify-between p-3 border-b border-white/10 bg-white/5">
              <h4 className="font-semibold text-sm">Notificações</h4>
              {unreadCount > 0 && (
-                 <button onClick={markAllRead} className="text-xs text-[#FF6600] hover:text-white transition-colors">
+                 <button onClick={markAllRead} className="text-xs text-[#216FA1] hover:text-white transition-colors">
                      Marcar todas como lidas
                  </button>
              )}

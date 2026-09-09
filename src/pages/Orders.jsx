@@ -219,7 +219,7 @@ export default function Orders() {
   if (unitsLoading || loading) {
     return (
       <div className="flex h-96 items-center justify-center text-gray-400">
-        <Loader2 className="mr-2 h-6 w-6 animate-spin text-[#FF6600]" /> Carregando CRM...
+        <Loader2 className="mr-2 h-6 w-6 animate-spin text-[#216FA1]" /> Carregando CRM...
       </div>
     );
   }
@@ -261,7 +261,7 @@ export default function Orders() {
                   onClick={() => setActivePipeline(key)}
                   className={`flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-[#FF6600] text-white shadow-lg shadow-orange-500/20'
+                      ? 'bg-[#216FA1] text-white shadow-lg shadow-orange-500/20'
                       : 'text-white/60 hover:bg-white/5 hover:text-white'
                   }`}
                 >

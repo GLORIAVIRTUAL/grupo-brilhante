@@ -188,14 +188,14 @@ export default function Dispatches() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <Send className="w-8 h-8 text-[#FF6600]" />
+            <Send className="w-8 h-8 text-[#216FA1]" />
             Disparos Automáticos
           </h1>
           <p className="text-gray-400 mt-1">Histórico de mensagens enviadas automaticamente</p>
         </div>
         
         <div className="flex gap-3">
-          <Button onClick={() => setShowNewDispatch(true)} className="bg-[#FF6600] hover:bg-[#e55c00] gap-2">
+          <Button onClick={() => setShowNewDispatch(true)} className="bg-[#216FA1] hover:bg-[#2d8ac4] gap-2">
             <Send className="w-4 h-4" /> Novo Disparo
           </Button>
           <Button onClick={handleExportReport} variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/10 gap-2">

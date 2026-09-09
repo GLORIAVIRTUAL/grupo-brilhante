@@ -27,11 +27,11 @@ export default function CustomDateFilter({ dateRange, setDateRange, customStart,
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="gap-2 border-white/10 bg-white/5 text-white hover:bg-white/10">
-              <CalendarRange className="h-4 w-4 text-[#FF6600]" />
+              <CalendarRange className="h-4 w-4 text-[#216FA1]" />
               {customStart && customEnd ? `${customStart} → ${customEnd}` : 'Selecionar período'}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-72 bg-[#1a0b36] border-white/10 text-white space-y-3">
+          <PopoverContent className="w-72 bg-[#17364F] border-white/10 text-white space-y-3">
             <div className="space-y-1">
               <Label className="text-sm">Data inicial</Label>
               <Input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="bg-white/5 border-white/10" />

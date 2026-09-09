@@ -76,11 +76,11 @@ const AuthenticatedApp = () => {
 
   if (authError?.type === 'access_unavailable') {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#120a24] px-6 text-white">
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0f2438] px-6 text-white">
         <div className="w-full max-w-md rounded-2xl border border-amber-400/20 bg-white/5 p-8 text-center shadow-2xl">
           <h1 className="text-2xl font-semibold">Validação de acesso indisponível</h1>
           <p className="mt-3 text-sm text-white/70">{authError.message}</p>
-          <button type="button" onClick={checkAppState} className="mt-6 rounded-lg bg-[#FF6600] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#e55c00]">
+          <button type="button" onClick={checkAppState} className="mt-6 rounded-lg bg-[#216FA1] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#2d8ac4]">
             Tentar novamente
           </button>
         </div>
@@ -90,7 +90,7 @@ const AuthenticatedApp = () => {
 
   if (authError?.type === 'access_blocked') {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#120a24] px-6 text-white">
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0f2438] px-6 text-white">
         <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 text-center shadow-2xl">
           <h1 className="text-2xl font-semibold">Acesso protegido</h1>
           <p className="mt-3 text-sm text-white/70">{authError.message}</p>
@@ -101,7 +101,7 @@ const AuthenticatedApp = () => {
                 ? 'Sua sessão foi revogada. Encerre-a e entre novamente.'
                 : 'Solicite ao administrador a revisão do seu acesso.'}
           </p>
-          <button type="button" onClick={() => logout(true)} className="mt-6 rounded-lg bg-[#FF6600] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#e55c00]">
+          <button type="button" onClick={() => logout(true)} className="mt-6 rounded-lg bg-[#216FA1] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#2d8ac4]">
             Encerrar sessão
           </button>
         </div>

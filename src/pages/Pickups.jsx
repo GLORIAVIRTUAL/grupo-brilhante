@@ -537,22 +537,22 @@ export default function Pickups() {
       <div className="flex flex-col gap-4">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
-            <Truck className="w-8 h-8 text-[#FF6600]" />
+            <Truck className="w-8 h-8 text-[#216FA1]" />
             Agenda de Coletas
           </h1>
           <p className="text-gray-400 mt-1">Gerencie os agendamentos de retirada e entrega</p>
-          <p className="text-xs text-[#FF6600] mt-2">Busca liberada para clientes de todas as unidades.</p>
+          <p className="text-xs text-[#216FA1] mt-2">Busca liberada para clientes de todas as unidades.</p>
         </div>
         
         <Dialog open={isNewPickupOpen} onOpenChange={(open) => { setIsNewPickupOpen(open); if (!open) resetForm(); else { setIsExtraPickup(false); setIsFixedPickup(false); } }}>
           <div className="flex justify-center">
             <DialogTrigger asChild>
-              <Button className="gap-3 animate-pulse rounded-2xl border-2 border-[#FF6600]/60 bg-[#FF6600]/10 px-12 py-7 text-xl font-bold text-[#FF6600] shadow-lg shadow-[#FF6600]/20 backdrop-blur-sm hover:bg-[#FF6600]/20">
+              <Button className="gap-3 animate-pulse rounded-2xl border-2 border-[#216FA1]/60 bg-[#216FA1]/10 px-12 py-7 text-xl font-bold text-[#216FA1] shadow-lg shadow-[#216FA1]/20 backdrop-blur-sm hover:bg-[#216FA1]/20">
                 <Plus className="w-7 h-7" /> Nova Coleta
               </Button>
             </DialogTrigger>
           </div>
-          <DialogContent className="bg-[#1a0b36] border-white/10 text-white sm:max-w-[500px] p-0 overflow-hidden">
+          <DialogContent className="bg-[#17364F] border-white/10 text-white sm:max-w-[500px] p-0 overflow-hidden">
             <div className="p-6 pb-0">
               <DialogHeader>
                 <DialogTitle>Agendar Nova Coleta</DialogTitle>
@@ -602,7 +602,7 @@ export default function Pickups() {
                           )}
                         </div>
                         {c.preferred_unit_name && (
-                          <span className="text-[10px] text-[#FF6600] whitespace-nowrap">{c.preferred_unit_name}</span>
+                          <span className="text-[10px] text-[#216FA1] whitespace-nowrap">{c.preferred_unit_name}</span>
                         )}
                       </div>
                     )) : (
@@ -622,8 +622,8 @@ export default function Pickups() {
                   </div>
                 )}
                 {selectedCustomer && (
-                  <div className="flex items-center gap-2 mt-1 p-2 bg-[#FF6600]/10 border border-[#FF6600]/20 rounded-md">
-                    <CheckCircle className="w-4 h-4 text-[#FF6600] shrink-0" />
+                  <div className="flex items-center gap-2 mt-1 p-2 bg-[#216FA1]/10 border border-[#216FA1]/20 rounded-md">
+                    <CheckCircle className="w-4 h-4 text-[#216FA1] shrink-0" />
                     <span className="text-sm text-white truncate">{searchTerm}</span>
                     <button 
                       onClick={() => { setSelectedCustomer(''); setSearchTerm(''); }}
@@ -664,7 +664,7 @@ export default function Pickups() {
                       className="bg-white/5 border-white/10"
                       placeholder="00000-000"
                     />
-                    {fetchingCep && <div className="absolute right-3 top-2.5 w-4 h-4 rounded-full border-2 border-white/20 border-t-[#FF6600] animate-spin" />}
+                    {fetchingCep && <div className="absolute right-3 top-2.5 w-4 h-4 rounded-full border-2 border-white/20 border-t-[#216FA1] animate-spin" />}
                   </div>
                 </div>
 
@@ -794,7 +794,7 @@ export default function Pickups() {
                 )}
               </div>
 
-              <Button onClick={handleCreatePickup} className="w-full bg-[#FF6600] hover:bg-[#e55c00] mt-4">
+              <Button onClick={handleCreatePickup} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4] mt-4">
                 {isFixedPickup ? "Agendar Coletas Fixas" : isExtraPickup ? "Agendar Encaixe" : "Confirmar Agendamento"}
               </Button>
             </div>
@@ -835,7 +835,7 @@ export default function Pickups() {
                   row: "flex justify-between w-full mt-2",
                   cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-white/5 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 w-8 sm:w-9 flex justify-center",
                   day: "h-8 w-8 sm:h-9 sm:w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-white/10 rounded-md transition-colors text-gray-300 flex items-center justify-center",
-                  day_selected: "bg-[#FF6600] text-white hover:bg-[#FF6600] hover:text-white focus:bg-[#FF6600] focus:text-white",
+                  day_selected: "bg-[#216FA1] text-white hover:bg-[#216FA1] hover:text-white focus:bg-[#216FA1] focus:text-white",
                   day_today: "bg-white/10 text-white",
                 }}
               />
@@ -903,7 +903,7 @@ export default function Pickups() {
                     </div>
                     <div className={cn(
                       "text-xs",
-                      isPast ? "text-gray-700" : "text-[#FF6600]"
+                      isPast ? "text-gray-700" : "text-[#216FA1]"
                     )}>
                       {slot.period}
                     </div>
@@ -911,7 +911,7 @@ export default function Pickups() {
                   
                   <div className="flex-1 min-h-[80px] border-l border-white/10 pl-4 py-1 relative">
                     {/* Time line dot */}
-                    <div className="absolute left-[-5px] top-4 w-2.5 h-2.5 rounded-full bg-[#1a0b36] border border-white/20" />
+                    <div className="absolute left-[-5px] top-4 w-2.5 h-2.5 rounded-full bg-[#17364F] border border-white/20" />
                     
                     <Droppable droppableId={droppableId}>
                       {(provided, snapshot) => (
@@ -920,7 +920,7 @@ export default function Pickups() {
                           {...provided.droppableProps}
                           className={cn(
                             "min-h-[70px] rounded-lg transition-colors",
-                            snapshot.isDraggingOver && "bg-[#FF6600]/5 ring-1 ring-[#FF6600]/30"
+                            snapshot.isDraggingOver && "bg-[#216FA1]/5 ring-1 ring-[#216FA1]/30"
                           )}
                         >
                           {!pickup ? (
@@ -942,7 +942,7 @@ export default function Pickups() {
                                         : pickup.type === 'fixed'
                                           ? "bg-yellow-500/20 border-yellow-500/30"
                                           : "bg-blue-500/10 border-blue-500/20",
-                                      dragSnapshot.isDragging && "ring-2 ring-[#FF6600] shadow-2xl"
+                                      dragSnapshot.isDragging && "ring-2 ring-[#216FA1] shadow-2xl"
                                     )}
                                   >
                                     {pickup.source === 'ai' && (
@@ -980,7 +980,7 @@ export default function Pickups() {
                                               </div>
                                             )}
                                             {(customer?.preferred_unit_name || units[customer?.unit_id]?.name) && (
-                                              <div className="flex items-center gap-2 text-xs text-[#FF6600]">
+                                              <div className="flex items-center gap-2 text-xs text-[#216FA1]">
                                                 <Store className="w-3 h-3" />
                                                 <span>{customer.preferred_unit_name || units[customer.unit_id]?.name}</span>
                                               </div>
@@ -1007,7 +1007,7 @@ export default function Pickups() {
                                         ) : (
                                           <Button
                                             size="sm"
-                                            className="h-7 gap-1 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs px-2"
+                                            className="h-7 gap-1 bg-[#216FA1] hover:bg-[#2d8ac4] text-white text-xs px-2"
                                             title="Gerar Ticket / Orçamento"
                                             onClick={() => handleGenerateTicket(pickup)}
                                           >
@@ -1118,7 +1118,7 @@ export default function Pickups() {
                               </div>
                             )}
                             {(customer?.preferred_unit_name || units[customer?.unit_id]?.name) && (
-                              <div className="flex items-center gap-2 text-xs text-[#FF6600]">
+                              <div className="flex items-center gap-2 text-xs text-[#216FA1]">
                                 <Store className="w-3 h-3" />
                                 <span>{customer.preferred_unit_name || units[customer.unit_id]?.name}</span>
                               </div>
@@ -1143,7 +1143,7 @@ export default function Pickups() {
                           ) : (
                             <Button
                               size="sm"
-                              className="h-7 gap-1 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs px-2"
+                              className="h-7 gap-1 bg-[#216FA1] hover:bg-[#2d8ac4] text-white text-xs px-2"
                               title="Gerar Ticket / Orçamento"
                               onClick={() => handleGenerateTicket(pickup)}
                             >
@@ -1218,7 +1218,7 @@ export default function Pickups() {
       )}
 
       <Dialog open={!!cancelFixedPickup} onOpenChange={(open) => !open && setCancelFixedPickup(null)}>
-        <DialogContent className="bg-[#1a0b36] border-white/10 text-white sm:max-w-[400px]">
+        <DialogContent className="bg-[#17364F] border-white/10 text-white sm:max-w-[400px]">
           <DialogHeader>
             <DialogTitle>Cancelar Coleta Fixa</DialogTitle>
           </DialogHeader>

@@ -35,7 +35,7 @@ export default function WasherMachine({ label = 'LAVAR 1', code = 'WSH-9000' }) 
               <div className="absolute top-0 left-0 w-full h-full bg-blue-500/10" style={{ clipPath: 'polygon(0% 40%, 100% 60%, 100% 100%, 0% 100%)' }} />
               {/* Clothes Particles */}
               <div className="absolute top-6 left-6 w-3 h-3 bg-white rounded-sm shadow-[0_0_10px_white]" />
-              <div className="absolute bottom-6 right-8 w-4 h-4 bg-[#FF6600] rounded-sm shadow-[0_0_10px_#FF6600]" />
+              <div className="absolute bottom-6 right-8 w-4 h-4 bg-[#216FA1] rounded-sm shadow-[0_0_10px_#216FA1]" />
             </motion.div>
           </div>
         </div>

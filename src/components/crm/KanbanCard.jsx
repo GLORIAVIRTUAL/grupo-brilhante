@@ -47,8 +47,8 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
             layoutId={card.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`bg-[#2a1b4e] p-4 rounded-xl border border-white/10 shadow-lg hover:border-[#FF6600]/50 transition-colors
-              ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-[#FF6600] rotate-2' : ''}
+            className={`bg-[#2a1b4e] p-4 rounded-xl border border-white/10 shadow-lg hover:border-[#216FA1]/50 transition-colors
+              ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-[#216FA1] rotate-2' : ''}
             `}
           >
             <div className="flex justify-between items-start mb-3">
@@ -68,7 +68,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
             </div>
             
             <div onClick={() => onClick(card)} className="cursor-pointer">
-              <h4 className="font-semibold text-white mb-1 truncate hover:text-[#FF6600] transition-colors">
+              <h4 className="font-semibold text-white mb-1 truncate hover:text-[#216FA1] transition-colors">
                 {customer?.full_name || 'Cliente Desconhecido'}
               </h4>
             </div>
@@ -83,7 +83,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
               <div className="mb-3">
                 <a href={card.receipt_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="block group/receipt relative">
                   {card.receipt_url.toLowerCase().includes('.pdf') ? (
-                    <div className="w-full h-24 bg-white/5 rounded-lg border border-white/10 flex flex-col items-center justify-center text-gray-400 hover:text-[#FF6600] transition-colors">
+                    <div className="w-full h-24 bg-white/5 rounded-lg border border-white/10 flex flex-col items-center justify-center text-gray-400 hover:text-[#216FA1] transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round" className="mb-2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
                       <span className="text-xs font-medium">Ver PDF</span>
                     </div>
@@ -100,7 +100,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
                           }
                         }}
                       />
-                      <div className="absolute inset-0 flex-col items-center justify-center text-gray-400 hover:text-[#FF6600] transition-colors" style={{ display: 'none' }}>
+                      <div className="absolute inset-0 flex-col items-center justify-center text-gray-400 hover:text-[#216FA1] transition-colors" style={{ display: 'none' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round" className="mb-2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                         <span className="text-xs font-medium text-center px-2">Ver Comprovante<br/>(Link Externo)</span>
                       </div>
@@ -147,7 +147,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
                         navigate(`/chat?customer_id=${card.customer_id}`);
                     }
                   }}
-                  className="text-white/40 hover:text-[#FF6600] transition-colors"
+                  className="text-white/40 hover:text-[#216FA1] transition-colors"
                   title="Abrir chat"
                 >
                   <MessageSquare className="w-4 h-4" />

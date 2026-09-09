@@ -108,7 +108,7 @@ export default function PickupRoutePlanner({ pickups, customers, customerMap, da
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <Route className="w-5 h-5 text-[#FF6600]" />
+            <Route className="w-5 h-5 text-[#216FA1]" />
             Melhor rota do dia
           </h2>
           <p className="text-sm text-gray-400 mt-1">Escolha a loja de saída e gere a ordem mais rápida das paradas.</p>
@@ -126,7 +126,7 @@ export default function PickupRoutePlanner({ pickups, customers, customerMap, da
             </SelectContent>
           </Select>
 
-          <Button onClick={handleOptimizeRoute} className="bg-[#FF6600] hover:bg-[#e55c00] gap-2" disabled={loadingRoute}>
+          <Button onClick={handleOptimizeRoute} className="bg-[#216FA1] hover:bg-[#2d8ac4] gap-2" disabled={loadingRoute}>
             {loadingRoute ? <Loader2 className="w-4 h-4 animate-spin" /> : <Route className="w-4 h-4" />}
             Gerar rota
           </Button>
@@ -160,7 +160,7 @@ export default function PickupRoutePlanner({ pickups, customers, customerMap, da
             {(provided) => (
               <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-3">
                 <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm text-gray-300 flex items-center gap-2">
-                  <Store className="w-4 h-4 text-[#FF6600]" />
+                  <Store className="w-4 h-4 text-[#216FA1]" />
                   Saída: <span className="font-medium text-white">{selectedStore}</span>
                 </div>
 
@@ -176,7 +176,7 @@ export default function PickupRoutePlanner({ pickups, customers, customerMap, da
                           <div {...dragProvided.dragHandleProps} className="text-gray-500 cursor-grab">
                             <GripVertical className="w-5 h-5" />
                           </div>
-                          <div className="w-8 h-8 rounded-full bg-[#FF6600]/15 text-[#FF6600] flex items-center justify-center text-sm font-bold shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-[#216FA1]/15 text-[#216FA1] flex items-center justify-center text-sm font-bold shrink-0">
                             {index + 1}
                           </div>
                           <div className="min-w-0">

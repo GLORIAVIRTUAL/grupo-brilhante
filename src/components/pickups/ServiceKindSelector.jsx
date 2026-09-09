@@ -13,7 +13,7 @@ export default function ServiceKindSelector({ value = 'dirty', onChange }) {
           className={cn(
             "flex items-center justify-center gap-2 rounded-md border p-3 text-sm transition-colors",
             value === 'dirty'
-              ? "bg-[#FF6600]/20 border-[#FF6600] text-white font-semibold"
+              ? "bg-[#216FA1]/20 border-[#216FA1] text-white font-semibold"
               : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
           )}
         >

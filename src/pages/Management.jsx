@@ -22,7 +22,7 @@ import MovementDetailsModal from '@/components/management/MovementDetailsModal';
 import CustomDateFilter from '@/components/management/CustomDateFilter';
 import ManagementCommandCenter from '@/components/management/ManagementCommandCenter';
 
-const COLORS = ['#FF6600', '#4C12A1', '#25D366', '#00C853', '#FFC107', '#33691E'];
+const COLORS = ['#216FA1', '#216FA1', '#25D366', '#00C853', '#FFC107', '#33691E'];
 
 const renderPieLabel = ({ cx, cy, midAngle, outerRadius, name, percent }) => {
   const RADIAN = Math.PI / 180;
@@ -240,7 +240,7 @@ export default function ManagementPage() {
   if (isLoading) {
     return (
       <div className="flex h-96 flex-col items-center justify-center space-y-4">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FF6600]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#216FA1]" />
         <p className="text-gray-400">Carregando gestão...</p>
       </div>
     );
@@ -263,7 +263,7 @@ export default function ManagementPage() {
             setCustomStart={setCustomStart}
             setCustomEnd={setCustomEnd}
           />
-          <Button onClick={() => setModalOpen(true)} className="gap-2 bg-[#FF6600] hover:bg-[#FF6600]/90">
+          <Button onClick={() => setModalOpen(true)} className="gap-2 bg-[#216FA1] hover:bg-[#216FA1]/90">
             <Plus className="h-4 w-4" /> Lançamento
           </Button>
         </div>
@@ -294,10 +294,10 @@ export default function ManagementPage() {
 
       <Tabs defaultValue="finance" className="w-full">
         <TabsList className="bg-white/5">
-          <TabsTrigger value="finance" className="gap-2 text-white data-[state=active]:bg-[#4C12A1] data-[state=active]:text-white"><Wallet className="h-4 w-4" /> Financeiro</TabsTrigger>
-          <TabsTrigger value="tickets" className="gap-2 text-white data-[state=active]:bg-[#4C12A1] data-[state=active]:text-white"><Ticket className="h-4 w-4" /> Tickets de Serviço</TabsTrigger>
+          <TabsTrigger value="finance" className="gap-2 text-white data-[state=active]:bg-[#216FA1] data-[state=active]:text-white"><Wallet className="h-4 w-4" /> Financeiro</TabsTrigger>
+          <TabsTrigger value="tickets" className="gap-2 text-white data-[state=active]:bg-[#216FA1] data-[state=active]:text-white"><Ticket className="h-4 w-4" /> Tickets de Serviço</TabsTrigger>
           {isAdmin && (
-            <TabsTrigger value="audit" className="gap-2 text-white data-[state=active]:bg-[#4C12A1] data-[state=active]:text-white"><ShieldAlert className="h-4 w-4" /> Auditoria</TabsTrigger>
+            <TabsTrigger value="audit" className="gap-2 text-white data-[state=active]:bg-[#216FA1] data-[state=active]:text-white"><ShieldAlert className="h-4 w-4" /> Auditoria</TabsTrigger>
           )}
         </TabsList>
 
@@ -316,7 +316,7 @@ export default function ManagementPage() {
                         label={renderPieLabel} labelLine={{ stroke: '#fff' }}>
                         {data.paymentMethodsData.map((e, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                       </Pie>
-                      <RechartsTooltip contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: 8 }} formatter={(v) => [`R$ ${Number(v).toFixed(2)}`, 'Valor']} />
+                      <RechartsTooltip contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: 8 }} formatter={(v) => [`R$ ${Number(v).toFixed(2)}`, 'Valor']} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : <div className="flex h-full items-center justify-center text-gray-500">Sem entradas no período</div>}
@@ -335,7 +335,7 @@ export default function ManagementPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" horizontal vertical={false} />
                       <XAxis type="number" stroke="#fff" tick={{ fill: '#fff' }} fontSize={12} />
                       <YAxis type="category" dataKey="name" stroke="#fff" tick={{ fill: '#fff' }} fontSize={12} width={100} />
-                      <RechartsTooltip contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: 8 }} cursor={{ fill: 'rgba(255,255,255,0.05)' }} formatter={(v) => [`R$ ${Number(v).toFixed(2)}`, 'Total']} />
+                      <RechartsTooltip contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: 8 }} cursor={{ fill: 'rgba(255,255,255,0.05)' }} formatter={(v) => [`R$ ${Number(v).toFixed(2)}`, 'Total']} />
                       <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                         {data.expensesData.map((e, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                       </Bar>

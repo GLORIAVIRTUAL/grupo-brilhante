@@ -60,8 +60,8 @@ export default function PickupsTable({ pickups, customerMap }) {
         const pdf = new jsPDF('l', 'mm', 'a4'); // Landscape
         
         // Colors
-        const primaryColor = [26, 11, 54]; // Dark background #1a0b36 matching the app theme
-        const accentColor = [255, 102, 0]; // #FF6600
+        const primaryColor = [26, 11, 54]; // Dark background #17364F matching the app theme
+        const accentColor = [255, 102, 0]; // #216FA1
         const darkGray = [60, 60, 60];
         const lightGray = [240, 240, 240];
         

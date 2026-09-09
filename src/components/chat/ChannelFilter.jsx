@@ -2,7 +2,7 @@ import React from 'react';
 import { MessageCircle, Instagram, Send, Layers } from 'lucide-react';
 
 const OPTIONS = [
-  { value: 'all', label: 'Todos', icon: Layers, active: 'border-[#FF6600]/40 bg-[#FF6600]/15 text-[#FF6600]' },
+  { value: 'all', label: 'Todos', icon: Layers, active: 'border-[#216FA1]/40 bg-[#216FA1]/15 text-[#216FA1]' },
   { value: 'WHATSAPP', label: 'WhatsApp', icon: MessageCircle, active: 'border-green-400/40 bg-green-400/15 text-green-300' },
   { value: 'INSTAGRAM', label: 'Instagram', icon: Instagram, active: 'border-pink-400/40 bg-pink-400/15 text-pink-300' },
   { value: 'MESSENGER', label: 'Messenger', icon: Send, active: 'border-blue-400/40 bg-blue-400/15 text-blue-300' },

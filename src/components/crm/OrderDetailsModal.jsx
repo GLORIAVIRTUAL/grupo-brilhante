@@ -144,16 +144,16 @@ export default function OrderDetailsModal({ isOpen, onClose, card, customer }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-lg">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-             <Package className="w-5 h-5 text-[#FF6600]" />
+             <Package className="w-5 h-5 text-[#216FA1]" />
              Detalhes do Pedido
           </DialogTitle>
         </DialogHeader>
 
         {loading ? (
-          <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+          <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>
         ) : !order ? (
           <div className="p-8 text-center text-gray-400">
              <p>Pedido não encontrado.</p>
@@ -167,7 +167,7 @@ export default function OrderDetailsModal({ isOpen, onClose, card, customer }) {
                    <span className="text-sm text-gray-400">Ticket: #{order.ticket_number || order.id.slice(0,4)}</span>
                 </div>
                 <div className="text-right">
-                   <div className="text-xl font-bold text-[#FF6600]">R$ {order.total_amount?.toFixed(2)}</div>
+                   <div className="text-xl font-bold text-[#216FA1]">R$ {order.total_amount?.toFixed(2)}</div>
                    <span className="text-xs text-gray-400">
                        {order.closed_at ? `Fechado em ${format(new Date(order.closed_at), 'dd/MM')}` : 'Em aberto'}
                    </span>
@@ -215,7 +215,7 @@ export default function OrderDetailsModal({ isOpen, onClose, card, customer }) {
                             onClick={() => handleStatusChange(s)}
                             className={`p-2 rounded-lg border text-xs font-medium transition-all flex flex-col items-center gap-1
                                 ${order.status === s 
-                                    ? 'bg-[#FF6600] border-[#FF6600] text-white' 
+                                    ? 'bg-[#216FA1] border-[#216FA1] text-white' 
                                     : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                                 }`}
                          >
@@ -255,7 +255,7 @@ export default function OrderDetailsModal({ isOpen, onClose, card, customer }) {
                     {notifying ? 'Enviando...' : 'Avisar que está Pronto'}
                  </Button>
                  <Button 
-                    className="bg-[#4C12A1] hover:bg-[#5d1dbf] text-white gap-2"
+                    className="bg-[#216FA1] hover:bg-[#5d1dbf] text-white gap-2"
                     onClick={handleGeneratePaymentLink}
                     disabled={generatingLink}
                  >

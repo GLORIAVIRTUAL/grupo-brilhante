@@ -27,7 +27,7 @@ export default function KanbanColumn({ columnId, cards, customers, onCardClick, 
             {...provided.droppableProps}
             ref={provided.innerRef}
             className={`flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-3 transition-colors overflow-y-auto custom-scrollbar
-              ${snapshot.isDraggingOver ? 'bg-white/10 border-[#FF6600]/30' : ''}
+              ${snapshot.isDraggingOver ? 'bg-white/10 border-[#216FA1]/30' : ''}
             `}
           >
             <AnimatePresence>

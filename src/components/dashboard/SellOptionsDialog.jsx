@@ -6,7 +6,7 @@ import { Camera, Plus } from 'lucide-react';
 export default function SellOptionsDialog({ open, onOpenChange, onPhotoQuote, onManualQuote }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md border-white/10 bg-[#1a0b36] text-white">
+      <DialogContent className="max-w-md border-white/10 bg-[#17364F] text-white">
         <DialogHeader>
           <DialogTitle>Como deseja vender?</DialogTitle>
         </DialogHeader>

@@ -24,9 +24,9 @@ export default function Apresentacao() {
   }, [go]);
 
   return (
-    <div className="min-h-screen bg-[#1a0b36] text-white relative overflow-hidden flex flex-col">
-      <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#4C12A1] blur-[150px] opacity-40 pointer-events-none" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#FF6600] blur-[150px] opacity-20 pointer-events-none" />
+    <div className="min-h-screen bg-[#17364F] text-white relative overflow-hidden flex flex-col">
+      <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#216FA1] blur-[150px] opacity-40 pointer-events-none" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#216FA1] blur-[150px] opacity-20 pointer-events-none" />
 
       <header className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 border-b border-white/10">
         <img
@@ -88,7 +88,7 @@ export default function Apresentacao() {
               key={s.title}
               onClick={() => setIndex(i)}
               aria-label={`Ir para o slide ${i + 1}`}
-              className={`h-2.5 rounded-full transition-all ${i === index ? 'w-8 bg-[#FF6600]' : 'w-2.5 bg-white/25 hover:bg-white/50'}`}
+              className={`h-2.5 rounded-full transition-all ${i === index ? 'w-8 bg-[#216FA1]' : 'w-2.5 bg-white/25 hover:bg-white/50'}`}
             />
           ))}
         </div>
@@ -96,7 +96,7 @@ export default function Apresentacao() {
         <button
           onClick={() => go(1)}
           disabled={index === slides.length - 1}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FF6600] text-white font-semibold hover:bg-[#e65c00] disabled:opacity-30 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#216FA1] text-white font-semibold hover:bg-[#e65c00] disabled:opacity-30 disabled:cursor-not-allowed"
         >
           Próximo <ChevronRight className="w-4 h-4" />
         </button>

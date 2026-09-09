@@ -91,9 +91,9 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-md">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-md">
         <DialogTitle className="text-xl flex items-center gap-2">
-          <CreditCard className="w-5 h-5 text-[#FF6600]" />
+          <CreditCard className="w-5 h-5 text-[#216FA1]" />
           Gerar Link de Pagamento
         </DialogTitle>
         <DialogDescription className="text-gray-400">
@@ -117,7 +117,7 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
               <select
                 value={selectedOrderId}
                 onChange={(e) => { setSelectedOrderId(e.target.value); setPaymentResult(null); }}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:border-[#FF6600]/50 focus:outline-none"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:border-[#216FA1]/50 focus:outline-none"
                 style={{ colorScheme: 'dark' }}
               >
                 {orders.map((o) => {
@@ -142,7 +142,7 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
                     onClick={() => { setBillingType('pix'); setPaymentResult(null); }}
                     className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${
                       billingType === 'pix'
-                      ? 'bg-[#FF6600]/20 border-[#FF6600] text-white'
+                      ? 'bg-[#216FA1]/20 border-[#216FA1] text-white'
                       : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                     }`}
                   >
@@ -153,7 +153,7 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
                     onClick={() => { setBillingType('credit_card'); setPaymentResult(null); }}
                     className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${
                       billingType === 'credit_card'
-                      ? 'bg-[#FF6600]/20 border-[#FF6600] text-white'
+                      ? 'bg-[#216FA1]/20 border-[#216FA1] text-white'
                       : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                     }`}
                   >
@@ -175,7 +175,7 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
                   </div>
                   <div className="flex justify-between mt-1 pt-1 border-t border-white/10">
                     <span className="text-gray-300 font-medium">Em aberto</span>
-                    <span className="font-bold text-[#FF6600]">R$ {openAmount.toFixed(2)}</span>
+                    <span className="font-bold text-[#216FA1]">R$ {openAmount.toFixed(2)}</span>
                   </div>
                 </div>
               )}
@@ -184,7 +184,7 @@ export default function PaymentLinkDialog({ isOpen, onClose, customer, onSendLin
                 <Button
                   onClick={handleGenerate}
                   disabled={generating || !selectedOrderId}
-                  className="w-full bg-[#FF6600] hover:bg-[#ff7b24] gap-2"
+                  className="w-full bg-[#216FA1] hover:bg-[#ff7b24] gap-2"
                 >
                   {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
                   {generating ? 'Gerando...' : 'Gerar Link'}

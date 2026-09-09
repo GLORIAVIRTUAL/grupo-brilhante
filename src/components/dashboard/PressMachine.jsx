@@ -9,7 +9,7 @@ export default function PressMachine({ label = 'PASSAR 1', code = 'PRS-X1' }) {
         {/* Header */}
         <div className="h-8 border-b border-white/10 bg-white/5 flex items-center px-3 justify-between">
           <span className="text-[9px] font-mono text-orange-300">{code}</span>
-          <div className="w-2 h-2 rounded-full bg-[#FF6600] animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[#216FA1] animate-pulse" />
         </div>
 
         <div className="flex-1 relative">
@@ -24,14 +24,14 @@ export default function PressMachine({ label = 'PASSAR 1', code = 'PRS-X1' }) {
           >
             <div className="w-24 h-4 bg-gray-500 rounded-l-full relative">
               {/* Press Head */}
-              <div className="absolute left-0 top-2 w-16 h-8 bg-gradient-to-b from-gray-300 to-gray-400 rounded-b-xl shadow-lg border-b-2 border-[#FF6600] flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full bg-[#FF6600]/10" />
+              <div className="absolute left-0 top-2 w-16 h-8 bg-gradient-to-b from-gray-300 to-gray-400 rounded-b-xl shadow-lg border-b-2 border-[#216FA1] flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full bg-[#216FA1]/10" />
               </div>
             </div>
           </motion.div>
 
           {/* Ironing Bed */}
-          <div className="absolute bottom-8 left-4 right-4 h-2 bg-[#FF6600]/50 rounded-full blur-[2px]" />
+          <div className="absolute bottom-8 left-4 right-4 h-2 bg-[#216FA1]/50 rounded-full blur-[2px]" />
           <div className="absolute bottom-8 left-4 right-4 h-1 bg-white/20 rounded-full" />
 
           {/* Steam Particles */}

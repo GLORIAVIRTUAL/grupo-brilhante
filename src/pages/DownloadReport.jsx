@@ -26,10 +26,10 @@ export default function DownloadReport() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1a0b36] p-6">
+    <div className="min-h-screen flex items-center justify-center bg-[#17364F] p-6">
       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 text-center max-w-md w-full">
-        <div className="w-20 h-20 bg-[#FF6600]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <FileText className="w-10 h-10 text-[#FF6600]" />
+        <div className="w-20 h-20 bg-[#216FA1]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <FileText className="w-10 h-10 text-[#216FA1]" />
         </div>
         <h1 className="text-2xl font-bold text-white mb-2">Relatório do Chatbot</h1>
         <p className="text-gray-400 mb-8">
@@ -39,7 +39,7 @@ export default function DownloadReport() {
         <Button 
           onClick={handleDownload} 
           disabled={loading}
-          className="bg-[#FF6600] hover:bg-[#e55c00] text-white px-8 py-3 text-lg gap-3 w-full"
+          className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white px-8 py-3 text-lg gap-3 w-full"
         >
           {loading ? (
             <><Loader2 className="w-5 h-5 animate-spin" /> Gerando...</>

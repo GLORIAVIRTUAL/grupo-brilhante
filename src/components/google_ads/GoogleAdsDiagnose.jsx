@@ -28,14 +28,14 @@ export default function GoogleAdsDiagnose() {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold flex items-center gap-2 text-white">
-            <Stethoscope className="w-5 h-5 text-[#FF6600]" />
+            <Stethoscope className="w-5 h-5 text-[#216FA1]" />
             Diagnóstico da Conexão
           </h3>
           <p className="text-sm text-gray-400 mt-1">
             Testa se as credenciais do Google Ads estão funcionando.
           </p>
         </div>
-        <Button onClick={handleDiagnose} disabled={loading} className="bg-[#FF6600] hover:bg-[#FF6600]/90">
+        <Button onClick={handleDiagnose} disabled={loading} className="bg-[#216FA1] hover:bg-[#216FA1]/90">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Testar Conexão'}
         </Button>
       </div>

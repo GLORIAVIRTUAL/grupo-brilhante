@@ -183,10 +183,10 @@ export default function ProspectImportModal({ open, onOpenChange, onImported }) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#1a0b36] border-white/10 text-white max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#17364F] border-white/10 text-white max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
-            <FileSpreadsheet className="w-5 h-5 text-[#FF6600]" />
+            <FileSpreadsheet className="w-5 h-5 text-[#216FA1]" />
             Importar Planilha de Empresas
           </DialogTitle>
         </DialogHeader>
@@ -196,12 +196,12 @@ export default function ProspectImportModal({ open, onOpenChange, onImported }) 
             Colunas aceitas: <strong>Nome da Empresa</strong>, <strong>Telefones</strong> (separados por <code className="bg-white/10 px-1 rounded">;</code>) e <strong>Nomes dos Sócios</strong> (cargo entre parênteses). Aceita .xlsx e .csv.
           </div>
 
-          <label className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-white/15 bg-white/5 p-8 cursor-pointer hover:border-[#FF6600]/40 transition-colors">
+          <label className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-white/15 bg-white/5 p-8 cursor-pointer hover:border-[#216FA1]/40 transition-colors">
             <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={handleFile} />
             {reading ? (
-              <><Loader2 className="w-8 h-8 animate-spin text-[#FF6600]" /><span className="text-sm text-gray-300">Lendo {fileName}...</span></>
+              <><Loader2 className="w-8 h-8 animate-spin text-[#216FA1]" /><span className="text-sm text-gray-300">Lendo {fileName}...</span></>
             ) : (
-              <><Upload className="w-8 h-8 text-[#FF6600]" /><span className="text-sm text-gray-300">{fileName || 'Clique para selecionar a planilha'}</span></>
+              <><Upload className="w-8 h-8 text-[#216FA1]" /><span className="text-sm text-gray-300">{fileName || 'Clique para selecionar a planilha'}</span></>
             )}
           </label>
 
@@ -252,7 +252,7 @@ export default function ProspectImportModal({ open, onOpenChange, onImported }) 
             >
               Cancelar
             </Button>
-            <Button onClick={handleImport} disabled={saving || validCount === 0} className="flex-1 bg-[#FF6600] hover:bg-[#e55c00] h-12 text-lg gap-2">
+            <Button onClick={handleImport} disabled={saving || validCount === 0} className="flex-1 bg-[#216FA1] hover:bg-[#2d8ac4] h-12 text-lg gap-2">
               {saving ? <><Loader2 className="w-5 h-5 animate-spin" /> Salvando...</> : <><CheckCircle2 className="w-5 h-5" /> Salvar {validCount > 0 ? `(${validCount})` : ''}</>}
             </Button>
           </div>

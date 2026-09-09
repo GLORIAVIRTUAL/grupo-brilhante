@@ -77,7 +77,7 @@ export default function FinanceTable({ entries, onDelete, onView }) {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="sm" onClick={() => onView(e)} className="h-8 gap-1 text-gray-300 hover:text-[#FF6600]">
+                          <Button variant="ghost" size="sm" onClick={() => onView(e)} className="h-8 gap-1 text-gray-300 hover:text-[#216FA1]">
                             <Eye className="h-4 w-4" /> Ver
                           </Button>
                           <Button variant="ghost" size="icon" onClick={() => onDelete(e)} className="h-8 w-8 text-gray-500 hover:text-red-400">

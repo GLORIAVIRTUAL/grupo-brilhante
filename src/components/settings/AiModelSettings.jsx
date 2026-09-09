@@ -64,7 +64,7 @@ export default function AiModelSettings() {
       </CardHeader>
       <CardContent className="space-y-6">
         {loading ? (
-          <div className="flex justify-center py-6"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+          <div className="flex justify-center py-6"><Loader2 className="animate-spin text-[#216FA1]" /></div>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,7 +89,7 @@ export default function AiModelSettings() {
                     <Thermometer className="w-4 h-4 text-orange-400" />
                     Temperatura (Criatividade)
                   </Label>
-                  <span className="text-sm font-mono text-[#FF6600]">{temperature}</span>
+                  <span className="text-sm font-mono text-[#216FA1]">{temperature}</span>
                 </div>
                 <Slider
                   value={[temperature]}

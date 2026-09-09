@@ -14,7 +14,7 @@ import PaymentStatusBadge from '@/components/payments/PaymentStatusBadge';
 const STATUS_LABEL = {
   pending: { label: 'Pendente', cls: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' },
   processing: { label: 'Em Processo', cls: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
-  ready: { label: 'Pronto', cls: 'bg-[#FF6600]/20 text-[#FF6600] border-[#FF6600]/30' },
+  ready: { label: 'Pronto', cls: 'bg-[#216FA1]/20 text-[#216FA1] border-[#216FA1]/30' },
   delivered: { label: 'Entregue', cls: 'bg-[#25D366]/20 text-[#25D366] border-[#25D366]/30' },
   finished: { label: 'Finalizado', cls: 'bg-[#25D366]/20 text-[#25D366] border-[#25D366]/30' },
   cancelled: { label: 'Cancelado', cls: 'bg-red-500/20 text-red-300 border-red-500/30' }
@@ -76,7 +76,7 @@ export default function ServiceTicketsTable({ orders, customerMap, onEdit, onDel
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Ticket className="h-5 w-5 text-[#FF6600]" /> Tickets de Serviço
+              <Ticket className="h-5 w-5 text-[#216FA1]" /> Tickets de Serviço
             </CardTitle>
             <CardDescription className="text-gray-300">Pedidos da lavanderia com prazo de entrega</CardDescription>
           </div>
@@ -132,7 +132,7 @@ export default function ServiceTicketsTable({ orders, customerMap, onEdit, onDel
                             variant="ghost"
                             title="Editar"
                             onClick={() => onEdit && onEdit(o)}
-                            className="h-8 w-8 text-gray-300 hover:bg-white/10 hover:text-[#FF6600]"
+                            className="h-8 w-8 text-gray-300 hover:bg-white/10 hover:text-[#216FA1]"
                           >
                             <Pencil className="h-4 w-4" />
                           </Button>
@@ -141,7 +141,7 @@ export default function ServiceTicketsTable({ orders, customerMap, onEdit, onDel
                             variant="ghost"
                             title="Baixar PDF"
                             onClick={() => handleDownload(o)}
-                            className="h-8 w-8 text-gray-300 hover:bg-white/10 hover:text-[#FF6600]"
+                            className="h-8 w-8 text-gray-300 hover:bg-white/10 hover:text-[#216FA1]"
                           >
                             <Download className="h-4 w-4" />
                           </Button>

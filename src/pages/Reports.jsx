@@ -14,7 +14,7 @@ import useUnitAccess, { filterRecordsByUnit, getUnitLabel } from '@/components/u
 import UnitFilterSelect from '@/components/units/UnitFilterSelect';
 import SpecializedReportsPanel from '@/components/reports/SpecializedReportsPanel';
 
-const COLORS = ['#FF6600', '#4C12A1', '#25D366', '#00C853', '#FFC107', '#33691E'];
+const COLORS = ['#216FA1', '#216FA1', '#25D366', '#00C853', '#FFC107', '#33691E'];
 
 const getSlug = (value) =>
   value
@@ -417,7 +417,7 @@ export default function ReportsPage() {
   if (isLoading) {
     return (
       <div className="flex h-96 flex-col items-center justify-center space-y-4">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FF6600]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#216FA1]" />
         <p className="text-gray-400">Carregando relatórios...</p>
       </div>
     );
@@ -519,7 +519,7 @@ export default function ReportsPage() {
           <Button variant="outline" size="sm" onClick={exportSalesToPDF} className="h-9 gap-2 border-white/20 bg-transparent text-white hover:bg-white/10">
             <Download className="h-4 w-4" /> PDF (Vendas)
           </Button>
-          <Button variant="outline" size="sm" onClick={downloadPickupsReportPdf} disabled={generatingPickupsPdf} className="h-9 gap-2 border-[#4C12A1] bg-transparent text-white hover:bg-[#4C12A1]/20">
+          <Button variant="outline" size="sm" onClick={downloadPickupsReportPdf} disabled={generatingPickupsPdf} className="h-9 gap-2 border-[#216FA1] bg-transparent text-white hover:bg-[#216FA1]/20">
             {generatingPickupsPdf ? <Loader2 className="h-4 w-4 animate-spin" /> : <Truck className="h-4 w-4" />}
             {generatingPickupsPdf ? 'Gerando...' : 'PDF (Coletas)'}
           </Button>
@@ -527,11 +527,11 @@ export default function ReportsPage() {
             {generatingUsersPdf ? <Loader2 className="h-4 w-4 animate-spin" /> : <Users className="h-4 w-4" />}
             {generatingUsersPdf ? 'Gerando...' : 'PDF (Usuários)'}
           </Button>
-          <Button variant="outline" size="sm" onClick={downloadConversationsReportPdf} disabled={generatingConvPdf} className="h-9 gap-2 border-[#FF6600] bg-transparent text-white hover:bg-[#FF6600]/20">
+          <Button variant="outline" size="sm" onClick={downloadConversationsReportPdf} disabled={generatingConvPdf} className="h-9 gap-2 border-[#216FA1] bg-transparent text-white hover:bg-[#216FA1]/20">
             {generatingConvPdf ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquare className="h-4 w-4" />}
             {generatingConvPdf ? 'Gerando...' : 'PDF (Conversas/Dia)'}
           </Button>
-          <Button size="sm" onClick={downloadChatReportPdf} disabled={generatingChatPdf} className="h-9 gap-2 bg-[#FF6600] text-white hover:bg-[#FF6600]/90">
+          <Button size="sm" onClick={downloadChatReportPdf} disabled={generatingChatPdf} className="h-9 gap-2 bg-[#216FA1] text-white hover:bg-[#216FA1]/90">
             {generatingChatPdf ? <Loader2 className="h-4 w-4 animate-spin" /> : <Bot className="h-4 w-4" />}
             {generatingChatPdf ? 'Gerando...' : 'PDF (Chat IA)'}
           </Button>
@@ -542,7 +542,7 @@ export default function ReportsPage() {
         <Card className="border-white/10 bg-white/5">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-400">Receita Total (Pagos)</CardTitle>
-            <TrendingUp className="h-4 w-4 text-[#FF6600]" />
+            <TrendingUp className="h-4 w-4 text-[#216FA1]" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-white">R$ {filteredData.totalRevenue.toFixed(2)}</div>
@@ -562,7 +562,7 @@ export default function ReportsPage() {
         <Card className="border-white/10 bg-white/5">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-400">Coletas Agendadas</CardTitle>
-            <Truck className="h-4 w-4 text-[#4C12A1]" />
+            <Truck className="h-4 w-4 text-[#216FA1]" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-white">{filteredData.totalPickups}</div>
@@ -590,11 +590,11 @@ export default function ReportsPage() {
                   <XAxis dataKey="date" stroke="#888" fontSize={12} />
                   <YAxis stroke="#888" fontSize={12} tickFormatter={(value) => `R$${value}`} />
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
-                    itemStyle={{ color: '#FF6600' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    itemStyle={{ color: '#216FA1' }}
                     formatter={(value) => [`R$ ${Number(value).toFixed(2)}`, 'Receita']}
                   />
-                  <Line type="monotone" dataKey="total" stroke="#FF6600" strokeWidth={3} dot={{ fill: '#FF6600', r: 4 }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="total" stroke="#216FA1" strokeWidth={3} dot={{ fill: '#216FA1', r: 4 }} activeDot={{ r: 6 }} />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
@@ -616,7 +616,7 @@ export default function ReportsPage() {
                   <XAxis type="number" stroke="#888" fontSize={12} />
                   <YAxis type="category" dataKey="name" stroke="#888" fontSize={12} width={120} />
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                     formatter={(value) => [`R$ ${Number(value).toFixed(2)}`, 'Receita']}
                   />
@@ -657,7 +657,7 @@ export default function ReportsPage() {
                     ))}
                   </Pie>
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     formatter={(value) => [`R$ ${Number(value).toFixed(2)}`, 'Valor']}
                   />
                 </PieChart>
@@ -692,7 +692,7 @@ export default function ReportsPage() {
                     ))}
                   </Pie>
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     formatter={(value) => [value, 'Quantidade']}
                   />
                 </PieChart>
@@ -721,11 +721,11 @@ export default function ReportsPage() {
                   <XAxis dataKey="date" stroke="#888" fontSize={12} />
                   <YAxis stroke="#888" fontSize={12} allowDecimals={false} />
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
-                    itemStyle={{ color: '#4C12A1' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    itemStyle={{ color: '#216FA1' }}
                     formatter={(value) => [value, 'Coletas']}
                   />
-                  <Line type="monotone" dataKey="total" stroke="#4C12A1" strokeWidth={3} dot={{ fill: '#4C12A1', r: 4 }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="total" stroke="#216FA1" strokeWidth={3} dot={{ fill: '#216FA1', r: 4 }} activeDot={{ r: 6 }} />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
@@ -754,11 +754,11 @@ export default function ReportsPage() {
                     labelLine={{ stroke: '#888' }}
                   >
                     {filteredData.pickupsFeeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.name === 'Grátis' ? '#25D366' : '#FF6600'} />
+                      <Cell key={`cell-${index}`} fill={entry.name === 'Grátis' ? '#25D366' : '#216FA1'} />
                     ))}
                   </Pie>
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     formatter={(value) => [value, 'Quantidade']}
                   />
                 </PieChart>
@@ -781,7 +781,7 @@ export default function ReportsPage() {
                   <XAxis type="number" stroke="#888" fontSize={12} allowDecimals={false} />
                   <YAxis type="category" dataKey="name" stroke="#888" fontSize={12} width={100} />
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                     formatter={(value) => [value, 'Coletas']}
                   />
@@ -810,7 +810,7 @@ export default function ReportsPage() {
                   <XAxis type="number" stroke="#888" fontSize={12} allowDecimals={false} />
                   <YAxis type="category" dataKey="name" stroke="#888" fontSize={12} width={120} />
                   <RechartsTooltip
-                    contentStyle={{ backgroundColor: '#1a0b36', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    contentStyle={{ backgroundColor: '#17364F', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
                     cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                     formatter={(value) => [value, 'Coletas']}
                   />

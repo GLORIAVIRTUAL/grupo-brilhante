@@ -27,7 +27,7 @@ export default function PaymentSuccess() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#1a0b36] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#17364F] flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center shadow-2xl shadow-purple-900/20">
         <motion.div 
           initial={{ scale: 0 }}
@@ -46,13 +46,13 @@ export default function PaymentSuccess() {
         {quoteId && (
           <div className="bg-white/5 rounded-lg p-4 mb-8 border border-white/5">
             <p className="text-sm text-gray-400 mb-1">Referência do Pedido</p>
-            <p className="font-mono text-[#FF6600] font-bold tracking-wider">#{quoteId.slice(0, 8).toUpperCase()}</p>
+            <p className="font-mono text-[#216FA1] font-bold tracking-wider">#{quoteId.slice(0, 8).toUpperCase()}</p>
           </div>
         )}
 
         <div className="space-y-3">
           <Link to="/Landing">
-            <Button className="w-full bg-[#FF6600] hover:bg-[#ff7b24] text-white h-12 text-lg">
+            <Button className="w-full bg-[#216FA1] hover:bg-[#ff7b24] text-white h-12 text-lg">
               <Home className="w-5 h-5 mr-2" />
               Voltar ao Início
             </Button>

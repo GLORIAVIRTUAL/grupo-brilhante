@@ -141,27 +141,27 @@ export default function Admin() {
 
   if (authorized !== true) {
     return (
-      <div className="min-h-screen bg-[#1a0b36] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#FF6600] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#17364F] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#216FA1] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#1a0b36] text-white font-sans selection:bg-[#FF6600] selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[#17364F] text-white font-sans selection:bg-[#216FA1] selection:text-white relative overflow-hidden">
         {/* Background Elements */}
-        <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#4C12A1] blur-[150px] opacity-40 pointer-events-none" />
-        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#FF6600] blur-[150px] opacity-20 pointer-events-none" />
+        <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#216FA1] blur-[150px] opacity-40 pointer-events-none" />
+        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#216FA1] blur-[150px] opacity-20 pointer-events-none" />
 
         {/* Header */}
         <header className="relative z-10 border-b border-white/10 bg-white/5 backdrop-blur-xl">
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                     <div className="w-9 h-9 bg-gradient-to-br from-[#FF6600] to-orange-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/20">
+                     <div className="w-9 h-9 bg-gradient-to-br from-[#216FA1] to-orange-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/20">
                         <ShieldCheck className="text-white w-5 h-5" />
                      </div>
                      <span className="font-bold text-lg tracking-tight">
-                        ADMIN<span className="text-[#FF6600]">5àsec</span>
+                        ADMIN<span className="text-[#216FA1]">5àsec</span>
                      </span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -184,7 +184,7 @@ export default function Admin() {
                   <p className="text-gray-400 mt-1">Visão geral das unidades e saúde financeira da rede.</p>
                 </div>
                 <Link to="/register-unit">
-                  <Button className="bg-[#FF6600] hover:bg-[#e55c00] text-white shadow-lg shadow-orange-500/20">
+                  <Button className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white shadow-lg shadow-orange-500/20">
                     <Plus className="w-4 h-4 mr-2" />
                     Nova Unidade
                   </Button>
@@ -264,7 +264,7 @@ export default function Admin() {
                                 <TableRow>
                                     <TableCell colSpan={6} className="h-32 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
-                                            <div className="w-6 h-6 border-2 border-[#FF6600] border-t-transparent rounded-full animate-spin" />
+                                            <div className="w-6 h-6 border-2 border-[#216FA1] border-t-transparent rounded-full animate-spin" />
                                             <p>Carregando unidades...</p>
                                         </div>
                                     </TableCell>
@@ -280,8 +280,8 @@ export default function Admin() {
                                     <TableRow key={unit.id} className="border-white/5 hover:bg-white/5 transition-colors group">
                                         <TableCell className="pl-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center border border-white/10 group-hover:border-[#FF6600]/30 transition-colors">
-                                                    <Building2 className="w-5 h-5 text-gray-400 group-hover:text-[#FF6600]" />
+                                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center border border-white/10 group-hover:border-[#216FA1]/30 transition-colors">
+                                                    <Building2 className="w-5 h-5 text-gray-400 group-hover:text-[#216FA1]" />
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="font-medium text-white">{unit.name}</span>
@@ -311,7 +311,7 @@ export default function Admin() {
                                                         <MoreHorizontal className="h-4 w-4" />
                                                     </Button>
                                                 </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="bg-[#1a0b36] border-white/10 text-white shadow-xl w-48">
+                                                <DropdownMenuContent align="end" className="bg-[#17364F] border-white/10 text-white shadow-xl w-48">
                                                     <DropdownMenuLabel>Gerenciar</DropdownMenuLabel>
                                                     <DropdownMenuItem className="focus:bg-white/10 cursor-pointer gap-2">
                                                         <LayoutDashboard className="w-4 h-4" /> Acessar Painel

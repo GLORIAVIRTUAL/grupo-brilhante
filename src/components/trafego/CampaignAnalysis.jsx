@@ -133,10 +133,10 @@ Tom: profissional, direto, baseado em números. Sem termos vagos como "melhorar 
     'bg-blue-500/15 text-blue-400 border-blue-500/30';
 
   return (
-    <div className="rounded-2xl border border-[#FF6600]/30 bg-gradient-to-br from-[#4C12A1]/30 to-[#FF6600]/10 p-5 space-y-4">
+    <div className="rounded-2xl border border-[#216FA1]/30 bg-gradient-to-br from-[#216FA1]/30 to-[#216FA1]/10 p-5 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Brain className="w-6 h-6 text-[#FF6600]" />
+          <Brain className="w-6 h-6 text-[#216FA1]" />
           <div>
             <div className="font-bold text-white text-lg">Análise IA — Gestor de Tráfego</div>
             <div className="text-xs text-gray-400">Diagnóstico profissional com recomendações acionáveis</div>
@@ -156,7 +156,7 @@ Tom: profissional, direto, baseado em números. Sem termos vagos como "melhorar 
               ⚠️ Não há entregas no período. A IA vai analisar a estrutura da conta e recomendar o que fazer para ativar resultados.
             </div>
           )}
-          <Button onClick={runAnalysis} disabled={loading || (insights.length === 0 && campaigns.length === 0)} className="w-full h-12 bg-[#FF6600] hover:bg-[#e55c00]">
+          <Button onClick={runAnalysis} disabled={loading || (insights.length === 0 && campaigns.length === 0)} className="w-full h-12 bg-[#216FA1] hover:bg-[#2d8ac4]">
             {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Brain className="w-5 h-5 mr-2" />}
             {loading ? 'Analisando como um gestor profissional...' : hasData ? 'Gerar análise completa do desempenho' : 'Diagnosticar conta e recomendar próximos passos'}
           </Button>
@@ -219,8 +219,8 @@ Tom: profissional, direto, baseado em números. Sem termos vagos como "melhorar 
           </div>
 
           {/* Recomendações */}
-          <div className="rounded-xl border border-[#FF6600]/30 bg-[#FF6600]/5 p-4">
-            <div className="flex items-center gap-2 text-[#FF6600] font-semibold mb-3"><Lightbulb className="w-4 h-4" /> Recomendações acionáveis</div>
+          <div className="rounded-xl border border-[#216FA1]/30 bg-[#216FA1]/5 p-4">
+            <div className="flex items-center gap-2 text-[#216FA1] font-semibold mb-3"><Lightbulb className="w-4 h-4" /> Recomendações acionáveis</div>
             <div className="space-y-3">
               {analysis.recommendations?.map((r, i) => (
                 <div key={i} className="rounded-lg bg-black/30 border border-white/10 p-3">
@@ -242,18 +242,18 @@ Tom: profissional, direto, baseado em números. Sem termos vagos como "melhorar 
           {/* Realocação de orçamento */}
           {analysis.budget_reallocation && (
             <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-              <div className="flex items-center gap-2 text-white font-semibold mb-2"><Target className="w-4 h-4 text-[#FF6600]" /> Realocação de orçamento sugerida</div>
+              <div className="flex items-center gap-2 text-white font-semibold mb-2"><Target className="w-4 h-4 text-[#216FA1]" /> Realocação de orçamento sugerida</div>
               <p className="text-sm text-gray-300 leading-relaxed">{analysis.budget_reallocation}</p>
             </div>
           )}
 
           {/* Próximos passos */}
-          <div className="rounded-xl border border-[#4C12A1]/30 bg-[#4C12A1]/10 p-4">
-            <div className="flex items-center gap-2 text-white font-semibold mb-2"><Zap className="w-4 h-4 text-[#FF6600]" /> Próximos passos (faça hoje)</div>
+          <div className="rounded-xl border border-[#216FA1]/30 bg-[#216FA1]/10 p-4">
+            <div className="flex items-center gap-2 text-white font-semibold mb-2"><Zap className="w-4 h-4 text-[#216FA1]" /> Próximos passos (faça hoje)</div>
             <ol className="space-y-1.5">
               {analysis.next_steps?.map((s, i) => (
                 <li key={i} className="text-sm text-gray-200 flex gap-2">
-                  <span className="text-[#FF6600] font-bold flex-shrink-0">{i + 1}.</span> {s}
+                  <span className="text-[#216FA1] font-bold flex-shrink-0">{i + 1}.</span> {s}
                 </li>
               ))}
             </ol>

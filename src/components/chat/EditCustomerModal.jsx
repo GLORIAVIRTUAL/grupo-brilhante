@@ -52,10 +52,10 @@ export default function EditCustomerModal({ isOpen, onClose, customer, onSaved }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white sm:max-w-[440px]">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white sm:max-w-[440px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <UserCog className="w-5 h-5 text-[#FF6600]" />
+            <UserCog className="w-5 h-5 text-[#216FA1]" />
             Cadastrar / Editar Cliente
           </DialogTitle>
         </DialogHeader>
@@ -66,7 +66,7 @@ export default function EditCustomerModal({ isOpen, onClose, customer, onSaved }
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Ex: Maria Silva"
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF6600]/50"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#216FA1]/50"
             />
           </div>
           <div className="space-y-2">
@@ -75,7 +75,7 @@ export default function EditCustomerModal({ isOpen, onClose, customer, onSaved }
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="51999999999"
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF6600]/50"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#216FA1]/50"
             />
             <p className="text-[11px] text-gray-500">
               Necessário para conseguir enviar mensagens a este contato.
@@ -85,7 +85,7 @@ export default function EditCustomerModal({ isOpen, onClose, customer, onSaved }
             <Button type="button" variant="ghost" onClick={onClose} className="text-white hover:bg-white/10">
               Cancelar
             </Button>
-            <Button type="button" onClick={handleSave} disabled={saving} className="bg-[#FF6600] hover:bg-[#e55c00] text-white">
+            <Button type="button" onClick={handleSave} disabled={saving} className="bg-[#216FA1] hover:bg-[#2d8ac4] text-white">
               {saving ? 'Salvando...' : 'Salvar'}
             </Button>
           </div>

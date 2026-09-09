@@ -122,7 +122,7 @@ export default function ProspectionManager() {
         <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Building2 className="h-5 w-5 text-[#FF6600]" /> Prospecção de Empresas
+              <Building2 className="h-5 w-5 text-[#216FA1]" /> Prospecção de Empresas
             </CardTitle>
             <p className="mt-1 text-sm text-gray-400">Cadastre empresas e envie disparos via WhatsApp.</p>
           </div>
@@ -136,7 +136,7 @@ export default function ProspectionManager() {
             <Button onClick={() => setIsDispatchOpen(true)} variant="outline" className="gap-2 border-[#25D366] bg-transparent text-white hover:bg-[#25D366]/20">
               <Send className="h-4 w-4" /> Disparar {selectedIds.length > 0 ? `(${selectedIds.length})` : ''}
             </Button>
-            <Button onClick={openNew} className="gap-2 bg-[#FF6600] hover:bg-[#e55c00]">
+            <Button onClick={openNew} className="gap-2 bg-[#216FA1] hover:bg-[#2d8ac4]">
               <Plus className="h-4 w-4" /> Nova Empresa
             </Button>
           </div>
@@ -153,7 +153,7 @@ export default function ProspectionManager() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-[#FF6600]" /></div>
+            <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-[#216FA1]" /></div>
           ) : filtered.length === 0 ? (
             <p className="py-10 text-center text-gray-500">Nenhuma empresa cadastrada.</p>
           ) : (
@@ -162,14 +162,14 @@ export default function ProspectionManager() {
                 <div
                   key={p.id}
                   className={`flex items-center gap-3 rounded-lg border p-3 transition-colors ${
-                    selectedIds.includes(p.id) ? 'border-[#FF6600]/40 bg-[#FF6600]/10' : 'border-white/10 bg-white/5'
+                    selectedIds.includes(p.id) ? 'border-[#216FA1]/40 bg-[#216FA1]/10' : 'border-white/10 bg-white/5'
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={selectedIds.includes(p.id)}
                     onChange={() => toggleSelect(p.id)}
-                    className="h-4 w-4 accent-[#FF6600]"
+                    className="h-4 w-4 accent-[#216FA1]"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -203,7 +203,7 @@ export default function ProspectionManager() {
       </Card>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="bg-[#1a0b36] border-white/10 text-white max-w-lg">
+        <DialogContent className="bg-[#17364F] border-white/10 text-white max-w-lg">
           <DialogHeader>
             <DialogTitle>{editing ? 'Editar Empresa' : 'Nova Empresa'}</DialogTitle>
           </DialogHeader>
@@ -247,7 +247,7 @@ export default function ProspectionManager() {
               <Label>Observações</Label>
               <Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className="bg-white/5 border-white/10" />
             </div>
-            <Button onClick={handleSave} disabled={saving} className="w-full bg-[#FF6600] hover:bg-[#e55c00]">
+            <Button onClick={handleSave} disabled={saving} className="w-full bg-[#216FA1] hover:bg-[#2d8ac4]">
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : (editing ? 'Salvar Alterações' : 'Cadastrar')}
             </Button>
           </div>

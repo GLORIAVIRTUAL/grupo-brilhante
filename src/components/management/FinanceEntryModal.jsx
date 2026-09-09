@@ -53,7 +53,7 @@ export default function FinanceEntryModal({ open, onClose, onSave, onSelectIncom
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="border-white/10 bg-[#1a0b36] text-white sm:max-w-md">
+      <DialogContent className="border-white/10 bg-[#17364F] text-white sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Novo Lançamento Financeiro</DialogTitle>
         </DialogHeader>
@@ -141,7 +141,7 @@ export default function FinanceEntryModal({ open, onClose, onSave, onSelectIncom
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} className="border-white/20 bg-transparent text-white hover:bg-white/10">Cancelar</Button>
-          <Button onClick={handleSave} disabled={saving || !form.amount} className="bg-[#FF6600] hover:bg-[#FF6600]/90">
+          <Button onClick={handleSave} disabled={saving || !form.amount} className="bg-[#216FA1] hover:bg-[#216FA1]/90">
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Salvar'}
           </Button>
         </DialogFooter>

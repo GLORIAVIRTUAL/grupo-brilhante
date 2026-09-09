@@ -11,7 +11,7 @@ export default function CustomerUnitCounts({ total, unitCounts, unassignedCount 
       </div>
       {unitCounts.map((unit) => (
         <div key={unit.id} className="rounded-lg border border-white/10 bg-white/5 p-3">
-          <Building2 className="mb-2 h-4 w-4 text-[#FF6600]" />
+          <Building2 className="mb-2 h-4 w-4 text-[#216FA1]" />
           <p className="text-xl font-bold text-white">{unit.count}</p>
           <p className="truncate text-xs text-white/50" title={unit.name}>{unit.name}</p>
         </div>

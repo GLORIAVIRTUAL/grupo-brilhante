@@ -143,7 +143,7 @@ export default function CardFeesManager() {
       </CardContent>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-lg max-h-[85vh] overflow-y-auto">
+        <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editing ? 'Editar Bandeira' : 'Nova Bandeira'}</DialogTitle>
           </DialogHeader>

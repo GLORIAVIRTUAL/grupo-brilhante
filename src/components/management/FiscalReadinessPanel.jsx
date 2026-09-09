@@ -287,7 +287,7 @@ export default function FiscalReadinessPanel({ profiles = [], documents = [], or
 
       {cancelTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setCancelTarget(null)}>
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#1a0b36] p-6" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#17364F] p-6" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold text-white">Cancelar NFSe na Focus NFe</h3>
             <p className="mt-1 text-sm text-white/50">Informe a justificativa do cancelamento (mínimo 15 caracteres). A NFSe será cancelada junto à prefeitura.</p>
             <textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} rows={3} className="mt-4 w-full rounded-md border border-white/10 bg-black/20 p-3 text-sm text-white" placeholder="Ex: Erro na descrição do serviço, solicitado pelo cliente..." />

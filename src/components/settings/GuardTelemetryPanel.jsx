@@ -68,7 +68,7 @@ export default function GuardTelemetryPanel() {
                 size="sm"
                 variant={days === p.days ? 'default' : 'outline'}
                 onClick={() => setDays(p.days)}
-                className={days === p.days ? 'bg-[#FF6600] hover:bg-[#ff7b24] text-white' : 'border-white/10 text-gray-300 hover:bg-white/5'}
+                className={days === p.days ? 'bg-[#216FA1] hover:bg-[#ff7b24] text-white' : 'border-white/10 text-gray-300 hover:bg-white/5'}
               >
                 {p.label}
               </Button>
@@ -80,7 +80,7 @@ export default function GuardTelemetryPanel() {
         </CardHeader>
         <CardContent>
           {loading ? (
-            <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+            <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>
           ) : ranking.length === 0 ? (
             <p className="text-sm text-gray-400 py-4">Nenhum erro registrado neste período. 🎉</p>
           ) : (
@@ -91,7 +91,7 @@ export default function GuardTelemetryPanel() {
                     <p className="text-sm font-medium">{GUARD_LABELS[guard] || guard}</p>
                     <p className="text-xs text-gray-500">{guard}</p>
                   </div>
-                  <span className="text-lg font-bold text-[#FF6600]">{count}</span>
+                  <span className="text-lg font-bold text-[#216FA1]">{count}</span>
                 </div>
               ))}
               <p className="text-xs text-gray-500 pt-2">Total no período: {events.length} correções.</p>
@@ -107,7 +107,7 @@ export default function GuardTelemetryPanel() {
         </CardHeader>
         <CardContent>
           {loading ? (
-            <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+            <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>
           ) : events.length === 0 ? (
             <p className="text-sm text-gray-400">Sem ocorrências.</p>
           ) : (

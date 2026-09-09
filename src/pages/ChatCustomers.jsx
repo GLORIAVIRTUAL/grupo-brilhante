@@ -46,12 +46,12 @@ export default function ChatCustomersPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-3">
-            <Users className="w-8 h-8 text-[#FF6600]" />
+            <Users className="w-8 h-8 text-[#216FA1]" />
             Clientes do Chat
           </h1>
           <p className="text-gray-400 mt-1">Lista de todos os clientes únicos que iniciaram conversa</p>
         </div>
-        <Button onClick={downloadCSV} className="bg-[#FF6600] hover:bg-[#e55c00] gap-2">
+        <Button onClick={downloadCSV} className="bg-[#216FA1] hover:bg-[#2d8ac4] gap-2">
           <Download className="w-4 h-4" /> Exportar CSV
         </Button>
       </div>

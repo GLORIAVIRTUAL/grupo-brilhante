@@ -196,16 +196,16 @@ ${customMessage ? `${customMessage}\n\n` : ''}Para aprovar, responda "Aprovar".`
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-5xl max-h-[90vh] flex flex-col">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-5xl max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-             <Calculator className="w-5 h-5 text-[#FF6600]" />
+             <Calculator className="w-5 h-5 text-[#216FA1]" />
              Revisão de Orçamento
           </DialogTitle>
         </DialogHeader>
 
         {loading ? (
-          <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#FF6600]" /></div>
+          <div className="flex justify-center p-8"><Loader2 className="animate-spin text-[#216FA1]" /></div>
         ) : !quote ? (
           <div className="p-8 text-center text-gray-400">
              <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -219,7 +219,7 @@ ${customMessage ? `${customMessage}\n\n` : ''}Para aprovar, responda "Aprovar".`
                    <span className="text-gray-400">Cliente:</span> <span className="font-bold">{customer?.full_name}</span>
                 </div>
                 <div>
-                   <span className="text-gray-400">Status Atual:</span> <span className="bg-[#FF6600]/20 text-[#FF6600] px-2 py-0.5 rounded text-xs ml-2">{quote.status}</span>
+                   <span className="text-gray-400">Status Atual:</span> <span className="bg-[#216FA1]/20 text-[#216FA1] px-2 py-0.5 rounded text-xs ml-2">{quote.status}</span>
                 </div>
              </div>
 
@@ -227,7 +227,7 @@ ${customMessage ? `${customMessage}\n\n` : ''}Para aprovar, responda "Aprovar".`
              <div className="flex-1 overflow-hidden flex flex-col">
                 <div className="flex justify-between items-center mb-2">
                    <Label>Itens do Pedido</Label>
-                   <Button size="sm" variant="ghost" onClick={handleAddItem} className="h-8 text-[#FF6600] hover:text-white hover:bg-[#FF6600]/20">
+                   <Button size="sm" variant="ghost" onClick={handleAddItem} className="h-8 text-[#216FA1] hover:text-white hover:bg-[#216FA1]/20">
                       <Plus className="w-4 h-4 mr-1" /> Adicionar Item
                    </Button>
                 </div>
@@ -307,7 +307,7 @@ ${customMessage ? `${customMessage}\n\n` : ''}Para aprovar, responda "Aprovar".`
                     />
                 </div>
 
-                <div className="flex justify-between items-center text-lg font-bold text-[#FF6600] pt-2 border-t border-white/10">
+                <div className="flex justify-between items-center text-lg font-bold text-[#216FA1] pt-2 border-t border-white/10">
                    <span>Total Final:</span>
                    <span>R$ {calculateTotal().toFixed(2)}</span>
                 </div>
@@ -320,7 +320,7 @@ ${customMessage ? `${customMessage}\n\n` : ''}Para aprovar, responda "Aprovar".`
           <Button 
             onClick={handleSendQuote} 
             disabled={loading || sending || !quote}
-            className="bg-[#4C12A1] hover:bg-[#5d1dbf] text-white"
+            className="bg-[#216FA1] hover:bg-[#5d1dbf] text-white"
           >
             {sending ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />}
             Enviar Orçamento

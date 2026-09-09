@@ -10,7 +10,7 @@ export default function SlideShell({ eyebrow, title, subtitle, children, footnot
       className="w-full max-w-6xl mx-auto px-6 md:px-10 py-10"
     >
       {eyebrow && (
-        <span className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-[#FF6600]/15 text-[#FF6600] border border-[#FF6600]/30">
+        <span className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-[#216FA1]/15 text-[#216FA1] border border-[#216FA1]/30">
           {eyebrow}
         </span>
       )}

@@ -196,7 +196,7 @@ export default function LandingQuoteForm({ unitId }) {
             ) : (
               filteredProducts.slice(0, 20).map((prod) => (
                 <button key={prod.id} type="button" onMouseDown={(e) => { e.preventDefault(); addPiece(prod); }} className="lq-search-option">
-                  <Shirt className="w-4 h-4 text-[#FF6600] shrink-0" />
+                  <Shirt className="w-4 h-4 text-[#216FA1] shrink-0" />
                   <span className="text-xs font-medium truncate flex-1">{prod.name}</span>
                   {Number(prod.price) > 0 ? <span className="text-[10px] text-[#806889]">{fmt(prod.price)}</span> : null}
                   <Plus className="w-3.5 h-3.5 text-[#806889]" />
@@ -216,7 +216,7 @@ export default function LandingQuoteForm({ unitId }) {
               <motion.div key={p.line_id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }} className="lq-piece">
                 <div className="lq-piece-head">
                   <button type="button" onClick={() => setExpandedId(open ? null : p.line_id)} className="lq-piece-toggle">
-                    <Shirt className="w-4 h-4 text-[#FF6600] shrink-0" />
+                    <Shirt className="w-4 h-4 text-[#216FA1] shrink-0" />
                     <span className="text-sm font-medium truncate">{i + 1}. {p.garment_type}</span>
                     <ChevronDown className={`w-4 h-4 text-[#806889] transition-transform ${open ? 'rotate-180' : ''}`} />
                   </button>

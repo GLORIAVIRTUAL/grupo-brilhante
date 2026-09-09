@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 265 65% 13%; /* #1a0b36 */
+    --background: 265 65% 13%; /* #17364F */
     --foreground: 0 0% 100%;
     
     --card: 265 65% 15%;
@@ -13,10 +13,10 @@
     --popover: 265 65% 13%;
     --popover-foreground: 0 0% 100%;
  
-    --primary: 24 100% 50%; /* #FF6600 */
+    --primary: 24 100% 50%; /* #216FA1 */
     --primary-foreground: 0 0% 100%;
  
-    --secondary: 264 79% 35%; /* #4C12A1 */
+    --secondary: 264 79% 35%; /* #216FA1 */
     --secondary-foreground: 0 0% 100%;
  
     --muted: 265 30% 25%;
@@ -35,7 +35,7 @@
 }
 
 body {
-  @apply bg-[#1a0b36] text-white;
+  @apply bg-[#17364F] text-white;
 }
 
 /* Custom Scrollbar for the "High Tech" feel */

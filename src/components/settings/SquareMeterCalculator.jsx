@@ -125,7 +125,7 @@ export default function SquareMeterCalculator() {
                   onClick={() => { setDraft(pricing); setEditing(false); }}>
                   Cancelar
                 </Button>
-                <Button size="sm" className="h-8 bg-[#FF6600] hover:bg-[#e55c00] gap-1" onClick={handleSave} disabled={saving}>
+                <Button size="sm" className="h-8 bg-[#216FA1] hover:bg-[#2d8ac4] gap-1" onClick={handleSave} disabled={saving}>
                   <Save className="w-3.5 h-3.5" /> {saving ? 'Salvando...' : 'Salvar'}
                 </Button>
               </div>
@@ -148,7 +148,7 @@ export default function SquareMeterCalculator() {
                     className="bg-black/30 border-white/10 h-9"
                   />
                 ) : (
-                  <div className="text-lg font-bold text-[#FF6600]">{brl(pricing[f.key])}</div>
+                  <div className="text-lg font-bold text-[#216FA1]">{brl(pricing[f.key])}</div>
                 )}
               </div>
             ))}
@@ -188,7 +188,7 @@ export default function SquareMeterCalculator() {
                   onClick={() => setCortinaTipo(o.t)}
                   className={`p-3 rounded-lg border text-sm transition-colors ${
                     cortinaTipo === o.t
-                      ? 'bg-[#FF6600]/20 border-[#FF6600] text-white'
+                      ? 'bg-[#216FA1]/20 border-[#216FA1] text-white'
                       : 'bg-white/5 border-white/10 text-gray-300 hover:border-white/30'
                   }`}
                 >
@@ -241,7 +241,7 @@ export default function SquareMeterCalculator() {
                 <span className="text-gray-600">×</span>
                 <span className="text-white font-medium">{brl(result.unit)}/m²</span>
               </div>
-              <div className="text-2xl font-bold text-[#FF6600]">
+              <div className="text-2xl font-bold text-[#216FA1]">
                 Valor da lavagem: {brl(result.total)}
               </div>
               <div className="text-xs text-gray-400">Prazo de entrega: {product.delivery}</div>

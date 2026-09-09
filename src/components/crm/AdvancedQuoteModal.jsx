@@ -481,7 +481,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a0b36] border border-white/10 text-white max-w-6xl h-[90vh] flex flex-col p-0 overflow-hidden">
+      <DialogContent className="bg-[#17364F] border border-white/10 text-white max-w-6xl h-[90vh] flex flex-col p-0 overflow-hidden">
         <div className="p-6 border-b border-white/10 bg-white/5 flex justify-between items-center">
             <div>
                 <DialogTitle className="text-xl">Novo orçamento manual</DialogTitle>
@@ -495,8 +495,8 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
             <div className="hidden items-center gap-2 sm:flex">
                 {[1, 2, 3, 4].map((number, index) => (
                     <React.Fragment key={number}>
-                        {index > 0 && <div className={`h-0.5 w-8 ${step >= number ? 'bg-[#FF6600]' : 'bg-gray-600'}`} />}
-                        <div className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${step >= number ? 'bg-[#FF6600] text-white' : 'bg-gray-700 text-gray-400'}`}>{number}</div>
+                        {index > 0 && <div className={`h-0.5 w-8 ${step >= number ? 'bg-[#216FA1]' : 'bg-gray-600'}`} />}
+                        <div className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${step >= number ? 'bg-[#216FA1] text-white' : 'bg-gray-700 text-gray-400'}`}>{number}</div>
                     </React.Fragment>
                 ))}
             </div>
@@ -591,19 +591,19 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                         <div 
                                             key={product.id} 
                                             onClick={() => addToCart(product)}
-                                            className="bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer hover:border-[#FF6600] transition-all group relative overflow-hidden"
+                                            className="bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer hover:border-[#216FA1] transition-all group relative overflow-hidden"
                                         >
                                             <div className="flex justify-between items-start mb-2">
-                                                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#FF6600] transition-colors">
+                                                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#216FA1] transition-colors">
                                                     <ProductIcon product={product} className="w-6 h-6" />
                                                 </div>
-                                                <span className="font-bold text-[#FF6600]">R$ {product.price}</span>
+                                                <span className="font-bold text-[#216FA1]">R$ {product.price}</span>
                                             </div>
                                             <h3 className="font-medium text-white truncate">{product.name}</h3>
                                             <p className="text-xs text-gray-500 line-clamp-2 mt-1">{product.description}</p>
                                             
-                                            <div className="absolute inset-0 bg-[#FF6600]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                <Plus className="w-8 h-8 text-[#FF6600]" />
+                                            <div className="absolute inset-0 bg-[#216FA1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <Plus className="w-8 h-8 text-[#216FA1]" />
                                             </div>
                                         </div>
                                     ))}
@@ -622,7 +622,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                             <TabsTrigger 
                                                 key={cat} 
                                                 value={cat}
-                                                className="data-[state=active]:bg-[#FF6600] data-[state=active]:text-white bg-white/5 border border-white/10 px-4 py-2 rounded-full"
+                                                className="data-[state=active]:bg-[#216FA1] data-[state=active]:text-white bg-white/5 border border-white/10 px-4 py-2 rounded-full"
                                             >
                                                 {cat}
                                             </TabsTrigger>
@@ -638,19 +638,19 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                                     <div 
                                                         key={product.id} 
                                                         onClick={() => addToCart(product)}
-                                                        className="bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer hover:border-[#FF6600] transition-all group relative overflow-hidden"
+                                                        className="bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer hover:border-[#216FA1] transition-all group relative overflow-hidden"
                                                     >
                                                         <div className="flex justify-between items-start mb-2">
-                                                            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#FF6600] transition-colors">
+                                                            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#216FA1] transition-colors">
                                                                 <ProductIcon product={product} className="w-6 h-6" />
                                                             </div>
-                                                            <span className="font-bold text-[#FF6600]">R$ {product.price}</span>
+                                                            <span className="font-bold text-[#216FA1]">R$ {product.price}</span>
                                                         </div>
                                                         <h3 className="font-medium text-white truncate">{product.name}</h3>
                                                         <p className="text-xs text-gray-500 line-clamp-2 mt-1">{product.description}</p>
                                                         
-                                                        <div className="absolute inset-0 bg-[#FF6600]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                            <Plus className="w-8 h-8 text-[#FF6600]" />
+                                                        <div className="absolute inset-0 bg-[#216FA1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                            <Plus className="w-8 h-8 text-[#216FA1]" />
                                                         </div>
                                                     </div>
                                                 ))}
@@ -666,7 +666,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                     <div className="w-80 bg-black/20 flex flex-col">
                         <div className="p-4 border-b border-white/10 bg-white/5">
                             <h3 className="font-bold flex items-center gap-2">
-                                <ShoppingCart className="w-4 h-4 text-[#FF6600]" />
+                                <ShoppingCart className="w-4 h-4 text-[#216FA1]" />
                                 Carrinho ({cart.reduce((a, b) => a + b.qty, 0)})
                             </h3>
                         </div>
@@ -702,7 +702,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                         <div className="p-4 border-t border-white/10 bg-white/5 space-y-4">
                             <div className="flex justify-between items-end">
                                 <span className="text-gray-400">Total Estimado</span>
-                                <span className="text-2xl font-bold text-[#FF6600]">R$ {cartTotal.toFixed(2)}</span>
+                                <span className="text-2xl font-bold text-[#216FA1]">R$ {cartTotal.toFixed(2)}</span>
                             </div>
                         </div>
                     </div>
@@ -746,7 +746,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                         </div>
                         <div className="flex justify-between py-2 border-b border-white/10">
                             <span className="text-gray-400">Total</span>
-                            <span className="font-bold text-[#FF6600]">R$ {cartTotal.toFixed(2)}</span>
+                            <span className="font-bold text-[#216FA1]">R$ {cartTotal.toFixed(2)}</span>
                         </div>
 
                         <div className="mt-4 max-h-44 space-y-2 overflow-y-auto pr-1">
@@ -773,7 +773,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                         onClick={() => setPaymentMethod(method.id)}
                                         className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${
                                             paymentMethod === method.id 
-                                            ? 'bg-[#FF6600]/20 border-[#FF6600] text-white' 
+                                            ? 'bg-[#216FA1]/20 border-[#216FA1] text-white' 
                                             : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                                         }`}
                                     >
@@ -797,7 +797,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                                     onClick={() => { setMachineType(t.id); setCardBrandId(''); }}
                                                     className={`p-2.5 rounded-lg border text-sm transition-all ${
                                                         machineType === t.id
-                                                        ? 'bg-[#FF6600]/20 border-[#FF6600] text-white'
+                                                        ? 'bg-[#216FA1]/20 border-[#216FA1] text-white'
                                                         : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                                                     }`}
                                                 >
@@ -863,7 +863,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                         </button>
 
                         <div className="mt-6 space-y-4 border-t border-white/10 pt-4">
-                            <Label className="text-[#FF6600]">Tempos de Processo (opcional)</Label>
+                            <Label className="text-[#216FA1]">Tempos de Processo (opcional)</Label>
                             <TimeField label="Lavagem" value={times.wash_time} onChange={(v) => setTimes({ ...times, wash_time: v })} />
                             <TimeField label="Secagem" value={times.dry_time} onChange={(v) => setTimes({ ...times, dry_time: v })} />
                             <TimeField label="Lavagem a Seco" value={times.dry_clean_time} onChange={(v) => setTimes({ ...times, dry_clean_time: v })} />
@@ -885,15 +885,15 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                     </div>
                     <div className="bg-white/5 rounded-2xl p-6 w-full max-w-lg border border-white/10 text-center">
                         <p className="text-sm text-gray-400">Número do ticket</p>
-                        <p className="mt-2 text-2xl font-bold text-[#FF6600]">{createdOrder?.ticket_number || createdOrder?.id?.slice(0, 8) || 'Criado'}</p>
+                        <p className="mt-2 text-2xl font-bold text-[#216FA1]">{createdOrder?.ticket_number || createdOrder?.id?.slice(0, 8) || 'Criado'}</p>
                         <p className="mt-4 text-sm text-gray-400">
                             {paymentReceived ? 'Pagamento registrado após confirmação explícita do funcionário.' : 'Pagamento pendente. Gere um link ou receba no caixa quando necessário.'}
                         </p>
                     </div>
 
                     {paymentLinkResult && (
-                        <div className="bg-white/5 rounded-2xl p-6 w-full max-w-lg border border-[#FF6600]/30 space-y-4">
-                            <h3 className="text-lg font-bold text-[#FF6600] flex items-center gap-2">
+                        <div className="bg-white/5 rounded-2xl p-6 w-full max-w-lg border border-[#216FA1]/30 space-y-4">
+                            <h3 className="text-lg font-bold text-[#216FA1] flex items-center gap-2">
                                 <CreditCard className="w-5 h-5" />
                                 {paymentLinkResult.billing_type === 'pix' ? 'Pix Gerado — Envie ao Cliente' : 'Link de Pagamento Gerado'}
                             </h3>
@@ -957,7 +957,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                         </Button>
                                     </div>
                                     <a href={paymentLinkResult.url} target="_blank" rel="noopener noreferrer" className="block">
-                                        <Button type="button" className="w-full bg-[#FF6600] hover:bg-[#ff7b24]">
+                                        <Button type="button" className="w-full bg-[#216FA1] hover:bg-[#ff7b24]">
                                             Abrir Link de Pagamento
                                         </Button>
                                     </a>
@@ -999,7 +999,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
             {step < 4 && (
                 <Button 
                     onClick={handleNextStep}
-                    className="bg-[#FF6600] hover:bg-[#ff7b24] gap-2"
+                    className="bg-[#216FA1] hover:bg-[#ff7b24] gap-2"
                     disabled={loading || (step === 1 && !customerPhone) || (step === 2 && garmentItems.length === 0)}
                 >
                     {loading && step === 2 ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
@@ -1015,7 +1015,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
             )}
             
             {step === 5 && (
-                <Button onClick={() => { onSuccess(); onClose(); }} className="bg-[#FF6600] hover:bg-[#ff7b24] gap-2 px-8">
+                <Button onClick={() => { onSuccess(); onClose(); }} className="bg-[#216FA1] hover:bg-[#ff7b24] gap-2 px-8">
                     Concluir
                 </Button>
             )}
