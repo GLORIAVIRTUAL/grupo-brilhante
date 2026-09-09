@@ -291,9 +291,9 @@ export default function Layout({ children }) {
         <aside className="w-20 lg:w-72 min-h-screen bg-white/5 backdrop-blur-xl border-r border-white/10 flex flex-col transition-all duration-300">
           <div className="px-3 py-4 flex items-center justify-center lg:justify-start gap-3">
             <img 
-              src="https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/bbf6557c1_Untitled110x40px2.png"
+              src="https://media.base44.com/images/public/6aa0eab298ecefdbd48dda38/b01404860_Untitleddesign100.png"
               alt="BRILHANTE LIMPEZA & TERCEIRIZAÇÃO"
-              className="h-14 lg:h-20 w-auto object-contain mx-auto lg:mx-0 [filter:brightness(0)_invert(1)]"
+              className="h-14 lg:h-20 w-auto object-contain mx-auto lg:mx-0 mix-blend-screen [filter:brightness(1.6)_saturate(1.3)]"
             />
           </div>
 
