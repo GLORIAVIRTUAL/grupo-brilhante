@@ -3,6 +3,7 @@ import { Building2, MapPin, Phone, Plus, RefreshCw, Search, UserRoundCog } from 
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { hasPermission } from '@/lib/accessControl';
+import { autoReason } from '@/lib/autoReason';
 
 const inputClass = 'w-full rounded-xl border border-white/10 bg-black/15 px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/25 focus:border-sky-400/60';
 const SEGMENTS = [['hospital', 'Hospital'], ['hotel', 'Hotel'], ['restaurant', 'Restaurante'], ['industry', 'Indústria'], ['retail', 'Varejo'], ['condominium', 'Condomínio'], ['office', 'Escritório'], ['public_sector', 'Setor público'], ['partner', 'Parceiro'], ['individual', 'Pessoa física'], ['other', 'Outro']];
@@ -95,7 +96,7 @@ export default function BusinessRegistry() {
     setBusy(true);
     try {
       await base44.functions.invoke('manage_business_parties', { action: 'add_contact', party_id: selected.id, legal_entity_id: legalEntityId, ...contact });
-      setContact((current) => ({ ...current, contact_name: '', value: '', reason: '' }));
+      setContact((current) => ({ ...current, contact_name: '', value: '' }));
       setNotice({ type: 'success', text: 'Contato adicionado.' });
       await openDetail(selected);
     } catch (error) { setNotice({ type: 'error', text: message(error) }); } finally { setBusy(false); }
@@ -106,7 +107,7 @@ export default function BusinessRegistry() {
     setBusy(true);
     try {
       await base44.functions.invoke('manage_business_parties', { action: 'add_address', party_id: selected.id, legal_entity_id: legalEntityId, ...address });
-      setAddress((current) => ({ ...current, postal_code: '', street: '', number: '', neighborhood: '', city: '', state: '', reason: '' }));
+      setAddress((current) => ({ ...current, postal_code: '', street: '', number: '', neighborhood: '', city: '', state: '' }));
       setNotice({ type: 'success', text: 'Endereço adicionado.' });
       await openDetail(selected);
     } catch (error) { setNotice({ type: 'error', text: message(error) }); } finally { setBusy(false); }
