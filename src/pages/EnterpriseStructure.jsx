@@ -114,9 +114,9 @@ export default function EnterpriseStructure() {
     setNotice(null);
     try {
       const response = unwrap(await base44.functions.invoke('manage_enterprise_core', payload));
-      setNotice({ type: 'success', text: 'Operação registrada e auditada com sucesso.' });
       if (onSuccess) onSuccess(response);
       await load();
+      setNotice({ type: 'success', text: 'Operação registrada e auditada com sucesso.' });
     } catch (error) {
       setNotice({ type: 'error', text: errorMessage(error) });
     } finally {
@@ -131,8 +131,8 @@ export default function EnterpriseStructure() {
     try {
       await base44.functions.invoke('manage_unit', { action: 'create', legal_entity_id: selectedCompanyId, ...forms.unit });
       patchForm('unit', EMPTY.unit);
-      setNotice({ type: 'success', text: 'Unidade criada como pendente e vinculada à empresa.' });
       await load();
+      setNotice({ type: 'success', text: 'Unidade criada como pendente e vinculada à empresa.' });
     } catch (error) {
       setNotice({ type: 'error', text: errorMessage(error) });
     } finally {
