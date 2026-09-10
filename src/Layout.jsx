@@ -298,7 +298,8 @@ export default function Layout({ children }) {
     : item.roles.includes(user?.role || ''));
 
   const erpItems = menuItems.filter((item) => erpPaths.includes(item.path));
-  const coreItems = menuItems.filter((item) => !erpPaths.includes(item.path));
+  const coreItems = menuItems.filter((item) => !erpPaths.includes(item.path) && item.path !== '/settings');
+  const settingsItem = menuItems.find((item) => item.path === '/settings');
 
   const marketingItems = [
     { icon: Sparkles, label: 'Campanhas', path: '/campanhas' },
@@ -455,6 +456,21 @@ export default function Layout({ children }) {
                 )}
               </div>
             )}
+
+             {settingsItem && (
+                <div className="pt-4 mt-4 border-t border-white/10">
+                  <Link
+                    to={settingsItem.path}
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative
+                      ${location.pathname === settingsItem.path
+                        ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border border-white/10'
+                        : 'hover:bg-white/5 text-gray-400 hover:text-white'}`}
+                  >
+                    <settingsItem.icon className={`w-5 h-5 ${location.pathname === settingsItem.path ? 'text-white' : 'text-gray-400 group-hover:text-[#216FA1] transition-colors'}`} />
+                    <span className="hidden lg:block font-medium flex-1">{settingsItem.label}</span>
+                  </Link>
+                </div>
+             )}
 
              <div className="pt-4 mt-4 border-t border-white/10">
                  <p className="px-3 text-xs font-semibold text-gray-500 uppercase mb-2 hidden lg:block">Links Públicos</p>
