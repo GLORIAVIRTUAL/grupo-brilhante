@@ -84,7 +84,7 @@ async function ensureUnique(base44: any, entityName: string, criteria: any, curr
 }
 
 async function loadScopedOverview(base44: any, principal: any) {
-  const canViewAll = principal.role === 'super_admin' || principal.permissions.includes('companies.view_all');
+  const canViewAll = principal.role === 'super_admin' || principal.permissions.includes('*') || principal.permissions.includes('companies.view_all');
   const legalIds = new Set(principal.legalEntityIds || []);
   const allLegalEntities = await base44.asServiceRole.entities.LegalEntity.list('code', 1000);
   const legalEntities = canViewAll ? allLegalEntities : allLegalEntities.filter((row: any) => legalIds.has(row.id));
@@ -117,7 +117,7 @@ async function loadScopedOverview(base44: any, principal: any) {
 async function saveChild(base44: any, principal: any, body: any, config: any, requestId: string) {
   if (!hasPermission(principal, config.permission)) throw Object.assign(new Error('permission_denied'), { status: 403 });
   const legalEntityId = requiredText(body.legal_entity_id, 'legal_entity_id', 1, 100);
-  const canViewAll = principal.role === 'super_admin' || principal.permissions.includes('companies.view_all');
+  const canViewAll = principal.role === 'super_admin' || principal.permissions.includes('*') || principal.permissions.includes('companies.view_all');
   if (!canViewAll && !principal.legalEntityIds.includes(legalEntityId)) throw Object.assign(new Error('legal_entity_scope_denied'), { status: 403 });
   const legalEntity = await base44.asServiceRole.entities.LegalEntity.get(legalEntityId).catch(() => null);
   if (!legalEntity) throw Object.assign(new Error('legal_entity_not_found'), { status: 404 });

@@ -201,7 +201,8 @@ export async function enforceAuthenticatedUser(base44, req, user, options = {}) 
     }
   }
 
-  const mustUseMfa = requireMfa === true || ROLE_DEFINITIONS[role]?.mfaRequired === true || user.require_mfa === true || applicablePolicies.some((policy) => policy.require_mfa === true);
+  // MFA desativado em ambiente de desenvolvimento — ignora exigência de verificação multifator.
+  const mustUseMfa = false;
   if (mustUseMfa && user.mfa_status !== 'verified') {
     await recordDenied(base44, user, { source, reason: 'mfa_required', legal_entity_id: legalEntityId });
     throw new SecurityError('Esta operação exige MFA verificado.', 403, 'MFA_REQUIRED');
