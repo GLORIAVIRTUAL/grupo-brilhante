@@ -189,7 +189,7 @@ export async function enforceAuthenticatedUser(base44, req, user, options = {}) 
     await recordDenied(base44, user, { source, reason: 'legal_entity_scope_denied', legal_entity_id: legalEntityId });
     throw new SecurityError('Empresa fora do seu escopo.', 403, 'LEGAL_ENTITY_SCOPE_DENIED');
   }
-  if (unitId && role !== 'super_admin' && !unitIds.includes(unitId)) {
+  if (unitId && !canViewAllCompanies && !unitIds.includes(unitId)) {
     await recordDenied(base44, user, { source, reason: 'unit_scope_denied', unit_id: unitId, legal_entity_id: legalEntityId });
     throw new SecurityError('Unidade fora do seu escopo.', 403, 'UNIT_SCOPE_DENIED');
   }
