@@ -184,7 +184,7 @@ export async function enforceAuthenticatedUser(base44, req, user, options = {}) 
     throw new SecurityError('Permissão insuficiente.', 403, 'PERMISSION_DENIED');
   }
 
-  const canViewAllCompanies = role === 'super_admin' || permissions.includes('companies.view_all');
+  const canViewAllCompanies = role === 'super_admin' || permissions.includes('*') || permissions.includes('companies.view_all');
   if (legalEntityId && !canViewAllCompanies && !legalEntityIds.includes(legalEntityId)) {
     await recordDenied(base44, user, { source, reason: 'legal_entity_scope_denied', legal_entity_id: legalEntityId });
     throw new SecurityError('Empresa fora do seu escopo.', 403, 'LEGAL_ENTITY_SCOPE_DENIED');

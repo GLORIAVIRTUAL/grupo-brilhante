@@ -13,6 +13,7 @@ import {
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { hasPermission } from '@/lib/accessControl';
+import ImplementationStageForm from '@/components/enterprise/ImplementationStageForm';
 
 const EMPTY = {
   group: { name: '', trade_name: '', code: '', reason: '' },
@@ -206,6 +207,15 @@ export default function EnterpriseStructure() {
           <div className="rounded-2xl border border-sky-400/20 bg-gradient-to-r from-sky-400/10 to-transparent p-5">
             <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs uppercase tracking-widest text-sky-300">CNPJ selecionado</p><h2 className="mt-1 text-xl font-semibold text-white">{selectedCompany.trade_name}</h2><p className="text-sm text-white/45">{selectedCompany.code} · {selectedCompany.tax_id}</p></div><div className="flex gap-2"><StatusPill value={selectedCompany.status} /><StatusPill value={selectedCompany.implementation_status} /></div></div>
           </div>
+
+          {canManage ? <Section icon={ShieldCheck} title="Etapa de implantação" description="As empresas já estão ativas; avance aqui o estágio de implantação do CNPJ selecionado.">
+            <ImplementationStageForm
+              key={selectedCompany.id + selectedCompany.implementation_status}
+              company={selectedCompany}
+              busy={busy === 'stage'}
+              onSubmit={(patch) => run('stage', { action: 'update_legal_entity', id: selectedCompany.id, ...patch })}
+            />
+          </Section> : null}
 
           {canManage ? <div className="grid gap-6 xl:grid-cols-2">
             <Section icon={MapPin} title="Unidades" description="Crie unidades já vinculadas ao CNPJ selecionado.">
