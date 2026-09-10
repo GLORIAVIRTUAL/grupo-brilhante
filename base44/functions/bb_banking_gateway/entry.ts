@@ -1,10 +1,10 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { requireInternalRequest, securityErrorResponse } from '../../shared/functionSecurity.js';
-import { assertExternalBankingAllowed, bankingRuntimeConfig, buildBoletoPayload, buildPixPayload, oauthBasicHeader, sanitizedBankResponse } from '../../shared/bankingProviderContract.js';
+import { BB_DEFAULT_ENDPOINTS, assertExternalBankingAllowed, bankingRuntimeConfig, buildBoletoPayload, buildPixPayload, oauthBasicHeader, sanitizedBankResponse } from '../../shared/bankingProviderContract.js';
 
 function clean(value: unknown, max = 500) { return String(value || '').trim().slice(0, max); }
 function config() { return bankingRuntimeConfig((name) => Deno.env.get(name) || ''); }
-function endpointPath(name: string) { const value = clean(Deno.env.get(name), 300); if (!value || !value.startsWith('/')) throw new Error('banking_endpoint_not_configured'); return value; }
+function endpointPath(name: string) { const value = clean(Deno.env.get(name), 300) || (BB_DEFAULT_ENDPOINTS as any)[name] || ''; if (!value || !value.startsWith('/')) throw new Error('banking_endpoint_not_configured'); return value; }
 function urlWithDeveloperKey(base: string, path: string, key: string) { const url = new URL(path, `${base}/`); url.searchParams.set('gw-dev-app-key', key); return url.toString(); }
 async function fetchJson(url: string, init: RequestInit, timeout = 15000) { const response = await fetch(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(timeout) }); const text = await response.text(); let data: any = {}; try { data = text ? JSON.parse(text) : {}; } catch { data = {}; } if (!response.ok) { const error: any = new Error(`banking_provider_http_${response.status}`); error.status = response.status; error.safeResponse = { status: response.status, provider_code: clean(data?.codigo || data?.code || '', 80) || null }; throw error; } return data; }
 

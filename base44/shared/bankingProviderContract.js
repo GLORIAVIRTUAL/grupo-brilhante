@@ -15,15 +15,27 @@ export const BANK_CHARGE_TRANSITIONS = Object.freeze({
   expired: [], cancelled: [], refunded: [], repair_required: ['queued', 'active', 'paid', 'cancelled'],
 });
 
+export const BB_DEFAULT_ENDPOINTS = Object.freeze({
+  BB_CHARGE_CREATE_PATH: '/cobrancas/v2/boletos',
+  BB_CHARGE_CANCEL_PATH: '/cobrancas/v2/boletos/{id}/baixar',
+  BB_PIX_CREATE_PATH: '/pix/v2/cob/{txid}',
+  BB_PIX_CANCEL_PATH: '/pix/v2/cob/{txid}',
+  BB_PIX_REFUND_PATH: '/pix/v2/pix/{txid}/devolucao/{refund_id}',
+});
+
+const BB_SANDBOX_HOSTS = Object.freeze({ oauth: 'https://oauth.sandbox.bb.com.br/oauth/token', api: 'https://api.sandbox.bb.com.br' });
+const BB_PRODUCTION_HOSTS = Object.freeze({ oauth: 'https://oauth.bb.com.br/oauth/token', api: 'https://api.bb.com.br' });
+
 export function bankingRuntimeConfig(getEnv = () => '') {
   const environment = String(getEnv('BB_ENVIRONMENT') || 'disabled').toLowerCase();
   const normalizedEnvironment = BB_ENVIRONMENTS.has(environment) ? environment : 'disabled';
+  const hosts = normalizedEnvironment === 'production' ? BB_PRODUCTION_HOSTS : BB_SANDBOX_HOSTS;
   return {
     environment: normalizedEnvironment,
     externalRequestsEnabled: String(getEnv('BB_EXTERNAL_REQUESTS_ENABLED') || '').toLowerCase() === 'true',
     productionEnabled: String(getEnv('BB_PRODUCTION_ENABLED') || '').toLowerCase() === 'true',
-    apiBaseUrl: String(getEnv('BB_API_BASE_URL') || '').replace(/\/$/, ''),
-    oauthUrl: String(getEnv('BB_OAUTH_URL') || ''),
+    apiBaseUrl: String(getEnv('BB_API_BASE_URL') || hosts.api).replace(/\/$/, ''),
+    oauthUrl: String(getEnv('BB_OAUTH_URL') || hosts.oauth),
     developerApplicationKey: String(getEnv('BB_DEVELOPER_APPLICATION_KEY') || ''),
     clientId: String(getEnv('BB_CLIENT_ID') || ''),
     clientSecret: String(getEnv('BB_CLIENT_SECRET') || ''),
