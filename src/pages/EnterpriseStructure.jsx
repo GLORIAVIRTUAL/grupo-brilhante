@@ -14,6 +14,7 @@ import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { hasPermission } from '@/lib/accessControl';
 import ImplementationStageForm from '@/components/enterprise/ImplementationStageForm';
+import { autoReason } from '@/lib/autoReason';
 
 const EMPTY = {
   group: { name: '', trade_name: '', code: '', reason: autoReason('Grupo econômico') },
