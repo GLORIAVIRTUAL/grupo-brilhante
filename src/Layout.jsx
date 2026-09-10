@@ -54,6 +54,13 @@ export default function Layout({ children }) {
   const soundEnabledRef = React.useRef(soundEnabled);
   const marketingPaths = ['/campanhas', '/campanhasrede', '/trafego', '/trafegogoogle', '/prospeccao'];
   const [marketingOpen, setMarketingOpen] = useState(() => marketingPaths.includes(location.pathname));
+  const erpPaths = [
+    '/enterprise-structure', '/documents', '/business-registry', '/commercial-operations',
+    '/enterprise-finance', '/banking-operations', '/enterprise-fiscal', '/procurement-operations',
+    '/hospital-laundry', '/linen-operations', '/cleaning-operations', '/communication-governance',
+    '/enterprise-intelligence', '/conta-azul-migration',
+  ];
+  const [erpOpen, setErpOpen] = useState(() => erpPaths.includes(location.pathname));
   
   // Using reliable notification sounds
   const audioRef = React.useRef(new Audio("https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/glass.mp3"));
@@ -290,6 +297,9 @@ export default function Layout({ children }) {
     ? item.permissions.some((permission) => hasPermission(user, permission))
     : item.roles.includes(user?.role || ''));
 
+  const erpItems = menuItems.filter((item) => erpPaths.includes(item.path));
+  const coreItems = menuItems.filter((item) => !erpPaths.includes(item.path));
+
   const marketingItems = [
     { icon: Sparkles, label: 'Campanhas', path: '/campanhas' },
     { icon: Network, label: 'Campanhas da Rede', path: '/campanhasrede' },
@@ -321,7 +331,7 @@ export default function Layout({ children }) {
           </div>
 
           <nav className="flex-1 mt-8 px-3 space-y-2">
-            {menuItems.map((item) => {
+            {coreItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <Link
@@ -356,6 +366,42 @@ export default function Layout({ children }) {
                 </Link>
               );
             })}
+
+            {erpItems.length > 0 && (
+              <div>
+                <button
+                  onClick={() => setErpOpen(prev => !prev)}
+                  className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative w-full border
+                    ${erpPaths.includes(location.pathname)
+                      ? 'bg-gradient-to-r from-[#216FA1] to-[#2d8ac4] shadow-lg shadow-blue-900/30 border-white/10'
+                      : 'bg-[#216FA1]/15 border-[#216FA1]/30 hover:bg-[#216FA1]/25 text-gray-200 hover:text-white'
+                    }`}
+                >
+                  <Building2 className={`w-5 h-5 ${erpPaths.includes(location.pathname) ? 'text-white' : 'text-[#216FA1]'}`} />
+                  <span className="hidden lg:block font-medium flex-1 text-left">ERP</span>
+                  <ChevronDown className={`w-4 h-4 hidden lg:block transition-transform ${erpOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {erpOpen && (
+                  <div className="mt-1 lg:ml-3 lg:pl-3 lg:border-l border-white/10 space-y-1">
+                    {erpItems.map((sub) => {
+                      const isActive = location.pathname === sub.path;
+                      return (
+                        <Link
+                          key={sub.path}
+                          to={sub.path}
+                          className={`flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 group
+                            ${isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-gray-400 hover:text-white'}`}
+                        >
+                          <sub.icon className={`w-4 h-4 ${isActive ? 'text-[#216FA1]' : 'text-gray-400 group-hover:text-[#216FA1] transition-colors'}`} />
+                          <span className="hidden lg:block font-medium text-sm">{sub.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             {(!user || ['super_admin', 'admin', 'manager', 'user'].includes(user?.role || 'user')) && (
               <Link
