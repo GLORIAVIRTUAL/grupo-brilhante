@@ -16,13 +16,13 @@ import { hasPermission } from '@/lib/accessControl';
 import ImplementationStageForm from '@/components/enterprise/ImplementationStageForm';
 
 const EMPTY = {
-  group: { name: '', trade_name: '', code: '', reason: '' },
-  company: { group_id: '', legal_name: '', trade_name: '', tax_id: '', code: '', tax_regime: 'simples_nacional', reason: '' },
-  unit: { name: '', code: '', subdomain: '', owner_email: '', unit_type: 'branch', reason: '' },
-  costCenter: { name: '', code: '', cost_center_type: 'administrative', reason: '' },
-  warehouse: { name: '', code: '', warehouse_type: 'central', reason: '' },
-  bank: { name: '', code: '', bank_code: '001', bank_name: 'Banco do Brasil', account_type: 'checking', branch_masked: '', account_masked: '', reason: '' },
-  linkUnit: { unit_id: '', code: '', unit_type: 'branch', reason: '' },
+  group: { name: '', trade_name: '', code: '', reason: autoReason('Grupo econômico') },
+  company: { group_id: '', legal_name: '', trade_name: '', tax_id: '', code: '', tax_regime: 'simples_nacional', reason: autoReason('Empresa legal') },
+  unit: { name: '', code: '', subdomain: '', owner_email: '', unit_type: 'branch', reason: autoReason('Unidade') },
+  costCenter: { name: '', code: '', cost_center_type: 'administrative', reason: autoReason('Centro de custo') },
+  warehouse: { name: '', code: '', warehouse_type: 'central', reason: autoReason('Depósito') },
+  bank: { name: '', code: '', bank_code: '001', bank_name: 'Banco do Brasil', account_type: 'checking', branch_masked: '', account_masked: '', reason: autoReason('Conta bancária') },
+  linkUnit: { unit_id: '', code: '', unit_type: 'branch', reason: autoReason('Vínculo de unidade') },
 };
 
 function unwrap(response) {
@@ -177,7 +177,6 @@ export default function EnterpriseStructure() {
               <Field label="Nome"><input className={inputClass} value={forms.group.name} onChange={(event) => patchForm('group', { name: event.target.value })} required /></Field>
               <Field label="Código"><input className={inputClass} value={forms.group.code} onChange={(event) => patchForm('group', { code: event.target.value })} placeholder="GRUPO-BRILHANTE" /></Field>
               <Field label="Nome de exibição"><input className={inputClass} value={forms.group.trade_name} onChange={(event) => patchForm('group', { trade_name: event.target.value })} /></Field>
-              <Field label="Justificativa"><input className={inputClass} value={forms.group.reason} onChange={(event) => patchForm('group', { reason: event.target.value })} minLength={8} required /></Field>
               <div className="sm:col-span-2"><ActionButton disabled={busy === 'group'}><Plus className="h-4 w-4" /> Criar grupo</ActionButton></div>
             </form>
             <div className="mt-4 space-y-2">{data.groups.map((group) => <div key={group.id} className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-3 py-2"><div><p className="text-sm font-medium text-white">{group.name}</p><p className="text-xs text-white/35">{group.code}</p></div><StatusPill value={group.status} /></div>)}</div>
@@ -191,7 +190,6 @@ export default function EnterpriseStructure() {
               <Field label="Nome fantasia"><input className={inputClass} value={forms.company.trade_name} onChange={(event) => patchForm('company', { trade_name: event.target.value })} required /></Field>
               <Field label="Código"><input className={inputClass} value={forms.company.code} onChange={(event) => patchForm('company', { code: event.target.value })} /></Field>
               <Field label="Regime tributário"><select className={inputClass} value={forms.company.tax_regime} onChange={(event) => patchForm('company', { tax_regime: event.target.value })}><option value="simples_nacional">Simples Nacional</option><option value="lucro_presumido">Lucro Presumido</option><option value="lucro_real">Lucro Real</option><option value="other">Outro</option></select></Field>
-              <Field label="Justificativa"><input className={inputClass} value={forms.company.reason} onChange={(event) => patchForm('company', { reason: event.target.value })} minLength={8} required /></Field>
               <div className="self-end"><ActionButton disabled={busy === 'company' || !data.groups.length}><Plus className="h-4 w-4" /> Criar empresa</ActionButton></div>
             </form>
           </Section>
@@ -225,7 +223,6 @@ export default function EnterpriseStructure() {
                 <Field label="Subdomínio"><input className={inputClass} value={forms.unit.subdomain} onChange={(event) => patchForm('unit', { subdomain: event.target.value })} required /></Field>
                 <Field label="E-mail responsável"><input type="email" className={inputClass} value={forms.unit.owner_email} onChange={(event) => patchForm('unit', { owner_email: event.target.value })} required /></Field>
                 <Field label="Tipo"><select className={inputClass} value={forms.unit.unit_type} onChange={(event) => patchForm('unit', { unit_type: event.target.value })}><option value="headquarters">Matriz</option><option value="branch">Filial</option><option value="industrial_plant">Planta industrial</option><option value="service_hub">Hub de serviços</option><option value="warehouse">Depósito</option></select></Field>
-                <Field label="Justificativa"><input className={inputClass} value={forms.unit.reason} onChange={(event) => patchForm('unit', { reason: event.target.value })} minLength={8} required /></Field>
                 <div className="sm:col-span-2"><ActionButton disabled={busy === 'unit'}><Plus className="h-4 w-4" /> Criar unidade pendente</ActionButton></div>
               </form>
               <div className="mt-4 space-y-2">{companyUnits.map((unit) => <div key={unit.id} className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-3 py-2"><div><p className="text-sm font-medium text-white">{unit.name}</p><p className="text-xs text-white/35">{unit.code || 'sem código'} · {unit.unit_type || 'unidade'}</p></div><StatusPill value={unit.status} /></div>)}</div>
@@ -236,7 +233,6 @@ export default function EnterpriseStructure() {
                 <Field label="Nome"><input className={inputClass} value={forms.costCenter.name} onChange={(event) => patchForm('costCenter', { name: event.target.value })} required /></Field>
                 <Field label="Código"><input className={inputClass} value={forms.costCenter.code} onChange={(event) => patchForm('costCenter', { code: event.target.value })} /></Field>
                 <Field label="Tipo"><select className={inputClass} value={forms.costCenter.cost_center_type} onChange={(event) => patchForm('costCenter', { cost_center_type: event.target.value })}><option value="administrative">Administrativo</option><option value="commercial">Comercial</option><option value="production">Produção</option><option value="logistics">Logística</option><option value="hospital">Hospitalar</option><option value="linen">Enxovais</option><option value="cleaning">Limpeza</option><option value="shared">Compartilhado</option></select></Field>
-                <Field label="Justificativa"><input className={inputClass} value={forms.costCenter.reason} onChange={(event) => patchForm('costCenter', { reason: event.target.value })} minLength={8} required /></Field>
                 <div className="sm:col-span-2"><ActionButton disabled={busy === 'costCenter'}><Save className="h-4 w-4" /> Salvar centro</ActionButton></div>
               </form>
               <div className="mt-4 flex flex-wrap gap-2">{companyCostCenters.map((item) => <span key={item.id} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/65">{item.code} · {item.name}</span>)}</div>
@@ -247,7 +243,6 @@ export default function EnterpriseStructure() {
                 <Field label="Nome"><input className={inputClass} value={forms.warehouse.name} onChange={(event) => patchForm('warehouse', { name: event.target.value })} required /></Field>
                 <Field label="Código"><input className={inputClass} value={forms.warehouse.code} onChange={(event) => patchForm('warehouse', { code: event.target.value })} /></Field>
                 <Field label="Tipo"><select className={inputClass} value={forms.warehouse.warehouse_type} onChange={(event) => patchForm('warehouse', { warehouse_type: event.target.value })}><option value="central">Central</option><option value="production">Produção</option><option value="consumables">Insumos</option><option value="linen">Enxovais</option><option value="quarantine">Quarentena</option><option value="third_party">Terceiro</option></select></Field>
-                <Field label="Justificativa"><input className={inputClass} value={forms.warehouse.reason} onChange={(event) => patchForm('warehouse', { reason: event.target.value })} minLength={8} required /></Field>
                 <div className="sm:col-span-2"><ActionButton disabled={busy === 'warehouse'}><Save className="h-4 w-4" /> Salvar depósito</ActionButton></div>
               </form>
               <div className="mt-4 flex flex-wrap gap-2">{companyWarehouses.map((item) => <span key={item.id} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/65">{item.code} · {item.name}</span>)}</div>
@@ -261,7 +256,6 @@ export default function EnterpriseStructure() {
                 <Field label="Código bancário"><input className={inputClass} value={forms.bank.bank_code} onChange={(event) => patchForm('bank', { bank_code: event.target.value })} /></Field>
                 <Field label="Agência mascarada"><input className={inputClass} value={forms.bank.branch_masked} onChange={(event) => patchForm('bank', { branch_masked: event.target.value })} placeholder="****-X" /></Field>
                 <Field label="Conta mascarada"><input className={inputClass} value={forms.bank.account_masked} onChange={(event) => patchForm('bank', { account_masked: event.target.value })} placeholder="*****-X" /></Field>
-                <Field label="Justificativa"><input className={inputClass} value={forms.bank.reason} onChange={(event) => patchForm('bank', { reason: event.target.value })} minLength={8} required /></Field>
                 <div className="self-end"><ActionButton disabled={busy === 'bank'}><Save className="h-4 w-4" /> Salvar conta desativada</ActionButton></div>
               </form>
               <div className="mt-4 space-y-2">{companyBanks.map((item) => <div key={item.id} className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-3 py-2"><div><p className="text-sm font-medium text-white">{item.name}</p><p className="text-xs text-white/35">{item.bank_code} · {item.branch_masked || 'agência protegida'} · {item.account_masked || 'conta protegida'}</p></div><StatusPill value={item.integration_status} /></div>)}</div>
@@ -272,7 +266,6 @@ export default function EnterpriseStructure() {
             <form className="grid gap-3 md:grid-cols-4" onSubmit={(event) => { event.preventDefault(); run('linkUnit', { action: 'link_unit', legal_entity_id: selectedCompanyId, ...forms.linkUnit }, () => patchForm('linkUnit', EMPTY.linkUnit)); }}>
               <Field label="Unidade"><select className={inputClass} value={forms.linkUnit.unit_id} onChange={(event) => patchForm('linkUnit', { unit_id: event.target.value })} required><option value="">Selecione</option>{data.unlinked_units.map((unit) => <option key={unit.id} value={unit.id}>{unit.name}</option>)}</select></Field>
               <Field label="Código"><input className={inputClass} value={forms.linkUnit.code} onChange={(event) => patchForm('linkUnit', { code: event.target.value })} /></Field>
-              <Field label="Justificativa"><input className={inputClass} value={forms.linkUnit.reason} onChange={(event) => patchForm('linkUnit', { reason: event.target.value })} minLength={8} required /></Field>
               <div className="self-end"><ActionButton disabled={busy === 'linkUnit'}><Save className="h-4 w-4" /> Vincular ao CNPJ</ActionButton></div>
             </form>
           </Section> : null}
