@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
     doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(20); doc.setFont(undefined, 'bold');
-    doc.text('Performance de Usuarios - 5asec', 14, 16);
+    doc.text('Performance de Usuarios - brilhante', 14, 16);
     doc.setFontSize(11); doc.setFont(undefined, 'normal');
     doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`, 14, 25);
     y = 44;
@@ -189,7 +189,7 @@ Deno.serve(async (req) => {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=relatorio-performance-usuarios-5asec.pdf'
+        'Content-Disposition': 'attachment; filename=relatorio-performance-usuarios-brilhante.pdf'
       }
     });
   } catch (error) {

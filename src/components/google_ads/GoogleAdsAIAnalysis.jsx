@@ -39,7 +39,7 @@ export default function GoogleAdsAIAnalysis({ campaigns, totals }) {
     }));
 
     const prompt = `
-Você é um gestor de tráfego pago profissional sênior, especialista em Google Ads, com 10+ anos de experiência otimizando campanhas para o setor de serviços locais (lavanderias 5àsec no Brasil).
+Você é um gestor de tráfego pago profissional sênior, especialista em Google Ads, com 10+ anos de experiência otimizando campanhas para o setor de serviços locais (lavanderias Brilhante no Brasil).
 
 Analise os dados reais a seguir das campanhas dos últimos 30 dias e gere uma análise profissional e ACIONÁVEL.
 

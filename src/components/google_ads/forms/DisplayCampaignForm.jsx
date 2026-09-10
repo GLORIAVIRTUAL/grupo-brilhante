@@ -17,7 +17,7 @@ export default function DisplayCampaignForm() {
   const [name, setName] = usePersistentState('gads_display_name', '');
   const [budget, setBudget] = usePersistentState('gads_display_budget', 15);
   const [finalUrl, setFinalUrl] = usePersistentState('gads_display_final_url', '');
-  const [businessName, setBusinessName] = usePersistentState('gads_display_business_name', '5àsec');
+  const [businessName, setBusinessName] = usePersistentState('gads_display_business_name', 'Brilhante');
   const [headlines, setHeadlines] = usePersistentState('gads_display_headlines', '');
   const [longHeadline, setLongHeadline] = usePersistentState('gads_display_long_headline', '');
   const [descriptions, setDescriptions] = usePersistentState('gads_display_descriptions', '');
@@ -84,7 +84,7 @@ export default function DisplayCampaignForm() {
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <Label className="text-gray-300">URL de destino</Label>
-            <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://5asec.com.br" className="bg-white/5 border-white/10 text-white" />
+            <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://grupobrilhante.com.br" className="bg-white/5 border-white/10 text-white" />
           </div>
           <div>
             <Label className="text-gray-300">Nome da empresa</Label>
@@ -99,7 +99,7 @@ export default function DisplayCampaignForm() {
 
         <div>
           <Label className="text-gray-300">Headline longo <span className="text-xs text-gray-500">(máx. 90 chars)</span></Label>
-          <Input value={longHeadline} onChange={e => setLongHeadline(e.target.value)} className="bg-white/5 border-white/10 text-white" placeholder="Lavanderia premium 5àsec com coleta e entrega grátis" />
+          <Input value={longHeadline} onChange={e => setLongHeadline(e.target.value)} className="bg-white/5 border-white/10 text-white" placeholder="Lavanderia premium Brilhante com coleta e entrega grátis" />
         </div>
 
         <div>

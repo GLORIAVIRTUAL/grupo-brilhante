@@ -103,7 +103,7 @@ export default function VideoCampaignForm() {
           <Input
             value={channelUrl}
             onChange={e => { setChannelUrl(e.target.value); setChannelSaved(false); }}
-            placeholder="https://youtube.com/@5asec-suaunidade"
+            placeholder="https://youtube.com/@grupobrilhante-suaunidade"
             className="bg-white/5 border-white/10 text-white text-sm"
           />
           <Button onClick={saveChannel} type="button" variant="outline" className="border-white/10 shrink-0">
@@ -138,7 +138,7 @@ export default function VideoCampaignForm() {
 
         <div>
           <Label className="text-gray-300">URL de destino</Label>
-          <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://5asec.com.br" className="bg-white/5 border-white/10 text-white" />
+          <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://grupobrilhante.com.br" className="bg-white/5 border-white/10 text-white" />
         </div>
 
         <div>

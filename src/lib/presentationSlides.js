@@ -1,10 +1,10 @@
-// Conteúdo da apresentação do sistema para a franqueadora 5àsec.
+// Conteúdo da apresentação do sistema para a franqueadora Brilhante.
 export const slides = [
   {
     kind: 'cover',
     image: 'https://media.base44.com/images/public/6998e8554cc6b3863e37588a/308dcb734_generated_image.png',
     eyebrow: 'Apresentação institucional',
-    title: 'O sistema de gestão e atendimento feito para as franquias 5àsec',
+    title: 'O sistema de gestão e atendimento feito para as franquias Brilhante',
     subtitle:
       'Chat com IA (Glória) + atendimento humano, CRM de pedidos, coletas, disparos, gestão financeira, dashboard e marketing — tudo em um só lugar.',
     footnote: 'Validado por 6 meses em operação real nas unidades de Porto Alegre.'
@@ -24,7 +24,7 @@ export const slides = [
       'A atendente assume a conversa a qualquer momento, sem perder o histórico.'
     ],
     advantage:
-      'Vantagem sobre outros sistemas: aqui a IA não é um chatbot de menu — ela vende, orça e agenda com as regras da 5àsec.'
+      'Vantagem sobre outros sistemas: aqui a IA não é um chatbot de menu — ela vende, orça e agenda com as regras da Brilhante.'
   },
   {
     kind: 'feature',
@@ -259,13 +259,13 @@ export const slides = [
   {
     kind: 'closing',
     eyebrow: 'Próximo passo',
-    title: 'A 5àsec merece um sistema à altura da sua marca',
+    title: 'A Brilhante merece um sistema à altura da sua marca',
     manifesto: [
-      'Inovação está no DNA da 5àsec — e a tecnologia que atende o cliente precisa acompanhar esse mesmo padrão.',
+      'Inovação está no DNA da Brilhante — e a tecnologia que atende o cliente precisa acompanhar esse mesmo padrão.',
       'A maior rede de lavanderias do mundo não pode depender de atendimento manual, planilhas soltas e contatos perdidos no WhatsApp. Inteligência artificial, CRM e automação já são o presente do varejo de serviços.',
-      'Este sistema foi construído dentro da operação 5àsec, testado em unidades reais e pronto para escalar em toda a rede — com a mesma exigência de qualidade que a marca leva para cada peça entregue.'
+      'Este sistema foi construído dentro da operação Brilhante, testado em unidades reais e pronto para escalar em toda a rede — com a mesma exigência de qualidade que a marca leva para cada peça entregue.'
     ],
-    signature: 'Vamos colocar a rede 5àsec um passo à frente.',
+    signature: 'Vamos colocar a rede Brilhante um passo à frente.',
     footnote: 'Desenvolvido por gloriavirtual.com'
   }
 ];

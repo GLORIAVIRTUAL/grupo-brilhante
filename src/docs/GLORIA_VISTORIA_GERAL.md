@@ -1,4 +1,4 @@
-# Vistoria Geral — Glória (IA do Chat 5àsec)
+# Vistoria Geral — Glória (IA do Chat Brilhante)
 Documento de auditoria: tudo que a Glória consulta, executa e obedece.
 Atualizado em 20/08/2026.
 
@@ -105,7 +105,7 @@ O prompt é montado **em tempo de execução** no `orchestrator` e combina texto
 - Prazo padrão: 3 dias úteis (data calculada em `shared/dateFacts.js`, com feriados).
 - Horário de funcionamento das 5 lojas respondido direto (nunca confundir com coleta).
 - Restrição de dia do cliente é respeitada; proibido reoferecer dia recusado.
-- Candidatura a emprego: pedir currículo no WhatsApp ou poa.riobranco@5asec.com.br (RH avalia).
+- Candidatura a emprego: pedir currículo no WhatsApp ou poa.riobranco@grupobrilhante.com.br (RH avalia).
 - Endereços/telefones (fixo + celular) das 5 lojas: Rio Branco, Petrópolis, Zaffari, Bourbon Wallig, Moinhos.
 
 ### 3.11 Prompt exclusivo da Loja Moinhos

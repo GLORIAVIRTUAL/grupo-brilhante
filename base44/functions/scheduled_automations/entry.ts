@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
                             if (customer.opt_in_whatsapp && customer.phones?.length > 0) {
                                 await base44.asServiceRole.functions.invoke('zapi_sender', {
                                     phone: customer.phones[0],
-                                    message: `Parabéns ${customer.full_name}! 🎂\nA 5àsec deseja um feliz aniversário! Ganhe 10% de desconto hoje!`,
+                                    message: `Parabéns ${customer.full_name}! 🎂\nA Brilhante deseja um feliz aniversário! Ganhe 10% de desconto hoje!`,
                                     conversation_id: null,
                                     _internal_token: Deno.env.get('INTERNAL_FUNCTION_TOKEN')
                                 });

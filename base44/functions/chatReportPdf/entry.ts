@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
     const corpus = joined.length > 90000 ? joined.slice(0, 90000) : joined;
 
     const llm = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Você é um analista de atendimento. Abaixo está o corpus de TODAS as mensagens enviadas pelos CLIENTES (inbound) de uma lavanderia (5àsec) que usa um chatbot com IA chamado "Glória" no WhatsApp.
+      prompt: `Você é um analista de atendimento. Abaixo está o corpus de TODAS as mensagens enviadas pelos CLIENTES (inbound) de uma lavanderia (Brilhante) que usa um chatbot com IA chamado "Glória" no WhatsApp.
 
 Produza:
 1. As principais DÚVIDAS/ASSUNTOS dos clientes agrupadas por tema, com contagem aproximada de mensagens por tema, ordenadas da mais frequente para a menos frequente, com nome curto e um exemplo real.
@@ -164,7 +164,7 @@ ${corpus}
     doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(20); doc.setFont(undefined, 'bold');
-    doc.text('Relatorio do Chat - 5asec', 14, 16);
+    doc.text('Relatorio do Chat - brilhante', 14, 16);
     doc.setFontSize(11); doc.setFont(undefined, 'normal');
     doc.text(`Periodo: ${fmtDate(firstDate)} a ${fmtDate(lastDate)}`, 14, 25);
     y = 44;
@@ -246,7 +246,7 @@ ${corpus}
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=relatorio-chat-5asec.pdf'
+        'Content-Disposition': 'attachment; filename=relatorio-chat-brilhante.pdf'
       }
     });
   } catch (error) {

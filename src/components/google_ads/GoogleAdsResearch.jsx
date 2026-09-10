@@ -11,7 +11,7 @@ import usePersistentState from '@/lib/usePersistentState';
 export default function GoogleAdsResearch({ onUseRecommendation }) {
   const [city, setCity] = usePersistentState('gads_research_city', '');
   const [budget, setBudget] = usePersistentState('gads_research_budget', 15);
-  const [objective, setObjective] = usePersistentState('gads_research_objective', 'Atrair novos clientes para lavanderia 5àsec');
+  const [objective, setObjective] = usePersistentState('gads_research_objective', 'Atrair novos clientes para lavanderia Brilhante');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = usePersistentState('gads_research_result', null);
 
@@ -36,7 +36,7 @@ export default function GoogleAdsResearch({ onUseRecommendation }) {
         required: ['campaign_name', 'keywords', 'headlines', 'descriptions'],
       };
 
-      const prompt = `Você é especialista em Google Ads para lavanderias 5àsec no Brasil.
+      const prompt = `Você é especialista em Google Ads para lavanderias Brilhante no Brasil.
 Crie uma estratégia COMPLETA de campanha de PESQUISA (Search) para:
 - Cidade: ${city}
 - Orçamento diário: R$ ${budget}
@@ -47,7 +47,7 @@ Regras:
 - "descriptions" devem ter NO MÁXIMO 90 caracteres cada (gere pelo menos 3)
 - "keywords" devem ser palavras-chave reais que pessoas digitam no Google buscando lavanderia (gere pelo menos 15)
 - "negative_keywords" são palavras a evitar (ex: "máquina", "grátis", "trabalho")
-- Use o tom premium e profissional da marca 5àsec`;
+- Use o tom premium e profissional da marca Brilhante`;
 
       const res = await base44.integrations.Core.InvokeLLM({
         prompt,

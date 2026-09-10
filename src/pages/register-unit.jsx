@@ -77,7 +77,7 @@ export default function RegisterUnit() {
                                 <Label htmlFor="name">Nome da Unidade</Label>
                                 <Input 
                                     id="name"
-                                    placeholder="Ex: 5àsec Rio Branco"
+                                    placeholder="Ex: Brilhante Rio Branco"
                                     value={formData.name}
                                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                                     className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[#216FA1]"
@@ -97,7 +97,7 @@ export default function RegisterUnit() {
                                         required
                                     />
                                     <div className="bg-white/10 border border-l-0 border-white/10 h-10 px-3 flex items-center text-sm text-gray-400 rounded-r-md whitespace-nowrap">
-                                        .chat5asec.com.br
+                                        .chatbrilhante.com.br
                                     </div>
                                 </div>
                                 <p className="text-xs text-gray-500">Este será o endereço de acesso do sistema da unidade.</p>
@@ -141,7 +141,7 @@ export default function RegisterUnit() {
                         </p>
                         
                         <div className="bg-black/30 p-4 rounded-lg border border-white/10 font-mono text-sm text-[#216FA1] break-all">
-                            {`https://${formData.subdomain}.chat5asec.com.br`}
+                            {`https://${formData.subdomain}.chatbrilhante.com.br`}
                         </div>
 
                         <p className="text-sm text-gray-500">

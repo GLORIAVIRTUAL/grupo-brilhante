@@ -10,14 +10,14 @@ import { Send, Loader2, Info, Image as ImageIcon, MessageCircle, Mail } from 'lu
 import { toast } from "sonner";
 
 export default function ProspectDispatchModal({ open, onOpenChange, prospects, selectedIds }) {
-  const [message, setMessage] = useState('Olá {empresa}! Somos da 5àsec e gostaríamos de apresentar nossos serviços corporativos. Podemos conversar? 👔✨');
+  const [message, setMessage] = useState('Olá {empresa}! Somos da Brilhante e gostaríamos de apresentar nossos serviços corporativos. Podemos conversar? 👔✨');
   const [sendToAll, setSendToAll] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [uploadingImage, setUploadingImage] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendWhatsapp, setSendWhatsapp] = useState(true);
   const [sendEmail, setSendEmail] = useState(false);
-  const [emailSubject, setEmailSubject] = useState('Serviços corporativos 5àsec');
+  const [emailSubject, setEmailSubject] = useState('Serviços corporativos Brilhante');
 
   const isEligible = (p) => (sendWhatsapp && p.phone) || (sendEmail && p.email);
   const eligible = prospects.filter(isEligible);

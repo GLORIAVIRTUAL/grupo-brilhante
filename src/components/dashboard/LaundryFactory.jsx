@@ -41,7 +41,7 @@ export default function LaundryFactory() {
             </div>
             
             {/* Label */}
-            <div className="absolute bottom-2 text-[8px] font-bold text-gray-500 tracking-widest">5àSEC TURBO</div>
+            <div className="absolute bottom-2 text-[8px] font-bold text-gray-500 tracking-widest">BRILHANTE TURBO</div>
           </div>
           {/* Floor Shadow */}
           <div className="absolute -bottom-4 left-2 w-28 h-4 bg-black/40 blur-md rounded-full" />

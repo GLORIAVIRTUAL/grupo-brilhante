@@ -31,7 +31,7 @@ export default function CampaignPreview({ imageUrl, overlayCopy }) {
         <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-7">
           <div className="max-w-[78%] space-y-3">
             <div className="inline-flex w-fit rounded-full border border-white/20 bg-black/35 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-white/90">
-              {copy.eyebrow || '5àsec'}
+              {copy.eyebrow || 'Brilhante'}
             </div>
 
             {copy.headline && (

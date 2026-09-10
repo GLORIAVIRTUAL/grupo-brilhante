@@ -17,7 +17,7 @@ export default function PerformanceMaxCampaignForm() {
   const [name, setName] = usePersistentState('gads_pmax_name', '');
   const [budget, setBudget] = usePersistentState('gads_pmax_budget', 30);
   const [finalUrl, setFinalUrl] = usePersistentState('gads_pmax_final_url', '');
-  const [businessName, setBusinessName] = usePersistentState('gads_pmax_business_name', '5àsec');
+  const [businessName, setBusinessName] = usePersistentState('gads_pmax_business_name', 'Brilhante');
   const [headlines, setHeadlines] = usePersistentState('gads_pmax_headlines', '');
   const [longHeadlines, setLongHeadlines] = usePersistentState('gads_pmax_long_headlines', '');
   const [descriptions, setDescriptions] = usePersistentState('gads_pmax_descriptions', '');

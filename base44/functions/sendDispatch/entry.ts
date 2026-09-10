@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
       const mentionsCampaign = ['promoc', 'novidade', 'oferta', 'mensagem', 'whatsapp'].some(term => normalized.includes(term));
       return asksPermission && mentionsCampaign;
     };
-    const moinhosConsentTemplate = `Olá, {nome}! Tudo bem? 😊\n\nTemos promoções e novidades exclusivas disponíveis agora para você, que já é cliente da 5àsec do Moinhos Shopping!\n\nPodemos enviar essas ofertas e novidades pelo WhatsApp?\n\nResponda SIM para autorizar ou NÃO para recusar.`;
+    const moinhosConsentTemplate = `Olá, {nome}! Tudo bem? 😊\n\nTemos promoções e novidades exclusivas disponíveis agora para você, que já é cliente da Brilhante do Moinhos Shopping!\n\nPodemos enviar essas ofertas e novidades pelo WhatsApp?\n\nResponda SIM para autorizar ou NÃO para recusar.`;
     const now = new Date();
     const cutoff = new Date(now);
     cutoff.setMonth(cutoff.getMonth() - Number(inactivity_months || 0));

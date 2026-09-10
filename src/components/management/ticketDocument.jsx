@@ -15,9 +15,9 @@ const STATUS_PT = {
 
 // Dados fixos da empresa (cabeçalho do cupom)
 const COMPANY = {
-  name: '5 À SEC',
+  name: 'BRILHANTE',
   slogan: 'QUALIDADE - RAPIDEZ - ECONOMIA',
-  branch: '5ASEC PETRÓPOLIS',
+  branch: 'BRILHANTE PETRÓPOLIS',
   address: 'AV NILO PEÇANHA, 95',
   city: 'PETRÓPOLIS - PORTO ALEGRE - RS'
 };

@@ -94,7 +94,7 @@ Deno.serve(async (req) => {
 
                     await base44.asServiceRole.integrations.Core.SendEmail({
                         to: prospect.email,
-                        subject: email_subject || 'Serviços corporativos 5àsec',
+                        subject: email_subject || 'Serviços corporativos Brilhante',
                         body: htmlBody
                     });
                     results.emails_sent++;

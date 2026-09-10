@@ -499,7 +499,7 @@ async function createDisplayCampaign(params) {
     headlines = [],
     long_headline,
     descriptions = [],
-    business_name = '5àsec',
+    business_name = 'Brilhante',
     marketing_image_urls = [], // 1.91:1 (1200x628 recomendado)
     square_image_urls = [],    // 1:1 (1200x1200 recomendado)
     logo_image_urls = [],      // 1:1 logo
@@ -681,7 +681,7 @@ async function createPerformanceMaxCampaign(params) {
     headlines = [],
     long_headlines = [],
     descriptions = [],
-    business_name = '5àsec',
+    business_name = 'Brilhante',
     marketing_image_urls = [],
     square_image_urls = [],
     logo_image_urls = [],

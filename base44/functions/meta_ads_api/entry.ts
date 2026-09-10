@@ -291,8 +291,8 @@ Deno.serve(async (req) => {
                 // 3. CRIATIVO
                 const linkData = {
                     message: primary_text,
-                    link: link_url || 'https://www.5asec.com.br',
-                    call_to_action: { type: cta_type, value: { link: link_url || 'https://www.5asec.com.br' } },
+                    link: link_url || 'https://www.grupobrilhante.com.br',
+                    call_to_action: { type: cta_type, value: { link: link_url || 'https://www.grupobrilhante.com.br' } },
                 };
                 if (headline) linkData.name = headline;
                 if (description) linkData.description = description;

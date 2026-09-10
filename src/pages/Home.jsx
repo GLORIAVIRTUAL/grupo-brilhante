@@ -7,7 +7,7 @@ export default function Home() {
   useEffect(() => {
     // Redundant check, handled in Layout usually, but safe to keep
     const hostname = window.location.hostname;
-    const isMainDomain = hostname === 'chat5asec.com.br' || hostname === 'www.chat5asec.com.br';
+    const isMainDomain = hostname === 'chatbrilhante.com.br' || hostname === 'www.chatbrilhante.com.br';
 
     if (isMainDomain) {
       navigate('/landing');

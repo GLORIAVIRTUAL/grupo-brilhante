@@ -49,7 +49,7 @@ Deno.serve(async (req) => {
     const corpus = joined.length > 90000 ? joined.slice(0, 90000) : joined;
 
     const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Você é um analista de atendimento. Abaixo está o corpus de TODAS as mensagens enviadas pelos CLIENTES (apenas mensagens recebidas/inbound) de uma lavanderia (5àsec) que usa um chatbot com IA chamado "Glória" no WhatsApp.
+      prompt: `Você é um analista de atendimento. Abaixo está o corpus de TODAS as mensagens enviadas pelos CLIENTES (apenas mensagens recebidas/inbound) de uma lavanderia (Brilhante) que usa um chatbot com IA chamado "Glória" no WhatsApp.
 
 Analise o conteúdo e produza:
 1. As principais DÚVIDAS/ASSUNTOS dos clientes, agrupadas por tema, com uma contagem aproximada de quantas mensagens se referem a cada tema, ordenadas da mais frequente para a menos frequente. Para cada tema dê um nome curto e um exemplo real de mensagem.

@@ -44,11 +44,11 @@ Sua análise deve focar em:
 1. Por que não há entregas (provavelmente todas pausadas)
 2. Quais campanhas reativar primeiro e por quê
 3. Como estruturar a conta para começar a gerar resultados
-4. O que falta para uma estratégia de tráfego pago funcional para lavanderia 5àsec
+4. O que falta para uma estratégia de tráfego pago funcional para lavanderia Brilhante
 5. Recomendações para ativar a operação de tráfego pago do zero ou destravar a atual` : '';
 
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Você é um GESTOR DE TRÁFEGO PAGO SÊNIOR especializado em Meta Ads para lavanderias 5àsec no Brasil.
+        prompt: `Você é um GESTOR DE TRÁFEGO PAGO SÊNIOR especializado em Meta Ads para lavanderias Brilhante no Brasil.
 
 Analise os dados reais de campanhas abaixo como faria um profissional de tráfego pago experiente. Seja DIRETO, TÉCNICO e ACIONÁVEL.
 

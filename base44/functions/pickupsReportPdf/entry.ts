@@ -116,7 +116,7 @@ Deno.serve(async (req) => {
     doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(20); doc.setFont(undefined, 'bold');
-    doc.text('Relatorio de Coletas - 5asec', 14, 16);
+    doc.text('Relatorio de Coletas - brilhante', 14, 16);
     doc.setFontSize(11); doc.setFont(undefined, 'normal');
     doc.text(`Periodo: ${fmtDate(firstDate)} a ${fmtDate(lastDate)}`, 14, 25);
     y = 44;
@@ -187,7 +187,7 @@ Deno.serve(async (req) => {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=relatorio-coletas-5asec.pdf'
+        'Content-Disposition': 'attachment; filename=relatorio-coletas-brilhante.pdf'
       }
     });
   } catch (error) {

@@ -260,8 +260,8 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold text-white/90 md:text-3xl">{unitTitle}</h1>
             <p className="mt-1 text-gray-400">
               {selectedUnitId === 'all'
-                ? 'Visão consolidada das 5 unidades da operação.'
-                : 'Bem-vindo à central de comando da sua 5àsec.'}
+                ? 'Visão consolidada das 3 unidades do Grupo Brilhante.'
+                : 'Bem-vindo à central de comando da sua unidade do Grupo Brilhante.'}
             </p>
             {user && (
               <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300">

@@ -161,7 +161,7 @@ export default function Admin() {
                         <ShieldCheck className="text-white w-5 h-5" />
                      </div>
                      <span className="font-bold text-lg tracking-tight">
-                        ADMIN<span className="text-[#216FA1]">5àsec</span>
+                        ADMIN<span className="text-[#216FA1]">Brilhante</span>
                      </span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -285,7 +285,7 @@ export default function Admin() {
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="font-medium text-white">{unit.name}</span>
-                                                    <span className="text-xs text-gray-500 font-mono mt-0.5">{unit.subdomain}.chat5asec.com.br</span>
+                                                    <span className="text-xs text-gray-500 font-mono mt-0.5">{unit.subdomain}.chatbrilhante.com.br</span>
                                                 </div>
                                             </div>
                                         </TableCell>

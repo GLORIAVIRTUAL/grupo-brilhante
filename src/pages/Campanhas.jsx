@@ -74,7 +74,7 @@ export default function Campanhas() {
     setGeneratingPrompt(true);
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Você é um diretor de criação da 5àsec.
+        prompt: `Você é um diretor de criação da Brilhante.
 
 Sua tarefa é gerar UM PROMPT de campanha publicitária baseado no TEMA/TÍTULO informado abaixo, mantendo a mesma estrutura, nível de detalhe, posicionamento visual premium e lógica de composição do prompt-base de referência.
 
@@ -89,7 +89,7 @@ Regras obrigatórias:
 - manter a estrutura geral do prompt-base (personagem e ação, ambiente, iluminação, composição, diretrizes de texto)
 - manter estética premium, fotografia hiper-realista e linguagem publicitária sofisticada
 - manter proporção vertical 9:16
-- manter a marca 5àsec e a paleta roxo + laranja
+- manter a marca Brilhante e a paleta roxo + laranja
 - manter a lógica de espaço negativo e hierarquia visual
 - o prompt deve em algum momento citar EXPLICITAMENTE o texto principal a aparecer na arte, derivado do tema (ex: chamada da promoção)
 - prompt em português do Brasil
@@ -138,7 +138,7 @@ Regras obrigatórias:
 
       if (!captionText.trim()) {
         const captionFallback = await base44.integrations.Core.InvokeLLM({
-          prompt: `Crie uma legenda para Instagram em português do Brasil para uma campanha da 5àsec com base neste briefing: ${prompt}. A legenda deve ser elegante, comercial, pronta para postar, com 1 parágrafo curto, CTA e 4 a 8 hashtags no final.`,
+          prompt: `Crie uma legenda para Instagram em português do Brasil para uma campanha da Brilhante com base neste briefing: ${prompt}. A legenda deve ser elegante, comercial, pronta para postar, com 1 parágrafo curto, CTA e 4 a 8 hashtags no final.`,
           response_json_schema: {
             type: 'object',
             properties: {
@@ -289,7 +289,7 @@ Regras obrigatórias:
               value={campaignName}
               onChange={(e) => setCampaignName(e.target.value)}
               className="border-white/10 bg-white/5"
-              placeholder="Ex: Promo inverno 5àsec"
+              placeholder="Ex: Promo inverno Brilhante"
             />
           </div>
 

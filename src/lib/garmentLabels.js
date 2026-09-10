@@ -59,7 +59,7 @@ export async function buildGarmentLabelHtml(garments) {
 ${labels.map(({ garment, qr }) => `<section class="label">
   <div><img class="qr" src="${qr}" alt="QR ${escapeHtml(garment.garment_code)}" /><div class="code">${escapeHtml(garment.garment_code)}</div></div>
   <div style="display:flex;flex-direction:column;min-width:0">
-    <div class="brand">GLÓRIA LAUNDRY 5àSec</div>
+    <div class="brand">GLÓRIA LAUNDRY Brilhante</div>
     <div class="ticket">Ticket: ${escapeHtml(garment.ticket_number || garment.order_id?.slice(-8) || '—')}</div>
     <div class="product">${escapeHtml(garment.product_name || 'Peça')}</div>
     <div class="detail">${escapeHtml(attributeText(garment) || 'Sem características adicionais')}</div>

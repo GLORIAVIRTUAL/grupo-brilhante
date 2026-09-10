@@ -21,19 +21,19 @@ const isConsentRequestMessage = (value) => {
 
 const MOINHOS_CONSENT_TEMPLATE = `Olá, {nome}! Tudo bem? 😊
 
-Temos promoções e novidades exclusivas disponíveis agora para você, que já é cliente da 5àsec do Moinhos Shopping!
+Temos promoções e novidades exclusivas disponíveis agora para você, que já é cliente da Brilhante do Moinhos Shopping!
 
 Podemos enviar essas ofertas e novidades pelo WhatsApp?
 
 Responda SIM para autorizar ou NÃO para recusar.`;
 
 const dispatchTypes = [
-  { value: 'consent_request', label: 'Solicitar consentimento', template: 'Olá {nome}! Você autoriza a 5àsec a enviar promoções e novidades pelo WhatsApp? Responda SIM para aceitar ou NÃO para recusar.' },
-  { value: 'promotional', label: 'Promocional', template: 'Olá {nome}! 🎉 Aproveite nossa promoção especial da 5àsec: 20% de desconto em todos os serviços de lavagem esta semana! Traga suas peças e economize. 🧺✨' },
-  { value: 'birthday', label: 'Aniversariante', template: 'Parabéns, {nome}! 🎂🎈 A 5àsec deseja um feliz aniversário! Para celebrar, preparamos um presente: 15% de desconto no seu próximo pedido. Aproveite! 🎁' },
-  { value: 'satisfaction_survey', label: 'Pesquisa de Satisfação', template: 'Olá {nome}! Como foi sua última experiência com a 5àsec? De 0 a 10, qual nota você daria? Sua opinião é muito importante para nós! ⭐' },
-  { value: 'inactive_customer', label: 'Reengajamento', template: 'Olá {nome}, sentimos sua falta! 😊 Faz um tempo que não nos visitou. Que tal renovar seu guarda-roupa com a 5àsec? Temos novidades esperando por você! 👔✨' },
-  { value: 'order_reminder', label: 'Lembrete de Pedido', template: 'Olá {nome}! 📦 Lembramos que seu pedido na 5àsec está pronto para retirada. Estamos aguardando sua visita! 😊' },
+  { value: 'consent_request', label: 'Solicitar consentimento', template: 'Olá {nome}! Você autoriza a Brilhante a enviar promoções e novidades pelo WhatsApp? Responda SIM para aceitar ou NÃO para recusar.' },
+  { value: 'promotional', label: 'Promocional', template: 'Olá {nome}! 🎉 Aproveite nossa promoção especial da Brilhante: 20% de desconto em todos os serviços de lavagem esta semana! Traga suas peças e economize. 🧺✨' },
+  { value: 'birthday', label: 'Aniversariante', template: 'Parabéns, {nome}! 🎂🎈 A Brilhante deseja um feliz aniversário! Para celebrar, preparamos um presente: 15% de desconto no seu próximo pedido. Aproveite! 🎁' },
+  { value: 'satisfaction_survey', label: 'Pesquisa de Satisfação', template: 'Olá {nome}! Como foi sua última experiência com a Brilhante? De 0 a 10, qual nota você daria? Sua opinião é muito importante para nós! ⭐' },
+  { value: 'inactive_customer', label: 'Reengajamento', template: 'Olá {nome}, sentimos sua falta! 😊 Faz um tempo que não nos visitou. Que tal renovar seu guarda-roupa com a Brilhante? Temos novidades esperando por você! 👔✨' },
+  { value: 'order_reminder', label: 'Lembrete de Pedido', template: 'Olá {nome}! 📦 Lembramos que seu pedido na Brilhante está pronto para retirada. Estamos aguardando sua visita! 😊' },
   { value: 'follow_up', label: 'Follow-up', template: 'Olá {nome}! Passando para saber se ficou satisfeito(a) com nosso serviço. Precisa de algo mais? Estamos à disposição! 💬' },
 ];
 

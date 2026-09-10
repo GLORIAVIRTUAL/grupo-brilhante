@@ -102,7 +102,7 @@ ${quote_facts
             messages: [
                 {
                     role: "system",
-                    content: `Você é um VERIFICADOR DE FATOS rigoroso para as respostas da atendente virtual Glória (lavanderia 5àsec). Sua tarefa é revisar a mensagem que a Glória vai enviar ao cliente e garantir que ela NÃO contenha NENHUMA informação inventada/alucinada.
+                    content: `Você é um VERIFICADOR DE FATOS rigoroso para as respostas da atendente virtual Glória (lavanderia Brilhante). Sua tarefa é revisar a mensagem que a Glória vai enviar ao cliente e garantir que ela NÃO contenha NENHUMA informação inventada/alucinada.
 
 ${factSheet}
 

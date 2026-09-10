@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
     doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18); doc.setFont(undefined, 'bold');
-    doc.text('Conversas Iniciadas por Dia - 5asec', 14, 15);
+    doc.text('Conversas Iniciadas por Dia - brilhante', 14, 15);
     doc.setFontSize(10); doc.setFont(undefined, 'normal');
     doc.text(`Periodo: ${fmtBR(order[0])} a ${fmtBR(order[order.length - 1])} (${DAYS} dias)`, 14, 23);
     doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-BR', { timeZone: TZ })}`, 14, 29);
@@ -148,7 +148,7 @@ Deno.serve(async (req) => {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=relatorio-conversas-por-dia-5asec.pdf'
+        'Content-Disposition': 'attachment; filename=relatorio-conversas-por-dia-brilhante.pdf'
       }
     });
   } catch (error) {

@@ -60,10 +60,10 @@ export default function ReportsPage() {
     }
   };
 
-  const downloadChatReportPdf = () => downloadReportPdf('chatReportPdf', 'relatorio-chat-5asec.pdf', setGeneratingChatPdf);
-  const downloadPickupsReportPdf = () => downloadReportPdf('pickupsReportPdf', 'relatorio-coletas-5asec.pdf', setGeneratingPickupsPdf);
-  const downloadUsersReportPdf = () => downloadReportPdf('userPerformanceReportPdf', 'relatorio-performance-usuarios-5asec.pdf', setGeneratingUsersPdf);
-  const downloadConversationsReportPdf = () => downloadReportPdf('conversationsPerDayReportPdf', 'relatorio-conversas-por-dia-5asec.pdf', setGeneratingConvPdf);
+  const downloadChatReportPdf = () => downloadReportPdf('chatReportPdf', 'relatorio-chat-brilhante.pdf', setGeneratingChatPdf);
+  const downloadPickupsReportPdf = () => downloadReportPdf('pickupsReportPdf', 'relatorio-coletas-brilhante.pdf', setGeneratingPickupsPdf);
+  const downloadUsersReportPdf = () => downloadReportPdf('userPerformanceReportPdf', 'relatorio-performance-usuarios-brilhante.pdf', setGeneratingUsersPdf);
+  const downloadConversationsReportPdf = () => downloadReportPdf('conversationsPerDayReportPdf', 'relatorio-conversas-por-dia-brilhante.pdf', setGeneratingConvPdf);
 
   // Relatórios precisam refletir pagamentos confirmados agora (webhook/caixa),
   // por isso não reutilizam cache antigo ao abrir a página.

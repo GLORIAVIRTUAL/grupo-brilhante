@@ -60,7 +60,7 @@ async function downloadImage(url: URL) {
     const response = await fetch(url, {
       signal: controller.signal,
       redirect: 'follow',
-      headers: { 'user-agent': 'Lavanderia5aSecVision/1.0' },
+      headers: { 'user-agent': 'LavanderiaBrilhanteVision/1.0' },
     });
 
     if (!response.ok) throw new Error('image_download_failed');

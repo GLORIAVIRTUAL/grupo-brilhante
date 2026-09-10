@@ -87,7 +87,7 @@ async function generateCampaignPlan(apiKey, prompt, reference_image_urls) {
             {
               text: `Briefing da campanha: ${prompt}
 
-Analise o briefing e as imagens de referência para criar uma ARTE PUBLICITÁRIA COMPLETA da 5àsec, não apenas fundo.
+Analise o briefing e as imagens de referência para criar uma ARTE PUBLICITÁRIA COMPLETA da Brilhante, não apenas fundo.
 A arte final deve aproveitar claramente as referências enviadas: estilo visual, enquadramento, direção de arte, poses, composição, clima, cores, tipografia, blocos de oferta e sensação premium.
 
 Quero um plano em JSON com 2 saídas:

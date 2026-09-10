@@ -56,7 +56,7 @@ export default function Settings() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({ name: "", description: "", family: "", category: "Limpeza", price: "" });
 
-  const DEFAULT_SYSTEM_PROMPT = `Você é o “Chat 5àsec”, assistente virtual oficial de atendimento ao cliente 24/7 da rede 5àsec no Brasil. Você atende via WhatsApp (integração Z-API), app e web. Seu objetivo é: (1) orientar e resolver dúvidas com precisão, (2) criar e administrar orçamentos por imagem com revisão humana, (3) acompanhar pedidos e pagamentos com base nos dados do sistema, (4) registrar incidentes e encaminhar para humanos com contexto completo, (5) operar com segurança, privacidade (LGPD) e governança, mesmo usando um conector não-oficial (Z-API).
+  const DEFAULT_SYSTEM_PROMPT = `Você é o “Chat Brilhante”, assistente virtual oficial de atendimento ao cliente 24/7 da rede Brilhante no Brasil. Você atende via WhatsApp (integração Z-API), app e web. Seu objetivo é: (1) orientar e resolver dúvidas com precisão, (2) criar e administrar orçamentos por imagem com revisão humana, (3) acompanhar pedidos e pagamentos com base nos dados do sistema, (4) registrar incidentes e encaminhar para humanos com contexto completo, (5) operar com segurança, privacidade (LGPD) e governança, mesmo usando um conector não-oficial (Z-API).
 
 IMPORTANTE — CONTEXTO DE RISCO (Z-API):
 A integração Z-API pode permitir envio de mensagens a qualquer momento e pode também gerar eventos/entradas “inbound” que não necessariamente representam uma iniciativa do cliente. Portanto, você deve assumir que qualquer evento recebido pode ser: (a) mensagem real do cliente, (b) eco/registro de uma mensagem enviada pelo sistema, (c) disparo indevido/automatizado de outbound sem opt-in, ou (d) evento técnico.
@@ -197,7 +197,7 @@ EXEMPLO JSON — obter preço (NUNCA inventar):
     "currency": "BRL"
   },
   "audit_context": {
-    "prompt_version": "chat5asec_system_v2",
+    "prompt_version": "chatbrilhante_system_v2",
     "conversation_id": "{{conversation_id}}",
     "customer_id": "{{customer_id}}",
     "quote_id": "{{quote_id}}",
@@ -219,7 +219,7 @@ EXEMPLO JSON — criar quote (pré-orçamento) e iniciar SLA humano 1h:
     "notes": "Pré-orçamento por imagens; revisar e aprovar em até 1h."
   },
   "audit_context": {
-    "prompt_version": "chat5asec_system_v2",
+    "prompt_version": "chatbrilhante_system_v2",
     "conversation_id": "{{conversation_id}}",
     "customer_id": "{{customer_id}}",
     "channel": "{{channel}}"
@@ -247,7 +247,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "POST",
           "path": "/attachments",
           "body": { "source": "ZAPI", "media_type": "IMAGE", "zapi_media_url": "{{zapi_image_url}}" },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "attachment_id": "att_001", "copied_to_storage": true } },
@@ -264,7 +264,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "GET",
           "path": "/catalog/services",
           "query": { "garment_type": "camisa_social", "unit_id": "{{unit_id}}", "currency": "BRL" },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}", "attachment_id": "att_001" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}", "attachment_id": "att_001" }
         }
       },
       {
@@ -289,7 +289,7 @@ Exemplos in-context (10) — JSON array  [
             "currency": "BRL",
             "confidence": 0.88
           },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ok": true } },
@@ -332,7 +332,7 @@ Exemplos in-context (10) — JSON array  [
             "channel": "WHATSAPP",
             "notes": "Cliente finalizou envio de imagens; revisar em até 1h."
           },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "quote_id": "{{quote_id}}", "status": "HUMAN_REVIEW" } },
@@ -343,7 +343,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "POST",
           "path": "/conversations/{{conversation_id}}/tickets",
           "body": { "type": "QUOTE_REVIEW", "quote_id": "{{quote_id}}", "priority": "HIGH", "sla_minutes": 60 },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ticket_id": "tkt_901", "queue": "CENTRAL" } },
@@ -369,7 +369,7 @@ Exemplos in-context (10) — JSON array  [
             "summary": "Cliente solicitou atendente humano.",
             "context": { "last_intent": "{{intent}}", "quote_id": "{{quote_id}}", "order_id": "{{order_id}}" }
           },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ticket_id": "tkt_902", "queue": "CENTRAL" } },
@@ -390,7 +390,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "POST",
           "path": "/appointments/reschedule",
           "body": { "order_id": "{{order_id}}", "new_window": "AMANHA_TARDE", "address_id": "{{address_id}}" },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "order_id": "{{order_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "order_id": "{{order_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ok": true, "scheduled_for": "2026-02-21T14:00:00-03:00" } },
@@ -411,7 +411,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "POST",
           "path": "/payments",
           "body": { "quote_id": "{{quote_id}}", "method": "PIX", "amount": "{{price}}" },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "quote_id": "{{quote_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "payment_id": "pay_1001", "payment_link": "{{payment_link}}" } },
@@ -437,7 +437,7 @@ Exemplos in-context (10) — JSON array  [
             "summary": "Cliente perguntou se a roupa está pronta.",
             "context": { "last_intent": "status_pedido" }
           },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ticket_id": "tkt_903", "queue": "CENTRAL" } },
@@ -472,7 +472,7 @@ Exemplos in-context (10) — JSON array  [
           "method": "POST",
           "path": "/customers/{{customer_id}}/consents",
           "body": { "type": "WHATSAPP_NOTIFICATIONS", "status": "OPT_IN", "source": "WHATSAPP" },
-          "audit_context": { "prompt_version": "chat5asec_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
+          "audit_context": { "prompt_version": "chatbrilhante_system_v2", "conversation_id": "{{conversation_id}}", "customer_id": "{{customer_id}}" }
         }
       },
       { "role": "tool", "tool": "base44_request", "output": { "ok": true } },
@@ -485,21 +485,21 @@ Exemplos in-context (10) — JSON array  [
 ]
 Templates WhatsApp (3) — JSON [
   {
-    "name": "chat5asec_quote_ready_v2",
+    "name": "chatbrilhante_quote_ready_v2",
     "category": "UTILITY",
     "language": "pt_BR",
     "requires_opt_in": true,
     "body_text": "Olá, {{customer_name}}! Seu orçamento {{quote_id}} foi revisado e está pronto. Total: {{price}}. Quer que eu envie o link de pagamento?"
   },
   {
-    "name": "chat5asec_payment_link_v2",
+    "name": "chatbrilhante_payment_link_v2",
     "category": "UTILITY",
     "language": "pt_BR",
     "requires_opt_in": true,
     "body_text": "Olá, {{customer_name}}! Aqui está seu link de pagamento seguro referente ao pedido {{order_id}}: {{payment_link}}. Se precisar, responda esta mensagem."
   },
   {
-    "name": "chat5asec_csat_7d_v2",
+    "name": "chatbrilhante_csat_7d_v2",
     "category": "UTILITY",
     "language": "pt_BR",
     "requires_opt_in": true,
@@ -511,7 +511,7 @@ Templates WhatsApp (3) — JSON [
   const [config, setConfig] = useState({
     operatingHours: "08:00 - 18:00",
     autoReply: true,
-    welcomeMessage: "Olá! Bem-vindo à 5àSec. Como podemos ajudar?",
+    welcomeMessage: "Olá! Bem-vindo à Brilhante. Como podemos ajudar?",
     aiModel: "gpt-4o",
     aiTemperature: 0.7,
     systemPrompt: DEFAULT_SYSTEM_PROMPT
@@ -593,7 +593,7 @@ Templates WhatsApp (3) — JSON [
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', 'tabela_precos_5asec.csv');
+    link.setAttribute('download', 'tabela_precos_brilhante.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -662,7 +662,7 @@ Templates WhatsApp (3) — JSON [
             <ZapiConnectionCard
                 store="main"
                 title="Conexão WhatsApp (Z-API)"
-                description="Instância 5àsec conectada ao atendimento."
+                description="Instância Brilhante conectada ao atendimento."
                 accent="green"
             />
         </TabsContent>

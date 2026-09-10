@@ -32,7 +32,7 @@ export default function CampaignResearch({ onUseRecommendation }) {
     setLoading(true);
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Você é especialista sênior em Meta Ads (Facebook + Instagram) para lavanderias 5àsec no Brasil.
+        prompt: `Você é especialista sênior em Meta Ads (Facebook + Instagram) para lavanderias Brilhante no Brasil.
 
 Analise o briefing abaixo e gere uma estratégia COMPLETA e PRONTA PARA USO. O cliente NÃO precisará preencher mais nada — todos os campos do anúncio devem vir prontos. Ele só revisará e poderá ajustar se quiser.
 
@@ -55,7 +55,7 @@ Gere TUDO o necessário para publicar:
    - headline: até 40 caracteres, impactante
    - primary_text: até 150 caracteres, com emoji e gatilho de ação
    - description: até 30 caracteres, complementar
-7. URL de destino sugerida (use https://www.5asec.com.br por padrão, ou um link de WhatsApp se for o caso)
+7. URL de destino sugerida (use https://www.grupobrilhante.com.br por padrão, ou um link de WhatsApp se for o caso)
 8. KPI principal a monitorar
 9. Estimativa realista de alcance e custo por resultado
 10. Justificativa estratégica detalhada

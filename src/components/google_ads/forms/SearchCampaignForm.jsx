@@ -80,7 +80,7 @@ export default function SearchCampaignForm({ prefill }) {
 
         <div>
           <Label className="text-gray-300">URL de destino</Label>
-          <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://5asec.com.br" className="bg-white/5 border-white/10 text-white" />
+          <Input value={finalUrl} onChange={e => setFinalUrl(e.target.value)} placeholder="https://grupobrilhante.com.br" className="bg-white/5 border-white/10 text-white" />
         </div>
 
         <div>

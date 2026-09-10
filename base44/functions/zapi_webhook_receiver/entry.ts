@@ -491,7 +491,7 @@ Deno.serve(async (req) => {
                 await base44.asServiceRole.functions.invoke('zapi_sender', {
                     phone,
                     message: accepted
-                        ? 'Consentimento registrado. Você poderá receber promoções e novidades da 5àsec pelo WhatsApp. Para cancelar, responda SAIR.'
+                        ? 'Consentimento registrado. Você poderá receber promoções e novidades da Brilhante pelo WhatsApp. Para cancelar, responda SAIR.'
                         : 'Tudo certo. Seu consentimento não foi ativado e você não receberá campanhas promocionais.',
                     conversation_id: conversation.id,
                     _internal_token: Deno.env.get('INTERNAL_FUNCTION_TOKEN')

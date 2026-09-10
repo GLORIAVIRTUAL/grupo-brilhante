@@ -47,7 +47,7 @@ export default function CampaignCreator({ prefill }) {
   const [headline, setHeadline] = usePersistentState('trafego_create_headline', '');
   const [primaryText, setPrimaryText] = usePersistentState('trafego_create_primary_text', '');
   const [description, setDescription] = usePersistentState('trafego_create_description', '');
-  const [linkUrl, setLinkUrl] = usePersistentState('trafego_create_link_url', 'https://www.5asec.com.br');
+  const [linkUrl, setLinkUrl] = usePersistentState('trafego_create_link_url', 'https://www.grupobrilhante.com.br');
   const [ctaType, setCtaType] = usePersistentState('trafego_create_cta', 'LEARN_MORE');
 
   // Público
@@ -128,7 +128,7 @@ export default function CampaignCreator({ prefill }) {
     setGeneratingCopy(true);
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Gere copy publicitária persuasiva para um anúncio no Facebook/Instagram da lavanderia 5àsec.
+        prompt: `Gere copy publicitária persuasiva para um anúncio no Facebook/Instagram da lavanderia Brilhante.
 Campanha/Tema: "${briefing}"
 Objetivo: ${OBJECTIVES.find(o => o.value === objective)?.label}
 
