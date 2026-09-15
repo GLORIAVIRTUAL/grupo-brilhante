@@ -135,7 +135,7 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
 
     const hasServices = normalizedServices.length > 0;
     const unitPrice = hasServices
-      ? asMoney(normalizedServices.reduce((sum, service) => sum + service.total_amount, 0))
+      ? asMoney(normalizedServices.reduce((sum, service) => sum + service.unit_price, 0))
       : asMoney(product.price);
     const quantity = isKg
       ? weightMultiplier
