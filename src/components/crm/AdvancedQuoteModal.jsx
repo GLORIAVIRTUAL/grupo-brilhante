@@ -179,35 +179,71 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
     }
   };
 
-  const createManualGarment = (product, template = {}) => ({
-    line_id: crypto.randomUUID(),
-    product_id: product.id,
-    garment_type: product.name,
-    unit_price: Number(product.price || 0),
-    attributes: {
-      color: '',
-      brand: '',
-      pattern: '',
-      size: '',
-      material: '',
-      ...(template.attributes || {}),
-      freeform: { ...(template.attributes?.freeform || {}) }
-    },
-    damages: [],
-    risk_tags: [...(product.risk_tags || [])],
-    notes: product.description || '',
-    customer_authorized_risks: false,
-    condition_checked: false,
-    image_ids: [],
-    document_asset_ids: [],
-    services: template.services?.length
-      ? template.services.map((service) => ({ ...service }))
-      : (product.default_service_ids || []).map((serviceId) => ({ service_id: serviceId, quantity: 1 })),
-    confidence: 1,
-    recognition_status: 'manual'
-  });
+  const isKgProduct = (product) => product?.unit_of_measure === 'kg';
+
+  const createManualGarment = (product, template = {}) => {
+    const isKg = isKgProduct(product);
+    const weight = isKg ? Number(template.weight || 1) : undefined;
+    const unitPrice = Number(product.price || 0);
+    const totalAmount = isKg ? Number((unitPrice * weight).toFixed(2)) : undefined;
+    return {
+      line_id: crypto.randomUUID(),
+      product_id: product.id,
+      garment_type: product.name,
+      unit_price: unitPrice,
+      unit_of_measure: product.unit_of_measure || null,
+      weight,
+      total_amount: totalAmount,
+      attributes: {
+        color: '',
+        brand: '',
+        pattern: '',
+        size: '',
+        material: '',
+        ...(template.attributes || {}),
+        freeform: { ...(template.attributes?.freeform || {}) }
+      },
+      damages: [],
+      risk_tags: [...(product.risk_tags || [])],
+      notes: product.description || '',
+      customer_authorized_risks: false,
+      condition_checked: false,
+      image_ids: [],
+      document_asset_ids: [],
+      services: template.services?.length
+        ? template.services.map((service) => ({ ...service }))
+        : (product.default_service_ids || []).map((serviceId) => ({ service_id: serviceId, quantity: 1 })),
+      confidence: 1,
+      recognition_status: 'manual'
+    };
+  };
 
   const addToCart = (product) => {
+    const isKg = isKgProduct(product);
+    if (isKg) {
+      setCart((current) => {
+        const existing = current.find((item) => item.product.id === product.id);
+        if (existing) {
+          const nextWeight = Number(((existing.weight || 1) + 1).toFixed(2));
+          return current.map((item) => item.product.id === product.id ? { ...item, weight: nextWeight, qty: 1 } : item);
+        }
+        return [...current, { product, qty: 1, weight: 1 }];
+      });
+      setGarmentItems((current) => {
+        const existing = current.find((piece) => piece.product_id === product.id);
+        if (existing) {
+          const nextWeight = Number(((existing.weight || 1) + 1).toFixed(2));
+          const unitPrice = Number(existing.unit_price || 0);
+          return current.map((piece) => piece.product_id === product.id
+            ? { ...piece, weight: nextWeight, total_amount: Number((unitPrice * nextWeight).toFixed(2)) }
+            : piece);
+        }
+        const piece = createManualGarment(product);
+        setActiveGarmentId(piece.line_id);
+        return [...current, piece];
+      });
+      return;
+    }
     const piece = createManualGarment(product);
     setGarmentItems((current) => [...current, piece]);
     setActiveGarmentId(piece.line_id);
@@ -258,6 +294,16 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
 
   const updateGarmentPiece = (lineId, nextPiece) => {
     setGarmentItems((current) => current.map((piece) => piece.line_id === lineId ? nextPiece : piece));
+  };
+
+  const updateWeight = (productId, weight) => {
+    const cleanWeight = Math.max(0.01, Number(weight) || 0);
+    setGarmentItems((current) => current.map((piece) => {
+      if (piece.product_id !== productId) return piece;
+      const unitPrice = Number(piece.unit_price || 0);
+      return { ...piece, weight: cleanWeight, total_amount: Number((unitPrice * cleanWeight).toFixed(2)) };
+    }));
+    setCart((current) => current.map((item) => item.product.id === productId ? { ...item, weight: cleanWeight } : item));
   };
 
   const applyAppearanceToSameProduct = (source) => {
@@ -353,26 +399,34 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
 
       if (!finalCustomerId) throw new Error('customer_required');
 
-      const quoteItems = garmentItems.map((piece) => ({
-        line_id: piece.line_id,
-        product_id: piece.product_id,
-        garment_type: piece.garment_type,
-        qty: 1,
-        unit_price: Number(piece.unit_price || 0),
-        subtotal: Number(piece.unit_price || 0),
-        total_amount: Number(piece.unit_price || 0),
-        confidence: 1,
-        recognition_status: 'manual',
-        image_ids: piece.image_ids || [],
-        document_asset_ids: piece.document_asset_ids || [],
-        attributes: piece.attributes || {},
-        damages: piece.damages || [],
-        risk_tags: piece.risk_tags || [],
-        services: piece.services || [],
-        notes: piece.notes || '',
-        condition_checked: Boolean(piece.condition_checked),
-        customer_authorized_risks: Boolean(piece.customer_authorized_risks)
-      }));
+      const quoteItems = garmentItems.map((piece) => {
+        const isKg = piece.unit_of_measure === 'kg';
+        const weight = isKg ? Number(piece.weight || 1) : undefined;
+        const unitPrice = Number(piece.unit_price || 0);
+        const lineTotal = isKg ? Number((unitPrice * weight).toFixed(2)) : unitPrice;
+        return {
+          line_id: piece.line_id,
+          product_id: piece.product_id,
+          garment_type: piece.garment_type,
+          qty: 1,
+          weight,
+          unit_of_measure: piece.unit_of_measure || null,
+          unit_price: unitPrice,
+          subtotal: lineTotal,
+          total_amount: lineTotal,
+          confidence: 1,
+          recognition_status: 'manual',
+          image_ids: piece.image_ids || [],
+          document_asset_ids: piece.document_asset_ids || [],
+          attributes: piece.attributes || {},
+          damages: piece.damages || [],
+          risk_tags: piece.risk_tags || [],
+          services: piece.services || [],
+          notes: piece.notes || '',
+          condition_checked: Boolean(piece.condition_checked),
+          customer_authorized_risks: Boolean(piece.customer_authorized_risks)
+        };
+      });
 
       const quote = await base44.entities.Quote.create({
         customer_id: finalCustomerId,
@@ -597,17 +651,17 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#216FA1] transition-colors">
                                                     <ProductIcon product={product} className="w-6 h-6" />
                                                 </div>
-                                                <span className="font-bold text-[#216FA1]">R$ {product.price}</span>
-                                            </div>
-                                            <h3 className="font-medium text-white truncate">{product.name}</h3>
-                                            <p className="text-xs text-gray-500 line-clamp-2 mt-1">{product.description}</p>
-                                            
-                                            <div className="absolute inset-0 bg-[#216FA1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <span className="font-bold text-[#216FA1]">R$ {product.price}{product.unit_of_measure === 'kg' ? '/kg' : ''}</span>
+                                                </div>
+                                                <h3 className="font-medium text-white truncate">{product.name}</h3>
+                                                <p className="text-xs text-gray-500 line-clamp-2 mt-1">{product.description}</p>
+
+                                                <div className="absolute inset-0 bg-[#216FA1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                 <Plus className="w-8 h-8 text-[#216FA1]" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                    {products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+                                                </div>
+                                                </div>
+                                                ))}
+                                                {products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
                                         <div className="col-span-full text-center text-gray-500 py-10">
                                             Nenhum item encontrado para "{searchTerm}"
                                         </div>
@@ -644,7 +698,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                                             <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:bg-[#216FA1] transition-colors">
                                                                 <ProductIcon product={product} className="w-6 h-6" />
                                                             </div>
-                                                            <span className="font-bold text-[#216FA1]">R$ {product.price}</span>
+                                                            <span className="font-bold text-[#216FA1]">R$ {product.price}{product.unit_of_measure === 'kg' ? '/kg' : ''}</span>
                                                         </div>
                                                         <h3 className="font-medium text-white truncate">{product.name}</h3>
                                                         <p className="text-xs text-gray-500 line-clamp-2 mt-1">{product.description}</p>
@@ -679,22 +733,43 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                 </div>
                             ) : (
                                 <div className="space-y-3">
-                                    {cart.map((item) => (
+                                    {cart.map((item) => {
+                                        const isKg = isKgProduct(item.product);
+                                        const lineTotal = garmentItems.filter((piece) => piece.product_id === item.product.id).reduce((sum, piece) => sum + Number(piece.total_amount ?? piece.unit_price ?? 0), 0);
+                                        return (
                                         <div key={item.product.id} className="bg-white/5 rounded-lg p-3 flex items-center gap-3">
                                             <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-gray-400">
                                                 <ProductIcon product={item.product} className="w-5 h-5" />
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-sm font-medium truncate">{item.product.name}</div>
-                                                <div className="text-xs text-gray-400">R$ {garmentItems.filter((piece) => piece.product_id === item.product.id).reduce((sum, piece) => sum + Number(piece.total_amount ?? piece.unit_price ?? 0), 0).toFixed(2)} no grupo</div>
+                                                <div className="text-xs text-gray-400">R$ {lineTotal.toFixed(2)}{isKg ? ' no grupo' : ''}</div>
                                             </div>
-                                            <div className="flex items-center gap-2 bg-black/20 rounded-md p-1">
-                                                <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, -1); }} className="p-1 hover:text-red-400"><Minus className="w-3 h-3" /></button>
-                                                <span className="text-xs w-4 text-center">{item.qty}</span>
-                                                <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, 1); }} className="p-1 hover:text-green-400"><Plus className="w-3 h-3" /></button>
-                                            </div>
+                                            {isKg ? (
+                                                <div className="flex items-center gap-1 bg-black/20 rounded-md px-2 py-1">
+                                                    <input
+                                                        type="number"
+                                                        min="0.01"
+                                                        step="0.01"
+                                                        value={item.weight ?? 1}
+                                                        onChange={(e) => updateWeight(item.product.id, e.target.value)}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        className="w-14 bg-transparent text-center text-sm text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                        title="Peso em kg"
+                                                    />
+                                                    <span className="text-xs text-gray-400">kg</span>
+                                                    <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.product.id); }} className="p-1 hover:text-red-400" title="Remover"><Minus className="w-3 h-3" /></button>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center gap-2 bg-black/20 rounded-md p-1">
+                                                    <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, -1); }} className="p-1 hover:text-red-400"><Minus className="w-3 h-3" /></button>
+                                                    <span className="text-xs w-4 text-center">{item.qty}</span>
+                                                    <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, 1); }} className="p-1 hover:text-green-400"><Plus className="w-3 h-3" /></button>
+                                                </div>
+                                            )}
                                         </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             )}
                         </ScrollArea>
@@ -750,13 +825,21 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                         </div>
 
                         <div className="mt-4 max-h-44 space-y-2 overflow-y-auto pr-1">
-                            {garmentItems.map((piece, index) => (
+                            {garmentItems.map((piece, index) => {
+                                const isKg = piece.unit_of_measure === 'kg';
+                                const weight = isKg ? Number(piece.weight || 1) : null;
+                                const lineTotal = isKg ? Number((Number(piece.unit_price || 0) * weight).toFixed(2)) : Number(piece.total_amount ?? piece.unit_price ?? 0);
+                                return (
                                 <div key={piece.line_id} className="rounded-xl border border-white/10 bg-black/15 p-3 text-sm">
-                                    <div className="flex items-center justify-between gap-3"><span className="font-medium">{index + 1}. {piece.garment_type}</span><span className="text-orange-300">R$ {Number(piece.unit_price || 0).toFixed(2)}</span></div>
+                                    <div className="flex items-center justify-between gap-3">
+                                        <span className="font-medium">{index + 1}. {piece.garment_type}</span>
+                                        <span className="text-orange-300">R$ {lineTotal.toFixed(2)}{isKg ? ` (${weight} kg)` : ''}</span>
+                                    </div>
                                     <p className="mt-1 text-xs text-white/45">{[piece.attributes?.color, piece.attributes?.brand, piece.attributes?.material, piece.attributes?.size].filter(Boolean).join(' · ') || 'Sem características aplicáveis'}</p>
                                     {(piece.damages || []).length > 0 && <p className="mt-1 text-xs text-red-300">Avarias: {piece.damages.join(', ')}</p>}
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                         
                         <div className="mt-6 space-y-2">
