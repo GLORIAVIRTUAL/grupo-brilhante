@@ -82,6 +82,11 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
       ? requestedServices
       : (product.default_service_ids || []).map((serviceId) => ({ service_id: serviceId, quantity: 1 }));
 
+    const isKg = product.unit_of_measure === 'kg';
+    const weightMultiplier = isKg
+      ? Math.max(0.01, Number(requested.weight || 0) || Number(requested.qty || 1))
+      : null;
+
     const normalizedServices = serviceRequests.map((requestedService) => {
       const service = servicesById.get(requestedService.service_id);
       if (!service) {
@@ -106,7 +111,9 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
         .filter((candidate) => candidate.score >= 0)
         .sort((left, right) => right.score - left.score || String(right.rule.valid_from || '').localeCompare(String(left.rule.valid_from || '')));
       const selectedRule = candidates[0]?.rule;
-      const quantity = Math.max(1, Math.floor(Number(requestedService.quantity || 1)));
+      const quantity = isKg
+        ? weightMultiplier
+        : Math.max(1, Math.floor(Number(requestedService.quantity || 1)));
       const unitPrice = calculateRulePrice(service.base_price, selectedRule);
 
       return {
@@ -130,14 +137,18 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
     const unitPrice = hasServices
       ? asMoney(normalizedServices.reduce((sum, service) => sum + service.total_amount, 0))
       : asMoney(product.price);
-    const quantity = Math.max(1, Math.floor(Number(requested.qty || 1)));
+    const quantity = isKg
+      ? weightMultiplier
+      : Math.max(1, Math.floor(Number(requested.qty || 1)));
     const subtotal = asMoney(unitPrice * quantity);
 
     return {
       ...requested,
       product_id: product.id,
       garment_type: product.name,
-      qty: quantity,
+      qty: isKg ? 1 : quantity,
+      weight: isKg ? asMoney(quantity) : undefined,
+      unit_of_measure: product.unit_of_measure || null,
       unit_price: unitPrice,
       subtotal,
       total_amount: subtotal,
