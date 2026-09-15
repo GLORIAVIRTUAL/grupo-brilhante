@@ -31,7 +31,7 @@ export default function LaundryFactoryV2() {
           })}
         </div>
 
-        {/* Row 2: Dryer + Dry Clean */}
+        {/* Row 2: Secadora, Lavagem a Seco e Passadores — agrupadas no final */}
         <div className="flex items-center justify-center w-full gap-4 md:gap-8 flex-wrap">
           <MachineDropZone machineId="DRY-7000" timeKey="dry_time" accent="text-blue-400" accentRing="ring-blue-400">
             <DryerMachine label="SECAR 1" code="DRY-7000" />
@@ -39,10 +39,6 @@ export default function LaundryFactoryV2() {
           <MachineDropZone machineId="DRC-5000" timeKey="dry_clean_time" accent="text-emerald-400" accentRing="ring-emerald-400">
             <DryCleanMachine label="LAVAGEM SECO 1" code="DRC-5000" />
           </MachineDropZone>
-        </div>
-
-        {/* Bottom Row: Presses */}
-        <div className="flex items-center justify-center w-full gap-8 md:gap-16 flex-wrap md:flex-nowrap">
           <MachineDropZone machineId="PRS-X1" timeKey="iron_time" accent="text-orange-400" accentRing="ring-orange-400">
             <PressMachine label="PASSAR 1" code="PRS-X1" />
           </MachineDropZone>

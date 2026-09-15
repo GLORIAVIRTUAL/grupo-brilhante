@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, BellRing } from 'lucide-react';
 import { useMachine } from '@/components/dashboard/MachineContext';
@@ -19,6 +19,7 @@ export default function MachineDropZone({ machineId, timeKey, accent = 'text-blu
   const { state, start, clear } = useMachine(machineId);
   const [isOver, setIsOver] = useState(false);
   const [, setTick] = useState(0);
+  const zoneRef = useRef(null);
 
   // Re-renderiza a cada segundo para atualizar o cronômetro exibido
   useEffect(() => {
@@ -26,6 +27,13 @@ export default function MachineDropZone({ machineId, timeKey, accent = 'text-blu
     const interval = setInterval(() => setTick((t) => t + 1), 1000);
     return () => clearInterval(interval);
   }, [state]);
+
+  // Rola a página para centralizar a máquina quando um ticket é arrastado sobre ela
+  useEffect(() => {
+    if (isOver && zoneRef.current) {
+      zoneRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    }
+  }, [isOver]);
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -59,6 +67,7 @@ export default function MachineDropZone({ machineId, timeKey, accent = 'text-blu
 
   return (
     <div
+      ref={zoneRef}
       onDragOver={(e) => { e.preventDefault(); setIsOver(true); }}
       onDragLeave={() => setIsOver(false)}
       onDrop={handleDrop}
