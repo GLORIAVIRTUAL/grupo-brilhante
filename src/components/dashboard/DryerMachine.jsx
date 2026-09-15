@@ -45,7 +45,7 @@ export default function DryerMachine({ label = 'SECAR 1', code = 'DRY-7000' }) {
 
       {/* Base Platform */}
       <div className="w-40 md:w-48 h-4 bg-white/10 mt-2 rounded-full blur-md" />
-      <div className="absolute -bottom-8 text-xs font-mono text-blue-400 tracking-widest opacity-60 whitespace-nowrap">{label}</div>
+      <div className="mt-1 text-xs font-mono text-blue-400 tracking-widest opacity-80 whitespace-nowrap">{label}</div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function LaundryFactoryV2() {
       <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px]" />
       <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-[#216FA1]/10 rounded-full blur-[100px]" />
 
-      <div className="flex flex-col gap-8 w-full max-w-6xl relative z-10">
+      <div className="flex flex-col gap-12 w-full max-w-6xl relative z-10 pb-4">
 
         {/* Row 1: Washers */}
         <div className="flex items-center justify-center w-full gap-4 md:gap-6 flex-wrap">

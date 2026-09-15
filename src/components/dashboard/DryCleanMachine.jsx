@@ -40,7 +40,7 @@ export default function DryCleanMachine({ label = 'LAVAGEM SECO 1', code = 'DRC-
 
       {/* Base Platform */}
       <div className="w-40 md:w-48 h-4 bg-white/10 mt-2 rounded-full blur-md" />
-      <div className="absolute -bottom-8 text-xs font-mono text-emerald-400 tracking-widest opacity-60 whitespace-nowrap">{label}</div>
+      <div className="mt-1 text-xs font-mono text-emerald-400 tracking-widest opacity-80 whitespace-nowrap">{label}</div>
     </div>
   );
 }
