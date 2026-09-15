@@ -737,34 +737,43 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                                         const isKg = isKgProduct(item.product);
                                         const lineTotal = garmentItems.filter((piece) => piece.product_id === item.product.id).reduce((sum, piece) => sum + Number(piece.total_amount ?? piece.unit_price ?? 0), 0);
                                         return (
-                                        <div key={item.product.id} className="bg-white/5 rounded-lg p-3 flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-gray-400">
-                                                <ProductIcon product={item.product} className="w-5 h-5" />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="text-sm font-medium truncate">{item.product.name}</div>
-                                                <div className="text-xs text-gray-400">R$ {lineTotal.toFixed(2)}{isKg ? ' no grupo' : ''}</div>
+                                        <div key={item.product.id} className="bg-white/5 rounded-lg p-3 space-y-2">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-gray-400">
+                                                    <ProductIcon product={item.product} className="w-5 h-5" />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="text-sm font-medium truncate">{item.product.name}</div>
+                                                    <div className="text-xs text-gray-400">R$ {Number(item.product.price || 0).toFixed(2)}/kg</div>
+                                                </div>
+                                                <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.product.id); }} className="p-1.5 rounded-md bg-white/5 hover:bg-red-500/20 hover:text-red-400 text-gray-400 transition-colors" title="Remover"><Minus className="w-4 h-4" /></button>
                                             </div>
                                             {isKg ? (
-                                                <div className="flex items-center gap-1 bg-black/20 rounded-md px-2 py-1">
-                                                    <input
-                                                        type="number"
-                                                        min="0.01"
-                                                        step="0.01"
-                                                        value={item.weight ?? 1}
-                                                        onChange={(e) => updateWeight(item.product.id, e.target.value)}
-                                                        onClick={(e) => e.stopPropagation()}
-                                                        className="w-14 bg-transparent text-center text-sm text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                                        title="Peso em kg"
-                                                    />
-                                                    <span className="text-xs text-gray-400">kg</span>
-                                                    <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.product.id); }} className="p-1 hover:text-red-400" title="Remover"><Minus className="w-3 h-3" /></button>
+                                                <div className="flex items-center justify-between gap-2 pl-[3.25rem]">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xs font-medium text-gray-300">Peso</span>
+                                                        <input
+                                                            type="number"
+                                                            min="0.01"
+                                                            step="0.01"
+                                                            value={item.weight ?? 1}
+                                                            onChange={(e) => updateWeight(item.product.id, e.target.value)}
+                                                            onClick={(e) => e.stopPropagation()}
+                                                            className="w-20 bg-black/40 border border-white/20 rounded-md text-center text-sm font-semibold text-white px-2 py-1.5 outline-none focus:border-[#216FA1] focus:ring-1 focus:ring-[#216FA1]/40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                            title="Peso em kg"
+                                                        />
+                                                        <span className="text-sm text-gray-300">kg</span>
+                                                    </div>
+                                                    <span className="text-sm font-bold text-[#216FA1]">R$ {lineTotal.toFixed(2)}</span>
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center gap-2 bg-black/20 rounded-md p-1">
-                                                    <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, -1); }} className="p-1 hover:text-red-400"><Minus className="w-3 h-3" /></button>
-                                                    <span className="text-xs w-4 text-center">{item.qty}</span>
-                                                    <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, 1); }} className="p-1 hover:text-green-400"><Plus className="w-3 h-3" /></button>
+                                                <div className="flex items-center justify-between gap-2 pl-[3.25rem]">
+                                                    <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-md p-1">
+                                                        <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, -1); }} className="p-1 hover:text-red-400"><Minus className="w-4 h-4" /></button>
+                                                        <span className="text-sm w-5 text-center font-medium">{item.qty}</span>
+                                                        <button onClick={(e) => { e.stopPropagation(); updateQty(item.product.id, 1); }} className="p-1 hover:text-green-400"><Plus className="w-4 h-4" /></button>
+                                                    </div>
+                                                    <span className="text-sm font-bold text-[#216FA1]">R$ {lineTotal.toFixed(2)}</span>
                                                 </div>
                                             )}
                                         </div>
