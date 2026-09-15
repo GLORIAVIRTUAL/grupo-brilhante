@@ -574,7 +574,7 @@ export default function AdvancedQuoteModal({ isOpen, onClose, pipeline, stage, u
                             />
                         </div>
                         {showSuggestions && suggestions.length > 0 && (
-                            <div className="absolute z-50 left-0 right-0 top-16 bg-[#23123f] border border-white/10 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                            <div className="absolute z-50 left-0 right-0 top-16 bg-[#17364F] border border-[#216FA1]/40 rounded-lg shadow-xl max-h-60 overflow-y-auto">
                                 {suggestions.map((c) => (
                                     <button
                                         key={c.id}
