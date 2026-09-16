@@ -47,7 +47,7 @@ export default function KanbanCard({ card, index, customer, onClick, onDeleteCli
             layoutId={card.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`bg-[#2a1b4e] p-4 rounded-xl border border-white/10 shadow-lg hover:border-[#216FA1]/50 transition-colors
+            className={`bg-[#17364F] p-4 rounded-xl border border-white/10 shadow-lg hover:border-[#216FA1]/50 transition-colors
               ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-[#216FA1] rotate-2' : ''}
             `}
           >
