@@ -72,7 +72,7 @@ export async function uploadSecureFile({ file, documentType, unitId, legalEntity
   }
   if (!resolvedLegalEntityId) throw new Error('A unidade ainda não está vinculada a um CNPJ. Faça a vinculação antes do envio.');
 
-  const { file_url: storageKey } = await base44.integrations.Core.UploadFile({ file: safeFile });
+  const { file_url: storageKey } = await base44.integrations.Core.UploadPublicFile({ file: safeFile });
   try {
     const response = await base44.functions.invoke('manage_document_assets', {
       action: 'register',
