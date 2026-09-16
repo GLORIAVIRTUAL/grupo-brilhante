@@ -30,7 +30,7 @@ function safeStorageKey(value: unknown) {
   let parsed: URL;
   try { parsed = new URL(key); } catch { throw new Error('invalid_storage_key'); }
   const hostname = parsed.hostname.toLowerCase();
-  if (parsed.protocol !== 'https:' || !(hostname === 'media.base44.com' || hostname.endsWith('.base44.com'))) {
+  if (parsed.protocol !== 'https:' || !(hostname === 'media.base44.com' || hostname.endsWith('.base44.com') || hostname === 'base44.app' || hostname.endsWith('.base44.app'))) {
     throw new Error('invalid_storage_origin');
   }
   return key;

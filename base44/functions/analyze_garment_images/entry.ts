@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
       if (!canAccessUnit(user, asset.unit_id)) {
         return Response.json({ error: 'forbidden_unit', request_id: requestId }, { status: 403 });
       }
-      if (!['valid'].includes(asset.validation_status) || ['rejected', 'quarantined'].includes(asset.scan_status)) {
+      if (['rejected', 'quarantined'].includes(asset.scan_status) || asset.validation_status === 'rejected') {
         return Response.json({ error: 'asset_not_safe_for_processing', asset_id: assetId, request_id: requestId }, { status: 422 });
       }
       assets.push(asset);
