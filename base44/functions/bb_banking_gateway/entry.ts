@@ -25,9 +25,7 @@ Deno.serve(async (req: Request) => {
     const attempt = Number(job.attempt_count || 0) + 1;
     await db.IntegrationJob.update(job.id, { status: 'processing', attempt_count: attempt, started_at: new Date().toISOString(), last_error_code: null, last_error_message: null });
     await db.BankCharge.update(charge.id, { status: job.operation === 'create_charge' ? 'transmitting' : charge.status, last_provider_request_at: new Date().toISOString(), provider_environment: runtime.environment });
-    const token = await accessToken(runtime);
-    const providerRequest = requestFor(job, charge, runtime);
-    const response = await fetchJson(providerRequest.url, { method: providerRequest.method, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', Accept: 'application/json', 'X-Idempotency-Key': job.idempotency_key }, body: ['GET', 'DELETE'].includes(providerRequest.method) ? undefined : JSON.stringify(providerRequest.payload) });
+    const response = await callProvider(job.operation, charge, runtime, (name: string) => Deno.env.get(name) || '', job.idempotency_key);
     const safe = sanitizedBankResponse(response);
     const nextChargeStatus = job.operation === 'create_charge' ? 'active' : job.operation === 'cancel_charge' ? 'cancelled' : 'refunded';
     const chargePatch: any = { status: nextChargeStatus, provider_charge_id: safe.providerChargeId || charge.provider_charge_id, txid: safe.txid || charge.txid, our_number: safe.ourNumber || charge.our_number, digitable_line: safe.digitableLine || charge.digitable_line, barcode: safe.barcode || charge.barcode, qr_code_text: safe.qrCodeText || charge.qr_code_text, qr_code_location: safe.qrCodeLocation || charge.qr_code_location, last_provider_status: safe.providerStatus, last_provider_response_at: new Date().toISOString(), safe_error_code: null };
