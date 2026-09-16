@@ -1,38 +1,10 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { requireInternalRequest, securityErrorResponse } from '../../shared/functionSecurity.js';
-import { BB_DEFAULT_ENDPOINTS, assertExternalBankingAllowed, bankingRuntimeConfig, buildBoletoPayload, buildPixPayload, oauthBasicHeader, sanitizedBankResponse } from '../../shared/bankingProviderContract.js';
+import { assertExternalBankingAllowed, bankingRuntimeConfig, sanitizedBankResponse } from '../../shared/bankingProviderContract.js';
+import { callProvider } from '../../shared/bbProviderTransport.js';
 
 function clean(value: unknown, max = 500) { return String(value || '').trim().slice(0, max); }
 function config() { return bankingRuntimeConfig((name) => Deno.env.get(name) || ''); }
-function endpointPath(name: string) { const value = clean(Deno.env.get(name), 300) || (BB_DEFAULT_ENDPOINTS as any)[name] || ''; if (!value || !value.startsWith('/')) throw new Error('banking_endpoint_not_configured'); return value; }
-function urlWithDeveloperKey(base: string, path: string, key: string) { const url = new URL(path, `${base}/`); url.searchParams.set('gw-dev-app-key', key); return url.toString(); }
-async function fetchJson(url: string, init: RequestInit, timeout = 15000) { const response = await fetch(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(timeout) }); const text = await response.text(); let data: any = {}; try { data = text ? JSON.parse(text) : {}; } catch { data = {}; } if (!response.ok) { const error: any = new Error(`banking_provider_http_${response.status}`); error.status = response.status; error.safeResponse = { status: response.status, provider_code: clean(data?.codigo || data?.code || '', 80) || null }; throw error; } return data; }
-
-async function accessToken(runtime: any) {
-  const data = await fetchJson(runtime.oauthUrl, { method: 'POST', headers: { Authorization: oauthBasicHeader(runtime), 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: 'grant_type=client_credentials&scope=cobrancas.boletos-info+cob.write+cob.read+pix.read+pix.write' }, 12000);
-  const token = clean(data.access_token, 5000);
-  if (!token) throw new Error('banking_oauth_token_missing');
-  return token;
-}
-
-function requestFor(job: any, charge: any, runtime: any) {
-  if (job.operation === 'create_charge') {
-    const payload = charge.charge_type === 'boleto'
-      ? buildBoletoPayload({ ...charge, payer: { name: charge.payer_name, tax_id: charge.payer_tax_id, email: charge.payer_email, address: charge.payer_address }, description: charge.metadata?.description, with_pix: charge.metadata?.with_pix, modality_code: charge.metadata?.modality_code, receipt_limit_days: charge.metadata?.receipt_limit_days }, runtime)
-      : buildPixPayload({ ...charge, payer: { name: charge.payer_name, tax_id: charge.payer_tax_id, email: charge.payer_email, address: charge.payer_address }, description: charge.metadata?.description, expiration_seconds: charge.metadata?.expiration_seconds, valid_after_due_days: charge.metadata?.valid_after_due_days }, runtime);
-    const path = charge.charge_type === 'boleto' ? endpointPath('BB_CHARGE_CREATE_PATH') : endpointPath('BB_PIX_CREATE_PATH');
-    return { method: charge.charge_type === 'pix_immediate' ? 'PUT' : 'POST', url: urlWithDeveloperKey(runtime.apiBaseUrl, path.replace('{txid}', charge.txid || charge.internal_reference), runtime.developerApplicationKey), payload };
-  }
-  if (job.operation === 'cancel_charge') {
-    const path = charge.charge_type === 'boleto' ? endpointPath('BB_CHARGE_CANCEL_PATH') : endpointPath('BB_PIX_CANCEL_PATH');
-    return { method: charge.charge_type === 'boleto' ? 'POST' : 'PATCH', url: urlWithDeveloperKey(runtime.apiBaseUrl, path.replace('{id}', charge.provider_charge_id || charge.our_number || '').replace('{txid}', charge.txid || ''), runtime.developerApplicationKey), payload: charge.charge_type === 'boleto' ? {} : { status: 'REMOVIDA_PELO_USUARIO_RECEBEDOR' } };
-  }
-  if (job.operation === 'refund_charge') {
-    const path = endpointPath('BB_PIX_REFUND_PATH');
-    return { method: 'PUT', url: urlWithDeveloperKey(runtime.apiBaseUrl, path.replace('{txid}', charge.txid || '').replace('{refund_id}', `DEV${charge.id.replace(/[^a-zA-Z0-9]/g, '').slice(-20)}`), runtime.developerApplicationKey), payload: { valor: Number(charge.settled_amount || charge.amount).toFixed(2) } };
-  }
-  throw new Error('unsupported_banking_operation');
-}
 
 Deno.serve(async (req: Request) => {
   const requestId = crypto.randomUUID();
