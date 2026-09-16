@@ -63,6 +63,8 @@ export default function Customers() {
       birthdate: "",
       zip_code: "",
       neighborhood: "",
+      city: "",
+      state: "",
       tax_id: "",
       unit_id: ""
   });
@@ -185,6 +187,8 @@ export default function Customers() {
             birthdate: formData.birthdate,
             zip_code: formData.zip_code,
             neighborhood: formData.neighborhood,
+            city: formData.city,
+            state: (formData.state || '').toUpperCase().slice(0, 2),
             tax_id: formData.tax_id?.replace(/\D/g, '') || '',
             unit_id: formData.unit_id || '',
             preferred_unit_name: selectedUnitObj?.name || '',
@@ -199,7 +203,7 @@ export default function Customers() {
 
         setIsDialogOpen(false);
         setEditingCustomer(null);
-        setFormData({ full_name: "", email: "", phone: "", address: "", address_number: "", address_complement: "", status: "active", birthdate: "", zip_code: "", neighborhood: "", tax_id: "", unit_id: "" });
+        setFormData({ full_name: "", email: "", phone: "", address: "", address_number: "", address_complement: "", status: "active", birthdate: "", zip_code: "", neighborhood: "", city: "", state: "", tax_id: "", unit_id: "" });
         loadCustomers();
     } catch (err) {
         console.error("Error saving customer:", err);
@@ -227,6 +231,8 @@ export default function Customers() {
           birthdate: customer.birthdate || "",
           zip_code: customer.zip_code || "",
           neighborhood: customer.neighborhood || "",
+          city: customer.city || "",
+          state: customer.state || "",
           tax_id: customer.tax_id || "",
           unit_id: customer.unit_id || ""
       });
@@ -240,10 +246,13 @@ export default function Customers() {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             const data = await response.json();
             if (!data.erro) {
+                // Cidade e UF chegam preenchidas automaticamente pelo CEP (exigidas no boleto do Banco do Brasil).
                 setFormData(prev => ({
                     ...prev,
-                    address: `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`,
-                    neighborhood: prev.neighborhood || data.bairro || ''
+                    address: data.logradouro || prev.address,
+                    neighborhood: data.bairro || prev.neighborhood || '',
+                    city: data.localidade || prev.city || '',
+                    state: data.uf || prev.state || ''
                 }));
             }
         } catch (error) {
@@ -328,7 +337,7 @@ export default function Customers() {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
                 <Button 
-                    onClick={() => { setEditingCustomer(null); setFormData({ full_name: "", email: "", phone: "", address: "", address_number: "", address_complement: "", status: "active", birthdate: "", zip_code: "", neighborhood: "", tax_id: "", unit_id: "" }); }}
+                    onClick={() => { setEditingCustomer(null); setFormData({ full_name: "", email: "", phone: "", address: "", address_number: "", address_complement: "", status: "active", birthdate: "", zip_code: "", neighborhood: "", city: "", state: "", tax_id: "", unit_id: "" }); }}
                     className="bg-[#216FA1] hover:bg-[#ff7b24] text-white gap-2"
                 >
                     <Plus className="w-4 h-4" /> Novo Cliente
@@ -377,7 +386,7 @@ export default function Customers() {
                             placeholder="Somente números"
                             className="bg-white/5 border-white/10"
                         />
-                        <p className="text-[11px] text-gray-500">Exigido pelo Asaas para gerar cobranças Pix ou cartão.</p>
+                        <p className="text-[11px] text-gray-500">Exigido pelo Banco do Brasil para emitir Pix ou boleto.</p>
                     </div>
                     <div className="space-y-2">
                         <Label>Email</Label>
@@ -408,7 +417,7 @@ export default function Customers() {
                                 value={formData.address} 
                                 onChange={e => setFormData({...formData, address: e.target.value})}
                                 className="bg-white/5 border-white/10" 
-                                placeholder="Endereço completo, Bairro, Cidade - UF"
+                                placeholder="Rua / logradouro"
                             />
                         </div>
                     </div>
@@ -438,6 +447,27 @@ export default function Customers() {
                                 onChange={e => setFormData({...formData, address_complement: e.target.value})}
                                 className="bg-white/5 border-white/10" 
                                 placeholder="Ex: Apto 402, Bloco B"
+                            />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="col-span-2 space-y-2">
+                            <Label>Cidade</Label>
+                            <Input
+                                value={formData.city}
+                                onChange={e => setFormData({...formData, city: e.target.value})}
+                                className="bg-white/5 border-white/10"
+                                placeholder="Preenchida pelo CEP"
+                            />
+                        </div>
+                        <div className="col-span-1 space-y-2">
+                            <Label>UF</Label>
+                            <Input
+                                value={formData.state}
+                                onChange={e => setFormData({...formData, state: e.target.value.toUpperCase().slice(0, 2)})}
+                                className="bg-white/5 border-white/10"
+                                placeholder="RS"
+                                maxLength={2}
                             />
                         </div>
                     </div>
