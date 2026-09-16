@@ -45,6 +45,8 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
   const [busy, setBusy] = useState(false);
   const [createdQuote, setCreatedQuote] = useState(null);
   const [createdOrder, setCreatedOrder] = useState(null);
+  const [paymentResult, setPaymentResult] = useState(null);
+  const [paymentBusy, setPaymentBusy] = useState(false);
 
   // Carrega TODOS os clientes (paginado) quando o modal abre — não depende
   // mais da lista filtrada do dashboard, que só tinha clientes com atividade do dia.
@@ -138,6 +140,8 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
     setItems([]);
     setCreatedQuote(null);
     setCreatedOrder(null);
+    setPaymentResult(null);
+    setPaymentBusy(false);
     setBusy(false);
   };
 
@@ -180,8 +184,8 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
           });
           uploaded.push(result.asset.id);
         } catch (uploadError) {
-          if (uploadError.code === 'DUPLICATE_DOCUMENT' && uploadError.asset?.id) {
-            uploaded.push(uploadError.asset.id);
+          if (uploadError.code === 'DUPLICATE_DOCUMENT' && (uploadError.assetId || uploadError.asset?.id)) {
+            uploaded.push(uploadError.assetId || uploadError.asset.id);
           } else {
             throw uploadError;
           }
@@ -248,14 +252,44 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
     setBusy(true);
     try {
       const response = await base44.functions.invoke('approve_quote', { quote_id: createdQuote.id });
-      setCreatedOrder(response.data?.order);
-      onCreated?.({ quote: createdQuote, order: response.data?.order });
-      toast.success('Ticket e peças criados com rastreabilidade.');
+      const order = response.data?.order;
+      setCreatedOrder(order);
+      onCreated?.({ quote: createdQuote, order });
+      toast.success('Ticket criado. Fechando para gerar cobrança separadamente.');
+      // Fecha o modal automaticamente após criar o ticket
+      setTimeout(() => handleOpenChange(false), 1200);
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.error === 'human_review_required' ? 'Ainda existem itens pendentes de revisão.' : 'Não foi possível criar o ticket.');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const generatePayment = async (billingType) => {
+    if (!createdOrder) return;
+    setPaymentBusy(true);
+    try {
+      const response = await base44.functions.invoke('generate_payment_link', {
+        order_id: createdOrder.id,
+        billing_type: billingType,
+      });
+      setPaymentResult({ ...response.data, billingType });
+      toast.success(billingType === 'pix' ? 'Pix gerado com sucesso.' : 'Boleto gerado com sucesso.');
+    } catch (error) {
+      console.error(error);
+      const msg = error.response?.data?.error;
+      if (msg === 'customer_data_incomplete') {
+        toast.error(`Complete o cadastro do cliente: ${error.response?.data?.missing_fields?.join(', ') || 'dados faltantes'}.`);
+      } else if (msg === 'payment_integration_disabled') {
+        toast.error('Integração de pagamento desativada. Contate o administrador.');
+      } else if (msg === 'payment_integration_not_configured') {
+        toast.error('Gateway de pagamento não configurado. Contate o administrador.');
+      } else {
+        toast.error(error.response?.data?.message || 'Não foi possível gerar a cobrança.');
+      }
+    } finally {
+      setPaymentBusy(false);
     }
   };
 
@@ -371,7 +405,34 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
                   <div className="flex gap-3"><TriangleAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" /><div><p className="font-semibold">Nenhuma cobrança foi registrada.</p><p className="mt-1 text-sm text-white/50">Crie o ticket somente quando o cliente aprovar o orçamento. O pagamento continuará sendo uma etapa separada.</p></div></div>
                 </div>
                 {createdOrder ? (
-                  <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-emerald-200">Ticket <strong>{createdOrder.ticket_number}</strong> criado com peças individualizadas.</div>
+                  <div className="space-y-4">
+                    <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-emerald-200">Ticket <strong>{createdOrder.ticket_number}</strong> criado com peças individualizadas.</div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-left space-y-3">
+                      <div className="flex items-center gap-2 font-semibold text-white"><FileImage className="h-4 w-4 text-[#216FA1]" /> Gerar cobrança</div>
+                      <p className="text-sm text-white/50">Gere o Pix ou boleto para o cliente pagar. O pagamento é confirmado automaticamente via webhook.</p>
+                      <div className="flex flex-wrap gap-2">
+                        <Button onClick={() => generatePayment('pix')} disabled={paymentBusy} className="bg-gradient-to-r from-[#216FA1] to-[#2d8ac4]">{paymentBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}Gerar Pix</Button>
+                        <Button onClick={() => generatePayment('boleto')} disabled={paymentBusy} variant="outline" className="border-white/20 text-white hover:bg-white/10">{paymentBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}Gerar Boleto</Button>
+                      </div>
+                      {paymentResult && (
+                        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 space-y-2">
+                          {paymentResult.billingType === 'pix' && paymentResult.pix_qr_code && (
+                            <>
+                              <div className="flex justify-center"><img src={paymentResult.pix_qr_code} alt="QR Code Pix" className="h-44 w-44 rounded-lg bg-white p-2" /></div>
+                              <div className="text-xs text-white/60">Chave copia e cola:</div>
+                              <div className="flex items-center gap-2">
+                                <code className="flex-1 rounded bg-black/30 px-2 py-1.5 text-xs text-emerald-200 break-all">{paymentResult.pix_copy_paste_key}</code>
+                                <Button size="sm" variant="ghost" onClick={() => { navigator.clipboard.writeText(paymentResult.pix_copy_paste_key); toast.success('Chave Pix copiada!'); }}>Copiar</Button>
+                              </div>
+                            </>
+                          )}
+                          {paymentResult.url && (
+                            <Button size="sm" className="w-full" onClick={() => window.open(paymentResult.url, '_blank')}>{paymentResult.billingType === 'pix' ? 'Abrir link de pagamento' : 'Abrir boleto'}</Button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 ) : (
                   <Button onClick={createOrder} disabled={busy} className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:from-emerald-400 hover:to-cyan-400">{busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}Cliente aprovou: criar ticket</Button>
                 )}

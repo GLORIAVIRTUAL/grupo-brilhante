@@ -9,7 +9,7 @@ function paymentReturnOrigin(): string {
   return parsed.origin;
 }
 
-const ALLOWED_BILLING_TYPES = new Set(['pix', 'credit_card']);
+const ALLOWED_BILLING_TYPES = new Set(['pix', 'credit_card', 'boleto']);
 
 // Gateway intermediário na VPS — administra a chave Asaas e o ambiente.
 // A URL já termina em /v3 (não duplicar).
@@ -162,6 +162,55 @@ async function createDirectPixPayment(
   } catch (err) {
     // Timeout / falha de rede: a cobrança pode ter sido criada — NÃO repetir.
     console.error('[generate_payment_link] Direct PIX network error (inconclusive)');
+    return { data: null, error: String(err), status: 'inconclusive' };
+  }
+}
+
+// Create a direct BOLETO payment — returns bank slip URL.
+// status: 'ok' | 'error' | 'inconclusive'
+async function createDirectBoletoPayment(
+  gatewayToken: string,
+  asaasCustomerId: string,
+  amount: number,
+  referenceLabel: string,
+  referenceId: string,
+  customerName: string
+): Promise<{ data: any; error: string | null; status: 'ok' | 'error' | 'inconclusive' }> {
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 3);
+
+  const body = {
+    customer: asaasCustomerId,
+    billingType: 'BOLETO',
+    value: Math.round(amount * 100) / 100,
+    dueDate: dueDate.toISOString().split('T')[0],
+    externalReference: referenceId,
+    description: `Pedido #${referenceLabel} - ${customerName || 'Cliente'}`,
+  };
+
+  try {
+    const resp = await fetch(`${gatewayBase()}/payments`, {
+      method: 'POST',
+      headers: gatewayHeaders(gatewayToken),
+      body: JSON.stringify(body),
+    });
+    const text = await resp.text();
+    let json: any = null;
+    try { json = JSON.parse(text); } catch (_) { json = null; }
+
+    if (!resp.ok) {
+      const errMsg = json?.errors?.map((e: any) => e.description).join('; ')
+        || (json && JSON.stringify(json))
+        || `HTTP ${resp.status}: ${text.slice(0, 200)}`;
+      console.error('[generate_payment_link] Direct BOLETO error', resp.status);
+      return { data: null, error: errMsg, status: 'error' };
+    }
+    if (!json) {
+      return { data: null, error: 'Resposta não-JSON do gateway', status: 'inconclusive' };
+    }
+    return { data: json, error: null, status: 'ok' };
+  } catch (err) {
+    console.error('[generate_payment_link] Direct BOLETO network error (inconclusive)');
     return { data: null, error: String(err), status: 'inconclusive' };
   }
 }
@@ -358,6 +407,28 @@ Deno.serve(async (req) => {
       }
     }
 
+    // For BOLETO: create direct bank slip payment (returns boleto URL)
+    if (billingType === 'boleto') {
+      const asaasCustomerId = await ensureAsaasCustomer(gatewayToken, customer);
+      if (asaasCustomerId) {
+        const boletoResult = await createDirectBoletoPayment(gatewayToken, asaasCustomerId, amount, referenceLabel, referenceIdForAsaas, customer?.full_name);
+        if (boletoResult.status === 'inconclusive') {
+          inconclusive = true;
+          lastError = boletoResult.error;
+        } else if (boletoResult.data?.bankSlipUrl || boletoResult.data?.invoiceUrl) {
+          result = {
+            type: 'direct_boleto',
+            asaasId: boletoResult.data.id,
+            url: boletoResult.data.bankSlipUrl || boletoResult.data.invoiceUrl,
+          };
+        } else {
+          lastError = boletoResult.error;
+        }
+      } else {
+        lastError = 'Não foi possível criar/obter cliente no gateway (CPF/CNPJ pode ser necessário).';
+      }
+    }
+
     // Fallback: checkout session (apenas se não houve tentativa Pix inconclusiva)
     if (!result && !inconclusive) {
       const checkoutResult = await createCheckoutSession(gatewayToken, billingType, amount, referenceLabel, referenceIdForAsaas, customer, origin);
@@ -403,12 +474,14 @@ Deno.serve(async (req) => {
       unit_id: source.unit_id,
       status: 'pending',
       amount,
-      payment_method: billingType === 'pix' ? 'pix' : 'credit_card',
+      payment_method: billingType === 'pix' ? 'pix' : billingType === 'boleto' ? 'boleto' : 'credit_card',
       external_reference: result.asaasId,
       idempotency_key: `asaas:${result.asaasId}`,
       notes: result.type === 'direct_pix'
         ? `Pix direto Asaas. request_id=${requestId}`
-        : `Checkout Asaas. request_id=${requestId}`,
+        : result.type === 'direct_boleto'
+          ? `Boleto direto Asaas. request_id=${requestId}`
+          : `Checkout Asaas. request_id=${requestId}`,
     });
 
     await base44.asServiceRole.entities.AuditLog.create({
@@ -418,7 +491,7 @@ Deno.serve(async (req) => {
       item_label: referenceLabel,
       customer_name: customer?.full_name,
       amount,
-      reason: result.type === 'direct_pix' ? 'pix_payment_created_asaas' : 'payment_link_created_asaas',
+      reason: result.type === 'direct_pix' ? 'pix_payment_created_asaas' : result.type === 'direct_boleto' ? 'boleto_payment_created_asaas' : 'payment_link_created_asaas',
       user_email: user?.email || 'automacao-interna@sistema',
       user_name: user?.full_name || user?.display_name || 'Automação interna',
       user_role: user?.role || 'internal',
