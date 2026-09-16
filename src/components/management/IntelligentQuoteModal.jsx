@@ -255,9 +255,7 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
       const order = response.data?.order;
       setCreatedOrder(order);
       onCreated?.({ quote: createdQuote, order });
-      toast.success('Ticket criado. Fechando para gerar cobrança separadamente.');
-      // Fecha o modal automaticamente após criar o ticket
-      setTimeout(() => handleOpenChange(false), 1200);
+      toast.success('Ticket criado. Gere o Pix ou boleto abaixo.');
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.error === 'human_review_required' ? 'Ainda existem itens pendentes de revisão.' : 'Não foi possível criar o ticket.');
