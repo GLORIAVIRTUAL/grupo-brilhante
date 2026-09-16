@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Camera, Check, ChevronLeft, ChevronRight, FileImage, Loader2, Plus, ShieldCheck, Sparkles, Trash2, TriangleAlert } from 'lucide-react';
+import { Camera, Check, ChevronLeft, ChevronRight, FileImage, Loader2, Plus, Search, ShieldCheck, Sparkles, Trash2, TriangleAlert, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { base44 } from '@/api/base44Client';
 import { uploadSecureFile } from '@/lib/secureFiles';
@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import GarmentReviewCard, { FALLBACK_CATALOG_OPTIONS as FALLBACK_OPTIONS } from '@/components/management/GarmentReviewCard';
@@ -34,6 +33,11 @@ function PreviewCard({ entry, onRemove }) {
 export default function IntelligentQuoteModal({ open, onOpenChange, customers = [], defaultUnitId, onCreated }) {
   const [step, setStep] = useState(1);
   const [customerId, setCustomerId] = useState('');
+  const [customerSearch, setCustomerSearch] = useState('');
+  const [allCustomers, setAllCustomers] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [customersLoading, setCustomersLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [items, setItems] = useState([]);
   const [products, setProducts] = useState([]);
@@ -42,6 +46,8 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
   const [createdQuote, setCreatedQuote] = useState(null);
   const [createdOrder, setCreatedOrder] = useState(null);
 
+  // Carrega TODOS os clientes (paginado) quando o modal abre — não depende
+  // mais da lista filtrada do dashboard, que só tinha clientes com atividade do dia.
   useEffect(() => {
     if (!open) return;
     base44.entities.Product.filter({ active: true }, 'name', 500)
@@ -50,6 +56,30 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
     base44.entities.OperationalCatalogEntry.filter({ active: true }, 'sort_order', 2000)
       .then(setCatalogEntries)
       .catch(() => setCatalogEntries([]));
+
+    let cancelled = false;
+    (async () => {
+      setCustomersLoading(true);
+      try {
+        if (customers.length && !allCustomers.length) setAllCustomers(customers);
+        const all = [];
+        const pageSize = 500;
+        let skip = 0;
+        while (true) {
+          const batch = await base44.entities.Customer.list('-created_date', pageSize, skip);
+          if (!batch || batch.length === 0) break;
+          all.push(...batch);
+          if (batch.length < pageSize) break;
+          skip += pageSize;
+        }
+        if (!cancelled) setAllCustomers(all);
+      } catch (e) {
+        console.error('Error loading customers', e);
+      } finally {
+        if (!cancelled) setCustomersLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
   }, [open]);
 
   const catalogOptions = useMemo(() => {
@@ -67,12 +97,43 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
 
   const total = useMemo(() => items.reduce((sum, item) => sum + Number(item.total_amount ?? Number(item.qty || 1) * Number(item.unit_price || 0)), 0), [items]);
   const unresolved = items.filter((item) => !item.product_id || item.recognition_status !== 'confirmed');
-  const selectedCustomer = customers.find((customer) => customer.id === customerId);
+  const selectedCustomer = allCustomers.find((customer) => customer.id === customerId);
+
+  const handleCustomerSearch = (value) => {
+    setCustomerSearch(value);
+    setCustomerId('');
+    if (value.trim().length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    const query = value.toLowerCase().trim();
+    const digits = query.replace(/\D/g, '');
+    const matches = allCustomers
+      .filter((c) => {
+        const name = (c.full_name || '').toLowerCase();
+        const phones = (c.phones || []).map((p) => (p || '').replace(/\D/g, ''));
+        return name.includes(query) || (digits && phones.some((p) => p.includes(digits)));
+      })
+      .slice(0, 8);
+    setSuggestions(matches);
+    setShowSuggestions(matches.length > 0);
+  };
+
+  const selectCustomer = (customer) => {
+    setCustomerId(customer.id);
+    setCustomerSearch(customer.full_name || '');
+    setShowSuggestions(false);
+    setSuggestions([]);
+  };
 
   const reset = () => {
     files.forEach((entry) => URL.revokeObjectURL(entry.preview));
     setStep(1);
     setCustomerId('');
+    setCustomerSearch('');
+    setSuggestions([]);
+    setShowSuggestions(false);
     setFiles([]);
     setItems([]);
     setCreatedQuote(null);
@@ -233,10 +294,42 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
                   <div className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
                     <div className="space-y-2">
                       <Label>Cliente</Label>
-                      <Select value={customerId} onValueChange={setCustomerId}>
-                        <SelectTrigger className="border-white/10 bg-black/20"><SelectValue placeholder="Selecione o cliente" /></SelectTrigger>
-                        <SelectContent>{customers.map((customer) => <SelectItem key={customer.id} value={customer.id}>{customer.full_name}</SelectItem>)}</SelectContent>
-                      </Select>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                        <Input
+                          value={customerSearch}
+                          onChange={(e) => handleCustomerSearch(e.target.value)}
+                          onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                          placeholder={customersLoading ? 'Carregando clientes...' : 'Buscar por nome ou telefone'}
+                          className="pl-10 bg-black/20 border-white/10"
+                          autoFocus
+                        />
+                        {customersLoading && <Loader2 className="absolute right-3 top-3 h-4 w-4 animate-spin text-gray-400" />}
+                        {showSuggestions && suggestions.length > 0 && (
+                          <div className="absolute z-50 left-0 right-0 top-12 bg-[#17364F] border border-[#216FA1]/40 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                            {suggestions.map((c) => (
+                              <button
+                                key={c.id}
+                                type="button"
+                                onMouseDown={(e) => { e.preventDefault(); selectCustomer(c); }}
+                                className="w-full text-left px-4 py-2.5 hover:bg-white/10 transition-colors border-b border-white/5 last:border-0"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <User className="h-3.5 w-3.5 text-gray-500" />
+                                  <span className="font-medium text-white">{c.full_name || 'Sem nome'}</span>
+                                </div>
+                                <div className="text-xs text-gray-400 ml-5.5">{(c.phones && c.phones[0]) || 'Sem telefone'}</div>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      {customerId && (
+                        <p className="text-xs text-emerald-300 flex items-center gap-1">
+                          <Check className="w-3 h-3" /> {selectedCustomer?.full_name || 'Cliente selecionado'}
+                        </p>
+                      )}
                     </div>
                     <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-sm text-emerald-100/80">
                       <div className="flex items-center gap-2 font-semibold text-emerald-300"><ShieldCheck className="h-4 w-4" /> Fluxo supervisionado</div>
