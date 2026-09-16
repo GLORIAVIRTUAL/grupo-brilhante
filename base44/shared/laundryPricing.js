@@ -77,10 +77,15 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
       throw error;
     }
 
-    const requestedServices = Array.isArray(requested.services) ? requested.services : [];
+    // Serviços sugeridos pela IA vêm apenas com o nome (sem id de catálogo).
+    // Mantemos somente os que existem no catálogo e caímos nos serviços padrão do produto.
+    const requestedServices = (Array.isArray(requested.services) ? requested.services : [])
+      .filter((requestedService) => servicesById.has(requestedService.service_id));
     const serviceRequests = requestedServices.length > 0
       ? requestedServices
-      : (product.default_service_ids || []).map((serviceId) => ({ service_id: serviceId, quantity: 1 }));
+      : (product.default_service_ids || [])
+        .filter((serviceId) => servicesById.has(serviceId))
+        .map((serviceId) => ({ service_id: serviceId, quantity: 1 }));
 
     const isKg = product.unit_of_measure === 'kg';
     const weightMultiplier = isKg
@@ -89,11 +94,6 @@ export function priceGarmentItems({ items, catalog, unitId, priority = 'normal' 
 
     const normalizedServices = serviceRequests.map((requestedService) => {
       const service = servicesById.get(requestedService.service_id);
-      if (!service) {
-        const error = new Error('service_not_found');
-        error.details = { index, service_id: requestedService.service_id };
-        throw error;
-      }
       if ((service.compatible_product_ids || []).length > 0 && !service.compatible_product_ids.includes(product.id)) {
         const error = new Error('service_not_compatible');
         error.details = { index, product_id: product.id, service_id: service.id };
