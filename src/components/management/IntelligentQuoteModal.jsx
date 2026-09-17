@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import GarmentReviewCard, { FALLBACK_CATALOG_OPTIONS as FALLBACK_OPTIONS } from '@/components/management/GarmentReviewCard';
+import ChargeResultPanel from '@/components/management/ChargeResultPanel';
 
 function currency(value) {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value || 0));
@@ -417,28 +418,7 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
                         <Button onClick={() => generatePayment('pix')} disabled={paymentBusy} className="bg-gradient-to-r from-[#216FA1] to-[#2d8ac4]">{paymentBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}Gerar Pix</Button>
                         <Button onClick={() => generatePayment('boleto')} disabled={paymentBusy} variant="outline" className="border-white/20 text-white hover:bg-white/10">{paymentBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}Gerar Boleto</Button>
                       </div>
-                      {paymentResult && (
-                        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 space-y-2">
-                          {paymentResult.qr_code_text && (
-                            <>
-                              <div className="text-xs text-white/60">Pix copia e cola:</div>
-                              <div className="flex items-center gap-2">
-                                <code className="flex-1 rounded bg-black/30 px-2 py-1.5 text-xs text-emerald-200 break-all">{paymentResult.qr_code_text}</code>
-                                <Button size="sm" variant="ghost" onClick={() => { navigator.clipboard.writeText(paymentResult.qr_code_text); toast.success('Código Pix copiado!'); }}>Copiar</Button>
-                              </div>
-                            </>
-                          )}
-                          {paymentResult.digitable_line && (
-                            <>
-                              <div className="text-xs text-white/60">Linha digitável do boleto (vence {paymentResult.due_date}):</div>
-                              <div className="flex items-center gap-2">
-                                <code className="flex-1 rounded bg-black/30 px-2 py-1.5 text-xs text-emerald-200 break-all">{paymentResult.digitable_line}</code>
-                                <Button size="sm" variant="ghost" onClick={() => { navigator.clipboard.writeText(paymentResult.digitable_line); toast.success('Linha digitável copiada!'); }}>Copiar</Button>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      )}
+                      <ChargeResultPanel result={paymentResult} />
                     </div>
                   </div>
                 ) : (
