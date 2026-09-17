@@ -20,7 +20,7 @@ export function urlWithDeveloperKey(base, path, key) {
 }
 
 export async function fetchJson(url, init, timeout = 15000) {
-  const response = await fetch(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(timeout) });
+  const response = await fetch(url, { ...init, redirect: 'manual', signal: AbortSignal.timeout(timeout) });
   const text = await response.text();
   let data = {};
   try { data = text ? JSON.parse(text) : {}; } catch { data = {}; }
