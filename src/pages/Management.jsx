@@ -275,6 +275,9 @@ export default function ManagementPage() {
         customers={customers}
         onManualEntry={() => setModalOpen(true)}
         onManualQuote={() => setQuoteModalOpen(true)}
+        dateRange={dateRange}
+        customStart={customStart}
+        customEnd={customEnd}
       />
 
       <div className="flex items-center gap-3 pt-2">

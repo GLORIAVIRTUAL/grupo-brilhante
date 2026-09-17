@@ -25,6 +25,7 @@ import ProductionOperationsPanel from './ProductionOperationsPanel';
 import OperationsInsightsPanel from './OperationsInsightsPanel';
 import { useAuth } from '@/lib/AuthContext';
 import { hasPermission } from '@/lib/accessControl';
+import { resolveDateRange, filterByDateRange } from '@/lib/dateRangeFilter';
 
 function ActionCard({ icon: Icon, title, description, accent, onClick, badge = null }) {
   return (
@@ -35,7 +36,7 @@ function ActionCard({ icon: Icon, title, description, accent, onClick, badge = n
   );
 }
 
-export default function ManagementCommandCenter({ selectedUnitId, defaultUnitId, customers = [], onManualEntry, onManualQuote }) {
+export default function ManagementCommandCenter({ selectedUnitId, defaultUnitId, customers = [], onManualEntry, onManualQuote, dateRange = 'all', customStart = '', customEnd = '' }) {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const [smartQuoteOpen, setSmartQuoteOpen] = useState(false);
@@ -49,38 +50,72 @@ export default function ManagementCommandCenter({ selectedUnitId, defaultUnitId,
   const unitId = selectedUnitId === 'all' ? defaultUnitId : selectedUnitId;
 
   const queryOptions = { staleTime: 60_000, retry: 1 };
-  const { data: garments = [] } = useQuery({ queryKey: ['command-garments'], queryFn: () => base44.entities.GarmentItem.filter({}, '-created_date', 3000), ...queryOptions });
-  const { data: reviews = [] } = useQuery({ queryKey: ['command-reviews'], queryFn: () => base44.entities.HumanReview.filter({}, '-created_date', 1000), ...queryOptions });
+  const { data: rawGarments = [] } = useQuery({ queryKey: ['command-garments'], queryFn: () => base44.entities.GarmentItem.filter({}, '-created_date', 3000), ...queryOptions });
+  const { data: rawReviews = [] } = useQuery({ queryKey: ['command-reviews'], queryFn: () => base44.entities.HumanReview.filter({}, '-created_date', 1000), ...queryOptions });
   const { data: stockItems = [] } = useQuery({ queryKey: ['command-stock'], queryFn: () => base44.entities.StockItem.filter({ active: true }, 'name', 2000), ...queryOptions });
-  const { data: purchaseDocuments = [] } = useQuery({ queryKey: ['command-purchases'], queryFn: () => base44.entities.PurchaseDocument.filter({}, '-created_date', 1000), ...queryOptions });
+  const { data: rawPurchaseDocuments = [] } = useQuery({ queryKey: ['command-purchases'], queryFn: () => base44.entities.PurchaseDocument.filter({}, '-created_date', 1000), ...queryOptions });
   const { data: suppliers = [] } = useQuery({ queryKey: ['command-suppliers'], queryFn: () => base44.entities.Supplier.filter({ active: true }, 'corporate_name', 1000), ...queryOptions });
-  const { data: payables = [] } = useQuery({ queryKey: ['command-payables'], queryFn: () => base44.entities.AccountsPayable.filter({}, 'due_date', 2000), ...queryOptions });
-  const { data: receivables = [] } = useQuery({ queryKey: ['command-receivables'], queryFn: () => base44.entities.AccountsReceivable.filter({}, 'due_date', 2000), ...queryOptions });
-  const { data: payments = [] } = useQuery({ queryKey: ['command-payments'], queryFn: () => base44.entities.Payment.filter({}, '-created_date', 3000), ...queryOptions });
-  const { data: financialDocuments = [] } = useQuery({ queryKey: ['command-financial-documents'], queryFn: () => base44.entities.FinancialDocument.filter({}, '-created_date', 1000), ...queryOptions });
-  const { data: cashSessions = [] } = useQuery({ queryKey: ['command-cash-sessions'], queryFn: () => base44.entities.CashSession.filter({}, '-opened_at', 500), ...queryOptions });
-  const { data: bankTransactions = [] } = useQuery({ queryKey: ['command-bank-transactions'], queryFn: () => base44.entities.BankTransaction.filter({}, '-transaction_date', 2000), ...queryOptions });
-  const { data: thirdPartyJobs = [] } = useQuery({ queryKey: ['command-third-party-jobs'], queryFn: () => base44.entities.ThirdPartyJob.filter({}, '-created_date', 1000), ...queryOptions });
+  const { data: rawPayables = [] } = useQuery({ queryKey: ['command-payables'], queryFn: () => base44.entities.AccountsPayable.filter({}, 'due_date', 2000), ...queryOptions });
+  const { data: rawReceivables = [] } = useQuery({ queryKey: ['command-receivables'], queryFn: () => base44.entities.AccountsReceivable.filter({}, 'due_date', 2000), ...queryOptions });
+  const { data: rawPayments = [] } = useQuery({ queryKey: ['command-payments'], queryFn: () => base44.entities.Payment.filter({}, '-created_date', 3000), ...queryOptions });
+  const { data: rawFinancialDocuments = [] } = useQuery({ queryKey: ['command-financial-documents'], queryFn: () => base44.entities.FinancialDocument.filter({}, '-created_date', 1000), ...queryOptions });
+  const { data: rawCashSessions = [] } = useQuery({ queryKey: ['command-cash-sessions'], queryFn: () => base44.entities.CashSession.filter({}, '-opened_at', 500), ...queryOptions });
+  const { data: rawBankTransactions = [] } = useQuery({ queryKey: ['command-bank-transactions'], queryFn: () => base44.entities.BankTransaction.filter({}, '-transaction_date', 2000), ...queryOptions });
+  const { data: rawThirdPartyJobs = [] } = useQuery({ queryKey: ['command-third-party-jobs'], queryFn: () => base44.entities.ThirdPartyJob.filter({}, '-created_date', 1000), ...queryOptions });
   const { data: thirdPartyPartners = [] } = useQuery({ queryKey: ['command-third-party-partners'], queryFn: () => base44.entities.ThirdPartyPartner.filter({ active: true }, 'trade_name', 500), ...queryOptions });
-  const { data: reworkCases = [] } = useQuery({ queryKey: ['command-rework-cases'], queryFn: () => base44.entities.ReworkCase.filter({}, '-opened_at', 1000), ...queryOptions });
+  const { data: rawReworkCases = [] } = useQuery({ queryKey: ['command-rework-cases'], queryFn: () => base44.entities.ReworkCase.filter({}, '-opened_at', 1000), ...queryOptions });
   const { data: locations = [] } = useQuery({ queryKey: ['command-locations'], queryFn: () => base44.entities.Location.filter({ active: true }, 'code', 2000), ...queryOptions });
-  const { data: orders = [] } = useQuery({ queryKey: ['command-orders'], queryFn: () => base44.entities.Order.filter({}, '-created_date', 3000), ...queryOptions });
-  const { data: quotes = [] } = useQuery({ queryKey: ['command-quotes'], queryFn: () => base44.entities.Quote.filter({}, '-created_date', 3000), ...queryOptions });
+  const { data: rawOrders = [] } = useQuery({ queryKey: ['command-orders'], queryFn: () => base44.entities.Order.filter({}, '-created_date', 3000), ...queryOptions });
+  const { data: rawQuotes = [] } = useQuery({ queryKey: ['command-quotes'], queryFn: () => base44.entities.Quote.filter({}, '-created_date', 3000), ...queryOptions });
   const { data: billingAgreements = [] } = useQuery({ queryKey: ['command-billing-agreements'], queryFn: () => base44.entities.BillingAgreement.filter({}, '-created_date', 1000), ...queryOptions });
-  const { data: billingStatements = [] } = useQuery({ queryKey: ['command-billing-statements'], queryFn: () => base44.entities.BillingStatement.filter({}, '-created_date', 2000), ...queryOptions });
+  const { data: rawBillingStatements = [] } = useQuery({ queryKey: ['command-billing-statements'], queryFn: () => base44.entities.BillingStatement.filter({}, '-created_date', 2000), ...queryOptions });
   const { data: fiscalProfiles = [] } = useQuery({ queryKey: ['command-fiscal-profiles'], queryFn: () => base44.entities.FiscalProfile.filter({}, '-created_date', 100), ...queryOptions });
-  const { data: fiscalDocuments = [] } = useQuery({ queryKey: ['command-fiscal-documents'], queryFn: () => base44.entities.FiscalDocument.filter({}, '-created_date', 2000), ...queryOptions });
+  const { data: rawFiscalDocuments = [] } = useQuery({ queryKey: ['command-fiscal-documents'], queryFn: () => base44.entities.FiscalDocument.filter({}, '-created_date', 2000), ...queryOptions });
   const { data: stockLots = [] } = useQuery({ queryKey: ['command-stock-lots'], queryFn: () => base44.entities.StockLot.filter({}, 'expiry_date', 3000), ...queryOptions });
-  const { data: stockMovements = [] } = useQuery({ queryKey: ['command-stock-movements'], queryFn: () => base44.entities.StockMovement.filter({}, '-occurred_at', 5000), ...queryOptions });
-  const { data: inventoryCounts = [] } = useQuery({ queryKey: ['command-inventory-counts'], queryFn: () => base44.entities.InventoryCount.filter({}, '-created_date', 1000), ...queryOptions });
+  const { data: rawStockMovements = [] } = useQuery({ queryKey: ['command-stock-movements'], queryFn: () => base44.entities.StockMovement.filter({}, '-occurred_at', 5000), ...queryOptions });
+  const { data: rawInventoryCounts = [] } = useQuery({ queryKey: ['command-inventory-counts'], queryFn: () => base44.entities.InventoryCount.filter({}, '-created_date', 1000), ...queryOptions });
   const { data: consumptionRecipes = [] } = useQuery({ queryKey: ['command-consumption-recipes'], queryFn: () => base44.entities.ConsumptionRecipe.filter({}, '-created_date', 2000), ...queryOptions });
-  const { data: productionBatches = [] } = useQuery({ queryKey: ['command-production-batches'], queryFn: () => base44.entities.ProductionBatch.filter({}, '-created_date', 3000), ...queryOptions });
+  const { data: rawProductionBatches = [] } = useQuery({ queryKey: ['command-production-batches'], queryFn: () => base44.entities.ProductionBatch.filter({}, '-created_date', 3000), ...queryOptions });
   const { data: machineStates = [] } = useQuery({ queryKey: ['command-machine-states'], queryFn: () => base44.entities.MachineState.filter({}, 'machine_id', 1000), ...queryOptions });
-  const { data: laborEntries = [] } = useQuery({ queryKey: ['command-labor-entries'], queryFn: () => base44.entities.LaborEntry.filter({}, '-started_at', 3000), ...queryOptions });
-  const { data: operationalAlerts = [] } = useQuery({ queryKey: ['command-operational-alerts'], queryFn: () => base44.entities.OperationalAlert.filter({}, '-last_detected_at', 2000), ...queryOptions });
+  const { data: rawLaborEntries = [] } = useQuery({ queryKey: ['command-labor-entries'], queryFn: () => base44.entities.LaborEntry.filter({}, '-started_at', 3000), ...queryOptions });
+  const { data: rawOperationalAlerts = [] } = useQuery({ queryKey: ['command-operational-alerts'], queryFn: () => base44.entities.OperationalAlert.filter({}, '-last_detected_at', 2000), ...queryOptions });
   const { data: productionCostProfiles = [] } = useQuery({ queryKey: ['command-production-cost-profiles'], queryFn: () => base44.entities.ProductionCostProfile.filter({}, '-valid_from', 500), ...queryOptions });
   const { data: laundryServices = [] } = useQuery({ queryKey: ['command-laundry-services'], queryFn: () => base44.entities.LaundryService.filter({ active: true }, 'name', 1000), ...queryOptions });
   const { data: units = [] } = useQuery({ queryKey: ['command-units'], queryFn: () => base44.entities.Unit.filter({ active: true }, 'name', 500), ...queryOptions });
+
+  // Todas as abas do centro de comando respeitam o período escolhido no filtro de datas.
+  const period = useMemo(() => {
+    const range = resolveDateRange(dateRange, customStart, customEnd);
+    const within = (records, fields) => filterByDateRange(records, range, fields);
+    return {
+      garments: within(rawGarments, ['created_date']),
+      reviews: within(rawReviews, ['created_date']),
+      purchaseDocuments: within(rawPurchaseDocuments, ['issue_date', 'created_date']),
+      payables: within(rawPayables, ['due_date', 'created_date']),
+      receivables: within(rawReceivables, ['due_date', 'created_date']),
+      payments: within(rawPayments, ['paid_at', 'created_date']),
+      financialDocuments: within(rawFinancialDocuments, ['issue_date', 'created_date']),
+      cashSessions: within(rawCashSessions, ['opened_at', 'created_date']),
+      bankTransactions: within(rawBankTransactions, ['transaction_date', 'created_date']),
+      thirdPartyJobs: within(rawThirdPartyJobs, ['created_date']),
+      reworkCases: within(rawReworkCases, ['opened_at', 'created_date']),
+      orders: within(rawOrders, ['created_date']),
+      quotes: within(rawQuotes, ['created_date']),
+      billingStatements: within(rawBillingStatements, ['created_date']),
+      fiscalDocuments: within(rawFiscalDocuments, ['issue_date', 'created_date']),
+      stockMovements: within(rawStockMovements, ['occurred_at', 'created_date']),
+      inventoryCounts: within(rawInventoryCounts, ['created_date']),
+      productionBatches: within(rawProductionBatches, ['created_date']),
+      laborEntries: within(rawLaborEntries, ['started_at', 'created_date']),
+      operationalAlerts: within(rawOperationalAlerts, ['last_detected_at', 'created_date']),
+    };
+  }, [dateRange, customStart, customEnd, rawGarments, rawReviews, rawPurchaseDocuments, rawPayables, rawReceivables, rawPayments, rawFinancialDocuments, rawCashSessions, rawBankTransactions, rawThirdPartyJobs, rawReworkCases, rawOrders, rawQuotes, rawBillingStatements, rawFiscalDocuments, rawStockMovements, rawInventoryCounts, rawProductionBatches, rawLaborEntries, rawOperationalAlerts]);
+
+  const {
+    garments, reviews, purchaseDocuments, payables, receivables, payments, financialDocuments,
+    cashSessions, bankTransactions, thirdPartyJobs, reworkCases, orders, quotes, billingStatements,
+    fiscalDocuments, stockMovements, inventoryCounts, productionBatches, laborEntries, operationalAlerts,
+  } = period;
 
   const canViewFinancial = hasPermission(user, 'finance.view') || hasPermission(user, 'payments.manage');
   const canManageQuotes = hasPermission(user, 'quotes.manage');
