@@ -27,7 +27,9 @@ function payerAddress(customer) {
 
 function missingPayerFields(customer) {
   const missing = [];
-  if (!customer?.tax_id) missing.push('CPF/CNPJ');
+  const taxId = String(customer?.tax_id || '').replace(/\D/g, '');
+  if (!taxId) missing.push('CPF/CNPJ');
+  else if (![11, 14].includes(taxId.length)) missing.push(`CPF/CNPJ válido (o cadastro tem ${taxId.length} dígitos)`);
   if (!customer?.address) missing.push('endereço');
   if (!customer?.address_number) missing.push('número');
   if (!customer?.neighborhood) missing.push('bairro');

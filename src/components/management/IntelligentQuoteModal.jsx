@@ -278,7 +278,9 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
     } catch (error) {
       console.error(error);
       const data = error.response?.data || {};
-      if (data.error === 'customer_data_incomplete') {
+      if (data.error === 'invalid_payer_tax_id') {
+        toast.error('CPF/CNPJ do cliente inválido. Corrija o cadastro do cliente e tente novamente.');
+      } else if (data.error === 'customer_data_incomplete') {
         toast.error(`Complete o cadastro do cliente: ${(data.missing_fields || []).join(', ') || 'dados faltantes'}.`);
       } else if (data.error === 'bank_account_not_active') {
         toast.error(data.message);
