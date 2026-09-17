@@ -269,6 +269,7 @@ export default async function (req) {
       error: code,
       provider_status: error?.safeResponse?.status || null,
       provider_code: error?.safeResponse?.provider_code || null,
+      provider_message: error?.safeResponse?.provider_message || null,
       request_id: requestId,
     }, { status: unavailable ? 503 : 502 });
   }

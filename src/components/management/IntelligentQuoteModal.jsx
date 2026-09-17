@@ -285,7 +285,9 @@ export default function IntelligentQuoteModal({ open, onOpenChange, customers = 
       } else if (data.error === 'bank_account_not_active') {
         toast.error(data.message);
       } else if (String(data.error || '').startsWith('banking_')) {
-        toast.error('Integração do Banco do Brasil indisponível. Contate o administrador.');
+        toast.error(data.provider_message
+          ? `Banco do Brasil recusou: ${data.provider_message}`
+          : 'Integração do Banco do Brasil indisponível. Contate o administrador.');
       } else {
         toast.error(data.message || 'Não foi possível emitir a cobrança no Banco do Brasil.');
       }

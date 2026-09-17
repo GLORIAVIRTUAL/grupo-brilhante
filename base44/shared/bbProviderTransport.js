@@ -27,7 +27,12 @@ export async function fetchJson(url, init, timeout = 15000) {
   if (!response.ok) {
     const error = new Error(`banking_provider_http_${response.status}`);
     error.status = response.status;
-    error.safeResponse = { status: response.status, provider_code: cleanValue(data?.codigo || data?.code || '', 80) || null };
+    const firstError = Array.isArray(data?.erros) ? data.erros[0] : null;
+    error.safeResponse = {
+      status: response.status,
+      provider_code: cleanValue(data?.codigo || data?.code || firstError?.codigo || '', 80) || null,
+      provider_message: cleanValue(data?.detail || data?.mensagem || data?.title || firstError?.mensagem || firstError?.textoMensagem || '', 300) || null,
+    };
     throw error;
   }
   return data;

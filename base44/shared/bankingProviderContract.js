@@ -23,7 +23,7 @@ export const BB_DEFAULT_ENDPOINTS = Object.freeze({
   BB_PIX_REFUND_PATH: '/pix/v2/pix/{txid}/devolucao/{refund_id}',
 });
 
-const BB_SANDBOX_HOSTS = Object.freeze({ oauth: 'https://oauth.sandbox.bb.com.br/oauth/token', api: 'https://api.sandbox.bb.com.br' });
+const BB_SANDBOX_HOSTS = Object.freeze({ oauth: 'https://oauth.hm.bb.com.br/oauth/token', api: 'https://api.hm.bb.com.br' });
 const BB_PRODUCTION_HOSTS = Object.freeze({ oauth: 'https://oauth.bb.com.br/oauth/token', api: 'https://api.bb.com.br' });
 
 export function bankingRuntimeConfig(getEnv = () => '') {
